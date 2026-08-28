@@ -1,0 +1,49 @@
+{
+  "video": {
+    "input_folder": "./videos",
+    "extensions": [".mp4", ".avi", ".mov", ".mkv"],
+    "output_folder": "./raporlar",
+    "save_frames": true,
+    "frame_quality": 85,
+    "exclude_prefixes": ["test_", "_"]
+  },
+  "processing": {
+    "skip_frames": 5,
+    "motion_threshold": 1200,
+    "contour_min_area": 250,
+    "contour_max_area": 100000,
+    "person_aspect_ratio": [0.3, 3.5],
+    "use_aspect_ratio_filter": true,
+    "cooldown_seconds": 8,
+    "global_cooldown_seconds": 10,
+    "tracker_max_distance": 120,
+    "one_event_per_scan": true
+  },
+  "multi_frame": {
+    "enabled": true,
+    "frame_count": 6,
+    "interval_frames": 5,
+    "margin": 50,
+    "max_width": 384,
+    "num_ctx": 8192,
+    "timeout_per_frame": 15
+  },
+  "ai": {
+    "model_name": "qwen2.5vl:3b",
+    "max_width": 640,
+    "timeout": 60,
+    "workers": 2,
+    "output_language": "tr",
+    "prompt": "Analyze sequential security camera frames. Frame 1 is oldest, the last frame is newest.\n\nSTRICT RULES:\n- Describe ONLY what is clearly visible. Never invent or assume a person exists.\n- If you cannot clearly see a human body/face, you MUST answer exactly: Kisi: yok\n- CRITICAL: If Kisi is \"yok\" (no person), NEVER add Cinsiyet, Kiyafet, or Hareket fields.\n- Do NOT repeat these instructions in your answer.\n- Answer in TURKISH only.\n\nOUTPUT FORMAT (2 to 5 short lines, Turkish):\nOlay: [kapi aciliyor / kapi kapaniyor / kisi giriyor / kisi cikiyor / baska hareket]\nKisi: [yok OR kisa aciklama - sadece net goruyorsan]\n\nONLY if person is 100% clearly visible in at least 2 frames, add:\nCinsiyet: [erkek / kadin / belirsiz]\nKiyafet: [renkler ve cesitler]\nHareket: [yon veya hareketi]"
+  },
+  "startup": {
+    "ask_video_selection": true,
+    "ask_roi_selection": true
+  },
+  "roi": {
+    "interactive": true,
+    "auto_save": true,
+    "coords_file": "roi_coords.json",
+    "max_display_width": 1280
+  }
+}
