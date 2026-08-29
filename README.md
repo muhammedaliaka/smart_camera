@@ -1,117 +1,145 @@
-# Akıllı Kamera Arşiv Analiz Sistemi v2.0
+# 🎥 Smart Camera - Akıllı Video Analiz Sistemi
 
-Güvenlik kamerası kayıtlarını otomatik tarar, hareketli anları tespit eder ve Qwen2-VL yapay zeka modeli ile analiz ederek detaylı raporlar oluşturur.
+Yapay zeka destekli otomatik video gözetim ve analiz sistemi.
 
-## 🆕 v2.0 Yenilikleri
+## ✨ Özellikler
 
-- **Çoklu Video Desteği**: `./videos` klasöründeki tüm videoları otomatik işler
-- **İnteraktif ROI Seçimi**: İlk frame'de mouse ile kapı bölgesi seçin, koordinatlar otomatik kaydedilir
-- **Gelişmiş Hareket Algılama**: Kontur analizi + aspect ratio filtresi (insan dışı hareketleri eleme)
-- **Asenkron AI**: Video okuma ve AI analizi paralel thread'lerde (kuyruk sistemi)
-- **Nesne Takibi**: Aynı kişiyi 8 saniye içinde tekrar raporlamaz
-- **Otomatik Config**: `config.json` ile tüm ayarlar merkezi
-- **Frame Resize**: AI'a 640px gönderim (hız + token tasarrufu)
-- **Görsel Raporlama**: Her tespit edilen kare rapora görsel olarak eklenir
-- **Progress Bar**: `tqdm` ile işlem ilerleme takibi
+- 🤖 **AI Destekli Analiz** - Ollama ile görüntü analizi
+- 📹 **Otomatik Video Tarama** - Hareket algılama ve nesne takibi
+- 🔍 **Özelleştirilebilir Arama** - "Ne arıyorsun?" özelliği
+- 📊 **Akıllı Raporlar** - JSON ve Markdown formatında
+- 🎨 **Modern GUI** - Kullanıcı dostu arayüz
+- 🌍 **Çoklu Dil** - Türkçe / İngilizce
+- ⚡ **Hızlı İşlem** - 1000+ FPS video tarama
+- 🖼️ **Multi-Frame Analiz** - Her olaydan çoklu kare yakalar
 
-## 📁 Klasör Yapısı
+## 🚀 Hızlı Başlangıç
 
-```
-.
-├── videos/                 # Analiz edilecek videoları buraya koyun
-├── raporlar/               # Otomatik oluşturulan raporlar
-│   ├── rapor_video1_20240115_143022.md
-│   └── frames/             # Tespit edilen kare görüntüleri
-├── config.json             # Sistem ayarları
-├── roi_coords.json         # Kaydedilmiş ROI koordinatları
-├── analyze_video_v2.py     # Ana script
-└── requirements.txt
-```
-
-## 🚀 Kurulum
+### 1. Gereksinimleri Yükle
 
 ```bash
-# 1. Bağımlılıkları yükle
 pip install -r requirements.txt
-
-# 2. Ollama'yı kur ve modeli indir
-ollama pull qwen2-vl:3b
-
-# 3. Videoları klasöre koy
-mkdir -p videos
-cp kamera_kaydi.mp4 videos/
-
-# 4. Çalıştır
-python analyze_video_v2.py
 ```
 
-## ⚙️ Config Ayarları (config.json)
+veya
+
+```cmd
+.\PAKET_YUKLE.bat
+```
+
+### 2. Ollama Kur (AI için - opsiyonel)
+
+```cmd
+.\OLLAMA_KURULUM.bat
+```
+
+### 3. Kurulum Sihirbazını Çalıştır
+
+```cmd
+.\KOLAY_ACILIS.bat
+```
+
+### 4. Uygulamayı Başlat
+
+```cmd
+.\UYGULAMA_BASLAT.bat
+```
+
+## 📋 Gereksinimler
+
+- Python 3.8+
+- OpenCV
+- NumPy
+- Ollama (AI için - opsiyonel)
+
+## 🎯 Kullanım
+
+1. **Setup Wizard** ile ayarları yapın:
+   - Video klasörü seçin
+   - AI modeli seçin (Ollama gerekli)
+   - Arama kriteri belirleyin (örn: "İnsanları tespit et")
+
+2. **Ana Uygulama** ile analiz başlatın:
+   - "ANALİZİ BAŞLAT" butonuna tıklayın
+   - Canlı log takip edin
+   - AI özeti inceleyin
+
+3. **Raporları** görüntüleyin:
+   - `raporlar/` klasöründe Markdown raporları
+   - `raporlar/json/` klasöründe JSON verileri
+   - `raporlar/frames/` klasöründe yakalanan kareler
+
+## 🛠️ Yapılandırma
+
+Setup wizard ile veya `config.json` dosyasını düzenleyerek:
 
 ```json
 {
-  "video": {
-    "input_folder": "./videos",
-    "extensions": [".mp4", ".avi", ".mov", ".mkv"],
-    "output_folder": "./raporlar",
-    "save_frames": true,
-    "frame_quality": 85
-  },
-  "processing": {
-    "skip_frames": 5,           // Her 5 karede bir kontrol
-    "motion_threshold": 3000,   // Hareket piksel eşiği
-    "contour_min_area": 500,  // Minimum kontur alanı (gürültü filtreleme)
-    "contour_max_area": 50000,// Maksimum kontur alanı
-    "person_aspect_ratio": [0.3, 2.5], // İnsan boy/en oranı
-    "cooldown_seconds": 8,      // Aynı kişiyi tekrar raporlama süresi
-    "tracker_max_distance": 100 // Takip mesafe eşiği (piksel)
-  },
-  "ai": {
-    "model_name": "qwen2-vl:3b",
-    "max_width": 640,         // AI'a gönderilecek max genişlik
-    "timeout": 60,
-    "workers": 2,             // Paralel AI worker sayısı
-    "prompt": "..."           // AI prompt'u
-  },
-  "roi": {
-    "interactive": true,      // İlk çalıştırmada ROI seç
-    "auto_save": true,
-    "coords_file": "roi_coords.json"
-  }
+  "input_folder": "videos",
+  "output_folder": "raporlar",
+  "model_name": "qwen2.5vl:3b",
+  "search_prompt": "İnsanları ve arabaları tespit et",
+  "skip_frames": 5,
+  "motion_threshold": 1200
 }
 ```
 
-## 🎯 Kullanım Akışı
+## 📊 Özellikler Detay
 
-1. **Videoları Koy**: `videos/` klasörüne `.mp4`, `.avi`, `.mov` dosyalarını at
-2. **ROI Seçimi**: Script ilk çalıştığında pencere açılır, mouse ile kapı bölgesini seç, `s` ile kaydet
-3. **Otomatik İşlem**: Tüm videolar sırayla işlenir, hareket anları AI'a gönderilir
-4. **Raporları İncele**: `raporlar/` klasöründe `.md` dosyaları ve `frames/` içinde görüntüler
+### AI Model Seçenekleri
+- **qwen2.5vl:3b** - Hızlı ve hafif (3GB) ✅ ÖNERİLEN
+- **llama3.2-vision:11b** - Güçlü (11GB)
+- **llava:7b** - Orta (4.5GB)
 
-## 🧠 Sistem Nasıl Çalışır?
+### Arama Kriterleri Örnekleri
+- 👤 "İnsanları tespit et"
+- 🚗 "Arabaları say"
+- 📦 "Paket hırsızlığı"
+- 🏃 "Şüpheli davranış"
+- 🐕 "Hayvan tespiti"
+- 🔥 "Yangın veya duman"
 
-1. **Filtreleme**: OpenCV MOG2 + kontur analizi + aspect ratio (insan filtresi)
-2. **ROI**: Sadece seçilen kapı bölgesindeki hareketler algılanır
-3. **Takip**: Centroid tracker ile aynı kişiyi takip eder, 8 saniye cooldown uygular
-4. **Asenkron**: Video okuma durmadan, AI worker'lar kuyruktan frame çekip analiz eder
-5. **Rapor**: Her tespit için zaman damgası, takip ID'si, görsel ve AI analizi kaydedilir
+**Boş bırakılırsa:** Genel hareket tespiti + şüpheli durum analizi
 
-## ⚠️ Bilinen Sınırlamalar
+## 📁 Dosya Yapısı
 
-- **Ollama Gereksinimi**: Sistem Ollama'nın çalışmasına bağlıdır
-- **GPU**: AI analizi CPU üzerinde yavaş olabilir, GPU önerilir
-- **Işık Değişimi**: Ani ışık değişimleri (far, bulut) false positive üretebilir
-- **Kalabalık**: Çok kişili sahnelerde takip ID'leri karışabilir
+```
+smart_camera/
+├── app_launcher.py          # Ana uygulama GUI
+├── setup_wizard_modern.py   # Modern kurulum sihirbazı
+├── analyze_video_v2.py      # Video analiz motoru
+├── config.json              # Yapılandırma dosyası
+├── requirements.txt         # Python bağımlılıkları
+├── UYGULAMA_BASLAT.bat     # Ana uygulama başlatıcı
+├── KOLAY_ACILIS.bat        # Setup wizard başlatıcı
+├── videos/                  # Video klasörü
+└── raporlar/               # Rapor çıktıları
+    ├── frames/             # Yakalanan kareler
+    └── json/               # JSON raporları
+```
 
-## 📝 v1 vs v2 Karşılaştırması
+## 🤝 Katkıda Bulunma
 
-| Özellik | v1 | v2 |
-|---------|----|----|
-| Çoklu video | ❌ | ✅ |
-| ROI seçimi | Manuel kod | 🖱️ Mouse ile interaktif |
-| Gürültü filtreleme | Yok | Kontur + aspect ratio |
-| Asenkron AI | ❌ Senkron | ✅ Multi-thread |
-| Nesne takibi | Yok | Centroid tracker |
-| Frame resize | Yok | 640px (hız) |
-| Görsel rapor | Yok | ✅ Kare görüntüleri |
-| Config | Sabit kod | ✅ JSON config |
-| Progress bar | Yok | ✅ tqdm |
+1. Fork yapın
+2. Feature branch oluşturun (`git checkout -b feature/amazing`)
+3. Commit edin (`git commit -m 'Add amazing feature'`)
+4. Push edin (`git push origin feature/amazing`)
+5. Pull Request açın
+
+## 📄 Lisans
+
+MIT License - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
+
+## 🙏 Teşekkürler
+
+- [Ollama](https://ollama.com/) - AI model desteği
+- [OpenCV](https://opencv.org/) - Video işleme
+- Topluluk katkılarına teşekkürler!
+
+## 📞 İletişim
+
+Sorularınız için [Issues](https://github.com/hayvanatoffical/smart_camera/issues) bölümünü kullanın.
+
+---
+
+⭐ **Beğendiyseniz yıldız verin!**

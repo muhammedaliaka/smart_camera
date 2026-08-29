@@ -1,0 +1,248 @@
+================================================================================
+  SMART CAMERA - HIZLI KULLANIM REHBERİ
+  QUICK USAGE GUIDE
+================================================================================
+
+🎯 EN HIZLI YOL / FASTEST WAY:
+
+    1. START_HERE.bat dosyasına çift tıkla
+    2. Setup wizard penceresi açılır
+    3. Ayarlarını yap
+    4. Başla!
+
+================================================================================
+📁 ÖNEMLİ DOSYALAR / IMPORTANT FILES:
+================================================================================
+
+🚀 BAŞLATICILAR / LAUNCHERS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  START_HERE.bat              👈 EN KOLAY! Buraya çift tıkla!
+  run_setup.bat                Setup wizard başlatıcı
+  install.bat                  İlk kurulum (bir kere yap)
+  Smart_Camera_Setup.bat       Masaüstünde (varsa)
+
+⚙️ PYTHON SCRIPTLER / PYTHON SCRIPTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  setup_wizard.py              Setup wizard (GUI)
+  analyze_video_v2.py          Ana program
+  install.py                   Kurulum scripti
+  build_exe.py                 EXE oluşturucu
+
+📚 DOKÜMANTASYON / DOCUMENTATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  KULLANIM_REHBERI.txt        👈 Bu dosya (hızlı referans)
+  QUICKSTART.md                Hızlı başlangıç (3 adım)
+  BASARILI_KURULUM.md          Kurulum raporu
+  SETUP_GUIDE.md               Detaylı kılavuz
+  README.md                    Tam dokümantasyon
+  FINAL_REPORT.md              Proje özeti
+
+================================================================================
+🎮 KULLANIM ÖRNEKLERİ / USAGE EXAMPLES:
+================================================================================
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ SENARYO 1: İLK KEZ KULLANIM (İLK KURULUM)                                 │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  1. install.bat çalıştır
+     → Dil seç: Türkçe (1)
+     → Bekle (bağımlılıklar yüklenir)
+     
+  2. Setup wizard otomatik açılır
+     → Klasörleri seç
+     → Ayarları yap (Dengeli profil önerilen)
+     → Kaydet
+     
+  3. Ana programı çalıştır
+     → python analyze_video_v2.py
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ SENARYO 2: SADECE AYAR DEĞİŞTİRME                                         │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  1. START_HERE.bat çift tıkla
+     → Setup wizard açılır
+     
+  2. Mevcut ayarları gör
+     → İstediğini değiştir
+     → Kaydet
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ SENARYO 3: DOĞRUDAN PROGRAMI ÇALIŞTIR                                     │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Eğer setup zaten yapıldıysa:
+  
+  python analyze_video_v2.py
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ SENARYO 4: EXE OLUŞTUR (GELİŞTİRİCİ)                                      │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  1. build_exe.bat çalıştır
+     → Bekle (2-3 dakika)
+     
+  2. EXE kullan
+     → dist\SmartCamera_Setup.exe
+     → Bu dosyayı kopyala/paylaş
+
+================================================================================
+⚙️ AYAR PROFİLLERİ / SETTING PROFILES:
+================================================================================
+
+🏃 HIZLI (Yeni Başlayanlar):
+┌─────────────────────────────┬──────┐
+│ Skip Frames                 │ 10   │
+│ Motion Threshold            │ 2000 │
+│ Cooldown                    │ 15s  │
+│ Multi-Frame                 │ OFF  │
+│ Workers                     │ 1    │
+└─────────────────────────────┴──────┘
+Kullanım: İlk test, düşük CPU
+
+⚖️ DENGELİ (ÖNERİLEN):
+┌─────────────────────────────┬──────┐
+│ Skip Frames                 │ 5    │
+│ Motion Threshold            │ 1200 │
+│ Cooldown                    │ 8s   │
+│ Multi-Frame                 │ ON   │
+│ Frame Count                 │ 6    │
+│ Workers                     │ 2    │
+└─────────────────────────────┴──────┘
+Kullanım: Normal kullanım ⭐
+
+🔍 DETAYLI (Profesyonel):
+┌─────────────────────────────┬──────┐
+│ Skip Frames                 │ 3    │
+│ Motion Threshold            │ 800  │
+│ Cooldown                    │ 5s   │
+│ Multi-Frame                 │ ON   │
+│ Frame Count                 │ 6    │
+│ Workers                     │ 4    │
+└─────────────────────────────┴──────┘
+Kullanım: Yüksek kalite, güçlü PC
+
+================================================================================
+🐛 SORUN GİDERME / TROUBLESHOOTING:
+================================================================================
+
+❌ Setup wizard açılmıyor
+   ✓ START_HERE.bat kullan
+   ✓ python setup_wizard.py dene
+   ✓ Python 3.8+ yüklü mü kontrol et
+
+❌ "Python bulunamadı" hatası
+   ✓ Python yükle: https://www.python.org/downloads/
+   ✓ PATH'e eklendiğinden emin ol
+
+❌ Klasör seçilemiyor
+   ✓ Yönetici olarak çalıştır (sağ tık)
+   ✓ Klasör yolunda Türkçe karakter olmasın
+
+❌ Config.json kaydetmiyor
+   ✓ Yazma izni ver
+   ✓ Klasör mevcut mu kontrol et
+
+⚠️ Sistem çok yavaş
+   ✓ Worker sayısını azalt (2→1)
+   ✓ Skip frames artır (5→10)
+   ✓ Multi-frame kapat
+
+⚠️ Çok fazla olay algılanıyor
+   ✓ Motion threshold artır (1200→2000)
+   ✓ Cooldown artır (8→15)
+
+⚠️ Hiç olay algılanmıyor
+   ✓ Motion threshold azalt (1200→800)
+   ✓ Skip frames azalt (5→3)
+
+================================================================================
+📞 YARDIM / HELP:
+================================================================================
+
+📖 Dokümantasyon:
+   • QUICKSTART.md - 3 adımda başla
+   • SETUP_GUIDE.md - Detaylı kılavuz
+   • README.md - Tüm özellikler
+
+🌐 Online:
+   • GitHub Issues - Sorun bildir
+   • GitHub Discussions - Tartış
+
+💬 İletişim:
+   • Dokümantasyon dosyalarını oku
+   • GitHub'da arama yap
+   • Issue aç
+
+================================================================================
+✨ HIZLI İPUÇLARI / QUICK TIPS:
+================================================================================
+
+💡 İlk Kullanım:
+   1. START_HERE.bat çalıştır
+   2. Varsayılan ayarları kullan
+   3. Bir test videosu çalıştır
+   4. Sonuçlara göre optimize et
+
+💡 Performans:
+   • CPU yüksekse → Worker sayısını azalt
+   • Bellek yüksekse → Multi-frame kapat
+   • Disk doluyorsa → Frame kaydetmeyi kapat
+
+💡 Kalite:
+   • Detaylı analiz → Multi-frame aç + düşük skip
+   • Hızlı tarama → Multi-frame kapat + yüksek skip
+   • Gece videoları → Düşük motion threshold
+
+💡 Bakım:
+   • Raporları düzenli temizle
+   • config.json'ı yedekle
+   • Ayarları not et
+
+================================================================================
+🎯 BAŞARI KRİTERLERİ / SUCCESS CRITERIA:
+================================================================================
+
+✅ Kurulum başarılı mı?
+   [ ] Python 3.8+ yüklü
+   [ ] Setup wizard açılıyor
+   [ ] config.json oluşuyor
+   [ ] Klasörler mevcut
+
+✅ Çalışıyor mu?
+   [ ] Video analizi yapılıyor
+   [ ] Raporlar oluşuyor
+   [ ] Frames kaydediliyor
+   [ ] JSON verisi doğru
+
+✅ Optimize mi?
+   [ ] Hız kabul edilebilir
+   [ ] CPU kullanımı makul
+   [ ] Olay algılama doğru
+   [ ] Raporlar anlamlı
+
+================================================================================
+🚀 HEMEN BAŞLA! / START NOW!
+================================================================================
+
+                    START_HERE.bat
+                         ↓
+              Çift tıkla / Double-click
+                         ↓
+              Setup wizard açılır
+                         ↓
+              Ayarlarını yap
+                         ↓
+                   BAŞLA!
+
+================================================================================
+
+Version: 1.0.0
+Last Updated: 2026
+Languages: 🇹🇷 Türkçe | 🇬🇧 English
+Status: ✅ HAZIR
+
+Made with ❤️ for Smart Camera Project
+
+================================================================================

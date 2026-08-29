@@ -1,0 +1,10 @@
+# Setup Wizard Requirements
+# Kurulum Sihirbazı Gereksinimleri
+
+# PyInstaller - EXE oluşturmak için
+pyinstaller>=5.0.0
+
+# Tkinter genellikle Python ile gelir, ama bazı sistemlerde:
+# Ubuntu/Debian: sudo apt-get install python3-tk
+# Fedora: sudo dnf install python3-tkinter
+# Windows/Mac: Python kurulumu ile gelir

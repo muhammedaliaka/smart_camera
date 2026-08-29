@@ -1,0 +1,251 @@
+{
+  "tr": {
+    "app_name": "Akıllı Kamera - Kolay Kurulum",
+    "version": "v1.0.0",
+    "copyright": "© 2026 Akıllı Kamera Projesi",
+    
+    "wizard": {
+      "title": "Akıllı Kamera - Kolay Kurulum",
+      "welcome_title": "Hoş Geldiniz!",
+      "welcome_message": "Akıllı Kamera sistemine hoş geldiniz!\n\nBu program videoları otomatik olarak izler ve olayları size raporlar.\n\nHadi başlayalım! 😊",
+      "button_next": "İleri",
+      "button_back": "Geri",
+      "button_cancel": "İptal",
+      "button_finish": "Tamamla",
+      "button_browse": "Seç"
+    },
+    
+    "pages": {
+      "language": {
+        "title": "Dil Seçimi",
+        "label": "Hangi dilde kullanmak istersiniz?",
+        "turkish": "Türkçe",
+        "english": "English"
+      },
+      
+      "folders": {
+        "title": "Klasörler",
+        "help": "Video dosyalarınızın olduğu klasörü ve raporların kaydedileceği yeri seçin.",
+        "input_folder": "Videolarım nerede?",
+        "output_folder": "Raporlar nereye kaydedilsin?",
+        "placeholder_input": "Örn: C:\\Videolarım",
+        "placeholder_output": "Örn: C:\\Raporlarım"
+      },
+      
+      "processing": {
+        "title": "Hız Ayarları",
+        "help": "Program videoları ne kadar hızlı tarayacak?",
+        "skip_frames": "Her kaç karede bir baksın:",
+        "skip_frames_help": "3-10: Çok detaylı (yavaş) | 5: Normal | 10-20: Hızlı tara",
+        "motion_threshold": "Hassaslık:",
+        "motion_threshold_help": "500-800: Çok hassas | 1200: Normal | 2000+: Az hassas",
+        "cooldown": "Aynı olayı kaç saniyede bir anlatsın:",
+        "cooldown_help": "5-8: Sık bildirim | 8-15: Normal"
+      },
+      
+      "ai": {
+        "title": "Zeka Ayarları",
+        "help": "Yapay zeka videoları nasıl analiz edecek?",
+        "model_name": "Yapay zeka modeli:",
+        "model_help": "qwen2.5vl:3b (önerilen - değiştirmeyin)",
+        "workers": "Aynı anda kaç iş yapsın:",
+        "workers_help": "1: Yavaş ama güvenli | 2: Normal | 4: Hızlı ama çok CPU",
+        "timeout": "En fazla kaç saniye beklesin:",
+        "timeout_help": "30-60 saniye önerilen"
+      },
+      
+      "multiframe": {
+        "title": "Detay Ayarları",
+        "help": "Her olay için tek yerine birden fazla açıdan resim alır. Daha detaylı ama yavaş.",
+        "enable": "Her olaydan birden fazla resim alsın",
+        "frame_count": "Kaç tane resim alsın:",
+        "frame_count_help": "3-6: Normal | 6-10: Çok detaylı",
+        "interval": "Resimler arası kaç kare atlasın:",
+        "interval_help": "3-5: Yakın | 5-10: Uzak"
+      },
+      
+      "summary": {
+        "title": "Hazır!",
+        "message": "Ayarlarınız kaydedildi! ✅\n\nArtık videoları analiz etmeye başlayabilirsiniz.",
+        "config_saved": "Seçtiğiniz Ayarlar",
+        "label_videos": "Videolar:",
+        "label_reports": "Raporlar:",
+        "label_processing": "Hız:",
+        "label_ai": "Yapay Zeka:",
+        "label_multiframe": "Resim:"
+      }
+    },
+    
+    "errors": {
+      "title": "Hata",
+      "folder_required": "Lütfen klasörleri seçin!",
+      "value_invalid": "Lütfen sayıları doğru girin!",
+      "save_failed": "Ayarlar kaydedilemedi!",
+      "number_required": "Buraya sadece sayı yazın!",
+      "range_error": "Sayı {min} ile {max} arasında olmalı!"
+    },
+    
+    "warnings": {
+      "title": "Uyarı",
+      "cancel_confirm": "Kurulumdan çıkmak istiyor musunuz?",
+      "folder_not_exist": "Bu klasör yok. Oluşturulsun mu?",
+      "overwrite_config": "Eski ayarlar var. Üzerine yazılsın mı?"
+    },
+    
+    "success": {
+      "title": "Başarılı",
+      "setup_complete": "Kurulum tamamlandı!",
+      "config_saved": "Ayarlar kaydedildi.",
+      "folders_created": "Klasörler oluşturuldu."
+    },
+    
+    "tooltips": {
+      "skip_frames": "Küçük sayı = Daha hassas ama yavaş\nBüyük sayı = Daha hızlı ama daha az detay",
+      "motion_threshold": "Küçük sayı = Daha hassas, her hareketi yakalar\nBüyük sayı = Sadece büyük hareketleri yakalar",
+      "cooldown": "Aynı olayın tekrar tekrar raporlanmaması için bekleme süresi",
+      "workers": "Bilgisayarınızın gücüne göre ayarlayın (genelde 2 yeter)",
+      "timeout": "Yapay zeka çok uzun süre cevap vermezse geç",
+      "multiframe": "Açık = Daha detaylı ama yavaş\nKapalı = Daha hızlı, tek resim"
+    },
+    
+    "presets": {
+      "fast": {
+        "name": "Hızlı Tara",
+        "description": "Az CPU kullanır, hızlı çalışır"
+      },
+      "balanced": {
+        "name": "Normal",
+        "description": "Önerilen ayarlar"
+      },
+      "detailed": {
+        "name": "Çok Detaylı",
+        "description": "Yüksek kalite, yavaş çalışır"
+      }
+    }
+  },
+  
+  "en": {
+    "app_name": "Smart Camera Setup Wizard",
+    "version": "v1.0.0",
+    "copyright": "© 2026 Smart Camera Project",
+    
+    "wizard": {
+      "title": "Smart Camera - Setup Wizard",
+      "welcome_title": "Welcome!",
+      "welcome_message": "Welcome to the Smart Camera Archive Analysis System Setup Wizard.\n\nThis wizard will help you configure the system settings.",
+      "button_next": "Next",
+      "button_back": "Back",
+      "button_cancel": "Cancel",
+      "button_finish": "Finish",
+      "button_browse": "Browse"
+    },
+    
+    "pages": {
+      "language": {
+        "title": "Language Selection",
+        "label": "Please select language:",
+        "turkish": "Türkçe",
+        "english": "English"
+      },
+      
+      "folders": {
+        "title": "Folder Settings",
+        "help": "Select the folder containing your video files and where reports will be saved.",
+        "input_folder": "Video Input Folder:",
+        "output_folder": "Report Output Folder:",
+        "placeholder_input": "e.g., C:\\Videos",
+        "placeholder_output": "e.g., C:\\Reports"
+      },
+      
+      "processing": {
+        "title": "Processing Settings",
+        "help": "Configure video processing parameters.",
+        "skip_frames": "Skip Frames:",
+        "skip_frames_help": "Analyze every N frames (1-30)",
+        "motion_threshold": "Motion Threshold:",
+        "motion_threshold_help": "Motion detection sensitivity (500-5000)",
+        "cooldown": "Cooldown:",
+        "cooldown_help": "Wait time for same event (5-30 seconds)"
+      },
+      
+      "ai": {
+        "title": "AI Settings",
+        "help": "Configure AI analysis settings.",
+        "model_name": "AI Model Name:",
+        "model_help": "Ollama model name (e.g., qwen2.5vl:3b)",
+        "workers": "Worker Count:",
+        "workers_help": "Number of parallel processes (1-4)",
+        "timeout": "Timeout:",
+        "timeout_help": "AI analysis timeout (30-120 seconds)"
+      },
+      
+      "multiframe": {
+        "title": "Multi-Frame Settings",
+        "help": "Analyze multiple frames for each event.",
+        "enable": "Enable multi-frame analysis",
+        "frame_count": "Frame Count:",
+        "frame_count_help": "Frames per event (3-10)",
+        "interval": "Frame Interval:",
+        "interval_help": "Gap between frames (3-10)"
+      },
+      
+      "summary": {
+        "title": "Summary",
+        "message": "Your settings have been saved successfully!\n\nYou can now run analyze_video_v2.py to start using the system.",
+        "config_saved": "Configuration saved: config.json",
+        "label_videos": "Video Folder:",
+        "label_reports": "Report Folder:",
+        "label_processing": "Processing:",
+        "label_ai": "AI:",
+        "label_multiframe": "Multi-Frame:"
+      }
+    },
+    
+    "errors": {
+      "title": "Error",
+      "folder_required": "Please select valid folders!",
+      "value_invalid": "Please enter valid values!",
+      "save_failed": "Could not save configuration!",
+      "number_required": "This field requires a numeric value!",
+      "range_error": "Value must be between {min} and {max}!"
+    },
+    
+    "warnings": {
+      "title": "Warning",
+      "cancel_confirm": "Cancel setup?",
+      "folder_not_exist": "Folder does not exist. Create it?",
+      "overwrite_config": "config.json already exists. Overwrite?"
+    },
+    
+    "success": {
+      "title": "Success",
+      "setup_complete": "Setup completed successfully!",
+      "config_saved": "Configuration file saved.",
+      "folders_created": "Folders created."
+    },
+    
+    "tooltips": {
+      "skip_frames": "Lower value = More sensitive but slower\nHigher value = Faster but less detail",
+      "motion_threshold": "Lower value = More sensitive, more events\nHigher value = Only large movements",
+      "cooldown": "Wait time before detecting same event again",
+      "workers": "Adjust based on CPU cores (typically 2-4)",
+      "timeout": "Maximum wait time if AI model doesn't respond",
+      "multiframe": "Enable = More detailed analysis, slower\nDisable = Faster, single frame"
+    },
+    
+    "presets": {
+      "fast": {
+        "name": "Fast",
+        "description": "Low CPU usage, fast processing"
+      },
+      "balanced": {
+        "name": "Balanced",
+        "description": "Recommended settings"
+      },
+      "detailed": {
+        "name": "Detailed",
+        "description": "High quality, slow processing"
+      }
+    }
+  }
+}

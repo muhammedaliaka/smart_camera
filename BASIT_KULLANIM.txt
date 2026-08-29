@@ -1,0 +1,205 @@
+================================================================================
+  AKILLI KAMERA - BASIT KULLANIM KILAVUZU
+================================================================================
+
+🎯 NE İŞE YARAR?
+
+Bu program videolarınızı otomatik olarak izler ve içlerinde olan olayları
+(hareket eden insanlar, arabalar vs.) bulup size rapor eder.
+
+================================================================================
+🚀 NASIL BAŞLARIM?
+================================================================================
+
+1. Masaüstündeki "Smart Camera Setup" ikonuna çift tıkla
+
+2. Program açılınca şunları seç:
+
+   📁 Videolarım nerede?
+      → Video dosyalarının olduğu klasörü seç
+      
+   📁 Raporlar nereye kaydedilsin?
+      → Raporların gideceği klasörü seç
+
+3. "İleri" butonuna tıkla
+
+4. Ayarları olduğu gibi bırak (sonra değiştirirsin)
+
+5. "Tamamla" butonuna tıkla
+
+6. HAZIR! 🎉
+
+================================================================================
+⚙️ AYARLAR NE ANLAMA GELİYOR?
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ HER KAÇ KAREDE BİR BAKSIN                                          │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  3-5:  Her 3-5 karede bir bakar → ÇOK DETAYLI ama yavaş
+  5-8:  Her 5-8 karede bir bakar → NORMAL (önerilen) ⭐
+  10+:  Her 10+ karede bir bakar → HIZLI ama az detay
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ HASSASLIK                                                           │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  500-800:   ÇOK HASSAS → Ufak hareketleri bile yakalar
+  1200:      NORMAL (önerilen) → Büyük hareketleri yakalar ⭐
+  2000+:     AZ HASSAS → Sadece çok büyük hareketleri yakalar
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ AYNI OLAYI KAÇ SANİYEDE BİR ANLAT                                  │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  5-8:   Sık sık rapor verir (çok bildirim)
+  8-10:  NORMAL (önerilen) ⭐
+  15+:   Seyrek rapor verir (az bildirim)
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ AYNI ANDA KAÇ İŞ YAPSIN                                            │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  1:  Yavaş ama güvenli (bilgisayar yavaşsa)
+  2:  NORMAL (önerilen) ⭐
+  3-4: Hızlı ama bilgisayar yorulur
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ HER OLAYDAN ÇOKLU RESİM ALSIN MI?                                  │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  KAPALI:  Her olaydan 1 resim → HIZLI
+  AÇIK:    Her olaydan 3-10 resim → DETAYLI ama yavaş ⭐
+
+================================================================================
+💡 HAZIR AYAR ÖNERİLERİ
+================================================================================
+
+🏃 HIZLI TARA (Bilgisayar yavaşsa)
+┌──────────────────────────────┬────────┐
+│ Her kaç karede bir           │ 10     │
+│ Hassaslık                    │ 2000   │
+│ Tekrar süresi                │ 15 sn  │
+│ Çoklu resim                  │ KAPALI │
+│ Aynı anda iş                 │ 1      │
+└──────────────────────────────┴────────┘
+
+⚖️ NORMAL (ÇOK İYİ) ⭐
+┌──────────────────────────────┬────────┐
+│ Her kaç karede bir           │ 5      │
+│ Hassaslık                    │ 1200   │
+│ Tekrar süresi                │ 8 sn   │
+│ Çoklu resim                  │ AÇIK   │
+│ Aynı anda iş                 │ 2      │
+└──────────────────────────────┴────────┘
+
+🔍 ÇOK DETAYLI (Güçlü bilgisayar gerekli)
+┌──────────────────────────────┬────────┐
+│ Her kaç karede bir           │ 3      │
+│ Hassaslık                    │ 800    │
+│ Tekrar süresi                │ 5 sn   │
+│ Çoklu resim                  │ AÇIK   │
+│ Aynı anda iş                 │ 4      │
+└──────────────────────────────┴────────┘
+
+================================================================================
+🎬 VİDEOLARI NASIL TARARIM?
+================================================================================
+
+1. Video dosyalarını "Videolarım" klasörüne kopyala
+   (Desteklenen: MP4, AVI, MOV, MKV)
+
+2. Komut penceresini aç (CMD veya PowerShell)
+
+3. Bu komutu yaz:
+   
+   cd C:\...\smart_camera
+   python analyze_video_v2.py
+
+4. Program otomatik olarak tüm videoları tarar
+
+5. Raporlar "Raporlarım" klasöründe olacak
+
+================================================================================
+📁 RAPORLAR NEREDE?
+================================================================================
+
+Raporlar klasöründe:
+
+📂 Raporlarım/
+├── 📄 rapor_video1.md          (Türkçe rapor - oku!)
+├── 📄 rapor_video2.md
+├── 📂 frames/                   (Resimler burada)
+│   ├── 🖼️ olay1_resim1.jpg
+│   ├── 🖼️ olay1_resim2.jpg
+│   └── 🖼️ olay2_resim1.jpg
+└── 📂 json/                     (Bilgisayar için veri)
+    └── rapor_video1.json
+
+================================================================================
+❌ SORUN GİDERME
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ Program açılmıyor                                                   │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  ✓ Masaüstündeki ikona sağ tık → "Yönetici olarak çalıştır"
+  ✓ Python yüklü mü kontrol et
+  ✓ START_HERE.bat dosyasını dene
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ Klasör seçilemiyor                                                  │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  ✓ Klasör yolunda Türkçe karakter olmasın
+  ✓ Klasörün mevcut olduğundan emin ol
+  ✓ Yönetici olarak çalıştır
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ Çok yavaş çalışıyor                                                 │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  ✓ "Aynı anda iş" sayısını 1'e düşür
+  ✓ "Her kaç karede bir" sayısını 10'a çıkar
+  ✓ "Çoklu resim"i KAPAT
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ Çok fazla olay yakalıyor (gereksiz bildirimler)                   │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  ✓ "Hassaslık" sayısını BÜYÜT (örn: 1200 → 2000)
+  ✓ "Tekrar süresi"ni UZAT (örn: 8 → 15 saniye)
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ Hiç olay yakalamıyor                                               │
+└─────────────────────────────────────────────────────────────────────┘
+  
+  ✓ "Hassaslık" sayısını KÜÇÜLT (örn: 1200 → 800)
+  ✓ "Her kaç karede bir" sayısını KÜÇÜLT (örn: 10 → 5)
+
+================================================================================
+📞 YARDIM
+================================================================================
+
+Daha detaylı bilgi için:
+
+📄 QUICKSTART.md        → Hızlı başlangıç (3 adım)
+📄 KULLANIM_REHBERI.txt → Biraz daha detaylı
+📄 SETUP_GUIDE.md       → Tam detaylı kılavuz
+📄 README.md            → Her şey burada
+
+================================================================================
+🎯 ÖZET
+================================================================================
+
+1. "Smart Camera Setup" ikonuna çift tıkla
+2. Klasörleri seç
+3. Ayarları olduğu gibi bırak
+4. Tamamla
+5. Videoları taramaya başla!
+
+Kolay gelsin! 🎉
+
+================================================================================

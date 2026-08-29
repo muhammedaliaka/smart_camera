@@ -13,6 +13,7 @@ Akıllı Kamera Arşiv Analiz Sistemi v2.0
 import cv2
 import ollama
 import os
+import sys
 import time
 import json
 import threading
@@ -212,6 +213,18 @@ def prompt_roi_selection(video_path: Path) -> Optional[Tuple[int, int, int, int]
                 return ROISelector().select(frame, video_name)
         return None
 
+    # Otomatik mod kontrolü (GUI'den çağrıldıysa)
+    auto_mode = os.environ.get('AUTO_MODE') == '1' or '--auto' in sys.argv
+    
+    if auto_mode:
+        # Otomatik mod - kayıtlı ROI varsa kullan, yoksa tam ekran
+        if saved_roi:
+            print(f"[OTOMATIK] Kayıtlı ROI kullanılıyor: {saved_roi}")
+            return saved_roi
+        else:
+            print("[OTOMATIK] Tam ekran modu (ROI yok)")
+            return None
+    
     print("\n" + "=" * 40)
     print("  ALAN SECIMI (ROI)")
     print("=" * 40)
@@ -501,27 +514,32 @@ class AIWorker(threading.Thread):
                     options['timeout'] = timeout
                     options['num_ctx'] = CFG["multi_frame"]["num_ctx"]
 
-                response = ollama.chat(
-                    model=self.model_name,
-                    messages=[{
-                        'role': 'user',
-                        'content': prompt,
-                        'images': temp_paths
-                    }],
-                    options=options
-                )
-                result = response['message']['content']
-                result = clean_ai_result(result)
-                
-                # Confidence hesapla (sonuc kalitesine gore)
-                confidence = 85.0  # Base confidence
-                if len(result) > 50:
-                    confidence += 5  # Detayli sonuc
-                if 'olay:' in result.lower() or 'kisi:' in result.lower():
-                    confidence += 5  # Yapili format
-                if frame_count > 3:
-                    confidence = min(99, confidence + 3)  # Cok kare = daha iyi
-                confidence = min(99, confidence)  # Max 99%
+                # Ollama kontrolü - model None ise basit mod
+                if self.model_name is None:
+                    result = "Hareket tespit edildi. (AI analizi yapılmadı - Ollama kurulmadı)"
+                    confidence = 0.0
+                else:
+                    response = ollama.chat(
+                        model=self.model_name,
+                        messages=[{
+                            'role': 'user',
+                            'content': prompt,
+                            'images': temp_paths
+                        }],
+                        options=options
+                    )
+                    result = response['message']['content']
+                    result = clean_ai_result(result)
+                    
+                    # Confidence hesapla (sonuc kalitesine gore)
+                    confidence = 85.0  # Base confidence
+                    if len(result) > 50:
+                        confidence += 5  # Detayli sonuc
+                    if 'olay:' in result.lower() or 'kisi:' in result.lower():
+                        confidence += 5  # Yapili format
+                    if frame_count > 3:
+                        confidence = min(99, confidence + 3)  # Cok kare = daha iyi
+                    confidence = min(99, confidence)  # Max 99%
 
                 self.result_queue.put({
                     'status': 'success',
@@ -1077,20 +1095,30 @@ def main():
     # Ollama kontrolü
     try:
         ollama.list()
+        print("✓ Ollama bağlantısı başarılı")
     except Exception as e:
-        print(f"[HATA] Ollama bağlantısı kurulamadı: {e}")
-        print("        Ollama'nın çalıştığından emin olun: 'ollama serve' komutunu çalıştırın")
-        return
-
-    # Model kontrolü
-    model = CFG["ai"]["model_name"]
-    try:
-        ollama.show(model)
-        print(f"[BİLGİ] Model hazır: {model}")
-    except Exception as e:
-        print(f"[UYARI] {model} bulunamadı!")
-        print(f"        Komut: ollama pull {model}")
-        return
+        print(f"\n{'='*60}")
+        print(f"[UYARI] Ollama bağlantısı kurulamadı: {e}")
+        print(f"{'='*60}")
+        print("Ollama olmadan devam ediliyor (Basit Mod)...")
+        print("Not: AI açıklamaları olmayacak, sadece hareket tespiti yapılacak.")
+        print(f"{'='*60}\n")
+        print("Ollama kurmak için: OLLAMA_KURULUM.bat dosyasını çalıştırın")
+        print(f"{'='*60}\n")
+        
+        # Basit mod - Ollama olmadan çalış
+        CFG["ai"]["model_name"] = None
+        model = None
+    else:
+        # Model kontrolü
+        model = CFG["ai"]["model_name"]
+        try:
+            ollama.show(model)
+            print(f"[BİLGİ] Model hazır: {model}")
+        except Exception as e:
+            print(f"[UYARI] {model} bulunamadı!")
+            print(f"        Komut: ollama pull {model}")
+            return
 
     # Klasörleri hazırla
     try:
