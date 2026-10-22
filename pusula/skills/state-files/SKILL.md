@@ -20,7 +20,7 @@ Context is volatile; files are not. Anything important goes to disk.
 
 ## Plan rules
 - Fill every template heading. An empty heading says "none"; it is never deleted.
-- **No code.** No code blocks, no pasted file bodies, no function bodies. Describe interfaces and behavior in plain words; name files, paths and commands. Code in a plan drifts and misleads other agents.
+- **Code is a claim.** Careless code in a plan misleads the agents that follow it. Allowed only when prose cannot pin the point, and only with `Why code:` and `Checked:` lines above the block (see `writing-plans`). Otherwise describe interfaces and behavior in plain words and name files, paths and commands.
 - Each step has an acceptance check you can run or see.
 - Big decisions get two options and a reason for the choice.
 - Do a short pre-mortem: ten ways this fails, each with a prevention.

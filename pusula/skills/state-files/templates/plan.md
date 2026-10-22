@@ -32,7 +32,7 @@ Write one line per heading: decision, risk, unknown. Write "none" if empty.
 Only for big decisions: option A, option B, choice and why.
 
 ## Steps
-Each step: what, where (names and paths, no code), acceptance check.
+Each step: what, where (names and paths), acceptance check. Code only when prose cannot pin the point, with `Why code:` and `Checked:` lines above the block.
 1. <step> | check: <how we know it is done>
 
 ## Risks (pre-mortem)

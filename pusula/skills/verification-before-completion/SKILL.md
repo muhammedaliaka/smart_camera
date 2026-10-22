@@ -21,7 +21,7 @@ Adapted from obra/superpowers `verification-before-completion`, MIT. Added: stat
 |---|---|---|
 | Builds | Build command, exit 0, warnings read | Linter passed (linter is not a compiler) |
 | Tests pass | Full project suite output, 0 failures | A previous run, "should pass" |
-| Static analysis clean | The repo's analyzers and linters, 0 new findings (compiler warnings, type check, Semgrep or equivalent if installed) | Only your own tests |
+| Static analysis clean | The repo's analyzers and linters, 0 new findings (compiler warnings, type check) plus `python .pusula/checks/pusula_check.py` when present: file size, labelled plan code, hardcoded values (Semgrep), secrets (gitleaks), dependencies (osv-scanner) | Only your own tests |
 | Bug fixed | Original symptom retested and gone | "Code changed" |
 | Regression test is real | Red-green: pass, revert the fix, must fail, restore, pass | One pass |
 | UI is right | Screenshot of the running UI judged line by line against the written acceptance criteria | "Looks fine", code review only |
@@ -33,6 +33,6 @@ Adapted from obra/superpowers `verification-before-completion`, MIT. Added: stat
 - Your own tests prove only what you thought of. Also run the checks you did not write: compiler, analyzers, existing suite.
 - UI needs written acceptance criteria before you build. No criteria: ask, or propose them and get a yes. A UI you never saw is not verified.
 - Report every failure the run shows, by name, even one you did not cause.
-- A check you could not run is reported as "not checked", with the reason.
+- A check you could not run is reported as "not checked", with the reason. The Pusula checks print `[NOT CHECKED]` for a missing tool and exit 2; never read that as a pass.
 - Wording like "should", "probably", "seems", or cheering before the run means you skipped the gate.
 - Verify before commit, push, PR, the next task, and before handing work to another agent.

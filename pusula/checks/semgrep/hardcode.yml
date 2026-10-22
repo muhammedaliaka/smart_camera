@@ -1,0 +1,45 @@
+rules:
+  - id: pusula-hardcoded-hex-color
+    languages: [generic]
+    severity: WARNING
+    message: Hardcoded color. Move it to a design token or theme file.
+    pattern-regex: '#[0-9a-fA-F]{6}\b'
+    paths:
+      include: ["*.cs", "*.ts", "*.tsx", "*.js", "*.jsx", "*.dart", "*.rs", "*.vue", "*.svelte", "*.kt", "*.swift"]
+      exclude: ["*token*", "*theme*", "*palette*", "*colors*", "*test*", "*.d.ts"]
+
+  - id: pusula-hardcoded-url
+    languages: [generic]
+    severity: WARNING
+    message: Hardcoded URL. Move it to config.
+    pattern-regex: 'https?://[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+'
+    paths:
+      include: ["*.cs", "*.ts", "*.tsx", "*.js", "*.jsx", "*.dart", "*.rs", "*.vue", "*.svelte", "*.kt", "*.swift", "*.py"]
+      exclude: ["*test*", "*config*", "*.d.ts"]
+
+  - id: pusula-hardcoded-ip
+    languages: [generic]
+    severity: WARNING
+    message: Hardcoded IP address. Move it to config.
+    pattern-regex: '\b(?!127\.0\.0\.1\b|0\.0\.0\.0\b)[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\b'
+    paths:
+      include: ["*.cs", "*.ts", "*.tsx", "*.js", "*.jsx", "*.dart", "*.rs", "*.py", "*.kt", "*.swift"]
+      exclude: ["*test*", "*config*"]
+
+  - id: pusula-unity-literal-color
+    languages: [generic]
+    severity: WARNING
+    message: Color built from number literals. Read it from a theme asset or design token.
+    pattern-regex: 'new\s+Color(32)?\s*\(\s*[0-9]'
+    paths:
+      include: ["*.cs"]
+      exclude: ["*Test*", "*Editor*"]
+
+  - id: pusula-unity-literal-ui-text
+    languages: [generic]
+    severity: WARNING
+    message: Hardcoded UI text. Use a localization key.
+    pattern-regex: '\.text\s*=\s*"[^"]+"'
+    paths:
+      include: ["*.cs"]
+      exclude: ["*Test*", "*Editor*"]

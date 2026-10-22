@@ -12,7 +12,7 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 |---|---|---|
 | Unclear or large request | `interview-me`, then `state-files` | The user said an explicit yes to the restated intent |
 | Research, library choice, migration | `source-driven-development`, `state-files` (findings), `doubt-driven-development` on the conclusion | Every claim has an official link or "unverified"; mapping table complete for migrations |
-| Plan for big or irreversible work | `state-files` (plan template), `doubt-driven-development` | Plan has no code, every step has a check, the user approved |
+| Plan for big or irreversible work | `writing-plans`, `state-files` (plan template), `doubt-driven-development` | Every step has a check, every code block is labelled, the user approved |
 | Build a feature | `ponytail`, `test-driven-development` (logic only), `verification-before-completion` | Evidence table satisfied |
 | UI work | `interview-me` (reference and criteria), `ponytail`, `verification-before-completion` | Screenshot judged against written criteria |
 | Bug or failing test | `systematic-debugging`, `test-driven-development`, `verification-before-completion` | Root cause named, regression test red-green proven |
@@ -24,7 +24,7 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 ## Conflicts already settled
 - No subagents, even where a skill suggests them. `doubt-driven-development` reviews in the same session.
 - TDD applies to logic, not to UI layout or config.
-- Plans hold no code, even test code: name the test and the command instead.
+- Plan code is allowed only when reasoned and labelled (`Why code:`, `Checked:`); the implementer verifies it before use.
 - Short answers do not replace plain Turkish explanations.
 - Skills never lower a rule in AGENTS.md.
 

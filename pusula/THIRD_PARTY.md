@@ -9,7 +9,7 @@ Rule: trusted source, permissive license, read in full, commit pinned, trimmed, 
 | --- | --- | --- | --- |
 | [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) `2c606141936f1eeef17fa3043a72095b4765b9c2` | MIT (stated in README and SKILL.md; no LICENSE file; no copyright holder named) | `AGENTS.md` (Work, items 1, 3, 4) | Condensed the four principles into three short rules. Guidance derives from Andrej Karpathy's public remarks; the repo is not written or endorsed by him. |
 | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) `09c434ab73ca43761c5d8b0c5d341926c2fba710` | MIT, (c) 2026 DietrichGebert | `skills/ponytail`, `AGENTS.md` (Work, item 2) | Trimmed. Dropped lite and ultra levels. Added a build-or-buy rung (library only if integration costs under half of writing it) and a plain-Turkish closing note. |
-| [obra/superpowers](https://github.com/obra/superpowers) `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b` | MIT, (c) 2025 Jesse Vincent | `skills/verification-before-completion`, `skills/systematic-debugging`, `skills/test-driven-development` | Rewritten shorter. Verification: added static-analysis gate, UI screenshot gate, own-tests rule. TDD: limited to logic; "delete the code" replaced by a red-green proof. Debugging: dropped the extra technique files and example scripts. |
+| [obra/superpowers](https://github.com/obra/superpowers) `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b` | MIT, (c) 2025 Jesse Vincent | `skills/verification-before-completion`, `skills/systematic-debugging`, `skills/test-driven-development`, `skills/writing-plans` | Rewritten shorter. Verification: added static-analysis gate, UI screenshot gate, own-tests rule. TDD: limited to logic; "delete the code" replaced by a red-green proof. Debugging: dropped the extra technique files and example scripts. Plans: kept file map, task sizing, step contents, self-review; added labelled-code rule (`Why code:`, `Checked:`), Pusula coverage list, no subagent handoff. |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) `aeac41d4d005999432bb7312f7ff06383a91d59d` | MIT, (c) 2025 Addy Osmani | `skills/source-driven-development`, `skills/interview-me`, `skills/doubt-driven-development`, `skills/security-and-hardening`, `skills/code-simplification` | Rewritten shorter. Source-driven: added migration mapping table and "not official" label. Interview: added question cap, UI reference rule, grants rule. Doubt: no subagent, same-session pass, cross-model only with user approval. Security: condensed, reference files left out, tool pointers added. Simplification: language examples dropped. |
 | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) `de837a95cc845b6341a6cbfd902a89a8190c568e` | MIT, (c) 2026 Ahmad Adi | `skills/state-files` | Idea only (plan, findings and progress files on disk). New short text and templates. Its hooks, scripts, gated mode and parallel-plan machinery are not used. |
 
@@ -17,7 +17,7 @@ Rule: trusted source, permissive license, read in full, commit pinned, trimmed, 
 
 - superpowers `using-superpowers`: "even a 1% chance, call a skill" starts process on trivial tasks.
 - superpowers subagent skills (`subagent-driven-development`, `dispatching-parallel-agents`): single-model rule.
-- superpowers `writing-plans`: bodies stay out of the plan (good), but it writes test code into the plan; Pusula plans hold no code.
+- superpowers `writing-plans` handoff: it offers subagent-driven execution; Pusula implements in the same session. The rest of the skill is adapted.
 - planning-with-files hooks: shell hooks run on every tool call and inject plan text; too heavy and too much surface for the first install.
 - caveman: telegraph style conflicts with plain explanations; its own page says "be concise" gives most of the gain.
 
@@ -37,6 +37,15 @@ Upstream originals, as published:
 
 Pusula versions: all 11 skills score 0, no findings, after rewording three phrases. A zero score is not a proof of safety; the scan is static, it never runs a skill.
 Not scanned: planning-with-files (not vendored).
+
+## Tools run by checks/ (not copied into the repo)
+
+| Tool | Version tested | License | Used for |
+| --- | --- | --- | --- |
+| [Semgrep](https://github.com/semgrep/semgrep) | 1.182.1 | not verified here | hardcoded-value rules; the rules in `checks/semgrep/hardcode.yml` are Pusula's own, registry rules are not used |
+| [gitleaks](https://github.com/gitleaks/gitleaks) | 8.30.1 | MIT | secret scan |
+| [osv-scanner](https://github.com/google/osv-scanner) | 2.7.0 | Apache-2.0 | dependency vulnerabilities (sends package names and versions to osv.dev) |
+| [SkillSpector](https://github.com/NVIDIA/SkillSpector) | 2.12.0 | Apache-2.0 | scan of third-party skills before install |
 
 ## License text
 
