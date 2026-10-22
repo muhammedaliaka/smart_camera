@@ -1,6 +1,6 @@
 # Pusula
 
-Claude Code ve Codex için küçük, ucuz bir kural ve skill seti. Dalga 0: sadece metin dosyaları. Betik, hook, MCP ve alt ajan yok.
+Claude Code ve Codex için küçük, ucuz bir kural ve skill seti. Dalga 0 ve 1: metin dosyaları ve tek bir kontrol betiği. Hook, MCP ve alt ajan yok.
 
 Plan belgesi: [Pusula — Tek Parça Yapay Zekâ Sistemi Planı](https://claude.ai/artifact/VuALtMD8uSuob6w3W3S7jU).
 
@@ -10,7 +10,9 @@ Plan belgesi: [Pusula — Tek Parça Yapay Zekâ Sistemi Planı](https://claude.
 | --- | --- | --- |
 | `AGENTS.md` | Çekirdek kurallar. Her oturumda yüklenir. | ~780 jeton |
 | `CLAUDE.md` | Tek satır: `@AGENTS.md`. Claude Code için köprü. | ~0 |
-| `skills/*/SKILL.md` | 12 skill. Sadece ad ve açıklaması yüklenir; gövdesi gerekince. | ~600 jeton (12 açıklama) |
+| `skills/*/SKILL.md` | 14 skill. Sadece ad ve açıklaması yüklenir; gövdesi gerekince. | ~650 jeton (14 açıklama) |
+| `skills/plain-explain` | Sade Türkçe anlatım biçimi ve kesinlik etiketleri (Doğruladım, Resmi kaynak, Tahmin, Bakmadım). | gerekince |
+| `skills/ui-acceptance` | Arayüz için kabul ölçütlerini koddan önce yazdırır, sonra ekran görüntüsünü satır satır yargılatır. | gerekince |
 | `skills/recipes` | Yönlendirici: hangi iş için hangi skill, hangi sırayla. | gerekince |
 | `skills/state-files` | Plan, bulgu ve ilerleme dosyası şablonları, izin defteri, devir notu. | gerekince |
 | `checks/` | Mekanik kontroller: `pusula_check.py` (dosya boyutu, etiketli plan kodu, sabit değer, sır, bağımlılık açığı) ve ayar dosyası. Jeton harcamaz. | 0 |
@@ -22,7 +24,7 @@ Plan belgesi: [Pusula — Tek Parça Yapay Zekâ Sistemi Planı](https://claude.
 2. Claude Code için `skills/` klasörünün içeriğini `.claude/skills/` altına kopyala.
 3. Codex için aynı içeriği `.agents/skills/` altına kopyala.
 4. Kontroller için `checks/` klasörünü projeye `.pusula/checks/` olarak kopyala. Python 3 yeter. Araçları kur: `uv tool install semgrep`, gitleaks ve osv-scanner (kurulum sayfaları `checks/config.json` içinde). Eksik araç `[NOT CHECKED]` yazar, geçti sayılmaz.
-5. Yeni oturum aç. Skill listesinde 12 skill'in göründüğünü kontrol et.
+5. Yeni oturum aç. Skill listesinde 14 skill'in göründüğünü kontrol et.
 
 Kullanıcı düzeyinde kurmak istersen: Claude Code `~/.claude/skills/`, Codex `~/.agents/skills/`.
 

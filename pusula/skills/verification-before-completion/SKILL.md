@@ -24,7 +24,7 @@ Adapted from obra/superpowers `verification-before-completion`, MIT. Added: stat
 | Static analysis clean | The repo's analyzers and linters, 0 new findings (compiler warnings, type check) plus `python .pusula/checks/pusula_check.py` when present: file size, labelled plan code, hardcoded values (Semgrep), secrets (gitleaks), dependencies (osv-scanner) | Only your own tests |
 | Bug fixed | Original symptom retested and gone | "Code changed" |
 | Regression test is real | Red-green: pass, revert the fix, must fail, restore, pass | One pass |
-| UI is right | Screenshot of the running UI judged line by line against the written acceptance criteria | "Looks fine", code review only |
+| UI is right | Screenshot of the running UI judged line by line against the written acceptance criteria (`ui-acceptance`) | "Looks fine", code review only |
 | Requirements met | Line-by-line checklist against the request | Tests pass |
 | Other agent finished | VCS diff shows the change | The agent said success |
 | Secrets safe | Scan of the diff for keys and tokens (gitleaks or grep) | "I did not add any" |

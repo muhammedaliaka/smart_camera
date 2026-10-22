@@ -35,7 +35,7 @@ Upstream originals, as published:
 | systematic-debugging | 77 | DO_NOT_INSTALL | example script about keychains and identities, plus bundled helper files; benign teaching content, not vendored |
 | security-and-hardening | 100 | DO_NOT_INSTALL | 21 findings: links to unscanned reference files, secret-handling and cloud-metadata examples, one phrase; benign teaching content, reference files not vendored |
 
-Pusula versions: all 11 skills score 0, no findings, after rewording three phrases. A zero score is not a proof of safety; the scan is static, it never runs a skill.
+Pusula versions: all 14 skills score 0, no findings, after rewording four phrases. A zero score is not a proof of safety; the scan is static, it never runs a skill. `plain-explain` and `ui-acceptance` are Pusula's own text, no third-party source. `verification-before-completion` still reads CAUTION with score 0: the scan could not resolve the path of `pusula_check.py`, which is a file the project adds at install time.
 Not scanned: planning-with-files (not vendored).
 
 ## Tools run by checks/ (not copied into the repo)
