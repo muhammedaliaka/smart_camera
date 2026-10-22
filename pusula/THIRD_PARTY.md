@@ -1,0 +1,49 @@
+# THIRD_PARTY
+
+Every third-party idea or text in Pusula is listed here. Checked on 2026-10-22.
+Rule: trusted source, permissive license, read in full, commit pinned, trimmed, scanned, recorded.
+
+## Sources
+
+| Source (pinned commit) | License | Pusula file | What we did |
+| --- | --- | --- | --- |
+| [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) `2c606141936f1eeef17fa3043a72095b4765b9c2` | MIT (stated in README and SKILL.md; no LICENSE file; no copyright holder named) | `AGENTS.md` (Work, items 1, 3, 4) | Condensed the four principles into three short rules. Guidance derives from Andrej Karpathy's public remarks; the repo is not written or endorsed by him. |
+| [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) `09c434ab73ca43761c5d8b0c5d341926c2fba710` | MIT, (c) 2026 DietrichGebert | `skills/ponytail`, `AGENTS.md` (Work, item 2) | Trimmed. Dropped lite and ultra levels. Added a build-or-buy rung (library only if integration costs under half of writing it) and a plain-Turkish closing note. |
+| [obra/superpowers](https://github.com/obra/superpowers) `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b` | MIT, (c) 2025 Jesse Vincent | `skills/verification-before-completion`, `skills/systematic-debugging`, `skills/test-driven-development` | Rewritten shorter. Verification: added static-analysis gate, UI screenshot gate, own-tests rule. TDD: limited to logic; "delete the code" replaced by a red-green proof. Debugging: dropped the extra technique files and example scripts. |
+| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) `aeac41d4d005999432bb7312f7ff06383a91d59d` | MIT, (c) 2025 Addy Osmani | `skills/source-driven-development`, `skills/interview-me`, `skills/doubt-driven-development`, `skills/security-and-hardening`, `skills/code-simplification` | Rewritten shorter. Source-driven: added migration mapping table and "not official" label. Interview: added question cap, UI reference rule, grants rule. Doubt: no subagent, same-session pass, cross-model only with user approval. Security: condensed, reference files left out, tool pointers added. Simplification: language examples dropped. |
+| [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) `de837a95cc845b6341a6cbfd902a89a8190c568e` | MIT, (c) 2026 Ahmad Adi | `skills/state-files` | Idea only (plan, findings and progress files on disk). New short text and templates. Its hooks, scripts, gated mode and parallel-plan machinery are not used. |
+
+## Not taken, and why
+
+- superpowers `using-superpowers`: "even a 1% chance, call a skill" starts process on trivial tasks.
+- superpowers subagent skills (`subagent-driven-development`, `dispatching-parallel-agents`): single-model rule.
+- superpowers `writing-plans`: bodies stay out of the plan (good), but it writes test code into the plan; Pusula plans hold no code.
+- planning-with-files hooks: shell hooks run on every tool call and inject plan text; too heavy and too much surface for the first install.
+- caveman: telegraph style conflicts with plain explanations; its own page says "be concise" gives most of the gain.
+
+## Scan results (NVIDIA SkillSpector v2.12.0, static mode, `--no-llm`)
+
+Upstream originals, as published:
+
+| Skill | Score | Verdict | Note |
+| --- | --- | --- | --- |
+| ponytail, interview-me, karpathy-guidelines, test-driven-development | 0 | SAFE | no findings |
+| verification-before-completion | 7 | SAFE | 1 medium |
+| code-simplification | 21 | CAUTION | the word "Remove" in a table read as self-modification; false positive |
+| doubt-driven-development | 22 | CAUTION | example command that calls another model's CLI |
+| source-driven-development | 47 | CAUTION | the skill quotes a prompt-injection phrase as something to ignore; false positive |
+| systematic-debugging | 77 | DO_NOT_INSTALL | example script about keychains and identities, plus bundled helper files; benign teaching content, not vendored |
+| security-and-hardening | 100 | DO_NOT_INSTALL | 21 findings: links to unscanned reference files, secret-handling and cloud-metadata examples, one phrase; benign teaching content, reference files not vendored |
+
+Pusula versions: all 11 skills score 0, no findings, after rewording three phrases. A zero score is not a proof of safety; the scan is static, it never runs a skill.
+Not scanned: planning-with-files (not vendored).
+
+## License text
+
+The MIT License applies to each source above, with the copyright holders named in the table.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
