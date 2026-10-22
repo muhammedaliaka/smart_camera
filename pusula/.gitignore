@@ -1,0 +1,3 @@
+# The repo-level .gitignore ignores these names; Pusula needs both.
+!config.json
+!test_*.py

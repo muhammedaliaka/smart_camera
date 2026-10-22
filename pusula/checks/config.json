@@ -1,0 +1,26 @@
+{
+  "max_file_bytes": 30720,
+  "size_ignore": [
+    "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.ico", "*.pdf", "*.zip",
+    "*.mp3", "*.wav", "*.ogg", "*.mp4", "*.fbx", "*.glb", "*.gltf", "*.blend",
+    "*.unity", "*.prefab", "*.asset", "*.mat", "*.meta", "*.anim", "*.controller",
+    "*.lock", "package-lock.json", "pnpm-lock.yaml", "*.min.js", "*.min.css", "*.map"
+  ],
+  "plan_globs": [".pusula/*/plan.md", "docs/plans/*.md"],
+  "plan_required_labels": ["Why code:", "Checked:"],
+  "plan_checked_pattern": "https?://|ran in this session|UNVERIFIED",
+  "plan_label_lookback_lines": 4,
+  "plan_coverage_headings": [
+    "User experience", "Correctness and logic", "Security", "Cost and tokens",
+    "Source quality", "Tests", "License and legal", "Scope and time",
+    "Maintenance", "Tool compatibility", "Delivery", "Conflicts"
+  ],
+  "fail_severities": ["ERROR", "WARNING"],
+  "max_findings_per_check": 10,
+  "semgrep_rules": "semgrep/hardcode.yml",
+  "tools": {
+    "semgrep": {"exe": "semgrep", "install": "uv tool install semgrep"},
+    "gitleaks": {"exe": "gitleaks", "install": "see https://github.com/gitleaks/gitleaks#installing"},
+    "osv": {"exe": "osv-scanner", "install": "see https://github.com/google/osv-scanner#installation"}
+  }
+}
