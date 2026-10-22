@@ -8,14 +8,15 @@ Plan belgesi: [Pusula — Tek Parça Yapay Zekâ Sistemi Planı](https://claude.
 
 | Yol | Ne işe yarar | Başlangıç yükü |
 | --- | --- | --- |
-| `AGENTS.md` | Çekirdek kurallar. Her oturumda yüklenir. | ~780 jeton |
+| `AGENTS.md` | Çekirdek kurallar. Her oturumda yüklenir. | ~880 jeton (tahmin) |
 | `CLAUDE.md` | Tek satır: `@AGENTS.md`. Claude Code için köprü. | ~0 |
-| `skills/*/SKILL.md` | 14 skill. Sadece ad ve açıklaması yüklenir; gövdesi gerekince. | ~650 jeton (14 açıklama) |
+| `skills/*/SKILL.md` | 14 skill. Sadece ad ve açıklaması yüklenir; gövdesi gerekince. | ~700 jeton (14 açıklama, tahmin) |
 | `skills/plain-explain` | Sade Türkçe anlatım biçimi ve kesinlik etiketleri (Doğruladım, Resmi kaynak, Tahmin, Bakmadım). | gerekince |
 | `skills/ui-acceptance` | Arayüz için kabul ölçütlerini koddan önce yazdırır, sonra ekran görüntüsünü satır satır yargılatır. | gerekince |
 | `skills/recipes` | Yönlendirici: hangi iş için hangi skill, hangi sırayla. | gerekince |
 | `skills/state-files` | Plan, bulgu ve ilerleme dosyası şablonları, izin defteri, devir notu. | gerekince |
-| `checks/` | Mekanik kontroller: `pusula_check.py` (dosya boyutu, etiketli plan kodu, sabit değer, sır, bağımlılık açığı) ve ayar dosyası. Jeton harcamaz. | 0 |
+| `checks/` | Mekanik kontroller: `pusula_check.py` (dosya boyutu, etiketli plan kodu ve dolu Coverage satırları, sabit değer, sır, bağımlılık açığı) ve ayar dosyası. Jeton harcamaz. | 0 |
+| `tests/` | T1–T7 test tablosu (`TESTS.md`), kontrol betiğinin birim testleri (`test_checks.py`), T6 ve T7 ölçüm betiği (`measure.py`), hedefler (`targets.json`). Projeye kopyalanmaz. | 0 |
 | `THIRD_PARTY.md` | Kaynak, lisans, sabitlenen commit, yaptığımız değişiklik, tarama sonucu. | okunmaz |
 
 ## Kurulum (projeye)
@@ -39,6 +40,10 @@ Kullanıcı düzeyinde kurmak istersen: Claude Code `~/.claude/skills/`, Codex `
 ## Kontrolleri çalıştırma
 
 `python .pusula/checks/pusula_check.py` tüm projeyi tarar. `--staged` sadece git'e eklenen değişiklikleri tarar. `--only size,plan,hardcode,secrets,deps` seçili kontrolleri çalıştırır. Çıkış kodu: 0 temiz, 1 bulgu var, 2 temiz ama bir kontrol çalışmadı. Eşikler ve dosya desenleri `checks/config.json` içinde; sabit değer kuralları `checks/semgrep/hardcode.yml` içinde (şimdilik C#, TS/JS, Dart, Rust, Python için genel kurallar).
+
+## Testler
+
+`python -m unittest discover -s tests` kontrol betiğini sınar (bağımlılık testi için `PUSULA_TEST_NET=1`). `python tests/measure.py load` başlangıç yükünü tahmin eder (karakter ÷ 4); gerçek rakam için host'ta `/context` bak. T1–T7 tablosu `tests/TESTS.md` içinde.
 
 ## Sıradaki
 

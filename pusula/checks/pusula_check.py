@@ -47,11 +47,30 @@ def check_size(files, root, cfg):
             if not matches(f, cfg["size_ignore"]) and (root / f).stat().st_size > limit]
 
 
+def check_coverage(f, lines, cfg):
+    start = next((i for i, ln in enumerate(lines) if ln.strip().lower() == "## coverage"), None)
+    if start is None:
+        return [f"{f}: no '## Coverage' section"]
+    body = []
+    for ln in lines[start + 1:]:
+        if ln.startswith("## "):
+            break
+        body.append(ln)
+    found = []
+    for name in cfg["plan_coverage_headings"]:
+        line = next((ln for ln in body if re.match(rf"^\s*[-*]\s*{re.escape(name)}\s*:", ln, re.IGNORECASE)), None)
+        text = line.split(":", 1)[1].strip() if line else ""
+        if not text or text.startswith("<"):
+            found.append(f"{f}: Coverage line '{name}' is {'missing' if line is None else 'empty'}")
+    return found
+
+
 def check_plan(files, root, cfg):
     found = []
     labels, pattern = cfg["plan_required_labels"], re.compile(cfg["plan_checked_pattern"])
     for f in (f for f in files if matches(f, cfg["plan_globs"])):
         lines = (root / f).read_text(encoding="utf-8", errors="replace").splitlines()
+        found += check_coverage(f, lines, cfg)
         fence = None
         for i, line in enumerate(lines):
             m = FENCE.match(line)
