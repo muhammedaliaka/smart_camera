@@ -39,11 +39,11 @@ Kullanıcı düzeyinde kurmak istersen: Claude Code `~/.claude/skills/`, Codex `
 
 ## Kontrolleri çalıştırma
 
-`python .pusula/checks/pusula_check.py` tüm projeyi tarar. `--staged` sadece git'e eklenen değişiklikleri tarar. `--only size,plan,hardcode,secrets,deps` seçili kontrolleri çalıştırır. Çıkış kodu: 0 temiz, 1 bulgu var, 2 temiz ama bir kontrol çalışmadı. Eşikler ve dosya desenleri `checks/config.json` içinde; sabit değer kuralları `checks/semgrep/hardcode.yml` içinde (şimdilik C#, TS/JS, Dart, Rust, Python için genel kurallar).
+`python .pusula/checks/pusula_check.py` tüm projeyi tarar. `--staged` sadece git'e eklenen değişiklikleri tarar. `--only size,plan,hardcode,secrets,sast,deps` seçili kontrolleri çalıştırır (`sast`: Semgrep'in hazır güvenlik kuralları, `p/security-audit`; kuralları internetten indirir, internet yoksa "NOT CHECKED" der). Çıkış kodu: 0 temiz, 1 bulgu var, 2 temiz ama bir kontrol çalışmadı. Eşikler ve dosya desenleri `checks/config.json` içinde; sabit değer kuralları `checks/semgrep/hardcode.yml` içinde (şimdilik C#, TS/JS, Dart, Rust, Python için genel kurallar).
 
 ## Testler
 
-`python -m unittest discover -s tests` kontrol betiğini sınar (bağımlılık testi için `PUSULA_TEST_NET=1`). `python tests/measure.py load` başlangıç yükünü tahmin eder (karakter ÷ 4); gerçek rakam için host'ta `/context` bak. T1–T7 tablosu `tests/TESTS.md` içinde.
+`python -m unittest discover -s tests` kontrol betiğini sınar (bağımlılık ve `sast` testleri için `PUSULA_TEST_NET=1`). `python tests/measure.py load` başlangıç yükünü tahmin eder (karakter ÷ 4); gerçek rakam için host'ta `/context` bak. T1–T14 tablosu `tests/TESTS.md` içinde; ilk A/B sonuçları `tests/results/2026-10-22.md` içinde.
 
 ## Sıradaki
 

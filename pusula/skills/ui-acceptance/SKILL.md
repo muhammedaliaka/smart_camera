@@ -22,10 +22,10 @@ Get the reference first (screenshot, game or site). No reference yet: your first
 Criteria written after the screenshot do not count. If you change one later, say so and why.
 
 ## 2. Build
-Tokens and keys only (AGENTS.md code rules). Build the empty, loading and error states with the default state, not later.
+Tokens and keys only (AGENTS.md code rules). Build the empty, loading and error states with the default state, not later. A static web page must open by double-click (`file://`): classic `<script>` tags, no ES modules, no `fetch()` of local files, unless the project already runs a server.
 
 ## 3. Look at it
-Run the real UI. Capture one screenshot per target size and per listed state. Describe what the image shows, not what the code intends.
+Run the real UI. Capture one screenshot per target size and per listed state, saved under `.pusula/<task>/shots/` (not a shared temp folder). Describe what the image shows, not what the code intends.
 
 Find a capture path before you give up, in this order:
 1. The project's own script or test config (package.json scripts, a Playwright config).

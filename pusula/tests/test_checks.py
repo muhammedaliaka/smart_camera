@@ -2,7 +2,7 @@
 
 Run: python -m unittest discover -s tests
 Tests that need an external tool are skipped when it is not on PATH.
-The dependency test needs network access and runs only when PUSULA_TEST_NET=1.
+The dependency and sast tests need network access and run only when PUSULA_TEST_NET=1.
 """
 import hashlib
 import json
@@ -148,9 +148,9 @@ class NotChecked(CheckCase):
 
     def test_missing_tools_exit_2_and_say_so(self):
         self.write("a.txt", "x")
-        out = self.run_check("size,hardcode,secrets,deps", env=self.bare_env())
+        out = self.run_check("size,hardcode,secrets,sast,deps", env=self.bare_env())
         self.assertEqual(out.returncode, 2, out.stdout)
-        for name in ("hardcode", "secrets", "deps"):
+        for name in ("hardcode", "secrets", "sast", "deps"):
             self.assertIn(f"[NOT CHECKED] {name}", out.stdout)
         self.assertIn("INCOMPLETE", out.stdout)
 
@@ -171,6 +171,36 @@ class HardcodeCheck(CheckCase):
         for rule in ("pusula-unity-literal-ui-text", "pusula-unity-literal-color", "pusula-hardcoded-hex-color"):
             self.assertIn(rule, out.stdout)
         self.assertNotIn("clean.ts", out.stdout)
+
+
+@unittest.skipUnless(shutil.which(CFG["tools"]["semgrep"]["exe"]), "semgrep not installed")
+class SastCheck(CheckCase):
+    def config_with(self, **change):
+        path = self.root.parent / (self.root.name + "-cfg.json")
+        path.write_text(json.dumps({**CFG, **change}), encoding="utf-8")
+        self.addCleanup(path.unlink, True)
+        return ["--config", str(path)]
+
+    def test_broken_ruleset_is_not_checked_not_clean(self):
+        self.write("app.py", "x = 1\n")
+        out = self.run_check("sast", extra=self.config_with(semgrep_rulesets=[str(self.root / "missing.yml")]))
+        self.assertEqual(out.returncode, 2, out.stdout)
+        self.assertIn("[NOT CHECKED] sast: semgrep did not run", out.stdout)
+
+    def test_broken_hardcode_rules_are_not_checked_not_clean(self):
+        self.write("app.py", "x = 1\n")
+        out = self.run_check("hardcode", extra=self.config_with(semgrep_rules="semgrep/missing.yml"))
+        self.assertEqual(out.returncode, 2, out.stdout)
+        self.assertIn("[NOT CHECKED] hardcode", out.stdout)
+
+    @unittest.skipUnless(os.environ.get("PUSULA_TEST_NET") == "1", "set PUSULA_TEST_NET=1 (rules are downloaded)")
+    def test_flags_shell_true_and_passes_clean_code(self):
+        self.write("bad.py", "import subprocess\n\n\ndef ping(host):\n    return subprocess.run('ping ' + host, shell=True)\n")
+        self.write("good.py", "import subprocess\n\n\ndef ping(host):\n    return subprocess.run(['ping', host])\n")
+        out = self.run_check("sast")
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("bad.py", out.stdout)
+        self.assertNotIn("good.py", out.stdout)
 
 
 @unittest.skipUnless(shutil.which(CFG["tools"]["gitleaks"]["exe"]), "gitleaks not installed")
@@ -210,6 +240,17 @@ class StagedMode(CheckCase):
         self.assertEqual(out.returncode, 1, out.stdout)
         self.assertIn("staged_big.txt", out.stdout)
         self.assertNotIn("loose_big.txt", out.stdout)
+
+    def test_project_in_a_subfolder_of_the_repo(self):
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        sub = self.root / "game"
+        sub.mkdir()
+        (sub / "big.txt").write_text("a" * (CFG["max_file_bytes"] + 1), encoding="utf-8")
+        subprocess.run(["git", "add", "game/big.txt"], cwd=self.root, check=True)
+        cmd = [sys.executable, str(SCRIPT), "--root", str(sub), "--only", "size", "--staged"]
+        out = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("big.txt", out.stdout)
 
 
 if __name__ == "__main__":

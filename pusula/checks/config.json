@@ -18,6 +18,7 @@
   "fail_severities": ["ERROR", "WARNING"],
   "max_findings_per_check": 10,
   "semgrep_rules": "semgrep/hardcode.yml",
+  "semgrep_rulesets": ["p/security-audit"],
   "tools": {
     "semgrep": {"exe": "semgrep", "install": "uv tool install semgrep"},
     "gitleaks": {"exe": "gitleaks", "install": "see https://github.com/gitleaks/gitleaks#installing"},

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Pusula mechanical checks. Standard library only; thresholds live in config.json.
 
-Usage: python pusula_check.py [--root DIR] [--staged] [--only size,plan,hardcode,secrets,deps] [--config FILE]
+Usage: python pusula_check.py [--root DIR] [--staged] [--only size,plan,hardcode,secrets,sast,deps] [--config FILE]
 Exit codes: 0 clean, 1 findings, 2 clean but some check did not run.
---staged limits size, plan, hardcode and secrets to staged changes; deps always scans the whole project.
+--staged limits size, plan, hardcode, secrets and sast to staged changes; deps always scans the whole project.
+sast and deps need network (rule download, advisory database); offline they report [NOT CHECKED].
 """
 import argparse
 import fnmatch
@@ -16,7 +17,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "deps"]
+ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "sast", "deps"]
 FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
 
 
@@ -31,7 +32,7 @@ def run(cmd, cwd):
 
 def list_files(root, staged):
     if staged:
-        out = run(["git", "diff", "--cached", "--name-only", "--diff-filter=ACM"], root)
+        out = run(["git", "diff", "--cached", "--name-only", "--relative", "--diff-filter=ACM"], root)
     else:
         out = run(["git", "ls-files", "-co", "--exclude-standard"], root)
     if out.returncode == 0:
@@ -94,18 +95,35 @@ def tool_path(cfg, key):
     return shutil.which(cfg["tools"][key]["exe"])
 
 
-def check_hardcode(files, root, cfg, staged):
+class Unavailable(Exception):
+    """A check could not run for a reason other than a missing tool."""
+
+
+def semgrep_scan(files, root, cfg, staged, configs):
     exe = tool_path(cfg, "semgrep")
     if not exe:
         return None
     targets = files if staged else ["."]
     if not targets:
         return []
-    cmd = [exe, "scan", "--config", str(HERE / cfg["semgrep_rules"]), "--metrics=off",
-           "--disable-version-check", "--quiet", "--json"] + targets
-    data = json.loads(run(cmd, root).stdout or "{}")
-    return [f"{r['path']}:{r['start']['line']}: {r['extra']['message']} [{r['check_id'].split('.')[-1]}]"
+    cmd = [exe, "scan", "--metrics=off", "--disable-version-check", "--quiet", "--json"]
+    for conf in configs:
+        cmd += ["--config", conf]
+    proc = run(cmd + targets, root)
+    data = json.loads(proc.stdout) if proc.stdout.strip().startswith("{") else {}
+    if proc.returncode != 0 or not data:
+        why = next((e["message"] for e in data.get("errors", [])), proc.stderr.strip())
+        raise Unavailable(f"semgrep did not run (exit {proc.returncode}): {why[:160]}")
+    return [f"{r['path']}:{r['start']['line']}: {r['extra']['message'].splitlines()[0][:140]} [{r['check_id'].split('.')[-1]}]"
             for r in data.get("results", []) if r["extra"]["severity"] in cfg["fail_severities"]]
+
+
+def check_hardcode(files, root, cfg, staged):
+    return semgrep_scan(files, root, cfg, staged, [str(HERE / cfg["semgrep_rules"])])
+
+
+def check_sast(files, root, cfg, staged):
+    return semgrep_scan(files, root, cfg, staged, cfg["semgrep_rulesets"])
 
 
 def check_secrets(root, cfg, staged):
@@ -151,13 +169,19 @@ def main():
         "plan": lambda: check_plan(files, root, cfg),
         "hardcode": lambda: check_hardcode(files, root, cfg, args.staged),
         "secrets": lambda: check_secrets(root, cfg, args.staged),
+        "sast": lambda: check_sast(files, root, cfg, args.staged),
         "deps": lambda: check_deps(root, cfg),
     }
-    tool_for = {"hardcode": "semgrep", "secrets": "gitleaks", "deps": "osv"}
+    tool_for = {"hardcode": "semgrep", "secrets": "gitleaks", "sast": "semgrep", "deps": "osv"}
     total, skipped = 0, 0
     print(f"PUSULA CHECKS root={root} files={len(files)} staged={args.staged}")
     for name in chosen:
-        found = results[name]()
+        try:
+            found = results[name]()
+        except Unavailable as why:
+            skipped += 1
+            print(f"[NOT CHECKED] {name}: {why}")
+            continue
         if found is None:
             skipped += 1
             print(f"[NOT CHECKED] {name}: {tool_for[name]} not installed ({cfg['tools'][tool_for[name]]['install']})")
