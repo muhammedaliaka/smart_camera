@@ -8,13 +8,15 @@ license: MIT
 
 Pusula's own skill. The user reads on a phone and is not a programmer. Success: after reading, they can decide or act, and no word is left unexplained.
 
-## Shape (always this order)
+## Shape (reports, results, errors, plans, decisions)
 1. **Sonuç.** The result in one sentence. Lead with it.
 2. **Ne demek.** What it means for them, in at most three short sentences.
 3. **Neden.** The reason, only if it helps them decide.
 4. **Sıradaki.** The next step, or the decision you need, with your recommendation first.
 
 Detail goes after, only if asked, or into a file (`state-files`). Do not retell what the user said or end with a summary of your own message.
+
+For "explain this idea" asks, skip the four headings. Give one short paragraph per idea: what it is in one sentence, one everyday example, and where it shows up in the user's project if it does.
 
 ## Word rules
 - Sentences under 20 words, one idea each, active voice.
@@ -25,7 +27,7 @@ Detail goes after, only if asked, or into a file (`state-files`). Do not retell 
 - No filler or cheering ("harika", "tabii ki"). No stacked hedges ("belki", "sanırım", "gibi görünüyor") in one sentence.
 
 ## Certainty labels
-Mark each claim that is not obvious:
+Label only claims about this project, a version, a number, or something the user will act on. Do not label general explanations or obvious facts. The labels:
 - **Doğruladım:** I ran or saw it in this session (name the evidence).
 - **Resmi kaynak:** the vendor's page says it (give the link).
 - **Tahmin:** my guess. Say what would confirm it.

@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 """Pusula measurements for tests T6 and T7. Standard library only; targets live in targets.json.
 
-  python tests/measure.py load [--root DIR]      start-up load estimate (T7)
+  python tests/measure.py real [--root DIR]      real start-up load: headless A/B against a bare project (T7)
+  python tests/measure.py load [--root DIR]      start-up load estimate, no model call (T7)
   python tests/measure.py sentences FILE         sentence length of a saved reply (T6)
-Token figures are estimates (characters / chars_per_token). Read /context in the host for the real number.
+`load` is an estimate (characters / chars_per_token) and runs about 1.5 times low; `real` asks the model once per variant.
 Exit codes: 0 within targets, 1 over a target.
 """
 import argparse
 import json
+import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -52,6 +57,42 @@ def load(root):
     return failed
 
 
+REMOTE_PREFIXES = ("CCR_", "CLAUDE_CODE_REMOTE", "CLAUDE_CODE_CCR", "CLAUDE_CODE_USE_CCR",
+                   "CLAUDE_CODE_POST_FOR_SESSION", "CLAUDE_SESSION_INGRESS")
+REMOTE_NAMES = ("CLAUDE_CODE_SESSION_ID", "CLAUDE_CODE_CHILD_SESSION")
+
+
+def first_request_tokens(project):
+    """Input tokens of one headless turn in `project`. Remote-session variables are dropped so the run stays separate."""
+    env = {k: v for k, v in os.environ.items() if not k.startswith(REMOTE_PREFIXES) and k not in REMOTE_NAMES}
+    out = subprocess.run(["claude", "-p", "Reply with one word: ok", "--output-format", "json", "--max-turns", "1",
+                          "--no-session-persistence"], cwd=project, env=env, capture_output=True, text=True, check=True)
+    usage = json.loads(out.stdout)["usage"]
+    return sum(usage[k] for k in ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"))
+
+
+def real(root):
+    if not shutil.which("claude"):
+        print("claude CLI not found; use `load` for an estimate")
+        return True
+    with tempfile.TemporaryDirectory() as tmp:
+        bare, pusula = Path(tmp, "bare"), Path(tmp, "pusula")
+        for project in (bare, pusula):
+            project.mkdir()
+            (project / "README.md").write_text("# scratch\n", encoding="utf-8")
+        for name in ("AGENTS.md", "CLAUDE.md"):
+            shutil.copy(root / name, pusula / name)
+        shutil.copytree(root / "skills", pusula / ".claude" / "skills")
+        for project in (bare, pusula):  # a clean git tree: uncommitted changes would add tokens of their own
+            subprocess.run(["git", "init", "-q"], cwd=project, check=True)
+            subprocess.run(["git", "add", "-A"], cwd=project, check=True)
+            subprocess.run(["git", "-c", "user.email=m@example.org", "-c", "user.name=m", "commit", "-q", "-m", "x"], cwd=project, check=True)
+        base, with_pusula = first_request_tokens(bare), first_request_tokens(pusula)
+    delta, limit = with_pusula - base, TARGETS["real_start_tokens_max"]
+    print(f"bare project: {base} tokens; with Pusula: {with_pusula} tokens; Pusula adds {delta} (target {limit}){' OVER' if delta > limit else ''}")
+    return delta > limit
+
+
 def sentences(path):
     text = re.sub(r"`{3,}.*?`{3,}", " ", Path(path).read_text(encoding="utf-8"), flags=re.DOTALL)
     text = re.sub(r"`[^`]*`|[*_#>|]|\[([^\]]*)\]\([^)]*\)", lambda m: m.group(1) or " ", text)
@@ -69,9 +110,13 @@ def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("load").add_argument("--root", default=str(HERE.parent))
+    sub.add_parser("real").add_argument("--root", default=str(HERE.parent))
     sub.add_parser("sentences").add_argument("file")
     args = ap.parse_args()
-    failed = load(Path(args.root).resolve()) if args.cmd == "load" else sentences(args.file)
+    if args.cmd == "sentences":
+        failed = sentences(args.file)
+    else:
+        failed = {"load": load, "real": real}[args.cmd](Path(args.root).resolve())
     sys.exit(1 if failed else 0)
 
 

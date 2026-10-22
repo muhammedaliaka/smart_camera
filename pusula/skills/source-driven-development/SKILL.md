@@ -25,7 +25,7 @@ Every framework-specific decision rests on official documentation. Do not work f
 Your training memory is not a source. Official docs can be stale: check the page date and the version it targets.
 
 ## Migrations (old stack to new stack)
-Before any plan, build a mapping table in `findings.md`: old concept | new concept | official page | gap or breaking change. Cover build, runtime, permissions or security model, IPC, storage, packaging, updates, signing, logging, testing. Every row needs an official link or the word "unverified". Unmapped old features are listed as risks.
+Before any plan, list the old APIs the code actually uses (search imports and calls). Build the mapping table in `findings.md` for those only: old concept | new concept | official page | gap or breaking change. Add rows for areas the code touches, such as build, runtime, security model, IPC, storage, packaging. Features the project does not use get one line, not rows, and no page fetches. Every row needs an official link or the word "unverified". Unmapped old features are listed as risks.
 
 ## Conflicts
 - Docs vs existing project code: show both options and ask. Do not pick silently.

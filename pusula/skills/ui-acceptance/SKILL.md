@@ -9,7 +9,7 @@ license: MIT
 Pusula's own skill. A UI nobody looked at is not verified. "Looks fine" and a code read are not evidence.
 
 ## 1. Criteria before code
-Get the reference first (`interview-me`: screenshot, game or site). Write the criteria to the task's plan or `.pusula/<task>/ui-criteria.md` before you build. Each one is numbered and can be judged from a screenshot or a measurement. Use the groups that apply; do not pad.
+Get the reference first (screenshot, game or site). No reference yet: your first reply asks for it and offers two described options; build nothing until it comes. If the user said they cannot answer now, pick one option, write it down as an assumption, and go on. Write the criteria to the task's plan or `.pusula/<task>/ui-criteria.md` before you build. Each one is numbered and can be judged from a screenshot or a measurement. Use the groups that apply; do not pad.
 
 | Group | What to pin down |
 |---|---|
@@ -25,7 +25,14 @@ Criteria written after the screenshot do not count. If you change one later, say
 Tokens and keys only (AGENTS.md code rules). Build the empty, loading and error states with the default state, not later.
 
 ## 3. Look at it
-Run the real UI. Capture one screenshot per target size and per listed state, with the capture path the project already has. No path, or no display: say "UI not seen" and ask; do not invent a pipeline. Describe what the image shows, not what the code intends.
+Run the real UI. Capture one screenshot per target size and per listed state. Describe what the image shows, not what the code intends.
+
+Find a capture path before you give up, in this order:
+1. The project's own script or test config (package.json scripts, a Playwright config).
+2. A headless browser already on the machine: read `$PLAYWRIGHT_BROWSERS_PATH`, run `npx --no-install playwright --version`, look for a `chromium` or `chrome` binary. If Playwright answers, `npx --no-install playwright screenshot --viewport-size=360,800 file:///abs/path/index.html out.png` captures a static page.
+3. Installing a browser or package needs the user's approval (`.pusula/permissions.md`).
+
+Nothing works: say "UI not seen", list what you tried, and ask.
 
 Judge line by line:
 

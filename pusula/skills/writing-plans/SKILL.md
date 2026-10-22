@@ -44,4 +44,4 @@ Plan code is a claim. It is allowed only when prose cannot pin the point, and on
 6. Code labels: every code block has both `Why code:` and `Checked:`.
 
 ## Handoff
-Link the plan, ask the user whether it captures what they want, and wait for a yes. Then implement in this session, one task at a time, no subagents, with `verification-before-completion` after each task.
+Link the plan, ask the user whether it captures what they want, and wait for a yes. If the user said they cannot answer now, do not ask a list of questions: put open questions under Unknowns, say the plan waits for their yes, and stop. Then implement in this session, one task at a time, no subagents, with `verification-before-completion` after each task.
