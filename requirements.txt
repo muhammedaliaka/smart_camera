@@ -3,3 +3,7 @@ opencv-contrib-python>=4.8.0
 numpy>=1.24.0
 tqdm>=4.65.0
 ollama>=0.1.0
+# Minimum versions of indirect packages (pulled in by ollama) that fix known vulnerabilities
+anyio>=4.14.2
+certifi>=2026.10.19
+idna>=3.15
