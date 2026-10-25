@@ -78,6 +78,24 @@ Canaries are the literal values, function names, bindings and declared propertie
 
 Not tested (do not claim): Wakaru (REA's source recovery needs it), a model reading the output, VM obfuscation (Pro), Unity IL2CPP, .NET, Flutter.
 
+## Experiment 2026-10-25 (2): behavior cloning from one recorded session (REA `environment-build`)
+Setup: a toy game API we wrote, in two variants. `open`: `/api/balance` (unit table), `/api/players` and `/api/players/p1`, no login. `guarded`: login gives a token, every call needs it, answers are scoped to the logged-in player and minimal (own data, one unit), the match write is validated (422 on bad input). One Chromium session per variant recorded with Playwright `recordHar` (6 to 12 requests), then `rea environment-build <har> <dir> --name x`, REA 6.8.0, no model.
+
+| Variant | Tools | Reads | Bundle `evidence.json` holds | Write `post_matches` |
+| --- | --- | --- | --- | --- |
+| open | 3 | 3 answered from state | the whole balance table (archer, knight, catapult) and every player's name and rank | withheld, `no-state-target` (recording never read the match list) |
+| guarded | 3 | 2 from state, 1 replayed | only the recorder's own data and the one unit read; no other unit, no other player; the login token (REA warns `credential-named-members`) | withheld, `no-state-target` |
+| guarded, fuller recording (list, create, read by id, list, twice) | 5 | 3 from state, 2 replayed | same scope | withheld, `no-observation` |
+
+What this shows (toy API only):
+- A recording copies exactly what the recorder was served. On the open API six requests copied the whole table and all players.
+- Login, per-player scoping and minimal answers limit a copy to what the attacker's own account is shown. REA cannot answer entities nobody recorded.
+- Server-only rules stay private: the 422 validation was never seen in any recording, so no clone of it exists.
+- Not defended: whatever a legitimate client must receive (own data, the units it uses). An attacker with one account can record more; rate limits and bot checks are the control for that, and were not tested.
+- REA did not serve the write in my two recordings. I did not tune the recording further; do not claim writes are safe.
+- The bundle ships recorded tokens in `evidence.json`. Never commit a HAR or a bundle.
+- Setup traps, not defenses: Playwright wrote `-1` for some HAR timings and REA's validator rejected the file ("must be >= 0"), so the copy was fixed to 0; page code that never reads a response body leaves no body in the HAR and REA reports `body-unusable`.
+
 ## Notes
 - npm package `rea-agents` 6.8.0: maintainer morluto, repository `morluto/rea`, no `preinstall`, `install` or `postinstall` hook (`prepare` and `prepack` are build-time). 49 MB unpacked, 2,398 files. Installed once with `npm install --ignore-scripts` into a scratch folder. A second CLI call was blocked by the permission classifier ("code from external"); not worked around; the user then granted the CLI on our own fixtures only (logged in `.pusula/permissions.md`). Results are in the Experiment section.
 - The pasted report is correct that REA reads JS files, source maps and network traffic, that VM-style protection is the strongest of the JS options, that nothing stops runtime or behavior observation, and that its table of expected effects is an estimate. It is JS-only, though: REA's own list covers Unity IL2CPP, .NET and Flutter, which are this user's likely stacks.

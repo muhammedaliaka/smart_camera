@@ -22,6 +22,7 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 | No installed skill fits, or "is there a skill for X" | `find-skills` | Candidates reported; nothing installed without a scan and an explicit yes |
 | Refactor or cleanup | `code-simplification`, `verification-before-completion` | Existing tests pass unchanged |
 | Input, auth, secrets, uploads, dependencies, LLM features | `security-and-hardening`, `verification-before-completion` | Security check list in the skill passes |
+| Release build, or protecting a shipped build from copying (REA) | `security-and-hardening` (read `anti-copy.md`), `verification-before-completion` | `pusula_check.py --only shield` clean; `shield_report.py` inside the budgets; claims limited to its table |
 | Any claim of "done" | `verification-before-completion` | Always last |
 | Long session | `state-files` (handoff note) | Note written, one page |
 
