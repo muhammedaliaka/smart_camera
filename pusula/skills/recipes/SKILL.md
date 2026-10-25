@@ -17,6 +17,7 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 | UI work | `interview-me` (reference), `ui-acceptance` (criteria first, screenshots last), `ponytail`, `verification-before-completion` | Every criterion row is pass or reported "not seen" |
 | Explain, report or answer "I do not understand" | `plain-explain` | Result first, certainty labels on non-obvious claims |
 | Bug or failing test | `systematic-debugging`, `test-driven-development`, `verification-before-completion` | Root cause named, regression test red-green proven |
+| New module, folder, layer or dependency; change touching 6+ files; naming, complexity, logs | `architecture-standard`, then `ponytail`, `verification-before-completion` | Architecture file current, `pusula_check.py` clean |
 | Refactor or cleanup | `code-simplification`, `verification-before-completion` | Existing tests pass unchanged |
 | Input, auth, secrets, uploads, dependencies, LLM features | `security-and-hardening`, `verification-before-completion` | Security check list in the skill passes |
 | Any claim of "done" | `verification-before-completion` | Always last |

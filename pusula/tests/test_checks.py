@@ -43,6 +43,12 @@ class CheckCase(unittest.TestCase):
         path.write_text(text if size is None else "a" * size, encoding="utf-8")
         return path
 
+    def config_with(self, **change):
+        path = self.root.parent / (self.root.name + "-cfg.json")
+        path.write_text(json.dumps({**CFG, **change}), encoding="utf-8")
+        self.addCleanup(path.unlink, True)
+        return ["--config", str(path)]
+
     def run_check(self, only, extra=(), env=None):
         cmd = [sys.executable, str(SCRIPT), "--root", str(self.root), "--only", only, *extra]
         return subprocess.run(cmd, capture_output=True, text=True, env=env, check=False)
@@ -148,9 +154,9 @@ class NotChecked(CheckCase):
 
     def test_missing_tools_exit_2_and_say_so(self):
         self.write("a.txt", "x")
-        out = self.run_check("size,hardcode,secrets,sast,deps", env=self.bare_env())
+        out = self.run_check("size,hardcode,secrets,sast,complexity,deps", env=self.bare_env())
         self.assertEqual(out.returncode, 2, out.stdout)
-        for name in ("hardcode", "secrets", "sast", "deps"):
+        for name in ("hardcode", "secrets", "sast", "complexity", "deps"):
             self.assertIn(f"[NOT CHECKED] {name}", out.stdout)
         self.assertIn("INCOMPLETE", out.stdout)
 
@@ -175,12 +181,6 @@ class HardcodeCheck(CheckCase):
 
 @unittest.skipUnless(shutil.which(CFG["tools"]["semgrep"]["exe"]), "semgrep not installed")
 class SastCheck(CheckCase):
-    def config_with(self, **change):
-        path = self.root.parent / (self.root.name + "-cfg.json")
-        path.write_text(json.dumps({**CFG, **change}), encoding="utf-8")
-        self.addCleanup(path.unlink, True)
-        return ["--config", str(path)]
-
     def test_broken_ruleset_is_not_checked_not_clean(self):
         self.write("app.py", "x = 1\n")
         out = self.run_check("sast", extra=self.config_with(semgrep_rulesets=[str(self.root / "missing.yml")]))
@@ -227,6 +227,91 @@ class DepsCheck(CheckCase):
         out = self.run_check("deps")
         self.assertEqual(out.returncode, 1, out.stdout)
         self.assertIn("lodash", out.stdout)
+
+
+@unittest.skipUnless(shutil.which(CFG["tools"]["lizard"]["exe"]), "lizard not installed")
+class ComplexityCheck(CheckCase):
+    BRANCHY = "def f(a):\n    r = 0\n" + "".join(f"    if a == {n}:\n        r += {n}\n" for n in range(12)) + "    return r\n"
+
+    def test_flags_a_complex_function_and_passes_a_simple_one(self):
+        self.write("app/branchy.py", self.BRANCHY)
+        self.write("app/simple.py", "def f(a):\n    return a + 1\n")
+        self.write("node_modules/dep/branchy.py", self.BRANCHY)
+        out = self.run_check("complexity")
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("branchy.py", out.stdout)
+        self.assertNotIn("simple.py", out.stdout)
+        self.assertNotIn("node_modules", out.stdout)
+
+    def test_limit_comes_from_config(self):
+        self.write("app/branchy.py", self.BRANCHY)
+        out = self.run_check("complexity", extra=self.config_with(complexity_max=50))
+        self.assertEqual(out.returncode, 0, out.stdout)
+
+
+class ArchitectureCheck(CheckCase):
+    FILE = ".pusula/architecture.md"
+
+    def table(self, *paths):
+        rows = "".join(f"| `{p}` | does a thing | fail fast | - |\n" for p in paths)
+        return f"# Architecture\n\n## Layers\n| L0 | x | L1 |\n\n## Modules\n| Path | Does what | If it fails | Budget |\n|---|---|---|---|\n{rows}\n## Dependencies\n| `not/a/module` | why |\n"
+
+    def test_no_file_means_nothing_to_check(self):
+        out = self.run_check("architecture")
+        self.assertEqual(out.returncode, 0, out.stdout)
+
+    def test_existing_paths_and_globs_pass(self):
+        self.write("src/inventory/a.py", "x = 1\n")
+        self.write(self.FILE, self.table("src/inventory", "src/*/a.py"))
+        out = self.run_check("architecture")
+        self.assertEqual(out.returncode, 0, out.stdout)
+
+    def test_missing_path_fails(self):
+        self.write(self.FILE, self.table("src/gone"))
+        out = self.run_check("architecture")
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("src/gone", out.stdout)
+
+    def test_placeholder_and_absolute_paths_fail(self):
+        self.write(self.FILE, self.table("<module path>", "/etc"))
+        out = self.run_check("architecture")
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("placeholder", out.stdout)
+        self.assertIn("relative", out.stdout)
+
+    def test_missing_modules_section_fails(self):
+        self.write(self.FILE, "# Architecture\n\n## Layers\n")
+        out = self.run_check("architecture")
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("## Modules", out.stdout)
+
+    def test_only_the_modules_section_is_read(self):
+        self.write("src/ok.py", "x = 1\n")
+        self.write(self.FILE, self.table("src/ok.py"))
+        out = self.run_check("architecture")
+        self.assertNotIn("not/a/module", out.stdout)
+
+
+@unittest.skipUnless(shutil.which(CFG["tools"]["osv"]["exe"]), "osv-scanner not installed")
+class LicensesCheck(CheckCase):
+    LOCK = json.dumps({"name": "demo", "lockfileVersion": 3, "packages": {
+        "": {"name": "demo", "dependencies": {"left-pad": "1.3.0"}},
+        "node_modules/left-pad": {"version": "1.3.0",
+                                  "resolved": "https://registry.npmjs.org/left-pad/-/left-pad-1.3.0.tgz"}}})
+
+    def test_off_until_an_allowlist_is_configured(self):
+        self.write("package-lock.json", self.LOCK)
+        out = self.run_check("licenses")
+        self.assertEqual(out.returncode, 0, out.stdout)
+
+    @unittest.skipUnless(os.environ.get("PUSULA_TEST_NET") == "1", "set PUSULA_TEST_NET=1 (licenses come from the network)")
+    def test_flags_a_license_outside_the_allowlist(self):
+        self.write("package-lock.json", self.LOCK)
+        out = self.run_check("licenses", extra=self.config_with(license_allow=["MIT"]))
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("left-pad", out.stdout)
+        ok = self.run_check("licenses", extra=self.config_with(license_allow=["MIT", "WTFPL"]))
+        self.assertEqual(ok.returncode, 0, ok.stdout)
 
 
 @unittest.skipUnless(shutil.which("git"), "git not installed")

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Pusula mechanical checks. Standard library only; thresholds live in config.json.
 
-Usage: python pusula_check.py [--root DIR] [--staged] [--only size,plan,hardcode,secrets,sast,deps] [--config FILE]
+Usage: python pusula_check.py [--root DIR] [--staged] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps,licenses] [--config FILE]
 Exit codes: 0 clean, 1 findings, 2 clean but some check did not run.
---staged limits size, plan, hardcode, secrets and sast to staged changes; deps always scans the whole project.
-sast and deps need network (rule download, advisory database); offline they report [NOT CHECKED].
+--staged limits size, plan, hardcode, secrets, sast and complexity to staged changes; architecture, deps and licenses always look at the whole project.
+sast, deps and licenses need network (rule download, advisory database); offline they report [NOT CHECKED].
+licenses is off until config.json lists license_allow.
 """
 import argparse
 import fnmatch
@@ -17,8 +18,9 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "sast", "deps"]
+ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "sast", "complexity", "architecture", "deps", "licenses"]
 FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
+TOOL_FOR = {"hardcode": "semgrep", "secrets": "gitleaks", "sast": "semgrep", "complexity": "lizard", "deps": "osv", "licenses": "osv"}
 
 
 def matches(path, patterns):
@@ -48,46 +50,65 @@ def check_size(files, root, cfg):
             if not matches(f, cfg["size_ignore"]) and (root / f).stat().st_size > limit]
 
 
-def check_coverage(f, lines, cfg):
-    start = next((i for i, ln in enumerate(lines) if ln.strip().lower() == "## coverage"), None)
+def section(lines, title):
+    """Lines under '## <title>' up to the next '## ' heading, or None when the heading is missing."""
+    start = next((i for i, ln in enumerate(lines) if ln.strip().lower() == f"## {title}"), None)
     if start is None:
+        return None
+    end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("## ")), len(lines))
+    return lines[start + 1:end]
+
+
+def coverage_problem(body, name):
+    line = next((ln for ln in body if re.match(rf"^\s*[-*]\s*{re.escape(name)}\s*:", ln, re.IGNORECASE)), None)
+    text = line.split(":", 1)[1].strip() if line else ""
+    if text and not text.startswith("<"):
+        return None
+    return "missing" if line is None else "empty"
+
+
+def check_coverage(f, lines, cfg):
+    body = section(lines, "coverage")
+    if body is None:
         return [f"{f}: no '## Coverage' section"]
-    body = []
-    for ln in lines[start + 1:]:
-        if ln.startswith("## "):
-            break
-        body.append(ln)
+    problems = ((name, coverage_problem(body, name)) for name in cfg["plan_coverage_headings"])
+    return [f"{f}: Coverage line '{name}' is {why}" for name, why in problems if why]
+
+
+def fence_openings(lines):
+    """Index of each line that opens a fenced code block; a longer or different fence inside one does not open another."""
+    fence = None
+    for i, line in enumerate(lines):
+        m = FENCE.match(line)
+        if not m:
+            continue
+        if fence is None:
+            fence = m.group(1)
+            yield i
+        elif m.group(1)[0] == fence[0] and len(m.group(1)) >= len(fence):
+            fence = None
+
+
+def label_problems(f, lines, i, cfg):
+    pattern = re.compile(cfg["plan_checked_pattern"])
+    above = [re.sub(r"^[\s>*_-]+", "", ln).replace("*", "") for ln in lines[max(0, i - cfg["plan_label_lookback_lines"]):i]]
     found = []
-    for name in cfg["plan_coverage_headings"]:
-        line = next((ln for ln in body if re.match(rf"^\s*[-*]\s*{re.escape(name)}\s*:", ln, re.IGNORECASE)), None)
-        text = line.split(":", 1)[1].strip() if line else ""
-        if not text or text.startswith("<"):
-            found.append(f"{f}: Coverage line '{name}' is {'missing' if line is None else 'empty'}")
+    for label in cfg["plan_required_labels"]:
+        hit = next((ln for ln in above if ln.startswith(label)), None)
+        if hit is None:
+            found.append(f"{f}:{i + 1}: code block without '{label}' above it")
+        elif label.startswith("Checked") and not pattern.search(hit[len(label):]):
+            found.append(f"{f}:{i + 1}: 'Checked:' needs a URL, 'ran in this session' or 'UNVERIFIED'")
     return found
 
 
 def check_plan(files, root, cfg):
     found = []
-    labels, pattern = cfg["plan_required_labels"], re.compile(cfg["plan_checked_pattern"])
     for f in (f for f in files if matches(f, cfg["plan_globs"])):
         lines = (root / f).read_text(encoding="utf-8", errors="replace").splitlines()
         found += check_coverage(f, lines, cfg)
-        fence = None
-        for i, line in enumerate(lines):
-            m = FENCE.match(line)
-            if not m:
-                continue
-            if fence:
-                fence = None if m.group(1)[0] == fence[0] and len(m.group(1)) >= len(fence) else fence
-                continue
-            fence = m.group(1)
-            above = [re.sub(r"^[\s>*_-]+", "", ln).replace("*", "") for ln in lines[max(0, i - cfg["plan_label_lookback_lines"]):i]]
-            for label in labels:
-                hit = next((ln for ln in above if ln.startswith(label)), None)
-                if hit is None:
-                    found.append(f"{f}:{i + 1}: code block without '{label}' above it")
-                elif label.startswith("Checked") and not pattern.search(hit[len(label):]):
-                    found.append(f"{f}:{i + 1}: 'Checked:' needs a URL, 'ran in this session' or 'UNVERIFIED'")
+        for i in fence_openings(lines):
+            found += label_problems(f, lines, i, cfg)
     return found
 
 
@@ -99,6 +120,15 @@ class Unavailable(Exception):
     """A check could not run for a reason other than a missing tool."""
 
 
+def semgrep_findings(proc, cfg):
+    data = json.loads(proc.stdout) if proc.stdout.strip().startswith("{") else {}
+    if proc.returncode != 0 or not data:
+        why = next((e["message"] for e in data.get("errors", [])), proc.stderr.strip())
+        raise Unavailable(f"semgrep did not run (exit {proc.returncode}): {why[:160]}")
+    return [f"{r['path']}:{r['start']['line']}: {r['extra']['message'].splitlines()[0][:140]} [{r['check_id'].split('.')[-1]}]"
+            for r in data.get("results", []) if r["extra"]["severity"] in cfg["fail_severities"]]
+
+
 def semgrep_scan(files, root, cfg, staged, configs):
     exe = tool_path(cfg, "semgrep")
     if not exe:
@@ -107,15 +137,8 @@ def semgrep_scan(files, root, cfg, staged, configs):
     if not targets:
         return []
     cmd = [exe, "scan", "--metrics=off", "--disable-version-check", "--quiet", "--json"]
-    for conf in configs:
-        cmd += ["--config", conf]
-    proc = run(cmd + targets, root)
-    data = json.loads(proc.stdout) if proc.stdout.strip().startswith("{") else {}
-    if proc.returncode != 0 or not data:
-        why = next((e["message"] for e in data.get("errors", [])), proc.stderr.strip())
-        raise Unavailable(f"semgrep did not run (exit {proc.returncode}): {why[:160]}")
-    return [f"{r['path']}:{r['start']['line']}: {r['extra']['message'].splitlines()[0][:140]} [{r['check_id'].split('.')[-1]}]"
-            for r in data.get("results", []) if r["extra"]["severity"] in cfg["fail_severities"]]
+    cmd += [a for conf in configs for a in ("--config", conf)]
+    return semgrep_findings(run(cmd + targets, root), cfg)
 
 
 def check_hardcode(files, root, cfg, staged):
@@ -137,20 +160,103 @@ def check_secrets(root, cfg, staged):
     return [f"{r['File']}:{r['StartLine']}: possible secret [{r['RuleID']}]" for r in json.loads(text)]
 
 
-def check_deps(root, cfg):
+LIZARD_WARNING = re.compile(r"^(.+?):(\d+): warning: (.+?) has \d+ NLOC, (\d+) CCN")
+
+
+def check_complexity(files, root, cfg, staged):
+    exe = tool_path(cfg, "lizard")
+    if not exe:
+        return None
+    ignore, limit = cfg["complexity_ignore"], cfg["complexity_max"]
+    targets = [f for f in files if not matches(f, ignore)] if staged else ["."]
+    if not targets:
+        return []
+    proc = run([exe, "-C", str(limit), "-w", "-i", "-1"] + [a for p in ignore for a in ("-x", p)] + targets, root)
+    if proc.returncode != 0:
+        raise Unavailable(f"lizard did not run (exit {proc.returncode}): {proc.stderr.strip()[-160:]}")
+    hits = filter(None, map(LIZARD_WARNING.match, proc.stdout.splitlines()))
+    return [f"{m[1]}:{m[2]}: {m[3]} has complexity {m[4]}, limit {limit}" for m in hits]
+
+
+def module_cells(rows):
+    """First column of each real table row, backticks stripped; header and separator rows are skipped."""
+    for ln in rows:
+        cell = ln.split("|")[1].strip().strip("`") if ln.lstrip().startswith("|") else ""
+        if cell and cell.lower() != "path" and not set(cell) <= set("-: "):
+            yield cell
+
+
+def module_problem(root, cell):
+    if cell.startswith("<"):
+        return "is still a placeholder"
+    if Path(cell).is_absolute():
+        return "must be a relative path"
+    return None if (root / cell).exists() or any(root.glob(cell)) else "does not exist"
+
+
+def check_architecture(root, cfg):
+    name = cfg["architecture_file"]
+    if not (root / name).is_file():
+        return []
+    rows = section((root / name).read_text(encoding="utf-8", errors="replace").splitlines(), "modules")
+    if rows is None:
+        return [f"{name}: no '## Modules' section"]
+    problems = ((cell, module_problem(root, cell)) for cell in module_cells(rows))
+    return [f"{name}: module path '{cell}' {why}" for cell, why in problems if why]
+
+
+def osv_packages(root, cfg, *flags):
     exe = tool_path(cfg, "osv")
     if not exe:
         return None
-    proc = run([exe, "scan", "source", "-r", "--format", "json", "."], root)
+    proc = run([exe, "scan", "source", *flags, "-r", "--format", "json", "."], root)
+    if proc.returncode == 128:
+        return []
     if proc.returncode not in (0, 1) or not proc.stdout.strip().startswith("{"):
-        return [] if proc.returncode == 128 else [f"osv-scanner failed (exit {proc.returncode}): {proc.stderr.strip()[-200:]}"]
-    found = []
-    for res in json.loads(proc.stdout).get("results", []):
-        for pkg in res.get("packages", []):
-            ids = ", ".join(v["id"] for v in pkg.get("vulnerabilities", []))
-            if ids:
-                found.append(f"{os.path.relpath(res['source']['path'], root)}: {pkg['package']['name']} {pkg['package']['version']}: {ids}")
-    return found
+        raise Unavailable(f"osv-scanner did not run (exit {proc.returncode}): {proc.stderr.strip()[-160:]}")
+    return [(os.path.relpath(res["source"]["path"], root), pkg)
+            for res in json.loads(proc.stdout).get("results", []) for pkg in res.get("packages", [])]
+
+
+def check_deps(root, cfg):
+    packages = osv_packages(root, cfg)
+    if packages is None:
+        return None
+    return [f"{src}: {pkg['package']['name']} {pkg['package']['version']}: {', '.join(v['id'] for v in pkg['vulnerabilities'])}"
+            for src, pkg in packages if pkg.get("vulnerabilities")]
+
+
+def check_licenses(root, cfg):
+    allow = cfg["license_allow"]
+    if not allow:
+        return []
+    packages = osv_packages(root, cfg, "--licenses=" + ",".join(allow))
+    if packages is None:
+        return None
+    return [f"{src}: {pkg['package']['name']} {pkg['package']['version']}: license {', '.join(pkg['license_violations'])} is not in license_allow"
+            for src, pkg in packages if pkg.get("license_violations")]
+
+
+def report(name, results, cfg):
+    """Run one check and print its line. Returns (findings, not_checked)."""
+    try:
+        found = results[name]()
+    except Unavailable as why:
+        print(f"[NOT CHECKED] {name}: {why}")
+        return 0, 1
+    if found is None:
+        tool = TOOL_FOR[name]
+        print(f"[NOT CHECKED] {name}: {tool} not installed ({cfg['tools'][tool]['install']})")
+        return 0, 1
+    if not found:
+        print(f"[ok] {name}")
+        return 0, 0
+    print(f"[FAIL] {name}: {len(found)}")
+    shown = found[:cfg["max_findings_per_check"]]
+    print("\n".join(f"  - {line}" for line in shown))
+    if len(found) > len(shown):
+        print(f"  ... {len(found) - len(shown)} more")
+    return len(found), 0
 
 
 def main():
@@ -162,7 +268,6 @@ def main():
     args = ap.parse_args()
     root = Path(args.root).resolve()
     cfg = json.loads(Path(args.config).read_text(encoding="utf-8"))
-    chosen = [c for c in args.only.split(",") if c in ALL_CHECKS]
     files = list_files(root, args.staged)
     results = {
         "size": lambda: check_size(files, root, cfg),
@@ -170,30 +275,14 @@ def main():
         "hardcode": lambda: check_hardcode(files, root, cfg, args.staged),
         "secrets": lambda: check_secrets(root, cfg, args.staged),
         "sast": lambda: check_sast(files, root, cfg, args.staged),
+        "complexity": lambda: check_complexity(files, root, cfg, args.staged),
+        "architecture": lambda: check_architecture(root, cfg),
         "deps": lambda: check_deps(root, cfg),
+        "licenses": lambda: check_licenses(root, cfg),
     }
-    tool_for = {"hardcode": "semgrep", "secrets": "gitleaks", "sast": "semgrep", "deps": "osv"}
-    total, skipped = 0, 0
     print(f"PUSULA CHECKS root={root} files={len(files)} staged={args.staged}")
-    for name in chosen:
-        try:
-            found = results[name]()
-        except Unavailable as why:
-            skipped += 1
-            print(f"[NOT CHECKED] {name}: {why}")
-            continue
-        if found is None:
-            skipped += 1
-            print(f"[NOT CHECKED] {name}: {tool_for[name]} not installed ({cfg['tools'][tool_for[name]]['install']})")
-        elif found:
-            total += len(found)
-            print(f"[FAIL] {name}: {len(found)}")
-            shown = found[:cfg["max_findings_per_check"]]
-            print("\n".join(f"  - {line}" for line in shown))
-            if len(found) > len(shown):
-                print(f"  ... {len(found) - len(shown)} more")
-        else:
-            print(f"[ok] {name}")
+    counts = [report(name, results, cfg) for name in args.only.split(",") if name in ALL_CHECKS]
+    total, skipped = (sum(c[k] for c in counts) for k in (0, 1))
     print(f"Result: {'FAIL' if total else 'CLEAN' if not skipped else 'INCOMPLETE'} ({total} findings, {skipped} not checked)")
     sys.exit(1 if total else 2 if skipped else 0)
 

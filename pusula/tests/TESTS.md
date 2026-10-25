@@ -1,4 +1,4 @@
-# Pusula testleri (T1–T14)
+# Pusula testleri (T1–T18)
 
 Kabul kararını yıldız sayısı değil bu testler verir. Bir parça (skill, MCP, araç) testte fark yaratmıyorsa çıkarılır.
 
@@ -33,10 +33,14 @@ Kabul kararını yıldız sayısı değil bu testler verir. Bir parça (skill, M
 | **T11 Belirsiz istek** | Unity projesi. İstem: "Oyunu daha iyi yap." | Kod değişmez. Okumalar gösterilir, tek soru sorulur. | `git status`. |
 | **T13 Test önce + devir notu** | `stats.py` projesi. İstem 1: `mode` ekle. İstem 2: devir notu yaz. | Test önce kırmızı. Sonunda tüm testler ve kontrol betiği. Devir notu dosyada, en çok bir sayfa. | Oturum kaydı; `wc` ile boyut. |
 | **T14 Güvenlik açıkları** | Bilerek zafiyetli küçük servis (SQL f-string, MD5, `shell=True`, `yaml.load`, koda gömülü anahtar). İstem: "Açıkları bul ve düzelt." | Beş açık da düzelir. Her düzeltmeye test. Analiz araçları çalışır. | Kod, `pusula_check.py --only sast,secrets`. |
+| **T15 Yeni özellik, katmanlı proje** | `core`, `infra`, `pages` katmanlı küçük bir Python projesi. İstem: "Stok takibi ekle." | Katmanlar korunur. Testler geçer. Kontrol betiği temiz. | Kodu elle oku, `pusula_check.py`. |
+| **T16 Küçük değişiklik** | Aynı proje. İstem: tek fonksiyona docstring ekle. | Tören yok: mimari dosyası, plan, soru yok. Fazla maliyet küçük. | `git status`, maliyet. |
+| **T17 Çok dosyalı yeniden adlandırma** | 10 dosyada kullanılan bir fonksiyonun adı değişir. | 6+ dosya için dört satırlık etki notu `.pusula/<görev>/progress.md` içinde ve kullanıcıya söylenir. Eski ad kalmaz. | Not dosyası, `grep`. |
+| **T18 Yeni modül ve bağımlılık** | Aynı proje. İstem: "Yeni bir notifications modülü ekle (e-posta); gerekirse kütüphane kullan." | `.pusula/architecture.md` taslağı yazılır, yolları var. Yeni modül katman atlamaz. Gereksiz kütüphane yok. | `pusula_check.py --only architecture`, import satırları. |
 
 ## Durum
-- 22 Ekim 2026: T1–T14 başsız A/B koşuldu. Sonuçlar `results/2026-10-22.md` içinde. 14 satırın 9'unda A kaldı, B geçti; 4'ünde ikisi de geçti.
-- Gerçek jeton farkı +2.380 (hedef +2.600). Tahmin (`measure.py load`) 1.593, hedef 1.800.
+- T1–T18 başsız A/B koşuldu (T15–T18 NEXUS v5 sonrası). Sonuçlar `results/2026-10-22.md` içinde. 18 satırdan 11'inde A kaldı, B geçti; 6'sında ikisi de geçti; T7 sadece ölçüm.
+- Gerçek jeton farkı +2.382 (hedef +2.600), NEXUS v5 dahil. Tahmin (`measure.py load`) 1.669, hedef 1.800.
 
 ## Hâlâ senin yapacakların
 - Unity ana menü (T3 gerçek koşu). Web ön deneme geçti, Unity için Unity gerekir.

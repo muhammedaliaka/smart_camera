@@ -16,7 +16,7 @@ Get the reference first (screenshot, game or site). No reference yet: your first
 | Layout | What sits where at each supported size and aspect ratio. Ask for the size list if unknown. Safe areas and notches. |
 | States | Default, focus or hover, pressed, disabled, empty, loading, error, very long text, missing data. |
 | Text | Every string comes from a key or localization table. The longest translation still fits. |
-| Color and spacing | Values come from design tokens, no literals. Text contrast 4.5:1, large text (18 pt, or 14 pt bold) 3:1, UI parts and icons 3:1 (WCAG 2.2, 1.4.3 and 1.4.11, read at w3.org on 2026-10-22). The project's own tokens win when they are stricter. |
+| Color and spacing | Values come from design tokens, no literals: color, type scale, spacing and motion (durations, easing). Text contrast 4.5:1, large text (18 pt, or 14 pt bold) 3:1, UI parts and icons 3:1 (WCAG 2.2, 1.4.3 and 1.4.11, read at w3.org on 2026-10-22). The project's own tokens win when they are stricter. |
 | Input | Touch targets at least 24 by 24 CSS px (WCAG 2.2, 2.5.8) or the platform's larger guide. Keyboard, gamepad or touch focus order. |
 
 Criteria written after the screenshot do not count. If you change one later, say so and why.

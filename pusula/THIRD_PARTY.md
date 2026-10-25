@@ -35,16 +35,17 @@ Upstream originals, as published:
 | systematic-debugging | 77 | DO_NOT_INSTALL | example script about keychains and identities, plus bundled helper files; benign teaching content, not vendored |
 | security-and-hardening | 100 | DO_NOT_INSTALL | 21 findings: links to unscanned reference files, secret-handling and cloud-metadata examples, one phrase; benign teaching content, reference files not vendored |
 
-Pusula versions: all 14 skills score 0, no findings, after rewording four phrases. A zero score is not a proof of safety; the scan is static, it never runs a skill. `plain-explain` and `ui-acceptance` are Pusula's own text, no third-party source. `verification-before-completion` still reads CAUTION with score 0: the scan could not resolve the path of `pusula_check.py`, which is a file the project adds at install time.
+Pusula versions: all 15 skills score 0, no findings, after rewording four phrases. A zero score is not a proof of safety; the scan is static, it never runs a skill. `plain-explain`, `ui-acceptance` and `architecture-standard` are Pusula's own text, no third-party source (the last is a rewrite of the user's own NEXUS_ARCH_STANDARD v4). `verification-before-completion` still reads CAUTION with score 0: the scan could not resolve the path of `pusula_check.py`, which is a file the project adds at install time.
 Not scanned: planning-with-files (not vendored).
 
 ## Tools run by checks/ (not copied into the repo)
 
 | Tool | Version tested | License | Used for |
 | --- | --- | --- | --- |
-| [Semgrep](https://github.com/semgrep/semgrep) | 1.182.1 | not verified here | hardcoded-value rules; the rules in `checks/semgrep/hardcode.yml` are Pusula's own, registry rules are not used |
+| [Semgrep](https://github.com/semgrep/semgrep) | 1.182.1 | not verified here | hardcoded-value rules (`checks/semgrep/hardcode.yml`, Pusula's own) and the registry ruleset `p/security-audit`, downloaded at run time and not copied here; metrics are off |
+| [lizard](https://github.com/terryyin/lizard) | 1.24.2 | not verified here | function complexity limit (`complexity` check) |
 | [gitleaks](https://github.com/gitleaks/gitleaks) | 8.30.1 | MIT | secret scan |
-| [osv-scanner](https://github.com/google/osv-scanner) | 2.7.0 | Apache-2.0 | dependency vulnerabilities (sends package names and versions to osv.dev) |
+| [osv-scanner](https://github.com/google/osv-scanner) | 2.7.0 | Apache-2.0 | dependency vulnerabilities and, when `license_allow` is set, licenses (sends package names and versions to osv.dev) |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector) | 2.12.0 | Apache-2.0 | scan of third-party skills before install |
 
 ## License text

@@ -27,7 +27,7 @@ Write it down: "X is the cause because Y." Make the smallest change that tests i
 - Make a failing test or repro first (`test-driven-development`).
 - One change for the root cause. No "while I am here" edits.
 - Verify with the full suite (`verification-before-completion`).
-- Three failed fixes means the design may be wrong. Stop and tell the user what you tried, what you saw, and what you suspect.
+- Three failed fixes means the design may be wrong. Stop and tell the user what you tried, what you saw, and what you suspect. The next attempt must change the abstraction level, who owns the boundary, or the data structure (`architecture-standard`, N8).
 
 ## Stop and restart at step 1 if you think
 "quick fix now, investigate later", "just try X", "change several things and run", "it is probably X", or "one more attempt" after two failures.

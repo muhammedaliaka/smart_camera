@@ -1,6 +1,6 @@
 {
   "chars_per_token": 4,
-  "core_tokens_max": 900,
+  "core_tokens_max": 920,
   "start_tokens_max": 1800,
   "skill_body_tokens_max": 1100,
   "sentence_words_max": 20,

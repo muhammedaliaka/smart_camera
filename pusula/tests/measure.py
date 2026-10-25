@@ -34,22 +34,29 @@ def split_skill(path):
     return fields.get("name", path.parent.name), fields.get("description", ""), body
 
 
-def load(root):
+def load_rows(root):
     core = sum(len((root / n).read_text(encoding="utf-8")) for n in ("AGENTS.md", "CLAUDE.md") if (root / n).is_file())
     skills = [split_skill(p) for p in sorted((root / "skills").glob("*/SKILL.md"))]
     listing = sum(len(name) + len(desc) for name, desc, _ in skills)
     biggest = max(skills, key=lambda s: len(s[2]))
-    rows = [
+    return [
         ("core (AGENTS.md + CLAUDE.md)", tokens(core), TARGETS["core_tokens_max"]),
         (f"skill listing ({len(skills)} names + descriptions)", tokens(listing), None),
         ("start load (core + listing)", tokens(core + listing), TARGETS["start_tokens_max"]),
         (f"largest skill body ({biggest[0]})", tokens(len(biggest[2])), TARGETS["skill_body_tokens_max"]),
     ]
-    over = [f"{p.relative_to(root)}: {p.stat().st_size} bytes" for p in root.rglob("*")
-            if p.is_file() and ".git" not in p.parts and p.stat().st_size > MAX_BYTES]
-    failed = bool(over)
+
+
+def oversize_files(root):
+    return [f"{p.relative_to(root)}: {p.stat().st_size} bytes" for p in root.rglob("*")
+            if p.is_file() and not {".git", "__pycache__"} & set(p.parts) and p.stat().st_size > MAX_BYTES]
+
+
+def load(root):
+    over = oversize_files(root)
     print(f"{'measure':50} {'est. tokens':>11} {'target':>7}")
-    for label, value, limit in rows:
+    failed = bool(over)
+    for label, value, limit in load_rows(root):
         flag = " OVER" if limit and value > limit else ""
         failed |= bool(flag)
         print(f"{label:50} {value:>11} {limit or '':>7}{flag}")
