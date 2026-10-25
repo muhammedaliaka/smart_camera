@@ -35,4 +35,4 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 - Skills never lower a rule in AGENTS.md.
 
 ## Not installed yet
-Domain packs: Tauri and Rust, Unity, Unreal, Flutter, Next.js, three.js and GLB, AI asset production, marketing, sales, video. For these, say so. Run `find-skills` to look for the vendor's official skill; if none, use `source-driven-development` on the official docs. Do not improvise from memory.
+Domain packs: Tauri and Rust, Unity, Unreal, Flutter, Next.js, three.js and GLB, AI asset production, marketing, sales, video. For these, say so. Run `find-skills` to look for the vendor's official skill; if none, use `source-driven-development` on the official docs. Do not improvise from memory. Unity: Unity publishes an official plugin (`Unity-Technologies/unity-agent-plugin`, Unity 6+). Not installed; it needs a license check, a SkillSpector scan and the user's yes (`THIRD_PARTY.md`).

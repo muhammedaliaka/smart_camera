@@ -112,4 +112,4 @@ Pusula bunların hiçbirini kendiliğinden kurmaz. Plan **taslak**: JS örneğin
 
 ## Sıradaki
 
-Dalga 2: codebase-memory-mcp ve rtk, T7 jeton testiyle. Dalga 3: alan paketleri (Unity, Tauri, Flutter; Next.js var). PC gelince gerçek oturum testleri: "yapma" listesinin cazip anda tutması, mimari skill'inin kendiliğinden tetiklenmesi, hard-problems kanıtı.
+Dalga 2: codebase-memory-mcp ve rtk, T7 jeton testiyle. Dalga 3: alan paketleri. Unity için Unity'nin kendi resmi eklentisi var (`unity-agent-plugin`); sadece belgelerini okudum, taramadım, kurmadım; lisansı, taramayı ve senin onayını bekliyor. Tauri ve Flutter'a henüz bakmadım; Next.js var. PC gelince gerçek oturum testleri: "yapma" listesinin cazip anda tutması, mimari skill'inin kendiliğinden tetiklenmesi, hard-problems kanıtı.
