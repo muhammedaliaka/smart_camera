@@ -113,6 +113,23 @@ Limits (do not stretch the claim):
 - The prompt listed the tools, so the agent knew which deobfuscators exist. An attacker without that hint might lose time; one with a model and webcrack does not.
 - Local fixtures we wrote; no Unity, .NET or native code.
 
+### Add-on: agent rebuild test on a harder fixture (three runs per build)
+Why: the first agent test scored every build at the maximum. This fixture has 6 modules (about 7 KB of source) and 8 functions: `buildCost` (bulk steps, tech cap, queue fee), `incomePerTick`, `damage` (armor curve, crit by a given roll), `scoreTarget` and `pickTarget` (tie-break by id), `findPath` (A* with swamp tiles, diagonals without corner cutting, tie-breaks), `missionScore` (medals) and `simulate` (seeded random numbers, state across ticks). Obfuscated sizes: min 3.8 KB, obf-low 12.4 KB, obf-high 42.6 KB. Same setup as before (headless `claude -p`, `claude-sonnet-5-5`, own folder per run, REA, webcrack and Wakaru offered), with three changes: static analysis only (running anything in `build/` and `node -e` were denied by the permission rules), no `require` or file access allowed in the answer, and 3 runs per build. The hidden grader (781 cases, written first) gave a correct file 781/781, a file with one wrong constant 694/781, and rejected a file that loads other code. The obfuscated builds themselves also scored 781/781 as candidates, so the protections changed no behavior here either.
+
+| Build | Scores (3 runs) | Mean turns | Mean cost USD (range) | Tools used |
+| --- | --- | --- | --- | --- |
+| plain | 781, 781, 781 | 9.7 | 0.133 (0.132-0.136) | none |
+| min | 781, 781, 781 | 6.3 | 0.165 (0.158-0.172) | none |
+| obf-low | 781, 764, 781 | 6.3 | 0.227 (0.220-0.231) | webcrack in 2 runs |
+| obf-high | 781, 781, 781 | 7.0 | 0.182 (0.164-0.196) | webcrack in 3 runs |
+
+- 11 of 12 runs were perfect. The one miss (obf-low, run 2: 764/781, only `simulate` wrong, 8 of 25) skipped webcrack, read the 12 KB file and decoded the string array by hand.
+- Money against `plain`: min +24%, obf-low +71%, obf-high +37%. The heavier preset cost less than the lighter one in all three pairs; I do not know why and do not claim a reason. Total for the 12 runs: $2.12.
+- Reading the obfuscated bundle did not stop an agent from recovering a seeded random generator, an A* with float tie-breaks and a stateful loop exactly.
+- Audit (stream logs): no run touched the grader, the readable fixture or anything outside its folder; none executed the build. One write outside the folder (`/tmp/dec.js`, obf-low run 2) was denied. The other denials were `node -e` and heredoc writes, which the agents redid with allowed tools.
+
+Limits: still a fixture we wrote with one model; the agent was told the function names and signatures; a real game is far larger, so whether this scales is untested. Static analysis only: running the real build and comparing its answers is the cheaper route for an attacker and no obfuscation touches it (see the API experiment). Three runs per build is a small sample.
+
 ## Experiment 2026-10-25 (2): behavior cloning from one recorded session (REA `environment-build`)
 Setup: a toy game API we wrote, in two variants. `open`: `/api/balance` (unit table), `/api/players` and `/api/players/p1`, no login. `guarded`: login gives a token, every call needs it, answers are scoped to the logged-in player and minimal (own data, one unit), the match write is validated (422 on bad input). One Chromium session per variant recorded with Playwright `recordHar` (6 to 12 requests), then `rea environment-build <har> <dir> --name x`, REA 6.8.0, no model.
 
@@ -141,7 +158,7 @@ What this shows (toy API only):
 - Whether an encrypted `global-metadata.dat` really makes REA's IL2CPP inspector fail. The package text says unrecognized magic is unsupported; not run. Even if it does, dumping from memory after launch is the known bypass (see Sources).
 - Which Unity content formats (`.assets`, AssetBundles, ScriptableObjects, campaign and map files) REA reads: its README lists Godot PCK and APK but no Unity asset format. Third-party tools may; not checked.
 - Obfuz's real strength and cost on a Unity build (README only, no run).
-- How a model fares on a large, stateful codebase after REA plus webcrack (the small agent test scored every build at the maximum), and whether the VM option (Pro) survives webcrack. The free presets did not (see Add-ons).
+- How a model fares on a game-sized codebase after REA plus webcrack (two small agent tests: 4 of 4 and 11 of 12 builds rebuilt perfectly), and whether the VM option (Pro) survives webcrack. The free presets did not (see Add-ons).
 - Whether obfuscator.io's VM sends source code to a service (the API token suggests it might) and what it costs.
 - Whether BitMono's metadata protection supports the Unity version in use.
 - Antivirus and store false positives for anti-tamper, packers or self-defending code.
