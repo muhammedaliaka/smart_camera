@@ -1,6 +1,6 @@
-# Pack: AI asset production (3D, image, music, SFX, voice)
+# Pack: AI asset production (3D, image, music, SFX, voice, rig, texture, video)
 
-Read when the task makes game or media assets with AI tools, or picks a tool for them. Terms change often. Facts read 2026-10-25 on the pages named; re-read the tool's terms on the day you use it. Labels: [official] page text, [reasoning], [unverified].
+Read when the task makes game or media assets with AI tools, or picks a tool for them. Terms change often. Facts read 2026-10-25 on the pages named; re-read the tool's terms on the day you use it. Labels: [official] page text, [secondary], [reasoning], [unverified].
 
 ## Sources first
 - Steam AI disclosure: https://partner.steamgames.com/doc/gettingstarted/contentsurvey. US copyright: https://www.copyright.gov/ai/ (Part 2 report, January 2025).
@@ -41,6 +41,15 @@ Read when the task makes game or media assets with AI tools, or picks a tool for
 **Voice**
 - Kokoro TTS: Apache-2.0 code and weights, 82M parameters. [official]
 - ElevenLabs: a commercial license is listed from the Starter plan up, none on Free. Credit rules [unverified]. [official]
+
+**Rig, animation, texture, VFX**
+- Mixamo (Adobe): characters and animations royalty-free for commercial projects, games included; no credit; do not redistribute the raw files or train ML models on them; auto-rigger: bipedal humanoids only. [secondary: search summary of Adobe's FAQ and a 2022 community post; the FAQ page returned 403]
+- Poly Haven: CC0, commercial use, no credit. ambientCG: CC0 1.0, no credit, suggests a credit line. [official]
+- AI rig, animation and texture tools, and particle assets: terms [unverified]; build VFX in the engine from CC0 textures. [reasoning]
+
+**Video** (see `video-production.md`)
+- Wan 2.1: Apache-2.0; README claims no rights over your outputs; T2V-1.3B needs 8.19 GB VRAM. [official]
+- HunyuanVideo (Tencent): does not apply in the EU, UK or South Korea; outputs cannot improve other AI models; over 100M monthly users needs Tencent's license. [official] Hosted video tools: [unverified].
 
 ## Checks
 - `assets/LEDGER.md` has a row for every file in the shipped asset folders (a small script or `ls` diff); empty license cells fail.

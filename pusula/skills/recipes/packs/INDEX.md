@@ -10,7 +10,7 @@ A pack is a short reference file for one stack or field: where the official sour
 | Flutter, Dart | `flutter.md` | 2026-10-25 |
 | Next.js, React server code | `nextjs.md` | 2026-10-25 |
 | three.js, glTF, GLB files | `threejs-glb.md` | 2026-10-25 |
-| AI-made 3D, image, music, SFX, voice; licenses; Steam AI disclosure | `ai-production.md` | 2026-10-25 |
+| AI-made 3D, image, music, SFX, voice, rig, texture, video; licenses; Steam AI disclosure | `ai-production.md` | 2026-10-25 |
 | Security audit, hardening, CI security (rules are in `security-and-hardening`) | `security.md` | 2026-10-25 |
 | Store page, launch copy, posts, email, search | `marketing.md` | 2026-10-25 |
 | Pricing, discounts, releasing a product, outreach plans | `sales.md` | 2026-10-25 |
