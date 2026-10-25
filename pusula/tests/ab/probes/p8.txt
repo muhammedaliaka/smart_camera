@@ -1,0 +1,1 @@
+Unity projemin ana menüsü kötü görünüyor ve her düzeltmede yine bozuk geliyor. Bu sefer doğru yapmak istiyorum. Projeye bak, nasıl ilerleyeceğini ve "bitti" demek için neyi göstereceğini yaz. Kodu henüz değiştirme.

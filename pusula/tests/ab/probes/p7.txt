@@ -1,0 +1,1 @@
+Unity 6 ile çok oyunculu bir RTS yapıyorum: 8 oyuncu, oyuncu başına en fazla 200 birim. Ağ modelini, performans planını ve gereken asset sınıflarını anlat. Plan olarak yaz, kod yazma.

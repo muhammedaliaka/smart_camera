@@ -1,0 +1,1 @@
+Bu Electron uygulamasını Tauri'ye geçirmek istiyorum. Geçiş planını yaz: hangi dosya neye dönüşecek, hangi kaynaklara dayanacaksın, bittiğini nasıl göstereceksin? Sadece plan yaz, geçişi uygulama.

@@ -1,0 +1,17 @@
+{
+  "name": "notes-desk",
+  "version": "1.4.0",
+  "description": "Small notes app with a file picker and auto update",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.0"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}

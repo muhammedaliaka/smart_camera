@@ -76,3 +76,40 @@ Amaç (Turkish, plain): Alan paketleri (`skills/recipes/packs/`) bir modele ger�
 - Değişen: `AGENTS.md` Sources bölümüne tek cümlelik işaretçi (adlı alanlarda önce `recipes/packs/INDEX.md`); `recipes` açıklaması; `run_ab.py --arms`. Pass kuralları ve maddeler **değişmedi**.
 - Tur 2 yalnız B ile koşuldu; A, tur 1'den alındı. Sonuçlar `results/2026-10-25b.md` içinde.
 - Tur 2 sırasında `game-production.md` paketi eklendi; sorular bu pakete girmediği için etkisi yok.
+
+## Tur 3: üç paket daha (2026-10-25, koşulardan önce yazıldı)
+Kapsam: `tauri-rust.md`, `game-production.md`, `unity.md`. Bunlar kullanıcının yaşadığı hataların yeri (Tauri geçişi, RTS, Unity menü). Aynı tasarım: A = yalnız dosya, B = dosya + Pusula (işaretçili `AGENTS.md`), 3 tekrar, aynı araçlar, cevaplar karıştırılıp arm bilgisiz puanlanır. Promptlar `probes/p6-p8.txt`, hazır projeler `probes/p6` (küçük Electron uygulaması: CDN betiği, preload köprüsü, otomatik güncelleme) ve `probes/p8` (uGUI kullanan Unity 6 projesi iskeleti).
+
+**p6 Electron'dan Tauri'ye geçiş planı** (beklenen paket `tauri-rust.md`)
+1. Resmi Tauri belgelerinin Electron geçiş rehberi içermediğini söyler ya da eşleme tablosunu "resmi değil / kendi çıkarımım" diye etiketler.
+2. `ipcMain`/`ipcRenderer` karşılığı olarak Tauri komutları (`invoke`) ve olayları verir.
+3. `preload`/`contextBridge` karşılığı olarak capabilities (`src-tauri/capabilities/`) ve izinleri anar.
+4. CSP'nin `tauri.conf.json` içinde ayarlanması gerektiğini söyler (varsayılan etkin değil) ve CDN betiğinin (`marked`) sorun olduğunu fark eder.
+5. Rust komut argümanlarının doğrulanması gerektiğini söyler (Rust çekirdeği güvenilir, webview güvenilmez).
+6. Güncelleyici: imza zorunlu, özel anahtar kaybolursa kurulu uygulamalar güncellenemez (`electron-updater` karşılığı).
+7. Her hedef işletim sisteminin web görünümünü (WebView2, webkit2gtk) ayrı test etmek gerektiğini söyler.
+8. Tauri v2 belgelerine (v2.tauri.app) dayanır; v1 ya da 3.0 alfa önermez.
+9. Bitiş kanıtı: `cargo clippy`/`cargo test` ve uygulamanın çalıştırılıp bir komut çağrısının görülmesi; doğrulanmayan satırları listeler.
+
+**p7 RTS ağ ve performans planı** (beklenen paket `game-production.md`)
+1. Lockstep: ağdan birim durumu değil komutlar gider.
+2. Tek tohumlu rastgele sayı üreteci, her makinede aynı çağrı sayısı; görsel efektler için ayrı üreteç.
+3. Kayan nokta determinizmi riski (farklı CPU, derleyici, derleme türü) ve tam sayı ya da sabit nokta seçeneği.
+4. Her turda sağlama toplamı (checksum) ile uyumsuzluk (desync) yakalama.
+5. Komut gecikmesi: komutlar birkaç tur sonra çalışır (AoE örneği: 2 tur, ~200 ms) ve gecikme gizlenir.
+6. Tekrar (replay) testi: komut + tohum kaydı, iki kez oynat, sağlama toplamlarını karşılaştır.
+7. Ölçüm: editörde değil hedef build'de profil; en kalabalık sahne testi (8x200 birim).
+8. En az 6 asset sınıfı sayar (takım rengi maskesi dahil) ve bütçelerin proje ayarında tutulacağını ya da kayıt/ledger tuttuğunu söyler.
+9. Optimizasyonu ölçüme bağlar (SRP Batcher/URP, ObjectPool, Entities/DOTS kararı profile göre); birim sayısı eşiği uydurmaz.
+
+**p8 Unity ana menü** (beklenen paket `unity.md`)
+1. Önce projeyi okur (`ProjectVersion.txt`, `manifest.json`, mevcut `MainMenu.cs`) ve projenin uGUI kullandığını bulur.
+2. UI Toolkit ile uGUI farkını söyler (ekran menüsü için UI Toolkit, dünya içi UI için uGUI) ve geçişi kullanıcıya bırakır ya da gerekçelendirir.
+3. Referans ister ve kabul ölçütlerini koddan önce yazar.
+4. Her durum (normal, üzerinde, basılı, odak, devre dışı) için ekran görüntüsü ister.
+5. Renk, boyut ve metnin sabit yazılmayıp tema/USS değişkenine ya da anahtara gideceğini söyler (koddaki `new Color(...)` ve "OYNA" metinleri sabit).
+6. "Unity'de çalıştırılmadı" diye açıkça yazar; çalışıyor demez.
+7. Komut satırı testi: `-runTests -batchmode`, `-testPlatform`, `-testResults`; `-quit` kullanmaz.
+8. Sürüme uygun resmi Unity 6 kılavuzuna dayanır; uydurma sayfa vermez.
+
+**Kurallar (tur 3):** R5: p6-p8'de B ortalaması A'dan düşük değil. R6: en az 2 soruda B, A'dan en az 1 puan yüksek. R7: B beklenen paketi 9 koşunun en az 6'sında okur. Maliyet oranı bildirilir; 2,0 üstü işaretlenir. Hepsi tutmazsa başarısız sayılır. Sınırlar tur 1 ile aynı; ek olarak maddeleri paket metninden ben türettim.

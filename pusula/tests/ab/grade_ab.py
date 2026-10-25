@@ -12,8 +12,9 @@ import re
 import sys
 from pathlib import Path
 
-EXPECTED = {"p1": "sales.md", "p2": "ai-production.md", "p3": "nextjs.md", "p4": "threejs-glb.md"}
-ITEMS = {"p1": 9, "p2": 9, "p3": 9, "p4": 8, "p5": 3}
+EXPECTED = {"p1": "sales.md", "p2": "ai-production.md", "p3": "nextjs.md", "p4": "threejs-glb.md",
+            "p6": "tauri-rust.md", "p7": "game-production.md", "p8": "unity.md"}
+ITEMS = {"p1": 9, "p2": 9, "p3": 9, "p4": 8, "p5": 3, "p6": 9, "p7": 9, "p8": 8}
 # Cross-check only: crude patterns for the items a regex can see. Manual scores decide.
 REGEX = {
     "p1": {1: r"\$\s?100\b|\b100\s?(\$|usd|dolar)", 2: r"30\s*(gün|day)", 3: r"(iki|2)\s*hafta|two weeks|14\s*(gün|day)",
@@ -23,6 +24,9 @@ REGEX = {
     "p3": {1: r"public|herkese açık|açık (uç|endpoint)", 3: r"owner|sahip", 4: r"zod|valid|doğrula",
            7: r"next build.{0,200}(lint|eslint)|(lint|eslint).{0,200}next build"},
     "p4": {1: r"DRACOLoader|setDRACOLoader", 2: r"dispose", 4: r"renderer\.info", 5: r"validator|gltf-validator", 6: r"three/addons", 7: r"gltf-transform"},
+    "p6": {2: r"invoke", 3: r"capabilit", 4: r"\bcsp\b|content.security", 6: r"imza|sign", 7: r"WebView2|webkit"},
+    "p7": {1: r"lockstep", 3: r"floating|float\b|fixed[- ]point|sabit nokta", 4: r"checksum|hash", 6: r"replay|tekrar oynat"},
+    "p8": {2: r"UI Toolkit", 4: r"screenshot|ekran görüntüsü", 5: r"USS|token|theme|tema", 6: r"not run in Unity|çalıştırmadım|çalıştıramadım"},
 }
 
 
