@@ -70,3 +70,9 @@ Amaç (Turkish, plain): Alan paketleri (`skills/recipes/packs/`) bir modele ger�
 - No web: A is handicapped on facts newer than the model's knowledge. In real use both arms could browse. B's edge here is partly "has dated facts in a file".
 - 3 repeats per cell: small sample. A one-point gap can be noise.
 - Prompts are in Turkish, so B's "plain Turkish" rule and A's default differ in style only.
+
+## Sonradan değişti (2026-10-25, tur 1'den sonra)
+- Tur 1 sonucu: R1, R2 ve R3 tutmadı. Sebep: model `Skill` aracını hiç çağırmadı (0/15), paketleri yalnız rastlantısal `Grep` ile buldu (R3: 4/12).
+- Değişen: `AGENTS.md` Sources bölümüne tek cümlelik işaretçi (adlı alanlarda önce `recipes/packs/INDEX.md`); `recipes` açıklaması; `run_ab.py --arms`. Pass kuralları ve maddeler **değişmedi**.
+- Tur 2 yalnız B ile koşuldu; A, tur 1'den alındı. Sonuçlar `results/2026-10-25b.md` içinde.
+- Tur 2 sırasında `game-production.md` paketi eklendi; sorular bu pakete girmediği için etkisi yok.

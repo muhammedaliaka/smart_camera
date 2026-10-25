@@ -1,6 +1,6 @@
 ---
 name: recipes
-description: Use at the start of any task to pick which Pusula skills to load and in what order. Maps task types to skill combinations and lists known conflicts.
+description: Router. Use at the start of any task to pick Pusula skills, and for any named stack or field (Steam, AI licenses, Unity, Next.js, three.js, Flutter, Tauri, marketing); it points to the field packs.
 license: MIT
 ---
 
