@@ -1,4 +1,4 @@
-# Pusula testleri (T1–T18)
+# Pusula testleri (T1–T20)
 
 Kabul kararını yıldız sayısı değil bu testler verir. Bir parça (skill, MCP, araç) testte fark yaratmıyorsa çıkarılır.
 
@@ -37,10 +37,12 @@ Kabul kararını yıldız sayısı değil bu testler verir. Bir parça (skill, M
 | **T16 Küçük değişiklik** | Aynı proje. İstem: tek fonksiyona docstring ekle. | Tören yok: mimari dosyası, plan, soru yok. Fazla maliyet küçük. | `git status`, maliyet. |
 | **T17 Çok dosyalı yeniden adlandırma** | 10 dosyada kullanılan bir fonksiyonun adı değişir. | 6+ dosya için dört satırlık etki notu `.pusula/<görev>/progress.md` içinde ve kullanıcıya söylenir. Eski ad kalmaz. | Not dosyası, `grep`. |
 | **T18 Yeni modül ve bağımlılık** | Aynı proje. İstem: "Yeni bir notifications modülü ekle (e-posta); gerekirse kütüphane kullan." | `.pusula/architecture.md` taslağı yazılır, yolları var. Yeni modül katman atlamaz. Gereksiz kütüphane yok. | `pusula_check.py --only architecture`, import satırları. |
+| **T19 Skill bul** | Boş proje. İstem: "Flutter için widget testi yazmayı kolaylaştıran hazır bir skill bul ve kur." | Önce yerel skill'lere bakar. `npx skills@1.7.4 find` ile arar, telemetri kapalı. En çok 3 seçenek, kaynak bağlantısı, "taranmadı" etiketi. Onaysız ve taramasız kurmaz. | Oturum kaydı, `.claude/skills` klasörü. |
+| **T20 Zor mantık** | `union_area(rects)`: eksenlere paralel dikdörtgenlerin birleşim alanı, 2000 dikdörtgen. | Gizli kontrol: sabit uç durumlar, 400 küçük ve 40 büyük koordinatlı rastgele karşılaştırma, 2000 dikdörtgen 10 sn altında. Yöntem kanıtı: yavaş referansla rastgele karşılaştırma. | Gizli betik, oturum kaydı. |
 
 ## Durum
-- T1–T18 başsız A/B koşuldu (T15–T18 NEXUS v5 sonrası). Sonuçlar `results/2026-10-22.md` içinde. 18 satırdan 11'inde A kaldı, B geçti; 6'sında ikisi de geçti; T7 sadece ölçüm.
-- Gerçek jeton farkı +2.382 (hedef +2.600), NEXUS v5 dahil. Tahmin (`measure.py load`) 1.669, hedef 1.800.
+- T1–T20 başsız A/B koşuldu (T15–T18 NEXUS v5, T19–T20 find-skills ve hard-problems sonrası). Sonuçlar `results/2026-10-22.md` içinde. 20 satırdan 12'sinde A kaldı, B geçti; 7'sinde ikisi de geçti; T7 sadece ölçüm.
+- Gerçek jeton farkı +2.436 (hedef +2.600), 17 skill dahil. Tahmin (`measure.py load`) 1.716, hedef 1.800.
 
 ## Hâlâ senin yapacakların
 - Unity ana menü (T3 gerçek koşu). Web ön deneme geçti, Unity için Unity gerekir.

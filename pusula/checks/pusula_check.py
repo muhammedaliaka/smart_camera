@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Pusula mechanical checks. Standard library only; thresholds live in config.json.
 
-Usage: python pusula_check.py [--root DIR] [--staged] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps,licenses] [--config FILE]
+Usage: python pusula_check.py [--root DIR] [--staged] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps] [--config FILE]
 Exit codes: 0 clean, 1 findings, 2 clean but some check did not run.
---staged limits size, plan, hardcode, secrets, sast and complexity to staged changes; architecture, deps and licenses always look at the whole project.
-sast, deps and licenses need network (rule download, advisory database); offline they report [NOT CHECKED].
-licenses is off until config.json lists license_allow.
+--staged limits size, plan, hardcode, secrets, sast and complexity to staged changes; architecture and deps always look at the whole project.
+sast and deps need network (rule download, advisory database); offline they report [NOT CHECKED].
 """
 import argparse
 import fnmatch
@@ -18,9 +17,9 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "sast", "complexity", "architecture", "deps", "licenses"]
+ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "sast", "complexity", "architecture", "deps"]
 FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
-TOOL_FOR = {"hardcode": "semgrep", "secrets": "gitleaks", "sast": "semgrep", "complexity": "lizard", "deps": "osv", "licenses": "osv"}
+TOOL_FOR = {"hardcode": "semgrep", "secrets": "gitleaks", "sast": "semgrep", "complexity": "lizard", "deps": "osv"}
 
 
 def matches(path, patterns):
@@ -205,11 +204,11 @@ def check_architecture(root, cfg):
     return [f"{name}: module path '{cell}' {why}" for cell, why in problems if why]
 
 
-def osv_packages(root, cfg, *flags):
+def osv_packages(root, cfg):
     exe = tool_path(cfg, "osv")
     if not exe:
         return None
-    proc = run([exe, "scan", "source", *flags, "-r", "--format", "json", "."], root)
+    proc = run([exe, "scan", "source", "-r", "--format", "json", "."], root)
     if proc.returncode == 128:
         return []
     if proc.returncode not in (0, 1) or not proc.stdout.strip().startswith("{"):
@@ -224,17 +223,6 @@ def check_deps(root, cfg):
         return None
     return [f"{src}: {pkg['package']['name']} {pkg['package']['version']}: {', '.join(v['id'] for v in pkg['vulnerabilities'])}"
             for src, pkg in packages if pkg.get("vulnerabilities")]
-
-
-def check_licenses(root, cfg):
-    allow = cfg["license_allow"]
-    if not allow:
-        return []
-    packages = osv_packages(root, cfg, "--licenses=" + ",".join(allow))
-    if packages is None:
-        return None
-    return [f"{src}: {pkg['package']['name']} {pkg['package']['version']}: license {', '.join(pkg['license_violations'])} is not in license_allow"
-            for src, pkg in packages if pkg.get("license_violations")]
 
 
 def report(name, results, cfg):
@@ -278,7 +266,6 @@ def main():
         "complexity": lambda: check_complexity(files, root, cfg, args.staged),
         "architecture": lambda: check_architecture(root, cfg),
         "deps": lambda: check_deps(root, cfg),
-        "licenses": lambda: check_licenses(root, cfg),
     }
     print(f"PUSULA CHECKS root={root} files={len(files)} staged={args.staged}")
     counts = [report(name, results, cfg) for name in args.only.split(",") if name in ALL_CHECKS]

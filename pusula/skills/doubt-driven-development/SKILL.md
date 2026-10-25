@@ -1,6 +1,6 @@
 ---
 name: doubt-driven-development
-description: Use before a non-trivial decision stands: architecture choice, risky or irreversible change, security logic, unfamiliar code, or a confident claim you cannot check mechanically. Adversarial self-review in the same session, no subagent.
+description: Use before a non-trivial decision stands: architecture choice, risky or irreversible change, security logic, unfamiliar code, or a claim you cannot check mechanically. Self-review in the same session.
 license: MIT
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: plain-explain
-description: Use when explaining a plan, result, error, decision or technical idea to the user in more than three sentences, or when the user says they do not understand. Fixed plain-Turkish shape, word rules, and certainty labels.
+description: Use when explaining a plan, result, error or technical idea to the user in more than three sentences, or when they say they do not understand. Plain-Turkish shape and certainty labels.
 license: MIT
 ---
 

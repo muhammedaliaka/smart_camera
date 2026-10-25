@@ -1,6 +1,6 @@
 ---
 name: verification-before-completion
-description: Use before claiming work is done, fixed or passing, and before commit or PR. Requires fresh evidence from commands, static analysis and (for UI) a screenshot checked against acceptance criteria.
+description: Use before claiming work is done, fixed or passing, and before commit. Requires fresh evidence: commands, static analysis, and for UI a screenshot checked against the criteria.
 license: MIT
 ---
 

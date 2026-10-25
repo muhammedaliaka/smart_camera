@@ -1,6 +1,6 @@
 ---
 name: architecture-standard
-description: Use when adding or restructuring a module, folder, layer or dependency, when a change touches 6 or more files, or when asked about project structure, naming, complexity or logging. Nine short rules, one architecture file.
+description: Use when adding or restructuring a module, layer or dependency, when a change touches 6 or more files, or for questions on structure, naming, complexity or logging.
 license: MIT
 ---
 
@@ -12,7 +12,7 @@ Pusula's rewrite of NEXUS_ARCH_STANDARD v4: fewer rules, one file instead of man
 One page per project (`templates/architecture.md`): Layers, Modules, Dependencies. No MANIFEST per folder, no header per file: imports and exports are the truth, copies drift.
 - Missing, and the task adds a module, layer or dependency? Draft it from the code, show it in two lines, carry on.
 - Update it in the same change that adds or moves one. `pusula_check.py` fails when a Modules path does not exist.
-- Dependencies: name and why, one line. Licenses come from the tool (`license_allow` in config.json, `--only licenses`), not memory. Read this table before adding a library.
+- Dependencies: name, why, license, official link, one line. Any license is acceptable; record it so the user can credit it. Read this table before adding a library.
 
 ## N2 Contract first
 A new module that others will call: write its signature first (type, interface, trait, schema or stubs), then the body. Changing a contract means updating every caller in the same change.

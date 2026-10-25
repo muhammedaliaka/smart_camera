@@ -20,8 +20,8 @@ Path is relative to the project root (a glob such as `src/*/` is fine). "If it f
 | <module path> | <one line> | <fail fast / retry n times / degrade to ...> | <unmeasured> |
 
 ## Dependencies
-Why each one is here. Licenses come from the tool, not from this table.
+Why each one is here. Any license is fine; the link lets the user credit it.
 
-| Name | Why |
-|---|---|
-| <name> | <one line> |
+| Name | Why | License | Link |
+|---|---|---|---|
+| <name> | <one line> | <as stated by the project> | <official page> |

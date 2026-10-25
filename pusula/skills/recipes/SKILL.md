@@ -18,6 +18,8 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 | Explain, report or answer "I do not understand" | `plain-explain` | Result first, certainty labels on non-obvious claims |
 | Bug or failing test | `systematic-debugging`, `test-driven-development`, `verification-before-completion` | Root cause named, regression test red-green proven |
 | New module, folder, layer or dependency; change touching 6+ files; naming, complexity, logs | `architecture-standard`, then `ponytail`, `verification-before-completion` | Architecture file current, `pusula_check.py` clean |
+| Hard logic, math, geometry, scheduling or an algorithm you cannot check by reading | `hard-problems`, `test-driven-development`, `verification-before-completion` | Hand examples pass, real version equals the slow reference on random cases (N and seed given) |
+| No installed skill fits, or "is there a skill for X" | `find-skills` | Candidates reported; nothing installed without a scan and an explicit yes |
 | Refactor or cleanup | `code-simplification`, `verification-before-completion` | Existing tests pass unchanged |
 | Input, auth, secrets, uploads, dependencies, LLM features | `security-and-hardening`, `verification-before-completion` | Security check list in the skill passes |
 | Any claim of "done" | `verification-before-completion` | Always last |
@@ -31,4 +33,4 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 - Skills never lower a rule in AGENTS.md.
 
 ## Not installed yet
-Domain packs: Tauri and Rust, Unity, Unreal, Flutter, Next.js, three.js and GLB, AI asset production, marketing, sales, video. For these, say so, then use `source-driven-development` on the official docs. Do not improvise from memory.
+Domain packs: Tauri and Rust, Unity, Unreal, Flutter, Next.js, three.js and GLB, AI asset production, marketing, sales, video. For these, say so. Run `find-skills` to look for the vendor's official skill; if none, use `source-driven-development` on the official docs. Do not improvise from memory.

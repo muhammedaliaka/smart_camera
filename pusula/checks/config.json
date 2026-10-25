@@ -22,7 +22,6 @@
   "complexity_max": 10,
   "complexity_ignore": ["*/node_modules/*", "*/Library/*", "*/Packages/*", "*/ThirdParty/*", "*/vendor/*", "*/target/*", "*/.pusula/*"],
   "architecture_file": ".pusula/architecture.md",
-  "license_allow": [],
   "tools": {
     "semgrep": {"exe": "semgrep", "install": "uv tool install semgrep"},
     "gitleaks": {"exe": "gitleaks", "install": "see https://github.com/gitleaks/gitleaks#installing"},

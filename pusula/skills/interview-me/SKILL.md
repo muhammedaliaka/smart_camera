@@ -1,6 +1,6 @@
 ---
 name: interview-me
-description: Use when a request is underspecified or ambiguous, before any plan or code, or when the user says "interview me" or "are we sure?". Asks one question at a time with a guess, until the intent is confirmed.
+description: Use when a request is underspecified or ambiguous, before any plan or code, or when the user says "interview me". One question at a time with a guess, until the intent is confirmed.
 license: MIT
 ---
 

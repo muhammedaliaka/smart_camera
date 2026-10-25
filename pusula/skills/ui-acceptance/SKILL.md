@@ -1,6 +1,6 @@
 ---
 name: ui-acceptance
-description: Use before building or changing any UI (Unity, web, Flutter, Tauri) and before calling it done. Writes testable acceptance criteria first, then judges screenshots of the running UI against each one.
+description: Use before building or changing any UI and before calling it done. Writes testable acceptance criteria first, then judges screenshots of the running UI against each one.
 license: MIT
 ---
 

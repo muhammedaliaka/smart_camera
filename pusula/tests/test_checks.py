@@ -292,28 +292,6 @@ class ArchitectureCheck(CheckCase):
         self.assertNotIn("not/a/module", out.stdout)
 
 
-@unittest.skipUnless(shutil.which(CFG["tools"]["osv"]["exe"]), "osv-scanner not installed")
-class LicensesCheck(CheckCase):
-    LOCK = json.dumps({"name": "demo", "lockfileVersion": 3, "packages": {
-        "": {"name": "demo", "dependencies": {"left-pad": "1.3.0"}},
-        "node_modules/left-pad": {"version": "1.3.0",
-                                  "resolved": "https://registry.npmjs.org/left-pad/-/left-pad-1.3.0.tgz"}}})
-
-    def test_off_until_an_allowlist_is_configured(self):
-        self.write("package-lock.json", self.LOCK)
-        out = self.run_check("licenses")
-        self.assertEqual(out.returncode, 0, out.stdout)
-
-    @unittest.skipUnless(os.environ.get("PUSULA_TEST_NET") == "1", "set PUSULA_TEST_NET=1 (licenses come from the network)")
-    def test_flags_a_license_outside_the_allowlist(self):
-        self.write("package-lock.json", self.LOCK)
-        out = self.run_check("licenses", extra=self.config_with(license_allow=["MIT"]))
-        self.assertEqual(out.returncode, 1, out.stdout)
-        self.assertIn("left-pad", out.stdout)
-        ok = self.run_check("licenses", extra=self.config_with(license_allow=["MIT", "WTFPL"]))
-        self.assertEqual(ok.returncode, 0, ok.stdout)
-
-
 @unittest.skipUnless(shutil.which("git"), "git not installed")
 class StagedMode(CheckCase):
     def test_only_staged_files_are_checked(self):

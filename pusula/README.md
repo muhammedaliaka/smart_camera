@@ -8,17 +8,19 @@ Plan belgesi: [Pusula — Tek Parça Yapay Zekâ Sistemi Planı](https://claude.
 
 | Yol | Ne işe yarar | Başlangıç yükü |
 | --- | --- | --- |
-| `AGENTS.md` | Çekirdek kurallar. Her oturumda yüklenir. | ~880 jeton (tahmin) |
+| `AGENTS.md` | Çekirdek kurallar. Her oturumda yüklenir. | ~910 jeton (tahmin) |
 | `CLAUDE.md` | Tek satır: `@AGENTS.md`. Claude Code için köprü. | ~0 |
-| `skills/*/SKILL.md` | 15 skill. Sadece ad ve açıklaması yüklenir; gövdesi gerekince. | ~760 jeton (15 açıklama, tahmin) |
+| `skills/*/SKILL.md` | 17 skill. Sadece ad ve açıklaması yüklenir; gövdesi gerekince. | ~800 jeton (17 açıklama, tahmin) |
 | `skills/plain-explain` | Sade Türkçe anlatım biçimi ve kesinlik etiketleri (Doğruladım, Resmi kaynak, Tahmin, Bakmadım). | gerekince |
 | `skills/ui-acceptance` | Arayüz için kabul ölçütlerini koddan önce yazdırır, sonra ekran görüntüsünü satır satır yargılatır. | gerekince |
 | `skills/architecture-standard` | NEXUS v5: dokuz kısa kural, tek mimari dosyası (`.pusula/architecture.md`), sorun günlüğü. Eski NEXUS v4'ün sadeleştirilmiş hali. | gerekince |
 | `NEXUS_v5.md` | NEXUS v4'ün 19 kuralından neyin kaldığını, neyin birleştiğini, neyin atıldığını ve nedenini gösteren tablo. Projeye kopyalanmaz. | okunmaz |
+| `skills/find-skills` | Elindeki skill yetmezse halka açık skill dizininde arar, en çok 3 seçenek sunar. Taramadan ve senin onayın olmadan kurmaz. Telemetri kapalı, sürüm sabit. | gerekince |
+| `skills/hard-problems` | Zor mantık, matematik, geometri, zamanlama işleri için yöntem: tam tanım, bilinen çözüm, yavaş ama doğru referans, rastgele karşılaştırma, sonra hızlı sürüm. | gerekince |
 | `skills/recipes` | Yönlendirici: hangi iş için hangi skill, hangi sırayla. | gerekince |
 | `skills/state-files` | Plan, bulgu ve ilerleme dosyası şablonları, izin defteri, devir notu. | gerekince |
-| `checks/` | Mekanik kontroller: `pusula_check.py` (dosya boyutu, etiketli plan kodu ve dolu Coverage satırları, sabit değer, sır, güvenlik açığı kuralları, fonksiyon karmaşıklığı, mimari dosyasındaki yolların varlığı, bağımlılık açığı, isteğe bağlı lisans) ve ayar dosyası. Jeton harcamaz. | 0 |
-| `tests/` | T1–T7 test tablosu (`TESTS.md`), kontrol betiğinin birim testleri (`test_checks.py`), T6 ve T7 ölçüm betiği (`measure.py`), hedefler (`targets.json`). Projeye kopyalanmaz. | 0 |
+| `checks/` | Mekanik kontroller: `pusula_check.py` (dosya boyutu, etiketli plan kodu ve dolu Coverage satırları, sabit değer, sır, güvenlik açığı kuralları, fonksiyon karmaşıklığı, mimari dosyasındaki yolların varlığı, bağımlılık açığı) ve ayar dosyası. Jeton harcamaz. | 0 |
+| `tests/` | T1–T20 test tablosu (`TESTS.md`), kontrol betiğinin birim testleri (`test_checks.py`), T6 ve T7 ölçüm betiği (`measure.py`), hedefler (`targets.json`). Projeye kopyalanmaz. | 0 |
 | `THIRD_PARTY.md` | Kaynak, lisans, sabitlenen commit, yaptığımız değişiklik, tarama sonucu. | okunmaz |
 
 ## Kurulum (projeye)
@@ -41,7 +43,7 @@ Kullanıcı düzeyinde kurmak istersen: Claude Code `~/.claude/skills/`, Codex `
 
 ## Kontrolleri çalıştırma
 
-`python .pusula/checks/pusula_check.py` tüm projeyi tarar. `--staged` sadece git'e eklenen değişiklikleri tarar. `--only size,plan,hardcode,secrets,sast,complexity,architecture,deps,licenses` seçili kontrolleri çalıştırır (`sast`: Semgrep'in hazır güvenlik kuralları, `p/security-audit`; kuralları internetten indirir, internet yoksa "NOT CHECKED" der). `complexity`: bir fonksiyonun karmaşıklığı 10'u geçerse kalır (lizard). `architecture`: `.pusula/architecture.md` içindeki modül yolları yoksa kalır; dosya yoksa bir şey denetlemez. `licenses`: `config.json` içinde `license_allow` listesi doluysa, listede olmayan lisansı olan paketi bulur; liste boşken kapalıdır. Çıkış kodu: 0 temiz, 1 bulgu var, 2 temiz ama bir kontrol çalışmadı. Eşikler ve dosya desenleri `checks/config.json` içinde; sabit değer kuralları `checks/semgrep/hardcode.yml` içinde (şimdilik C#, TS/JS, Dart, Rust, Python için genel kurallar).
+`python .pusula/checks/pusula_check.py` tüm projeyi tarar. `--staged` sadece git'e eklenen değişiklikleri tarar. `--only size,plan,hardcode,secrets,sast,complexity,architecture,deps` seçili kontrolleri çalıştırır (`sast`: Semgrep'in hazır güvenlik kuralları, `p/security-audit`; kuralları internetten indirir, internet yoksa "NOT CHECKED" der). `complexity`: bir fonksiyonun karmaşıklığı 10'u geçerse kalır (lizard). `architecture`: `.pusula/architecture.md` içindeki modül yolları yoksa kalır; dosya yoksa bir şey denetlemez. Lisans kontrolü yoktur; her lisans serbest, lisans ve bağlantı `architecture.md` tablosuna yazılır. Çıkış kodu: 0 temiz, 1 bulgu var, 2 temiz ama bir kontrol çalışmadı. Eşikler ve dosya desenleri `checks/config.json` içinde; sabit değer kuralları `checks/semgrep/hardcode.yml` içinde (şimdilik C#, TS/JS, Dart, Rust, Python için genel kurallar).
 
 ## Testler
 

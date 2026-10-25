@@ -25,7 +25,7 @@ Kurallar AI için `skills/architecture-standard/SKILL.md` içinde (İngilizce, k
 ## Eski 19 kural ne oldu
 | Eski | Yeni | Ne oldu ve neden |
 | --- | --- | --- |
-| R1 Fraktal kimlik (MANIFEST, en çok 7 öğe) | N1 | MANIFEST klasör başına değil, projede **tek dosya**. "7 öğe" sınırı atıldı (aşağıda soru 1). |
+| R1 Fraktal kimlik (MANIFEST, en çok 7 öğe) | N1 | MANIFEST klasör başına değil, projede **tek dosya**. "7 öğe" sınırı atıldı (sen gereksiz dedin). |
 | R2 Canlı tabela | atıldı | Kodun kopyasıydı, ayrışırdı. Doğrulayan araç da yoktu. |
 | R3 Sözleşme önce | N2 | Kaldı. "5 dakika + commit" töreni kalktı. |
 | R4 İsim egemenliği | N3 | Kaldı, aynı. |
@@ -51,12 +51,14 @@ Kurallar AI için `skills/architecture-standard/SKILL.md` içinde (İngilizce, k
 `python .pusula/checks/pusula_check.py` şimdi şunları da bakar. Hiçbiri jeton harcamaz.
 - `complexity`: karmaşıklığı 10'u geçen fonksiyon varsa kalır. **Doğruladım:** Pusula'nın kendi 7 fonksiyonu geçemedi, böldüm, şimdi geçiyor.
 - `architecture`: `.pusula/architecture.md` içindeki bir modül yolu yoksa kalır. Dosya yoksa bakmaz.
-- `licenses`: `license_allow` listesi doluysa, listede olmayan lisansı yakalar. Liste boşken kapalıdır.
+- Lisans kontrolü yok. Pusula senin kendi kullanımın için; hangi lisans olursa olsun serbest. Her bağımlılık için lisans ve resmi bağlantı `architecture.md` tablosuna yazılır, istersen atıf yaparsın.
 
-## Senin vereceğin kararlar
-1. **"Klasörde en çok 7 öğe"** kuralını attım. Unity'de `Assets` altındaki klasörler yüzlerce dosya içerir; sayı yerine "bir klasör, bir iş" kuralı daha kolay. İstersen geri koyarım. **Tahmin:** geri koymak gerekmez.
-2. **Lisans izin listesi.** Ticari oyunda hangi lisanslar olur? MIT, Apache-2.0, BSD ve ISC genelde sorun çıkarmaz. GPL ve AGPL genelde çıkarır. Bu hukuki bir karar, bana değil sana ait. Karar verene kadar `license_allow` boş, kontrol kapalı.
-3. **Katman adları.** L0–L3'ü korudum. Seasons of Iron için gerçek katmanları (örneğin simülasyon, çizim, arayüz, ağ) birlikte yazarız.
+## Kapanan kararlar
+1. **"Klasörde en çok 7 öğe" kuralı yok.** Sen gereksiz dedin.
+2. **Lisans kontrolü yok.** Pusula kendi kullanımın için; her lisans serbest.
+
+## Açık karar
+- **Katman adları.** L0–L3'ü korudum. Seasons of Iron için gerçek katmanları (örneğin simülasyon, çizim, arayüz, ağ) ilk gerçek işte birlikte yazarız.
 
 ## Bilmediklerim
 - **Bakmadım:** Gerçek bir Unity projesinde asmdef ile katman denetimi. Resmi sayfa döngüsel referansın izin verilmediğini söylüyor ([Unity](https://docs.unity3d.com/6000.3/Documentation/Manual/assembly-definitions-referencing.html)); kurulumu denemedim.

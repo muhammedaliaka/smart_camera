@@ -1,7 +1,7 @@
 # THIRD_PARTY
 
-Every third-party idea or text in Pusula is listed here. Checked on 2026-10-22.
-Rule: trusted source, permissive license, read in full, commit pinned, trimmed, scanned, recorded.
+Every third-party idea or text in Pusula is listed here. Checked on 2026-10-22; the find-skills row on 2026-10-25.
+Rule: trusted source, license recorded (any license is fine for personal use), read in full, commit pinned, trimmed, scanned, recorded.
 
 ## Sources
 
@@ -12,9 +12,11 @@ Rule: trusted source, permissive license, read in full, commit pinned, trimmed, 
 | [obra/superpowers](https://github.com/obra/superpowers) `2ce8aa15d05bd57213e6f746f953aafb7ded7a8b` | MIT, (c) 2025 Jesse Vincent | `skills/verification-before-completion`, `skills/systematic-debugging`, `skills/test-driven-development`, `skills/writing-plans` | Rewritten shorter. Verification: added static-analysis gate, UI screenshot gate, own-tests rule. TDD: limited to logic; "delete the code" replaced by a red-green proof. Debugging: dropped the extra technique files and example scripts. Plans: kept file map, task sizing, step contents, self-review; added labelled-code rule (`Why code:`, `Checked:`), Pusula coverage list, no subagent handoff. |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) `aeac41d4d005999432bb7312f7ff06383a91d59d` | MIT, (c) 2025 Addy Osmani | `skills/source-driven-development`, `skills/interview-me`, `skills/doubt-driven-development`, `skills/security-and-hardening`, `skills/code-simplification` | Rewritten shorter. Source-driven: added migration mapping table and "not official" label. Interview: added question cap, UI reference rule, grants rule. Doubt: no subagent, same-session pass, cross-model only with user approval. Security: condensed, reference files left out, tool pointers added. Simplification: language examples dropped. |
 | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) `de837a95cc845b6341a6cbfd902a89a8190c568e` | MIT, (c) 2026 Ahmad Adi | `skills/state-files` | Idea only (plan, findings and progress files on disk). New short text and templates. Its hooks, scripts, gated mode and parallel-plan machinery are not used. |
+| [vercel-labs/skills](https://github.com/vercel-labs/skills) `a80e4c9d12d607631249d4d7d059f835d4b2f13a` | MIT, (c) 2026 Vercel, Inc. | `skills/find-skills` | Rewritten shorter. Kept: search with `npx skills find`, verify before recommending, present options. Changed: no `-g -y` auto-install; CLI version pinned to 1.7.4; telemetry off; local skills first; shallow clone, SkillSpector scan and full read before any install; MCP stays off. SkillSpector scored the unpinned `npx skills` (RP1); pinned it. |
 
 ## Not taken, and why
 
+- vercel-labs/skills `find-skills` step 6 (`npx skills add ... -g -y`): installs unscanned third-party instructions without asking.
 - superpowers `using-superpowers`: "even a 1% chance, call a skill" starts process on trivial tasks.
 - superpowers subagent skills (`subagent-driven-development`, `dispatching-parallel-agents`): single-model rule.
 - superpowers `writing-plans` handoff: it offers subagent-driven execution; Pusula implements in the same session. The rest of the skill is adapted.
@@ -45,7 +47,8 @@ Not scanned: planning-with-files (not vendored).
 | [Semgrep](https://github.com/semgrep/semgrep) | 1.182.1 | not verified here | hardcoded-value rules (`checks/semgrep/hardcode.yml`, Pusula's own) and the registry ruleset `p/security-audit`, downloaded at run time and not copied here; metrics are off |
 | [lizard](https://github.com/terryyin/lizard) | 1.24.2 | not verified here | function complexity limit (`complexity` check) |
 | [gitleaks](https://github.com/gitleaks/gitleaks) | 8.30.1 | MIT | secret scan |
-| [osv-scanner](https://github.com/google/osv-scanner) | 2.7.0 | Apache-2.0 | dependency vulnerabilities and, when `license_allow` is set, licenses (sends package names and versions to osv.dev) |
+| [osv-scanner](https://github.com/google/osv-scanner) | 2.7.0 | Apache-2.0 | dependency vulnerabilities (sends package names and versions to osv.dev) |
+| [skills CLI](https://github.com/vercel-labs/skills) (npm `skills`) | 1.7.4 | MIT | `find` only: searches the public skill directory (run through `npx skills@1.7.4`, telemetry off). Install is never run by Pusula |
 | [SkillSpector](https://github.com/NVIDIA/SkillSpector) | 2.12.0 | Apache-2.0 | scan of third-party skills before install |
 
 ## License text
