@@ -14,7 +14,7 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 | Research, library choice, migration | `source-driven-development`, `state-files` (findings), `doubt-driven-development` on the conclusion | Every claim has an official link or "unverified"; mapping table complete for migrations |
 | Plan for big or irreversible work | `writing-plans`, `state-files` (plan template), `doubt-driven-development` | Every step has a check, every code block is labelled, the user approved |
 | Build a feature | `ponytail`, `test-driven-development` (logic only), `verification-before-completion` | Evidence table satisfied |
-| UI work | `interview-me` (reference), `ui-acceptance` (criteria first, screenshots last), `ponytail`, `verification-before-completion` | Every criterion row is pass or reported "not seen" |
+| UI work | `interview-me` (reference), `ui-acceptance` (criteria first, screenshots last), `frontend-design` (new UI or new look only), `ponytail`, `verification-before-completion` | Every criterion row is pass or reported "not seen" |
 | Explain, report or answer "I do not understand" | `plain-explain` | Result first, certainty labels on non-obvious claims |
 | Bug or failing test | `systematic-debugging`, `test-driven-development`, `verification-before-completion` | Root cause named, regression test red-green proven |
 | New module, folder, layer or dependency; change touching 6+ files; naming, complexity, logs | `architecture-standard`, then `ponytail`, `verification-before-completion` | Architecture file current, `pusula_check.py` clean |
@@ -30,6 +30,7 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 - TDD applies to logic, not to UI layout or config.
 - Plan code is allowed only when reasoned and labelled (`Why code:`, `Checked:`); the implementer verifies it before use.
 - Short answers do not replace plain Turkish explanations.
+- `frontend-design` is for new UI or a new look. An existing design system wins; colors and fonts still go to tokens.
 - Skills never lower a rule in AGENTS.md.
 
 ## Not installed yet

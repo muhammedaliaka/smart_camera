@@ -1,0 +1,48 @@
+# Pusula for Codex: copy into ~/.codex/config.toml or a project-scoped .codex/config.toml.
+# The locked list below is the same as the Read rules in settings/claude.settings.json (a unit test checks that).
+# Codex has no "ask" for reads: a locked path is denied until you change the profile.
+default_permissions = "pusula"
+
+# Compact earlier than the model default so a long session stays cheap (tokens; unset uses the model default).
+model_auto_compact_token_limit = 200000
+
+[permissions.pusula]
+description = "Workspace write, lockfiles and build output locked"
+extends = ":workspace"
+
+[permissions.pusula.filesystem.":workspace_roots"]
+"**/package-lock.json" = "deny"
+"**/npm-shrinkwrap.json" = "deny"
+"**/yarn.lock" = "deny"
+"**/pnpm-lock.yaml" = "deny"
+"**/bun.lock" = "deny"
+"**/bun.lockb" = "deny"
+"**/Cargo.lock" = "deny"
+"**/Gemfile.lock" = "deny"
+"**/poetry.lock" = "deny"
+"**/uv.lock" = "deny"
+"**/Pipfile.lock" = "deny"
+"**/composer.lock" = "deny"
+"**/go.sum" = "deny"
+"**/packages.lock.json" = "deny"
+"**/packages-lock.json" = "deny"
+"**/pubspec.lock" = "deny"
+"**/Podfile.lock" = "deny"
+"**/Package.resolved" = "deny"
+"**/gradle.lockfile" = "deny"
+"**/flake.lock" = "deny"
+"**/.next/**" = "deny"
+"**/dist/**" = "deny"
+"**/target/**" = "deny"
+"**/Library/**" = "deny"
+"**/Temp/**" = "deny"
+"**/obj/**" = "deny"
+"**/.gradle/**" = "deny"
+"**/.dart_tool/**" = "deny"
+"**/coverage/**" = "deny"
+"**/__pycache__/**" = "deny"
+"**/.venv/**" = "deny"
+"**/*.min.js" = "deny"
+"**/*.min.css" = "deny"
+"**/*.map" = "deny"
+"**/*.pyc" = "deny"

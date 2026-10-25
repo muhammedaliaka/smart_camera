@@ -3,6 +3,7 @@
   "core_tokens_max": 920,
   "start_tokens_max": 1800,
   "skill_body_tokens_max": 1100,
+  "third_party_skills": ["frontend-design"],
   "sentence_words_max": 20,
   "real_start_tokens_max": 2600
 }

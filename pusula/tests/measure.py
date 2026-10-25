@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Pusula measurements for tests T6 and T7. Standard library only; targets live in targets.json.
 
-  python tests/measure.py real [--root DIR]      real start-up load: headless A/B against a bare project (T7)
+  python tests/measure.py real [--root DIR] [--with-settings]   real start-up load: headless A/B against a bare project (T7);
+                                                 --with-settings also installs settings/claude.settings.json and the hooks
   python tests/measure.py load [--root DIR]      start-up load estimate, no model call (T7)
   python tests/measure.py sentences FILE         sentence length of a saved reply (T6)
 `load` is an estimate (characters / chars_per_token) and runs about 1.5 times low; `real` asks the model once per variant.
@@ -38,7 +39,8 @@ def load_rows(root):
     core = sum(len((root / n).read_text(encoding="utf-8")) for n in ("AGENTS.md", "CLAUDE.md") if (root / n).is_file())
     skills = [split_skill(p) for p in sorted((root / "skills").glob("*/SKILL.md"))]
     listing = sum(len(name) + len(desc) for name, desc, _ in skills)
-    biggest = max(skills, key=lambda s: len(s[2]))
+    own = [s for s in skills if s[0] not in TARGETS["third_party_skills"]]
+    biggest = max(own, key=lambda s: len(s[2]))
     return [
         ("core (AGENTS.md + CLAUDE.md)", tokens(core), TARGETS["core_tokens_max"]),
         (f"skill listing ({len(skills)} names + descriptions)", tokens(listing), None),
@@ -78,7 +80,7 @@ def first_request_tokens(project):
     return sum(usage[k] for k in ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"))
 
 
-def real(root):
+def real(root, with_settings=False):
     if not shutil.which("claude"):
         print("claude CLI not found; use `load` for an estimate")
         return True
@@ -90,13 +92,17 @@ def real(root):
         for name in ("AGENTS.md", "CLAUDE.md"):
             shutil.copy(root / name, pusula / name)
         shutil.copytree(root / "skills", pusula / ".claude" / "skills")
+        if with_settings:
+            shutil.copy(root / "settings" / "claude.settings.json", pusula / ".claude" / "settings.json")
+            shutil.copytree(root / "checks", pusula / ".pusula" / "checks", ignore=shutil.ignore_patterns("__pycache__"))
         for project in (bare, pusula):  # a clean git tree: uncommitted changes would add tokens of their own
             subprocess.run(["git", "init", "-q"], cwd=project, check=True)
             subprocess.run(["git", "add", "-A"], cwd=project, check=True)
             subprocess.run(["git", "-c", "user.email=m@example.org", "-c", "user.name=m", "commit", "-q", "-m", "x"], cwd=project, check=True)
         base, with_pusula = first_request_tokens(bare), first_request_tokens(pusula)
     delta, limit = with_pusula - base, TARGETS["real_start_tokens_max"]
-    print(f"bare project: {base} tokens; with Pusula: {with_pusula} tokens; Pusula adds {delta} (target {limit}){' OVER' if delta > limit else ''}")
+    label = "Pusula + settings" if with_settings else "Pusula"
+    print(f"bare project: {base} tokens; with {label}: {with_pusula} tokens; adds {delta} (target {limit}){' OVER' if delta > limit else ''}")
     return delta > limit
 
 
@@ -117,13 +123,16 @@ def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("load").add_argument("--root", default=str(HERE.parent))
-    sub.add_parser("real").add_argument("--root", default=str(HERE.parent))
+    real_parser = sub.add_parser("real")
+    real_parser.add_argument("--root", default=str(HERE.parent))
+    real_parser.add_argument("--with-settings", action="store_true")
     sub.add_parser("sentences").add_argument("file")
     args = ap.parse_args()
     if args.cmd == "sentences":
         failed = sentences(args.file)
     else:
-        failed = {"load": load, "real": real}[args.cmd](Path(args.root).resolve())
+        root = Path(args.root).resolve()
+        failed = real(root, args.with_settings) if args.cmd == "real" else load(root)
     sys.exit(1 if failed else 0)
 
 

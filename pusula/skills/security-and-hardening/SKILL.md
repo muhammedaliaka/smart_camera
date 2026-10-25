@@ -23,7 +23,7 @@ Validate input at the boundary with a schema. Parameterize queries. Encode outpu
 New auth flows or auth changes, new kinds of sensitive data, new external integrations, CORS changes, file uploads, rate-limit changes, elevated permissions.
 
 ## Never
-Commit secrets. Log secrets or personal data. Trust client-side validation. Use `eval` or `innerHTML` on user data. Keep tokens in localStorage. Show stack traces to users. Switch off security headers for convenience. Give an app broader OS, plugin or capability permissions than it needs (least privilege for desktop and mobile shells too).
+Commit secrets. Log secrets or personal data. Trust client-side validation. Use `eval` or `innerHTML` on user data. Keep tokens in localStorage. Show stack traces to users. Omit security headers. Give an app broader OS, plugin or capability permissions than it needs (least privilege for desktop and mobile shells too).
 
 ## Specifics
 - **Injection and XSS:** never build SQL or shell strings from input; use the framework's escaping or an allowlist sanitizer.
@@ -33,6 +33,7 @@ Commit secrets. Log secrets or personal data. Trust client-side validation. Use 
 - **Rate limits:** strict on auth endpoints; shared store when more than one instance.
 - **Secrets:** from the environment; `.env.example` holds placeholders; real keys are gitignored; scan the staged diff. A leaked secret is compromised: rotate first, then clean history.
 - **Dependencies:** one lockfile and a pinned manager; block install scripts until reviewed; triage audit findings by reachability; never auto-apply forced fixes; audits miss new malicious or typosquatted packages, so review new dependencies, release age and ownership.
+- **Copying:** shipped code can be read. Keep value and secrets on the server; see `anti-copy.md`.
 - **Personal data:** collect only for a stated purpose, classify fields, set retention, keep deletion and export working end to end.
 - **AI/LLM features:** model output is untrusted (never into eval, SQL, shell, HTML or paths; validate then encode). Prompts can be hijacked by fetched text; enforce permissions in code, not in the prompt. Keep secrets and other users' data out of context. Confirm destructive tool actions. Cap tokens, rate and recursion.
 

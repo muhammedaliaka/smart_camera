@@ -12,7 +12,7 @@ Context is volatile; files are not. Anything important goes to disk.
 
 ## Where
 `.pusula/<task-slug>/plan.md`, `findings.md`, `progress.md` (templates in `templates/`).
-`.pusula/permissions.md`: permissions the user granted. `.pusula/handoff.md`: end-of-session note. `.pusula/architecture.md` and `.pusula/issues.md`: see `architecture-standard`.
+`.pusula/permissions.md`: permissions the user granted and things they said never to do. A hook shows it again after context compaction. `.pusula/handoff.md`: end-of-session note. `.pusula/architecture.md` and `.pusula/issues.md`: see `architecture-standard`.
 
 ## Start of a task
 1. Read `.pusula/permissions.md` and the open task's `plan.md` ("Next step"), then `git diff --stat`.

@@ -1,6 +1,6 @@
 ---
 name: test-driven-development
-description: Use when implementing new logic or fixing a bug: write a failing test first, see it fail for the right reason, then write minimal code. Not for UI layout, config or generated code.
+description: Use when implementing new logic or fixing a bug. Write a failing test first, see it fail for the right reason, then write minimal code. Not for UI layout, config or generated code.
 license: MIT
 ---
 

@@ -1,0 +1,90 @@
+{
+  "permissions": {
+    "ask": [
+      "Read(**/package-lock.json)",
+      "Read(**/npm-shrinkwrap.json)",
+      "Read(**/yarn.lock)",
+      "Read(**/pnpm-lock.yaml)",
+      "Read(**/bun.lock)",
+      "Read(**/bun.lockb)",
+      "Read(**/Cargo.lock)",
+      "Read(**/Gemfile.lock)",
+      "Read(**/poetry.lock)",
+      "Read(**/uv.lock)",
+      "Read(**/Pipfile.lock)",
+      "Read(**/composer.lock)",
+      "Read(**/go.sum)",
+      "Read(**/packages.lock.json)",
+      "Read(**/packages-lock.json)",
+      "Read(**/pubspec.lock)",
+      "Read(**/Podfile.lock)",
+      "Read(**/Package.resolved)",
+      "Read(**/gradle.lockfile)",
+      "Read(**/flake.lock)",
+      "Read(**/.next/**)",
+      "Read(**/dist/**)",
+      "Read(**/target/**)",
+      "Read(**/Library/**)",
+      "Read(**/Temp/**)",
+      "Read(**/obj/**)",
+      "Read(**/.gradle/**)",
+      "Read(**/.dart_tool/**)",
+      "Read(**/coverage/**)",
+      "Read(**/__pycache__/**)",
+      "Read(**/.venv/**)",
+      "Read(**/*.min.js)",
+      "Read(**/*.min.css)",
+      "Read(**/*.map)",
+      "Read(**/*.pyc)",
+      "Edit(.claude/settings.json)",
+      "Edit(.claude/settings.local.json)",
+      "Edit(.pusula/checks/**)"
+    ]
+  },
+  "autoCompactWindow": 200000,
+  "skillOverrides": {
+    "batch": "name-only",
+    "claude-api": "name-only",
+    "code-review": "name-only",
+    "dataviz": "name-only",
+    "debug": "name-only",
+    "deep-research": "name-only",
+    "design": "name-only",
+    "design-sync": "name-only",
+    "doctor": "name-only",
+    "fewer-permission-prompts": "name-only",
+    "loop": "name-only",
+    "plugin-authoring": "name-only",
+    "run": "name-only",
+    "run-skill-generator": "name-only",
+    "schedule": "name-only",
+    "simplify": "name-only",
+    "update-config": "name-only",
+    "verify": "name-only",
+    "workflow-authoring": "name-only"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.pusula/checks/lock_guard.py\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.pusula/checks/after_compact.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

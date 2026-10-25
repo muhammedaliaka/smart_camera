@@ -26,5 +26,5 @@ Done when you can predict the user's reaction to your next three questions. Cap:
 
 ## Pusula additions
 - **UI work:** ask for a reference (screenshot, game, site) and for acceptance criteria. No reference: propose two described options and get a pick.
-- **Grants:** when the user allows something ("you may edit anything under src/"), write it to `.pusula/permissions.md` and do not ask again.
+- **Grants and bans:** when the user allows something ("you may edit anything under src/") or forbids it ("never add a library"), write it to `.pusula/permissions.md` and do not ask again.
 - **Understanding note:** for any large task, start with a short "Anladığım" note (my reading of your request) so the user can correct it.
