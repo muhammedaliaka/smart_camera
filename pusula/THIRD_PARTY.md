@@ -44,7 +44,7 @@ Not scanned: planning-with-files (not vendored).
 
 | Tool | Version tested | License | Used for |
 | --- | --- | --- | --- |
-| [Semgrep](https://github.com/semgrep/semgrep) | 1.182.1 | not verified here | hardcoded-value rules (`checks/semgrep/hardcode.yml`, Pusula's own) and the registry ruleset `p/security-audit`, downloaded at run time and not copied here; metrics are off |
+| [Semgrep](https://github.com/semgrep/semgrep) | 1.182.1 | not verified here | hardcoded-value rules (`checks/semgrep/hardcode.yml`, Pusula's own) and the registry ruleset `p/default`, downloaded at run time and not copied here; metrics are off |
 | [lizard](https://github.com/terryyin/lizard) | 1.24.2 | not verified here | function complexity limit (`complexity` check) |
 | [gitleaks](https://github.com/gitleaks/gitleaks) | 8.30.1 | MIT | secret scan |
 | [osv-scanner](https://github.com/google/osv-scanner) | 2.7.0 | Apache-2.0 | dependency vulnerabilities (sends package names and versions to osv.dev) |

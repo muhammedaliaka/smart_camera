@@ -18,7 +18,7 @@
   "fail_severities": ["ERROR", "WARNING"],
   "max_findings_per_check": 10,
   "semgrep_rules": "semgrep/hardcode.yml",
-  "semgrep_rulesets": ["p/security-audit"],
+  "semgrep_rulesets": ["p/default"],
   "complexity_max": 10,
   "complexity_ignore": ["*/node_modules/*", "*/Library/*", "*/Packages/*", "*/ThirdParty/*", "*/vendor/*", "*/target/*", "*/.pusula/*"],
   "architecture_file": ".pusula/architecture.md",
