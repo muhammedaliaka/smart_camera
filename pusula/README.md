@@ -89,17 +89,20 @@ Hepsini inceledim (liste `THIRD_PARTY.md`, "Reviewed, not installed"). **Kurduğ
 - **Sana faydası (Tahmin):** oyun tasarım belgeleri, plan ve devir notlarını okumak için `.pusula/` klasörünü kasa olarak açabilirsin. Telefonda dosyaların oraya gelmesi için bir eşitleme yolu gerekir (git, bulut klasörü veya Obsidian'ın ücretli Sync'i); bunu denemedim. Projeyi kasa yaparsan `.obsidian/` klasörünü `.gitignore`'a ekle.
 - `defuddle` (web sayfasından temiz Markdown çıkarır, jeton tasarrufu için) ileride bakılacak adaylardan; şimdilik kurulu değil.
 
-## Kopyalamaya karşı
+## Kopyalamaya karşı (REA)
 
-ReVa (Ghidra için MCP sunucusu) bir modelin derlenmiş programdaki çözülmüş kodu, metinleri ve çağrı ilişkilerini okumasını sağlıyor; resmi README'ye göre büyük programları ve donanım yazılımı imajlarını da işleyebiliyor. Yani bunu **engelleyen** bir araç yok; yapılabilen şey maliyeti artırmak. Özet (`skills/security-and-hardening/anti-copy.md`):
+Sorduğun araç **REA** (`morluto/rea`, "Reverse Engineer Anything"): ajanlara bağlanan bir MCP sunucusu ve komut satırı aracı (MIT). JS ve Electron paketlerini (modül, import, kaynak haritası, rota), siteleri, .NET'i, **Unity IL2CPP metadata'sını**, APK'yı, Flutter'ı ve Ghidra/IDA ile native kodu okuyor; kayıtlı web trafiğinden (HAR) bir uygulamanın davranışını taklit eden ortam da çıkarabiliyor. Orijinal kaynağı geri getirdiğini iddia etmiyor (Resmi belge). Önceki sürümde yanlışlıkla ReVa'yı yazmıştım; o ayrı bir araç. REA'nın README'sini kopyalayan birçok sahte depo var; sadece `morluto/rea` ve npm'deki `rea-agents`.
 
-1. Değerli mantık ve veri istemcide durmasın: hesaplar, satın alma, sıralama, denge verisi, hile kontrolü ve her sır sunucuda, her eylem sunucuda doğrulanır.
-2. Tasarımın zorunlu kıldığını bil: deterministik "lockstep" bir RTS'de tüm simülasyon her istemcide çalışır; kurallar oyunla birlikte gider. Korunabilecekler: sunucu hizmetleri, içerik, marka, kullanım şartları.
-3. Unity: Mono derlemesi okunur C# verir. IL2CPP maliyeti artırır ama `global-metadata.dat` düz bir dosya; Il2CppDumper ve Cpp2IL isimleri ve metinleri oradan okur. BitMono gibi bir karartıcı bu dosyayı da şifreleyebiliyor (BitMono belgesine göre; denemedim).
-4. Karartma kilit değil, sadece maliyet; yansıma (reflection) ve derleme süresini bozabilir.
-5. Kullanım şartı + hukuk (ülkeye göre değişir; avukat), ve her sürüme özel işaretler ile sızıntının kaynağını kanıtlamak.
+Bunu **engelleyen** bir araç yok; yapılabilen şey maliyeti artırmak ve **ölçmek**. Özet (`skills/security-and-hardening/anti-copy.md`, tam plan `.pusula/build-shield/plan.md`):
 
-Pusula bunların hiçbirini kendiliğinden kurmaz. Kullanıcı korumak isterse yapay zekâ önce "kimden korunuyoruz?" diye sorar.
+1. Bedava hediye verme: kaynak haritası, `.pdb`, çıplak `global-metadata.dat`, `.env` yayında olmasın. REA kaynak haritalarını doğrudan okuyor.
+2. Değerli mantık ve sırlar sunucuda dursun; her eylem sunucuda doğrulansın.
+3. Unity: IL2CPP maliyeti artırır. REA metadata sürümlerini 24/27/29/31/39 çözüyor ve "tanınmayan (belki şifreli) başlık desteklenmez" diyor; BitMono bu dosyayı şifreleyen bir koruma belgeliyor. Çalışma anı bellek ve native kod analizi yine mümkün (denemedim).
+4. JS: üreticilerin kendi rakamı, karartılmış kod %15–80 yavaşlıyor ve dosya büyüyor. VM koruması ücretli. Yani rapordaki "%5 büyüme" hedefi garanti değil, ölçülecek bir bütçe.
+5. Davranış (ağ trafiği, çalışma anı) gizlenemez; API'yi savun.
+6. RTS'te lockstep simülasyon her istemcide çalışır; kurallar oyunla gider. Korunabilecek: sunucu hizmetleri, içerik, veri, marka, kullanım şartları.
+
+Pusula bunların hiçbirini kendiliğinden kurmaz. Plan **taslak**; onayın ve iki cevabın (hangi yığın önce, hangi modüller değerli) bekleniyor. REA'yı bu makinede çalıştırma izni de sende (aşağıya bak: plan, "Unknowns").
 
 ## Testler
 
