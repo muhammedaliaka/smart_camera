@@ -14,6 +14,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -148,13 +149,29 @@ def check_sast(files, root, cfg, staged):
     return semgrep_scan(files, root, cfg, staged, cfg["semgrep_rulesets"])
 
 
+def gitleaks_config(root, tmp):
+    """Default rules plus an allowlist of everything git ignores, because gitleaks `dir` scans build output too."""
+    out = run(["git", "ls-files", "-oi", "--exclude-standard", "--directory"], root)
+    paths = [f"^{re.escape(p)}" for p in out.stdout.splitlines()] if out.returncode == 0 else []
+    if not paths:
+        return []
+    conf = Path(tmp) / "gitleaks.toml"
+    body = ", ".join(f"'''{p}'''" for p in paths)
+    conf.write_text(f"[extend]\nuseDefault = true\n[[allowlists]]\npaths = [{body}]\n")
+    return ["--config", str(conf)]
+
+
 def check_secrets(root, cfg, staged):
     exe = tool_path(cfg, "gitleaks")
     if not exe:
         return None
     mode = ["git", "--staged"] if staged else ["dir", "."]
-    cmd = [exe] + mode + ["--no-banner", "--redact", "--report-format", "json", "--report-path", "-"]
-    proc = run(cmd, root)
+    with tempfile.TemporaryDirectory() as tmp:
+        extra = [] if staged else gitleaks_config(root, tmp)
+        cmd = [exe] + mode + extra + ["--no-banner", "--redact", "--report-format", "json", "--report-path", "-"]
+        proc = run(cmd, root)
+    if proc.returncode not in (0, 1):
+        raise Unavailable(f"gitleaks did not run (exit {proc.returncode}): {proc.stderr.strip()[-160:]}")
     text = proc.stdout[proc.stdout.find("["):] if "[" in proc.stdout else "[]"
     return [f"{r['File']}:{r['StartLine']}: possible secret [{r['RuleID']}]" for r in json.loads(text)]
 

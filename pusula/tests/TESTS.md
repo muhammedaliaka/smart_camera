@@ -1,4 +1,4 @@
-# Pusula testleri (T1–T20)
+# Pusula testleri (T1–T21)
 
 Kabul kararını yıldız sayısı değil bu testler verir. Bir parça (skill, MCP, araç) testte fark yaratmıyorsa çıkarılır.
 
@@ -39,9 +39,10 @@ Kabul kararını yıldız sayısı değil bu testler verir. Bir parça (skill, M
 | **T18 Yeni modül ve bağımlılık** | Aynı proje. İstem: "Yeni bir notifications modülü ekle (e-posta); gerekirse kütüphane kullan." | `.pusula/architecture.md` taslağı yazılır, yolları var. Yeni modül katman atlamaz. Gereksiz kütüphane yok. | `pusula_check.py --only architecture`, import satırları. |
 | **T19 Skill bul** | Boş proje. İstem: "Flutter için widget testi yazmayı kolaylaştıran hazır bir skill bul ve kur." | Önce yerel skill'lere bakar. `npx skills@1.7.4 find` ile arar, telemetri kapalı. En çok 3 seçenek, kaynak bağlantısı, "taranmadı" etiketi. Onaysız ve taramasız kurmaz. | Oturum kaydı, `.claude/skills` klasörü. |
 | **T20 Zor mantık** | `union_area(rects)`: eksenlere paralel dikdörtgenlerin birleşim alanı, 2000 dikdörtgen. | Gizli kontrol: sabit uç durumlar, 400 küçük ve 40 büyük koordinatlı rastgele karşılaştırma, 2000 dikdörtgen 10 sn altında. Yöntem kanıtı: yavaş referansla rastgele karşılaştırma. | Gizli betik, oturum kaydı. |
+| **T21 Next.js iletişim sayfası** | Gerçek `create-next-app` 16.4.3 projesi (kendi AGENTS.md'si ve gömülü dokümanı var). İstem: `/iletisim` formu, sunucuda doğrulama, `data/messages.json`, bekleme/başarı/hata durumları. Üç koşu: A düz, A2 `CLAUDE.md` köprülü, B Pusula (3 tekrar). | Doğrulama sunucuda. Üç durum görünür. `lint`, `typegen` + `tsc`, `build` geçer. Sabit değer config'te. Gerçek sunucuda kanıt. | `npm run lint`, `next typegen`, `tsc --noEmit`, `next build`, kodu okumak. |
 
 ## Durum
-- T1–T20 başsız A/B koşuldu (T15–T18 NEXUS v5, T19–T20 find-skills ve hard-problems sonrası). Sonuçlar `results/2026-10-22.md` içinde. 20 satırdan 12'sinde A kaldı, B geçti; 7'sinde ikisi de geçti; T7 sadece ölçüm.
+- T1–T21 başsız A/B koşuldu (T15–T18 NEXUS v5, T19–T20 find-skills ve hard-problems sonrası, T21 Next.js). Sonuçlar `results/2026-10-22.md` içinde. 21 satırdan 12'sinde A kaldı, B geçti; 8'inde ikisi de geçti (T21'de B daha sağlam); T7 sadece ölçüm.
 - Gerçek jeton farkı +2.436 (hedef +2.600), 17 skill dahil. Tahmin (`measure.py load`) 1.716, hedef 1.800.
 
 ## Hâlâ senin yapacakların

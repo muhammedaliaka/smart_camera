@@ -6,11 +6,12 @@ license: MIT
 
 # Architecture standard (NEXUS v5)
 
-Pusula's rewrite of NEXUS_ARCH_STANDARD v4: fewer rules, one file instead of many, tools check what tools can. Kept, merged, dropped: `NEXUS_v5.md`. A typo, a rename or a one-file change needs none of this.
+A typo, a rename or a one-file change needs none of this.
 
 ## N1 One map: `.pusula/architecture.md`
-One page per project (`templates/architecture.md`): Layers, Modules, Dependencies. No MANIFEST per folder, no header per file: imports and exports are the truth, copies drift.
+One page per project (`templates/architecture.md`): Stack, Layers, Modules, Dependencies. No MANIFEST per folder, no header per file: imports and exports are the truth, copies drift.
 - Missing, and the task adds a module, layer or dependency? Draft it from the code, show it in two lines, carry on.
+- Stack section empty? Fill it with `stacks.md` (next to this file); it lists known stacks and the steps for any other.
 - Update it in the same change that adds or moves one. `pusula_check.py` fails when a Modules path does not exist.
 - Dependencies: name, why, license, official link, one line. Any license is acceptable; record it so the user can credit it. Read this table before adding a library.
 

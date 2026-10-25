@@ -22,6 +22,8 @@ Every framework-specific decision rests on official documentation. Do not work f
 3. Web standards (MDN, specs) and compatibility data.
 4. Community material (Stack Overflow, blogs, forums, AI summaries): only after the above, always labelled "not official", never the sole basis for a decision.
 
+No official pick for a library or tool? Open the topic's list from [sindresorhus/awesome](https://github.com/sindresorhus/awesome) (CC0 index of about 800 community lists; never load it whole, open one list). Label the pick "not official", then check its repo: license, last release, open issues.
+
 Your training memory is not a source. Official docs can be stale: check the page date and the version it targets.
 
 ## Migrations (old stack to new stack)

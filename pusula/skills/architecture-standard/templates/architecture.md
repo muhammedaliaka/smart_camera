@@ -2,6 +2,17 @@
 
 Updated: <date>. One page. `pusula_check.py` checks that every Modules path exists.
 
+## Stack
+Name and version. Commands to build, test, lint and type-check, each run once or marked UNVERIFIED. Official docs, security guide, native analyzers. See `stacks.md` in the `architecture-standard` skill.
+
+| What | Command or link |
+|---|---|
+| Stack and version | <e.g. name 1.2.3> |
+| Build | <command> |
+| Test | <command> |
+| Lint and types | <command> |
+| Docs and security guide | <official links> |
+
 ## Layers
 A layer may call only the layer listed. Data flows down. Change the rows to the project's real layers.
 

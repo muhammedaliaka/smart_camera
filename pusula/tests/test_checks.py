@@ -214,6 +214,18 @@ class SecretsCheck(CheckCase):
         self.assertIn("leak.py", out.stdout)
         self.assertNotIn("ok.py", out.stdout)
 
+    @unittest.skipUnless(shutil.which("git"), "git not installed")
+    def test_git_ignored_build_output_is_skipped(self):
+        token = "ghp_" + hashlib.sha256(b"pusula-test").hexdigest()[:36]
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        self.write(".gitignore", ".next/\n")
+        self.write(".next/cache/info", f'TOKEN = "{token}"\n')
+        self.write("src/leak.py", f'TOKEN = "{token}"\n')
+        out = self.run_check("secrets")
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("leak.py", out.stdout)
+        self.assertNotIn(".next", out.stdout)
+
 
 @unittest.skipUnless(os.environ.get("PUSULA_TEST_NET") == "1" and shutil.which(CFG["tools"]["osv"]["exe"]),
                      "set PUSULA_TEST_NET=1 and install osv-scanner")
