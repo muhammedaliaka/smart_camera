@@ -23,6 +23,7 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 | Refactor or cleanup | `code-simplification`, `verification-before-completion` | Existing tests pass unchanged |
 | Input, auth, secrets, uploads, dependencies, LLM features | `security-and-hardening`, `verification-before-completion` | Security check list in the skill passes |
 | Release build, or protecting a shipped build from copying (REA) | `security-and-hardening` (read `anti-copy.md`), `verification-before-completion` | `pusula_check.py --only shield` clean; `shield_report.py` inside the budgets; claims limited to its table |
+| Work in a named stack or field: Tauri/Rust, Unity, Unreal, Flutter, Next.js, three.js/GLB, AI assets and licenses, security audit, marketing, sales, video making, video watching | `packs/INDEX.md`, then the one matching pack, then the recipe for the task itself | The pack's "Done when" holds |
 | Any claim of "done" | `verification-before-completion` | Always last |
 | Long session | `state-files` (handoff note) | Note written, one page |
 
@@ -34,5 +35,5 @@ Load only the skills a recipe names. Do not load the rest. If these recipes and 
 - `frontend-design` is for new UI or a new look. An existing design system wins; colors and fonts still go to tokens.
 - Skills never lower a rule in AGENTS.md.
 
-## Not installed yet
-Domain packs: Tauri and Rust, Unity, Unreal, Flutter, Next.js, three.js and GLB, AI asset production, marketing, sales, video. For these, say so. Run `find-skills` to look for the vendor's official skill; if none, use `source-driven-development` on the official docs. Do not improvise from memory. Unity: Unity publishes an official plugin (`Unity-Technologies/unity-agent-plugin`, Unity 6+). Not installed; it needs a license check, a SkillSpector scan and the user's yes (`THIRD_PARTY.md`).
+## Domain packs
+Stack and field notes live in `packs/`. Read `packs/INDEX.md` when the task is in one of those fields, then only the matching pack. Vendor skills come first (`find-skills`); otherwise `source-driven-development` on the official docs. Do not improvise from memory. Not installed: Unity's official plugin (`Unity-Technologies/unity-agent-plugin`) needs a license check, a SkillSpector scan and the user's yes (`THIRD_PARTY.md`).
