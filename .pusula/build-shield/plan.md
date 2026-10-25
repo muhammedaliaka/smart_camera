@@ -1,17 +1,19 @@
 # Plan: Build Shield (make shipped builds harder for AI reverse-engineering tools)
 
 Status: draft
-Updated: 2026-10-25
+Updated: 2026-10-25 (experiment run; user answers added)
 
 ## Özet (Türkçe, telefonda okumak için)
 - **Hedef:** Yayınladığın build'i REA gibi yapay zekâ destekli tersine mühendislik araçlarının okumasını **zorlaştırmak** ve bunu **ölçerek** göstermek. "Kırılamaz" demek yok.
 - **REA ne?** `morluto/rea`: Reverse Engineer Anything. Ajanlara bağlanan bir MCP/CLI. JS ve Electron, siteler, .NET, **Unity IL2CPP**, APK, Flutter, native programlar. Kaynak kodu geri getirdiğini iddia etmiyor; bulduğu kanıtla ajan kod yazıyor.
 - **Yapıştırdığın rapor:** büyük ölçüde doğru (kaynak haritası, ağ trafiği, VM koruması en güçlüsü, hiçbir şey davranış gözlemini durdurmaz). Eksikleri: sadece JS'e bakıyor (senin RTS'in Unity), "%5 büyüme" hedefi üreticilerin kendi rakamlarıyla çelişiyor (15–80% yavaşlama), ölçümü en sona koymuş.
 - **Benim değişikliğim:** (1) önce ölç, sonra koru; (2) kendi VM'imizi yazma, hazır araç kullan; (3) ucuz "sızıntı kontrolü" (kaynak haritası, çıplak `global-metadata.dat`); (4) boyut/hız bütçesi ayar dosyasında, aşılırsa yayın durur; (5) davranış kopyalamaya (HAR ile ortam çıkarma) karşı API savunması; (6) her sürüme özel iz.
-- **Önce karar gereken:** hangi yığın ilk (öneri: Unity) ve hangi 5–10 modül "değerli" (sen söyleyeceksin). Detay aşağıda, İngilizce.
+- **Senin kararların (işlendi):** ilk yığın Unity; değerli kod dört sınıf (birim yapay zekâsı ve yol bulma, ekonomi ve denge, çok oyunculu ve ağ, kampanya ve harita verisi); koruma **herhangi bir oyun türü için, ayar dosyasından, her şeyi varsayılan olarak kilitleyecek** şekilde yapılacak (tek oyuna göre değil).
+- **Deney yapıldı (REA 6.8.0, sadece JS örneği, kendi yazdığımız):** düz sürümde REA 12/12 işaretçiyi buluyor; sıkıştırınca 10/12; hafif karartma 7/12; ağır karartma 3/12. Kaynak haritası bırakılırsa tüm kaynak açık. Karartınca REA'nın sayıları **artıyor**, yani doğru ölçü "kaç tane buldu" değil "bildiğimiz değerli isim, metin, adres ve sayıların kaçı hâlâ bulunuyor". Davranış hiç değişmedi: oyunu çalıştıran kişi değerleri yine görür. Unity ve .NET henüz denenmedi. (Katalogda 229 araç var; sen 207 demiştin, 6.8.0 sürümüne göre sayı bu.)
+- **Sıradaki karar:** aşağıdaki Unknowns tablosunda (webcrack çalıştırma izni, Unity testi için senin bilgisayarın).
 
 ## Goal
-A repeatable release step that (1) refuses to ship leaks REA reads for free (source maps, debug symbols, plain IL2CPP metadata), (2) applies existing protection tools to a user-chosen list of valuable modules within a size and start-up budget, and (3) reports, with numbers, how much less REA can recover from the protected build than from the plain one. The claim it may make is "recovers X% fewer names, strings and routes"; it never claims "unbreakable".
+A repeatable release step that (1) refuses to ship leaks REA reads for free (source maps, debug symbols, plain IL2CPP metadata), (2) applies existing protection tools to everything by default (code and content data of any game type), with exclusions in config, within a size and start-up budget, and (3) reports, with numbers, how much less REA can recover from the protected build than from the plain one. The claim it may make is "X% of the names, strings, routes and constants found in the plain build are still found in the protected one"; it never claims "unbreakable".
 
 ## Out of scope
 - Making copying impossible, DRM, license servers, anti-piracy.
@@ -34,7 +36,11 @@ A repeatable release step that (1) refuses to ship leaks REA reads for free (sou
 | Flutter: `--obfuscate --split-debug-info`, nothing more claimed | Docs say it only renames symbols, does not encrypt resources | https://docs.flutter.dev/deployment/obfuscate |
 | Size and speed are budgets in config, not promises | "+5%" conflicts with the vendors' own numbers | findings.md |
 | Behavior is out of reach of obfuscation: defend the API | REA builds agent environments from HAR captures and observes pages at runtime | `references/environments.md` |
-| Selective: protect a named list of modules, not the whole build | Cost and breakage grow with coverage; the report's own best idea | pasted report, section 3 |
+| Generic and default-all: `shield.config.json` maps four value classes (`ai`, `economy`, `network`, `content`) to path or namespace globs per project; everything not excluded is protected; `exclude` lists reflection, serialization and engine-named items | User decision: the shield serves every game type and every Pusula user, not one game; a protect-only list leaves anything forgotten in the clear. Cost is held by the budgets, not by a short list | user message 2026-10-25 |
+| Headline metric is recall of known values, not raw counts: the literal strings, routes, names and numeric constants found in the plain build, and the share still found in the protected build, per value class | Experiment: obfuscation raised REA's node count from 202 to 1,689 while recall fell from 12/12 to 3/12 | findings.md, Experiment |
+| Leak check reads the source map's `sourcesContent` itself | Experiment: REA's JavaScript analyzer gave the same counts with and without the map, yet the map held all 12 canaries | findings.md, Experiment |
+| Unity first candidates: Obfuz (MIT; symbols, constants, control flow, watermark; IL2CPP and Mono) and BitMono (metadata protection); say plainly that metadata encryption is bypassed by memory dumping | README of Obfuz; BitMono docs; blog report of the bypass | findings.md, Sources |
+| Content data (campaign, maps, balance tables): keep authoritative copies on the server; an encrypted local pack only raises cost | Unity's own manual says client-held content can be grabbed; REA lists no Unity asset reader but others may exist | https://docs.unity3d.com/550/Documentation/Manual/protectingcontent.html |
 | Tag every release with a private build ID | Lets the user prove where a leaked copy came from | common practice, untested |
 
 ## Coverage
@@ -46,7 +52,7 @@ Write one line per heading: decision, risk, unknown. Write "none" if empty.
 - Source quality: official docs and REA's own package text; third-party blogs only for the name collision; star counts ignored (blogs disagree).
 - Tests: planted-leak unit tests for the leak check; budgets checked by script; equivalence smoke test; REA version recorded with every number.
 - License and legal: REA MIT, Wakaru Apache-2.0, webcrack MIT, javascript-obfuscator BSD-2; obfuscator.io VM and Jscrambler are paid; EULA clause and takedown need a lawyer; REA's own README excludes unauthorized analysis.
-- Scope and time: Unity first, then web; Tauri, Electron and Rust later; no custom protector.
+- Scope and time: Unity first, then web; Tauri, Electron and Rust later; no custom protector. Config is generic: any game type fills the four value classes with its own globs; empty class = report says NOT COVERED, never clean.
 - Maintenance: REA releases daily (6.8.0 on 2026-10-25), so results age; pin the version in each report and re-run on every release build.
 - Tool compatibility: REA needs Node 22.23.4+ (this sandbox has 22.22.0 and `--help` still ran); Ghidra, IDA or Hopper only for native depth; BitMono needs a matching Unity version (unknown).
 - Delivery: one `shield.config.json` per project, one `shield_report.py`, one extra `pusula_check.py` check, one recipes row; nothing runs without the user's approval of this plan.
@@ -59,20 +65,20 @@ Big decision: how to protect JS and C# logic.
 - Choice: B. Revisit A only if the numbers show REA still recovers the valuable modules after B, and then buy or adopt a VM product rather than write one.
 
 ## Steps
-1. Choose stack and valuables | check: `shield.config.json` exists with `stack`, `protect` (5 to 10 module or namespace names), `release_dir`, and budgets `max_size_growth_pct`, `max_startup_ms_growth`, `max_frame_ms_growth`; no number is hardcoded in a script. Needs the user's answers.
-2. Run `rea --help` and each needed command's `--help`, record the exact flags | check: `findings.md` lists the commands and flags used (candidates: `inspect-il2cpp-metadata`, `inspect-managed-members`, `inspect-managed-artifact`, `analyze-javascript-application`, `compare-source-to-bundle`, `inspect-byte-entropy`, `environment-build`). Needs permission to run REA.
+1. Write the config schema | check: `shield.config.json` holds `stack`, `classes` (`ai`, `economy`, `network`, `content`, each a list of path or namespace globs), `exclude`, `release_dir`, and budgets `max_size_growth_pct`, `max_startup_ms_growth`, `max_frame_ms_growth`; no number or class name is hardcoded in a script; a class with no globs is reported as NOT COVERED. Stack = Unity, all four classes: answered.
+2. Run `rea --help` and each needed command's `--help`, record the exact flags | check: `findings.md` lists the commands and flags used (candidates: `inspect-il2cpp-metadata`, `inspect-managed-members`, `inspect-managed-artifact`, `analyze-javascript-application`, `compare-source-to-bundle`, `inspect-byte-entropy`, `environment-build`). Done for `analyze-javascript-application` (permission granted for our own fixtures); the Unity and .NET commands need a Unity build.
 3. Build one plain fixture per stack from code we own (Unity: a small scene plus the valuable modules; web: a tiny app) | check: build succeeds, tests pass, REA version and fixture commit are written next to the output.
-4. Baseline: run the REA commands on the plain fixture and save counts | check: `baseline.json` holds numbers for type and method names from metadata, string literals, routes and endpoints, module count, source-map presence, byte entropy of the largest data file.
-5. Leak check, as one more check in `pusula_check.py` that reads `release_dir` from config | check: unit tests with planted `*.map`, `sourceMappingURL`, `*.pdb`, plain metadata magic and `.env` fail it; a clean folder passes; a missing `release_dir` reports NOT CHECKED, never clean.
-6. Apply the protections for the stack to the fixture, selective by `protect` | check: the fixture's tests pass on the protected build; size, start-up and frame time are inside the budgets or the release stops.
-7. Re-run step 4 on the protected build and write `shield_report.py` output | check: table of plain versus protected counts, percent change, budgets, REA version, and an exit code 0 clean, 1 over budget or leak, 2 REA not installed. Only claims backed by this table go into README.
+4. Baseline: run the REA commands on the plain fixture and save the findings | check: `baseline.json` holds the names, string literals, routes and numeric constants REA finds (these become the canary list, sorted into the four classes by the config globs), plus source-map presence and byte entropy of the largest data file. Done for the JS fixture (12 canaries).
+5. Leak check, as one more check in `pusula_check.py` that reads `release_dir` from config | check: unit tests with planted `*.map` (checked by opening it for `sourcesContent`), `sourceMappingURL`, `*.pdb`, plain metadata magic and `.env` fail it; a clean folder passes; a missing `release_dir` reports NOT CHECKED, never clean.
+6. Apply the protections for the stack to the fixture, everything except `exclude` | check: the fixture's tests pass on the protected build; size, start-up and frame time are inside the budgets or the release stops.
+7. Re-run step 4 on the protected build and write `shield_report.py` output | check: table of canary recall per class (plain versus protected), budgets, REA version, and an exit code 0 clean, 1 over budget or leak, 2 REA not installed. Only claims backed by this table go into README.
 8. Optional agent-level test: give a coding agent plain and protected builds with one fixed prompt ("recreate feature X"), three runs each, graded on a rubric written first | check: scores and token cost saved in `findings.md`; if protected is not worse, say so.
 9. API and behavior defenses for web or networked games: auth on every request, per-user scoping, rate limits and bot checks, minimal responses, no bulk endpoints, server validates every action | check: a captured HAR of the fixture, fed to `rea environment-build`, does not answer the writes or the other users' data.
 10. Tag releases with a private build ID in a few places and keep the map private | check: a test extracts the ID from a protected build and matches it to the private log.
 11. Add a `recipes` row ("Release build") and a short README section | check: `measure.py load` still inside targets; claims in README match `findings.md`.
 
 ## Risks (pre-mortem)
-1. Encrypted metadata or obfuscation breaks the Unity build or reflection | prevention: selective list, exclude serialized and reflection names, smoke test blocks release.
+1. Encrypted metadata or obfuscation breaks the Unity build or reflection (protect-all raises this) | prevention: `exclude` for serialized, reflection and engine-named items, the report lists every exclusion, the smoke test blocks release.
 2. REA still reads the valuable logic from the native binary through Ghidra or IDA | prevention: measure it (step 4 and 7); say so in the report; move the logic to a server where the design allows.
 3. A lockstep RTS must ship its simulation, so rules cannot be hidden | prevention: protect services, data and content; label this limit in the report.
 4. Antivirus or store flags anti-tamper, packers or self-defending code | prevention: avoid self-defending and anti-debug by default; test on a clean Windows machine; keep it optional.
@@ -86,13 +92,13 @@ Big decision: how to protect JS and C# logic.
 ## Unknowns
 | Question | Who or what answers it |
 | --- | --- |
-| Is `morluto/rea` the repo the user means? | the user (one word) |
-| Which stack first, and which 5 to 10 modules are the valuable ones? | the user |
+| May webcrack (MIT) be installed and run on our own fixtures to model REA plus a deobfuscator? Not covered by the REA permission. | the user |
+| Real Unity result: needs the user's own `global-metadata.dat` and `Assembly-CSharp.dll` (or a small Unity build) on the PC; Unity cannot be built here | the user's PC |
+| Which Unity content formats can others read (`.assets`, AssetBundles, ScriptableObjects)? REA's list has none | a search plus a real test |
 | Does an encrypted `global-metadata.dat` really stop REA's IL2CPP inspector? | step 2 and 7, a real run |
 | Do javascript-obfuscator presets survive webcrack, and what does a model add? | step 7 and 8 |
 | Does BitMono's metadata protection support the Unity version in use? | Unity project settings plus a test build |
 | Does obfuscator.io VM send code to a service, and what does it cost? | its terms and pricing page |
-| May REA's CLI be run in this sandbox? | the user (a permission rule), or run it on the PC |
 
 ## Next step
-Get the user's answers to the first two unknowns and permission to run the REA CLI on fixtures we build ourselves; then do step 2.
+Ask whether webcrack may run on our fixtures. Then build the Unity fixture on the user's PC (step 3) and run the Unity commands from step 2. Until then, do not claim any Unity numbers.
