@@ -61,6 +61,21 @@ Each variant's `main.js` was passed through `webcrack <file> -o <dir>` (defaults
 - So free-tier javascript-obfuscator buys little against REA plus a deobfuscator that targets it. Treat it as a speed bump for casual readers only.
 - Caveats: tiny fixture (3 functions), default webcrack settings, no self-defending, no VM (Pro tier, not run), no model reading the output. A bigger codebase or the VM option may behave differently; that is untested.
 
+### Add-on: per-class recall with `shield_report.py` (same REA outputs as above, all nodes instead of 12 hand-picked canaries)
+Canaries are the literal values, function names, bindings and declared properties REA reports for the plain build (values of 3 characters or more; 4 short ones such as `90` skipped). Classes by path: `ai` = `src/unitAi.js`, `economy` = `src/economy.js`, `network` = `src/net.js`, `content` = no files in this fixture (reported NOT COVERED), `(unclassified)` = `main.js`. "Found" = REA still reports the value in the protected output (strings as a whole word, numbers as values).
+
+| Variant | ai (2) | economy (17) | network (12) | (unclassified) (5) | Size vs plain |
+| --- | --- | --- | --- | --- | --- |
+| plain | 100% | 100% | 100% | 100% | 0% |
+| min | 50% | 76% | 75% | 80% | -29% |
+| obf-low | 50% | 76% | 50% | 100% | +219% |
+| obf-high | 50% | 12% | 17% | 100% | +894% |
+| webcrack(obf-high) | 50% | 76% | 83% | 100% | +84% |
+
+- This metric is broader than the 12 hand-picked canaries, so numbers differ (minify alone: 10/12 above, 76% here).
+- Ranking is the same: property names and names used from another file (`main.js`) stay readable, and webcrack brings the economy and network classes back to minify level.
+- Sizes are the whole analyzed folder; a 3-file fixture makes the percentages meaningless for a real game.
+
 Not tested (do not claim): Wakaru (REA's source recovery needs it), a model reading the output, VM obfuscation (Pro), Unity IL2CPP, .NET, Flutter.
 
 ## Notes

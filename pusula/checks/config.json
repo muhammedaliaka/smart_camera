@@ -104,7 +104,8 @@
     "budget_keys": [
       "max_size_growth_pct",
       "max_startup_ms_growth",
-      "max_frame_ms_growth"
+      "max_frame_ms_growth",
+      "max_recall_pct"
     ],
     "leak_files": {
       "*.map": "source map",
@@ -125,6 +126,61 @@
       "global-metadata.dat": {
         "magic_hex": "AF1BB1FA",
         "why": "plain IL2CPP metadata, names and strings readable by dumpers"
+      }
+    },
+    "report": {
+      "min_length": 3,
+      "unclassified": "(unclassified)",
+      "size_budget": "max_size_growth_pct",
+      "growth_kind": {
+        "max_size_growth_pct": "pct",
+        "max_startup_ms_growth": "abs",
+        "max_frame_ms_growth": "abs"
+      },
+      "extractors": {
+        "analyze_javascript_application": {
+          "nodes": [
+            "normalized_result",
+            "semantic_graph",
+            "nodes"
+          ],
+          "path": [
+            "identity",
+            "module_path"
+          ],
+          "kinds": {
+            "literal": {
+              "value": [
+                "properties",
+                "value"
+              ]
+            },
+            "function": {
+              "value": [
+                "properties",
+                "name"
+              ]
+            },
+            "binding": {
+              "value": [
+                "label"
+              ]
+            },
+            "property-slot": {
+              "value": [
+                "properties",
+                "name"
+              ],
+              "where": {
+                "path": [
+                  "properties",
+                  "presence"
+                ],
+                "equals": "present"
+              }
+            }
+          }
+        }
       }
     }
   },
