@@ -1,0 +1,1 @@
+Bu Next.js projesini incele. /dashboard'a sadece giriş yapmış kullanıcı giriyor, silme butonu deleteInvoice kullanıyor. Güvenli mi? Tam olarak neyi nasıl değiştireyim? CI'm sadece `next build` çalıştırıyor; lint de kapsanıyor mu? Kodu değiştirme, sadece cevapla. Okuma araçların var, internet yok. Soru sorma.

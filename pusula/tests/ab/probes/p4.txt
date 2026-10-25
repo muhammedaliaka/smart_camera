@@ -1,0 +1,1 @@
+Bu three.js projesinde gltf-transform ile Draco sıkıştırdığım GLB yüklenmiyor. Ayrıca swapModel fonksiyonunda bellek sızıntısı var mı? Dosyanın geçerli olduğunu nasıl doğrularım? Kodu değiştirme, sadece cevapla. Okuma araçların var, internet yok. Soru sorma.
