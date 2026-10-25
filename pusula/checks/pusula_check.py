@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Pusula mechanical checks. Standard library only; thresholds live in config.json.
 
-Usage: python pusula_check.py [--root DIR] [--staged | --all] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps] [--config FILE]
+Usage: python pusula_check.py [--root DIR] [--staged | --all] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps,shield] [--config FILE]
 Exit codes: 0 clean, 1 findings, 2 clean but some check did not run.
 Default: size, plan, hardcode and complexity look only at files changed since the last commit (new files included), so old code stays quiet;
 secrets, sast, architecture and deps always look at the whole project, because a hole in old code is still a hole.
 --staged limits size, plan, hardcode, secrets, sast and complexity to staged changes. --all makes every check look at the whole project.
 sast and deps need network (rule download, advisory database); offline they report [NOT CHECKED].
+shield is opt-in (name it in --only): it scans release_dir from .pusula/shield.config.json for files that hand over the source for free.
 """
 import argparse
 import fnmatch
@@ -21,6 +22,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "sast", "complexity", "architecture", "deps"]
+OPT_IN = ["shield"]
 FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
 TOOL_FOR = {"hardcode": "semgrep", "secrets": "gitleaks", "sast": "semgrep", "complexity": "lizard", "deps": "osv"}
 
@@ -254,6 +256,84 @@ def check_deps(root, cfg):
             for src, pkg in packages if pkg.get("vulnerabilities")]
 
 
+def sub_dict(project, key):
+    value = project.get(key)
+    return value if isinstance(value, dict) else {}
+
+
+def shield_value_problems(project, sh):
+    classes, budgets = sub_dict(project, "classes"), sub_dict(project, "budgets")
+    problems = [] if project.get("stack") in sh["stacks"] else [f"stack must be one of {', '.join(sh['stacks'])}"]
+    problems += [f"classes.{c} must be a list of globs (may be empty)" for c in sh["value_classes"] if not isinstance(classes.get(c), list)]
+    problems += [f"budgets.{k} must be a number" for k in sh["budget_keys"] if not isinstance(budgets.get(k), (int, float))]
+    return problems
+
+
+def shield_schema_problems(project, sh):
+    problems = [f"missing key '{k}'" for k in sh["required_keys"] if k not in project]
+    problems += [f"unknown key '{k}'" for k in project if k not in sh["required_keys"] + sh["optional_keys"]]
+    return problems + shield_value_problems(project, sh)
+
+
+def read_edge(path, count, tail):
+    with path.open("rb") as handle:
+        if tail:
+            handle.seek(max(0, handle.seek(0, os.SEEK_END) - count))
+        return handle.read(count)
+
+
+def embedded_source(path, rel, sh):
+    if not matches(rel, sh["source_map_globs"]):
+        return ""
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except ValueError:
+        return ""
+    return "; embeds the original source" if isinstance(data, dict) and data.get(sh["map_source_key"]) else ""
+
+
+def shield_file_leaks(path, rel, sh):
+    found = [f"{rel}: {why} in the release{embedded_source(path, rel, sh)}" for glob, why in sh["leak_files"].items() if matches(rel, [glob])]
+    found += [f"{rel}: '{needle}' near the end of the file" for glob, needle in sh["leak_text"].items()
+              if matches(rel, [glob]) and needle.encode() in read_edge(path, sh["leak_text_tail_bytes"], True)]
+    found += [f"{rel}: {spec['why']}" for glob, spec in sh["plain_metadata"].items()
+              if matches(rel, [glob]) and read_edge(path, len(bytes.fromhex(spec["magic_hex"])), False) == bytes.fromhex(spec["magic_hex"])]
+    return found
+
+
+def shield_project(root, sh):
+    """The project's shield config and the problems with it; no config file means nothing to check."""
+    where = root / sh["project_config"]
+    if not where.is_file():
+        raise Unavailable(f"no {sh['project_config']}; it needs {', '.join(sh['required_keys'])}")
+    try:
+        project = json.loads(where.read_text(encoding="utf-8"))
+    except ValueError as why:
+        return None, [f"{sh['project_config']}: not valid JSON ({why})"]
+    problems = shield_schema_problems(project, sh) if isinstance(project, dict) else ["must be a JSON object"]
+    return project, [f"{sh['project_config']}: {p}" for p in problems]
+
+
+def scan_release(root, project, sh):
+    release = (root / project["release_dir"]).resolve()
+    files = sorted(p for p in release.rglob("*") if p.is_file()) if release.is_dir() else []
+    if not files:
+        raise Unavailable(f"release_dir '{project['release_dir']}' is missing or empty; build first")
+    return [line for p in files for line in shield_file_leaks(p, p.relative_to(release).as_posix(), sh)]
+
+
+def check_shield(root, cfg):
+    sh = cfg["shield"]
+    project, problems = shield_project(root, sh)
+    if problems:
+        return problems
+    found = scan_release(root, project, sh)
+    uncovered = [c for c in sh["value_classes"] if not project["classes"][c]]
+    if uncovered and not found:
+        raise Unavailable(f"no leaks found, but these value classes have no globs and are not covered: {', '.join(uncovered)}")
+    return found
+
+
 def report(name, results, cfg):
     """Run one check and print its line. Returns (findings, not_checked)."""
     try:
@@ -303,9 +383,10 @@ def main():
         "complexity": lambda: check_complexity(files, root, cfg, scoped),
         "architecture": lambda: check_architecture(root, cfg),
         "deps": lambda: check_deps(root, cfg),
+        "shield": lambda: check_shield(root, cfg),
     }
     print(f"PUSULA CHECKS root={root} scope={args.mode} files={len(files)}")
-    counts = [report(name, results, cfg) for name in args.only.split(",") if name in ALL_CHECKS]
+    counts = [report(name, results, cfg) for name in args.only.split(",") if name in ALL_CHECKS + OPT_IN]
     total, skipped = (sum(c[k] for c in counts) for k in (0, 1))
     print(f"Result: {'FAIL' if total else 'CLEAN' if not skipped else 'INCOMPLETE'} ({total} findings, {skipped} not checked)")
     sys.exit(1 if total else 2 if skipped else 0)

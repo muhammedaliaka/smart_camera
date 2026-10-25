@@ -1,32 +1,149 @@
 {
   "max_file_bytes": 30720,
   "size_ignore": [
-    "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.ico", "*.pdf", "*.zip",
-    "*.mp3", "*.wav", "*.ogg", "*.mp4", "*.fbx", "*.glb", "*.gltf", "*.blend",
-    "*.unity", "*.prefab", "*.asset", "*.mat", "*.meta", "*.anim", "*.controller",
-    "*.lock", "package-lock.json", "pnpm-lock.yaml", "*.min.js", "*.min.css", "*.map"
+    "*.png",
+    "*.jpg",
+    "*.jpeg",
+    "*.gif",
+    "*.webp",
+    "*.ico",
+    "*.pdf",
+    "*.zip",
+    "*.mp3",
+    "*.wav",
+    "*.ogg",
+    "*.mp4",
+    "*.fbx",
+    "*.glb",
+    "*.gltf",
+    "*.blend",
+    "*.unity",
+    "*.prefab",
+    "*.asset",
+    "*.mat",
+    "*.meta",
+    "*.anim",
+    "*.controller",
+    "*.lock",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "*.min.js",
+    "*.min.css",
+    "*.map"
   ],
-  "plan_globs": [".pusula/*/plan.md", "docs/plans/*.md"],
-  "plan_required_labels": ["Why code:", "Checked:"],
+  "plan_globs": [
+    ".pusula/*/plan.md",
+    "docs/plans/*.md"
+  ],
+  "plan_required_labels": [
+    "Why code:",
+    "Checked:"
+  ],
   "plan_checked_pattern": "https?://|ran in this session|UNVERIFIED",
   "plan_label_lookback_lines": 4,
   "plan_coverage_headings": [
-    "User experience", "Correctness and logic", "Security", "Cost and tokens",
-    "Source quality", "Tests", "License and legal", "Scope and time",
-    "Maintenance", "Tool compatibility", "Delivery", "Conflicts"
+    "User experience",
+    "Correctness and logic",
+    "Security",
+    "Cost and tokens",
+    "Source quality",
+    "Tests",
+    "License and legal",
+    "Scope and time",
+    "Maintenance",
+    "Tool compatibility",
+    "Delivery",
+    "Conflicts"
   ],
-  "fail_severities": ["ERROR", "WARNING"],
+  "fail_severities": [
+    "ERROR",
+    "WARNING"
+  ],
   "max_findings_per_check": 10,
   "semgrep_rules": "semgrep/hardcode.yml",
-  "semgrep_rulesets": ["p/default"],
+  "semgrep_rulesets": [
+    "p/default"
+  ],
   "complexity_max": 10,
-  "complexity_ignore": ["*/node_modules/*", "*/Library/*", "*/Packages/*", "*/ThirdParty/*", "*/vendor/*", "*/target/*", "*/.pusula/*"],
+  "complexity_ignore": [
+    "*/node_modules/*",
+    "*/Library/*",
+    "*/Packages/*",
+    "*/ThirdParty/*",
+    "*/vendor/*",
+    "*/target/*",
+    "*/.pusula/*"
+  ],
   "architecture_file": ".pusula/architecture.md",
   "after_compact_max_bytes": 3000,
+  "shield": {
+    "project_config": ".pusula/shield.config.json",
+    "stacks": [
+      "unity",
+      "web",
+      "electron",
+      "flutter",
+      "dotnet",
+      "other"
+    ],
+    "value_classes": [
+      "ai",
+      "economy",
+      "network",
+      "content"
+    ],
+    "required_keys": [
+      "stack",
+      "release_dir",
+      "classes",
+      "budgets"
+    ],
+    "optional_keys": [
+      "exclude"
+    ],
+    "budget_keys": [
+      "max_size_growth_pct",
+      "max_startup_ms_growth",
+      "max_frame_ms_growth"
+    ],
+    "leak_files": {
+      "*.map": "source map",
+      "*.pdb": "debug symbols",
+      ".env": "environment secrets",
+      ".env.*": "environment secrets"
+    },
+    "source_map_globs": [
+      "*.map"
+    ],
+    "map_source_key": "sourcesContent",
+    "leak_text": {
+      "*.js": "sourceMappingURL=",
+      "*.css": "sourceMappingURL="
+    },
+    "leak_text_tail_bytes": 2048,
+    "plain_metadata": {
+      "global-metadata.dat": {
+        "magic_hex": "AF1BB1FA",
+        "why": "plain IL2CPP metadata, names and strings readable by dumpers"
+      }
+    }
+  },
   "tools": {
-    "semgrep": {"exe": "semgrep", "install": "uv tool install semgrep"},
-    "gitleaks": {"exe": "gitleaks", "install": "see https://github.com/gitleaks/gitleaks#installing"},
-    "osv": {"exe": "osv-scanner", "install": "see https://github.com/google/osv-scanner#installation"},
-    "lizard": {"exe": "lizard", "install": "uv tool install lizard"}
+    "semgrep": {
+      "exe": "semgrep",
+      "install": "uv tool install semgrep"
+    },
+    "gitleaks": {
+      "exe": "gitleaks",
+      "install": "see https://github.com/gitleaks/gitleaks#installing"
+    },
+    "osv": {
+      "exe": "osv-scanner",
+      "install": "see https://github.com/google/osv-scanner#installation"
+    },
+    "lizard": {
+      "exe": "lizard",
+      "install": "uv tool install lizard"
+    }
   }
 }

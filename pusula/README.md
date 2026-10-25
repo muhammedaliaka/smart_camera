@@ -98,8 +98,9 @@ Bunu **engelleyen** bir araç yok; yapılabilen şey maliyeti artırmak ve **öl
 1. Bedava hediye verme: kaynak haritası, `.pdb`, çıplak `global-metadata.dat`, `.env` yayında olmasın. REA kaynak haritalarını doğrudan okuyor.
 2. Değerli mantık ve sırlar sunucuda dursun; her eylem sunucuda doğrulansın.
 3. Unity: IL2CPP maliyeti artırır. REA metadata sürümlerini 24/27/29/31/39 çözüyor ve "tanınmayan (belki şifreli) başlık desteklenmez" diyor; BitMono bu dosyayı şifreleyen bir koruma belgeliyor. Çalışma anı bellek ve native kod analizi yine mümkün (denemedim).
-4. JS: üreticilerin kendi rakamı, karartılmış kod %15–80 yavaşlıyor ve dosya büyüyor. VM koruması ücretli. Yani rapordaki "%5 büyüme" hedefi garanti değil, ölçülecek bir bütçe.
+4. JS: üreticilerin kendi rakamı, karartılmış kod %15–80 yavaşlıyor ve dosya büyüyor. VM koruması ücretli. Yani rapordaki "%5 büyüme" hedefi garanti değil, ölçülecek bir bütçe. **Ölçtüm (küçük bir JS örneğinde, REA 6.8.0):** karartma REA'nın bulduklarını 12'de 3'e indirdi, ama webcrack aracı eklenince 10'a geri çıktı. Ücretsiz karartma sadece meraklı okuyucuyu yavaşlatır. Unity'de denenmedi.
 5. Davranış (ağ trafiği, çalışma anı) gizlenemez; API'yi savun.
+   **Sızıntı kontrolü hazır:** `python pusula/checks/pusula_check.py --only shield`. Yayın klasöründe kaynak haritası (içindeki kaynakla birlikte), `.pdb`, `.env`, `sourceMappingURL` ve çıplak `global-metadata.dat` arar. Ayarı `.pusula/shield.config.json` içinde: oyun türü, yayın klasörü, dört değerli sınıf (`ai`, `economy`, `network`, `content`) ve bütçeler. Boş sınıf ya da eksik klasör "temiz" sayılmaz, "kontrol edilmedi" denir. Normal çalıştırmada kendiliğinden koşmaz.
 6. RTS'te lockstep simülasyon her istemcide çalışır; kurallar oyunla gider. Korunabilecek: sunucu hizmetleri, içerik, veri, marka, kullanım şartları.
 
 Pusula bunların hiçbirini kendiliğinden kurmaz. Plan **taslak**; onayın ve iki cevabın (hangi yığın önce, hangi modüller değerli) bekleniyor. REA'yı bu makinede çalıştırma izni de sende (aşağıya bak: plan, "Unknowns").

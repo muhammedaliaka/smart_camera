@@ -48,7 +48,20 @@ What this shows (measured on this fixture only):
 - Behavior never changed: every variant printed the same output, so anyone who runs the code and logs the values still gets them. This is the lockstep-game limit.
 - Cost: obf-high is 10 times the bytes and about 17 ms slower to start on this tiny fixture. Fixture size makes the ratio meaningless for a real game; the config budgets must be checked on the real build.
 
-Not tested (do not claim): Wakaru and webcrack (neither authorized nor installed; REA's source recovery needs Wakaru), a model reading the output, VM obfuscation (Pro), Unity IL2CPP, .NET, Flutter. REA alone is a weak attacker; real attackers add a deobfuscator and a model.
+### Add-on: REA plus webcrack 2.16.0 (user allowed webcrack on our own fixtures, logged in `.pusula/permissions.md`)
+Each variant's `main.js` was passed through `webcrack <file> -o <dir>` (defaults), then REA ran on the result as above. Every cleaned build still printed the same output.
+
+| Variant after webcrack | JS bytes | Graph nodes | Unknowns | Canary found by REA |
+| --- | --- | --- | --- | --- |
+| min | 1,555 | 247 | 73 | 10/12 |
+| obf-low | 2,566 | 268 | 80 | 10/12 |
+| obf-high | 2,659 | 277 | 83 | 10/12 |
+
+- On this fixture webcrack undid both javascript-obfuscator presets: string array (base64 and rc4), split strings, number expressions and the flattening all came back readable, and REA's recall rose from 7/12 and 3/12 to 10/12, the same as plain minify. The two names still missing (`BASE_COST`, `COUNTER`) were lost by the minifier, not by the obfuscator.
+- So free-tier javascript-obfuscator buys little against REA plus a deobfuscator that targets it. Treat it as a speed bump for casual readers only.
+- Caveats: tiny fixture (3 functions), default webcrack settings, no self-defending, no VM (Pro tier, not run), no model reading the output. A bigger codebase or the VM option may behave differently; that is untested.
+
+Not tested (do not claim): Wakaru (REA's source recovery needs it), a model reading the output, VM obfuscation (Pro), Unity IL2CPP, .NET, Flutter.
 
 ## Notes
 - npm package `rea-agents` 6.8.0: maintainer morluto, repository `morluto/rea`, no `preinstall`, `install` or `postinstall` hook (`prepare` and `prepack` are build-time). 49 MB unpacked, 2,398 files. Installed once with `npm install --ignore-scripts` into a scratch folder. A second CLI call was blocked by the permission classifier ("code from external"); not worked around; the user then granted the CLI on our own fixtures only (logged in `.pusula/permissions.md`). Results are in the Experiment section.
@@ -60,7 +73,7 @@ Not tested (do not claim): Wakaru and webcrack (neither authorized nor installed
 - Whether an encrypted `global-metadata.dat` really makes REA's IL2CPP inspector fail. The package text says unrecognized magic is unsupported; not run. Even if it does, dumping from memory after launch is the known bypass (see Sources).
 - Which Unity content formats (`.assets`, AssetBundles, ScriptableObjects, campaign and map files) REA reads: its README lists Godot PCK and APK but no Unity asset format. Third-party tools may; not checked.
 - Obfuz's real strength and cost on a Unity build (README only, no run).
-- Whether javascript-obfuscator's free presets survive webcrack, and what a model adds on top of it.
+- What a model adds on top of REA plus webcrack, and whether the VM option (Pro) survives webcrack. The free presets did not (see Add-on).
 - Whether obfuscator.io's VM sends source code to a service (the API token suggests it might) and what it costs.
 - Whether BitMono's metadata protection supports the Unity version in use.
 - Antivirus and store false positives for anti-tamper, packers or self-defending code.

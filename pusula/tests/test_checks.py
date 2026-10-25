@@ -15,8 +15,12 @@ import unittest
 from pathlib import Path
 
 CHECKS = Path(__file__).resolve().parent.parent / "checks"
+sys.path.insert(0, str(CHECKS))
+import pusula_check
+
 SCRIPT = CHECKS / "pusula_check.py"
 CFG = json.loads((CHECKS / "config.json").read_text(encoding="utf-8"))
+SHIELD = CFG["shield"]
 HEADINGS = CFG["plan_coverage_headings"]
 FENCE = "`" * 3
 
@@ -302,6 +306,102 @@ class ArchitectureCheck(CheckCase):
         self.write(self.FILE, self.table("src/ok.py"))
         out = self.run_check("architecture")
         self.assertNotIn("not/a/module", out.stdout)
+
+
+class ShieldCheck(CheckCase):
+    """IL2CPP_MAGIC is the byte order REA 6.8.0 recognized in `inspect-il2cpp-metadata`, tried 2026-10-25."""
+    IL2CPP_MAGIC = bytes.fromhex("AF1BB1FA")
+
+    def setUp(self):
+        super().setUp()
+        self.release = "out"
+        self.project = {"stack": "unity", "release_dir": self.release, "exclude": [],
+                        "classes": {c: ["Assets/**"] for c in SHIELD["value_classes"]},
+                        "budgets": {k: 5 for k in SHIELD["budget_keys"]}}
+        self.write(f"{self.release}/game.dat", "data")
+
+    def run_shield(self):
+        self.write(SHIELD["project_config"], json.dumps(self.project))
+        return self.run_check("shield")
+
+    def test_config_magic_matches_the_one_rea_accepts(self):
+        self.assertEqual(bytes.fromhex(SHIELD["plain_metadata"]["global-metadata.dat"]["magic_hex"]), self.IL2CPP_MAGIC)
+
+    def test_clean_release_passes(self):
+        out = self.run_shield()
+        self.assertEqual(out.returncode, 0, out.stdout)
+        self.assertIn("[ok] shield", out.stdout)
+
+    def test_planted_leaks_fail_and_are_named(self):
+        self.write(f"{self.release}/app.js.map", json.dumps({"version": 3, "sourcesContent": ["const secret = 1;"]}))
+        self.write(f"{self.release}/app.js", "run();\n//# sourceMappingURL=app.js.map\n")
+        self.write(f"{self.release}/Game.pdb", "debug")
+        self.write(f"{self.release}/.env", "KEY=value")
+        (self.root / self.release / "global-metadata.dat").write_bytes(self.IL2CPP_MAGIC + bytes(64))
+        out = self.run_shield()
+        self.assertEqual(out.returncode, 1, out.stdout)
+        for name in ("app.js.map", "app.js:", "Game.pdb", ".env", "global-metadata.dat"):
+            self.assertIn(name, out.stdout)
+        self.assertIn("embeds the original source", out.stdout)
+
+    def test_encrypted_metadata_and_map_without_source_are_not_flagged_as_embedding(self):
+        (self.root / self.release / "global-metadata.dat").write_bytes(bytes(range(64)))
+        self.write(f"{self.release}/app.js.map", json.dumps({"version": 3, "sources": []}))
+        out = self.run_shield()
+        self.assertNotIn("global-metadata.dat", out.stdout)
+        self.assertNotIn("embeds the original source", out.stdout)
+
+    def test_missing_or_empty_release_is_not_checked_not_clean(self):
+        (self.root / self.release / "game.dat").unlink()
+        out = self.run_shield()
+        self.assertEqual(out.returncode, 2, out.stdout)
+        self.assertIn("[NOT CHECKED] shield", out.stdout)
+        self.project["release_dir"] = "nowhere"
+        self.assertEqual(self.run_shield().returncode, 2)
+
+    def test_no_config_is_not_checked(self):
+        out = self.run_check("shield")
+        self.assertEqual(out.returncode, 2)
+        self.assertIn(SHIELD["project_config"], out.stdout)
+
+    def test_class_without_globs_is_reported_not_clean(self):
+        self.project["classes"]["content"] = []
+        out = self.run_shield()
+        self.assertEqual(out.returncode, 2, out.stdout)
+        self.assertIn("content", out.stdout)
+
+    def test_leaks_beat_uncovered_classes(self):
+        self.project["classes"]["ai"] = []
+        self.write(f"{self.release}/Game.pdb", "debug")
+        self.assertEqual(self.run_shield().returncode, 1)
+
+    def test_schema_problems_fail(self):
+        self.project["colour"] = "red"
+        del self.project["budgets"][SHIELD["budget_keys"][0]]
+        self.project["stack"] = "nes"
+        out = self.run_shield()
+        self.assertEqual(out.returncode, 1, out.stdout)
+        for text in ("unknown key 'colour'", SHIELD["budget_keys"][0], "stack must be one of"):
+            self.assertIn(text, out.stdout)
+
+    def test_class_must_be_a_list_not_a_string(self):
+        self.project["classes"]["ai"] = "Assets/**"
+        out = self.run_shield()
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("classes.ai must be a list", out.stdout)
+
+    def test_only_the_end_of_a_big_script_is_searched(self):
+        needle = next(iter(SHIELD["leak_text"].values()))
+        padding = "x" * (SHIELD["leak_text_tail_bytes"] * 2)
+        self.write(f"{self.release}/early.js", f"{needle}\n{padding}")
+        self.write(f"{self.release}/late.js", f"{padding}\n{needle}")
+        out = self.run_shield()
+        self.assertIn("late.js", out.stdout)
+        self.assertNotIn("early.js", out.stdout)
+
+    def test_shield_runs_only_when_named(self):
+        self.assertNotIn("shield", pusula_check.ALL_CHECKS)
+        self.assertIn("shield", pusula_check.OPT_IN)
 
 
 @unittest.skipUnless(shutil.which("git"), "git not installed")
