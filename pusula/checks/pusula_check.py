@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Pusula mechanical checks. Standard library only; thresholds live in config.json.
 
-Usage: python pusula_check.py [--root DIR] [--staged] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps] [--config FILE]
+Usage: python pusula_check.py [--root DIR] [--staged | --all] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps] [--config FILE]
 Exit codes: 0 clean, 1 findings, 2 clean but some check did not run.
---staged limits size, plan, hardcode, secrets, sast and complexity to staged changes; architecture and deps always look at the whole project.
+Default: size, plan, hardcode and complexity look only at files changed since the last commit (new files included), so old code stays quiet;
+secrets, sast, architecture and deps always look at the whole project, because a hole in old code is still a hole.
+--staged limits size, plan, hardcode, secrets, sast and complexity to staged changes. --all makes every check look at the whole project.
 sast and deps need network (rule download, advisory database); offline they report [NOT CHECKED].
 """
 import argparse
@@ -32,16 +34,26 @@ def run(cmd, cwd):
     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, errors="replace", check=False)
 
 
-def list_files(root, staged):
-    if staged:
-        out = run(["git", "diff", "--cached", "--name-only", "--relative", "--diff-filter=ACM"], root)
-    else:
-        out = run(["git", "ls-files", "-co", "--exclude-standard"], root)
-    if out.returncode == 0:
-        return [f for f in out.stdout.splitlines() if (root / f).is_file()]
+GIT_LISTS = {
+    "staged": [["git", "diff", "--cached", "--name-only", "--relative", "--diff-filter=ACM"]],
+    "changed": [["git", "diff", "HEAD", "--name-only", "--relative", "--diff-filter=ACMR"],
+                ["git", "ls-files", "-o", "--exclude-standard"]],
+    "all": [["git", "ls-files", "-co", "--exclude-standard"]],
+}
+
+
+def walk_files(root):
     skip = {".git", "node_modules"}
     return [str(p.relative_to(root)).replace(os.sep, "/") for p in root.rglob("*")
             if p.is_file() and not skip & set(p.relative_to(root).parts)]
+
+
+def list_files(root, mode):
+    outs = [run(cmd, root) for cmd in GIT_LISTS[mode]]
+    if any(o.returncode for o in outs):
+        return list_files(root, "all") if mode == "changed" else walk_files(root)
+    names = sorted({f for o in outs for f in o.stdout.splitlines()})
+    return [f for f in names if (root / f).is_file()]
 
 
 def check_size(files, root, cfg):
@@ -129,11 +141,11 @@ def semgrep_findings(proc, cfg):
             for r in data.get("results", []) if r["extra"]["severity"] in cfg["fail_severities"]]
 
 
-def semgrep_scan(files, root, cfg, staged, configs):
+def semgrep_scan(files, root, cfg, scoped, configs):
     exe = tool_path(cfg, "semgrep")
     if not exe:
         return None
-    targets = files if staged else ["."]
+    targets = files if scoped else ["."]
     if not targets:
         return []
     cmd = [exe, "scan", "--metrics=off", "--disable-version-check", "--quiet", "--json"]
@@ -141,8 +153,8 @@ def semgrep_scan(files, root, cfg, staged, configs):
     return semgrep_findings(run(cmd + targets, root), cfg)
 
 
-def check_hardcode(files, root, cfg, staged):
-    return semgrep_scan(files, root, cfg, staged, [str(HERE / cfg["semgrep_rules"])])
+def check_hardcode(files, root, cfg, scoped):
+    return semgrep_scan(files, root, cfg, scoped, [str(HERE / cfg["semgrep_rules"])])
 
 
 def check_sast(files, root, cfg, staged):
@@ -179,12 +191,12 @@ def check_secrets(root, cfg, staged):
 LIZARD_WARNING = re.compile(r"^(.+?):(\d+): warning: (.+?) has \d+ NLOC, (\d+) CCN")
 
 
-def check_complexity(files, root, cfg, staged):
+def check_complexity(files, root, cfg, scoped):
     exe = tool_path(cfg, "lizard")
     if not exe:
         return None
     ignore, limit = cfg["complexity_ignore"], cfg["complexity_max"]
-    targets = [f for f in files if not matches(f, ignore)] if staged else ["."]
+    targets = [f for f in files if not matches(f, ignore)] if scoped else ["."]
     if not targets:
         return []
     proc = run([exe, "-C", str(limit), "-w", "-i", "-1"] + [a for p in ignore for a in ("-x", p)] + targets, root)
@@ -264,27 +276,35 @@ def report(name, results, cfg):
     return len(found), 0
 
 
-def main():
+def parse_args():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=".")
-    ap.add_argument("--staged", action="store_true")
+    scope = ap.add_mutually_exclusive_group()
+    scope.add_argument("--staged", action="store_const", const="staged", dest="mode")
+    scope.add_argument("--all", action="store_const", const="all", dest="mode")
     ap.add_argument("--only", default=",".join(ALL_CHECKS))
     ap.add_argument("--config", default=str(HERE / "config.json"))
-    args = ap.parse_args()
+    ap.set_defaults(mode="changed")
+    return ap.parse_args()
+
+
+def main():
+    args = parse_args()
     root = Path(args.root).resolve()
     cfg = json.loads(Path(args.config).read_text(encoding="utf-8"))
-    files = list_files(root, args.staged)
+    files = list_files(root, args.mode)
+    scoped, staged = args.mode != "all", args.mode == "staged"
     results = {
         "size": lambda: check_size(files, root, cfg),
         "plan": lambda: check_plan(files, root, cfg),
-        "hardcode": lambda: check_hardcode(files, root, cfg, args.staged),
-        "secrets": lambda: check_secrets(root, cfg, args.staged),
-        "sast": lambda: check_sast(files, root, cfg, args.staged),
-        "complexity": lambda: check_complexity(files, root, cfg, args.staged),
+        "hardcode": lambda: check_hardcode(files, root, cfg, scoped),
+        "secrets": lambda: check_secrets(root, cfg, staged),
+        "sast": lambda: check_sast(files, root, cfg, staged),
+        "complexity": lambda: check_complexity(files, root, cfg, scoped),
         "architecture": lambda: check_architecture(root, cfg),
         "deps": lambda: check_deps(root, cfg),
     }
-    print(f"PUSULA CHECKS root={root} files={len(files)} staged={args.staged}")
+    print(f"PUSULA CHECKS root={root} scope={args.mode} files={len(files)}")
     counts = [report(name, results, cfg) for name in args.only.split(",") if name in ALL_CHECKS]
     total, skipped = (sum(c[k] for c in counts) for k in (0, 1))
     print(f"Result: {'FAIL' if total else 'CLEAN' if not skipped else 'INCOMPLETE'} ({total} findings, {skipped} not checked)")

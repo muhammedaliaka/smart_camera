@@ -316,6 +316,30 @@ class StagedMode(CheckCase):
         self.assertIn("staged_big.txt", out.stdout)
         self.assertNotIn("loose_big.txt", out.stdout)
 
+    def commit_all(self):
+        git = ["git", "-c", "user.email=t@example.org", "-c", "user.name=t"]
+        subprocess.run([*git, "add", "-A"], cwd=self.root, check=True)
+        subprocess.run([*git, "commit", "-q", "-m", "base"], cwd=self.root, check=True)
+
+    def test_default_scope_is_changed_files_and_all_widens_it(self):
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        self.write("old_big.txt", size=CFG["max_file_bytes"] + 1)
+        self.commit_all()
+        self.write("new_big.txt", size=CFG["max_file_bytes"] + 1)
+        out = self.run_check("size")
+        self.assertIn("new_big.txt", out.stdout)
+        self.assertNotIn("old_big.txt", out.stdout)
+        out = self.run_check("size", extra=["--all"])
+        self.assertIn("old_big.txt", out.stdout)
+        self.assertIn("new_big.txt", out.stdout)
+
+    def test_repo_without_a_commit_falls_back_to_all_files(self):
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        self.write("big.txt", size=CFG["max_file_bytes"] + 1)
+        out = self.run_check("size")
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("big.txt", out.stdout)
+
     def test_project_in_a_subfolder_of_the_repo(self):
         subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
         sub = self.root / "game"
