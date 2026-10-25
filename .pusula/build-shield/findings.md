@@ -76,7 +76,42 @@ Canaries are the literal values, function names, bindings and declared propertie
 - Ranking is the same: property names and names used from another file (`main.js`) stay readable, and webcrack brings the economy and network classes back to minify level.
 - Sizes are the whole analyzed folder; a 3-file fixture makes the percentages meaningless for a real game.
 
-Not tested (do not claim): Wakaru (REA's source recovery needs it), a model reading the output, VM obfuscation (Pro), Unity IL2CPP, .NET, Flutter.
+### Add-on: Wakaru 1.15.0 (the tool REA's source recovery uses; user allowed it on our own fixtures)
+`wakaru <variant>/main.js -o <dir>/main.js`, then REA and `shield_report.py` as above. Every output still printed the same result.
+
+| Variant after Wakaru | ai | economy | network | JS bytes |
+| --- | --- | --- | --- | --- |
+| min | 50% | 76% | 75% | 2,028 |
+| obf-low | 50% | 76% | 50% | 6,656 |
+| obf-high | 50% | 12% | 17% | 20,067 |
+
+- Wakaru changed nothing about recall: the numbers equal the unprocessed variants. It made `obf-high` larger (14,593 to 20,067 bytes). This matches Wakaru's own note that heavy control-flow obfuscation needs a dedicated approach.
+- So REA's built-in recovery path (Wakaru) does not undo javascript-obfuscator output on this fixture; webcrack does. A real attacker would add webcrack or a model.
+- Wakaru's CLI also has `extract`, which pulls the original files out of a source map's `sourcesContent`: a second tool that makes a shipped map worth a full copy.
+
+Not tested (do not claim): VM obfuscation (Pro), Unity IL2CPP, .NET, Flutter.
+
+### Add-on: agent-level rebuild test (plan step 8; one run per variant)
+Question: can a coding agent with the deobfuscators rebuild the valuable functions from each build? Setup: the same 3-module fixture (`unitCost`, `damage`, `pickTarget`, plus a net module), four builds (`plain` = readable sources, `min`, `obf-low`, `obf-high`). Each run had its own folder holding only the build and links to REA, webcrack and Wakaru. One headless `claude -p` run per build, model `claude-sonnet-5-5`, tools Read, Write, Edit, Glob, Grep and `Bash(node:*)`, one fixed prompt: write `recreated/game.js` with the three functions "including every constant and tie-break". A hidden grader (82 cases: 27 `unitCost`, 15 `damage`, 40 seeded `pickTarget` lists) was written before the runs and checked first: a correct file scored 82/82, a deliberately wrong one 23/82.
+
+| Build | Score | Turns | Cost (USD) | Tools the agent used |
+| --- | --- | --- | --- | --- |
+| plain | 82/82 | 5 | 0.078 | none |
+| min | 82/82 | 4 | 0.071 | none |
+| obf-low | 82/82 | 5 | 0.090 | webcrack |
+| obf-high | 82/82 | 7 | 0.109 | webcrack |
+
+- Every build was rebuilt perfectly. The only visible cost of obfuscation: +16% (low) and +39% (high) money against `plain`, +27% and +52% against `min`, and 1 to 3 more turns. Runs took 15 to 22 seconds.
+- No run used REA or Wakaru. webcrack alone was enough, which matches the recall experiment.
+- Process audit (stream logs): no run read the readable fixture, the grader or anything above its folder. `obf-high` once tried to write webcrack output to `/tmp/wc`; the don't-ask permission mode denied it and the agent redid it inside its folder. The `../` hits in the `plain` and `min` logs are `cd` inside the run folder.
+- The `obf-high` agent grepped the bundle and found `plain/src/net.js` and `plain/src/economy.js` still readable: module path strings survive obfuscation. That is a hint about the code layout, not a defect of the test.
+- The CLI also billed a Haiku helper call of $0.0002 per run (its own housekeeping, not chosen by us).
+
+Limits (do not stretch the claim):
+- One run per build, not the three the plan asked for. Cost differences of this size can be noise.
+- The score cannot tell the builds apart: three pure functions are too easy and every build scored the maximum. A harder fixture (many files, stateful code, the shared classes of a real game) is needed to see a score gap.
+- The prompt listed the tools, so the agent knew which deobfuscators exist. An attacker without that hint might lose time; one with a model and webcrack does not.
+- Local fixtures we wrote; no Unity, .NET or native code.
 
 ## Experiment 2026-10-25 (2): behavior cloning from one recorded session (REA `environment-build`)
 Setup: a toy game API we wrote, in two variants. `open`: `/api/balance` (unit table), `/api/players` and `/api/players/p1`, no login. `guarded`: login gives a token, every call needs it, answers are scoped to the logged-in player and minimal (own data, one unit), the match write is validated (422 on bad input). One Chromium session per variant recorded with Playwright `recordHar` (6 to 12 requests), then `rea environment-build <har> <dir> --name x`, REA 6.8.0, no model.
@@ -106,7 +141,7 @@ What this shows (toy API only):
 - Whether an encrypted `global-metadata.dat` really makes REA's IL2CPP inspector fail. The package text says unrecognized magic is unsupported; not run. Even if it does, dumping from memory after launch is the known bypass (see Sources).
 - Which Unity content formats (`.assets`, AssetBundles, ScriptableObjects, campaign and map files) REA reads: its README lists Godot PCK and APK but no Unity asset format. Third-party tools may; not checked.
 - Obfuz's real strength and cost on a Unity build (README only, no run).
-- What a model adds on top of REA plus webcrack, and whether the VM option (Pro) survives webcrack. The free presets did not (see Add-on).
+- How a model fares on a large, stateful codebase after REA plus webcrack (the small agent test scored every build at the maximum), and whether the VM option (Pro) survives webcrack. The free presets did not (see Add-ons).
 - Whether obfuscator.io's VM sends source code to a service (the API token suggests it might) and what it costs.
 - Whether BitMono's metadata protection supports the Unity version in use.
 - Antivirus and store false positives for anti-tamper, packers or self-defending code.
