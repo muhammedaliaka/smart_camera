@@ -8,9 +8,9 @@ Plan belgesi: [Pusula — Tek Parça Yapay Zekâ Sistemi Planı](https://claude.
 
 | Yol | Ne işe yarar | Başlangıç yükü |
 | --- | --- | --- |
-| `AGENTS.md` | Çekirdek kurallar. Her oturumda yüklenir. | ~910 jeton (tahmin) |
+| `AGENTS.md` | Çekirdek kurallar. Her oturumda yüklenir. | ~920 jeton (tahmin) |
 | `CLAUDE.md` | Tek satır: `@AGENTS.md`. Eski Claude Code sürümleri için köprü (2.1.310 AGENTS.md'yi kendisi okuyor, çift yüklenmiyor). | ~0 |
-| `skills/*/SKILL.md` | 18 skill. Sadece ad ve açıklaması yüklenir; gövdesi gerekince. | ~860 jeton (18 açıklama, tahmin) |
+| `skills/*/SKILL.md` | 18 skill. Sadece ad ve açıklaması yüklenir; gövdesi gerekince. | ~870 jeton (18 açıklama, tahmin; çekirdekle toplam 1.792) |
 | `skills/plain-explain` | Sade Türkçe anlatım biçimi ve kesinlik etiketleri (Doğruladım, Resmi kaynak, Tahmin, Bakmadım). | gerekince |
 | `skills/ui-acceptance` | Arayüz için kabul ölçütlerini koddan önce yazdırır, sonra ekran görüntüsünü satır satır yargılatır. | gerekince |
 | `skills/architecture-standard` | NEXUS v5: dokuz kısa kural, tek mimari dosyası (`.pusula/architecture.md`), sorun günlüğü. Eski NEXUS v4'ün sadeleştirilmiş hali. | gerekince |
@@ -20,10 +20,13 @@ Plan belgesi: [Pusula — Tek Parça Yapay Zekâ Sistemi Planı](https://claude.
 | `skills/frontend-design` | Anthropic'in skill'i (Apache-2.0, değiştirilmedi). Arayüzün "yapay zekâ yapmış" gibi görünmesini engelleyen tasarım rehberi. Sadece yeni arayüz veya yeni görünüm için; projede tasarım sistemi varsa o kazanır. | gerekince |
 | `skills/security-and-hardening/anti-copy.md` | Ürünün kopyalanmasını ve tersine mühendisliği zorlaştırma: ne işe yarar, ne yaramaz. Sadece sorulunca okunur. | gerekince |
 | `skills/recipes` | Yönlendirici: hangi iş için hangi skill, hangi sırayla. | gerekince |
+| `skills/recipes/packs/` | 13 alan paketi (Tauri/Rust, Unity, Unreal, Flutter, Next.js, three.js/GLB, yapay zekâ üretimi, güvenlik, pazarlama, satış, oyun üretimi, video yapma, video izleme) ve `INDEX.md`. Her biri 6 KB altında; tarihli, resmi sayfalardan okunmuş gerçekler, tuzaklar, kontroller, "bitti" ölçütü. `AGENTS.md` içindeki tek cümle modeli buraya yönlendirir. | gerekince (paket başına ~1.000–1.500 jeton) |
 | `skills/state-files` | Plan, bulgu ve ilerleme dosyası şablonları, izin defteri, devir notu. | gerekince |
 | `checks/` | Mekanik kontroller: `pusula_check.py` (dosya boyutu, etiketli plan kodu ve dolu Coverage satırları, sabit değer, sır, güvenlik açığı kuralları, fonksiyon karmaşıklığı, mimari dosyasındaki yolların varlığı, bağımlılık açığı) ve ayar dosyası. Jeton harcamaz. | 0 |
 | `settings/` | `claude.settings.json` (okuma kilidi, erken sıkıştırma, paket skill listesini kısaltma, iki hook) ve `codex.config.toml` (aynı kilit listesi). Projeye birleştirilir, üzerine yazılmaz. | 0 |
-| `tests/` | T1–T21 test tablosu (`TESTS.md`), kontrol betiğinin birim testleri (`test_checks.py`), kilit ve ayar testleri (`test_settings.py`), T6 ve T7 ölçüm betiği (`measure.py`), hedefler (`targets.json`). Projeye kopyalanmaz. | 0 |
+| `checks/validate_glb.mjs` | Bir `.glb` dosyasını resmi Khronos doğrulayıcısıyla (kütüphane; komut satırı aracı yok) denetler. Node ve `gltf-validator` paketi gerekir. | 0 |
+| `tests/` | T1–T28 test tablosu (`TESTS.md`); birim testleri: kontrol betiği (`test_checks.py`), kilit ve ayar (`test_settings.py`), paket yapısı (`test_packs.py`), shield raporu (`test_shield_report.py`), GLB (`test_glb.py`), A/B araçları (`test_ab.py`); T6 ve T7 ölçüm betiği (`measure.py`), hedefler (`targets.json`). Projeye kopyalanmaz. | 0 |
+| `tests/ab/`, `tests/results/` | Başsız A/B deney düzeneği (`run_ab.py`, `grade_ab.py`, ön kayıt `PREREG.md`, sorular ve hazır projeler `probes/`); sonuç raporları ve anonim ham veri (`results/data/`). Projeye kopyalanmaz. | 0 |
 | `THIRD_PARTY.md` | Kaynak, lisans, sabitlenen commit, yaptığımız değişiklik, tarama sonucu. | okunmaz |
 
 ## Kurulum (projeye)
@@ -108,8 +111,22 @@ Pusula bunların hiçbirini kendiliğinden kurmaz. Plan **taslak**: JS örneğin
 
 ## Testler
 
-`python -m unittest discover -s tests` kontrol betiğini sınar (bağımlılık ve `sast` testleri için `PUSULA_TEST_NET=1`). `python tests/measure.py load` başlangıç yükünü tahmin eder (karakter ÷ 4; üçüncü taraf skill'ler gövde hedefinden muaf, `targets.json`); gerçek rakam için host'ta `/context` bak. T1–T14 tablosu `tests/TESTS.md` içinde; ilk A/B sonuçları `tests/results/2026-10-22.md` içinde.
+`python -m unittest discover -s tests` kontrol betiğini, kilit ve ayarları, paket yapısını, shield raporunu, GLB doğrulamasını ve A/B araçlarını sınar. Bağımlılık ve `sast` testleri için `PUSULA_TEST_NET=1`; GLB testi için `PUSULA_TEST_NODE_MODULES=<klasör>` (içinde `gltf-validator` olan `node_modules`). `python tests/measure.py load` başlangıç yükünü tahmin eder (karakter ÷ 4; üçüncü taraf skill'ler gövde hedefinden muaf, `targets.json`); gerçek rakam için host'ta `/context` bak. T1–T28 tablosu `tests/TESTS.md` içinde; sonuçlar `tests/results/` altında (`2026-10-22.md` ilk A/B; `2026-10-25b.md` ve `2026-10-25c.md` alan paketleri).
+
+## Alan paketleri ve ölçülen etkisi
+
+Paket, modelin ezberinin yanlış ya da eksik olduğu yerde işe yarar; modelin zaten iyi bildiği yerde yaramaz. Başsız `claude -p`, web yok, her soru 3 kez, ön kayıtlı kurallarla ölçtüm (ayrıntı ve sınırlar `tests/results/2026-10-25b.md` ve `2026-10-25c.md`):
+
+- **Yönlendirme:** İşaretçi olmadan model `Skill` aracını hiç çağırmadı (0/15); paket 12 koşunun 4'ünde açıldı. `AGENTS.md`'ye tek cümle eklenince beklenen paket 11/12 açıldı. Tur 3'te 9/9.
+- **Fark çıkan yerler (A yalnız dosya → B Pusula):** Steam fiyat planı 6,3 → 9,0; Electron→Tauri planı 6,0 → 8,3; RTS ağ planı 4,0 → 8,7; Unity menü planı 3,0 → 6,0. **Fark çıkmayan:** AI lisansları 9,0 → 8,7; Next.js incelemesi 7,0 → 7,0; three.js 6,3 → 7,0 (gürültü payı içinde).
+- **Bedel:** B, A'nın ortalama 1,6 katı (tur 2) ile 2,4 katı (tur 3, planlama soruları) maliyetli. Soru başına B 0,05–0,29 $.
+- **Dürüst sınırlar:** n=3. Maddeleri paket metninden ben türettim; tur 3'te arm tam kör değildi. "Pakete bakıldı" demek "paketin hepsi uygulandı" demek değil (Next.js "istemciye giden veriyi daralt" 0/9; Unity "komut bayrakları" 0/3). Tur 1 ve tur 2 için ön kayıtlı kurallar tutmadı; tur 3'ünki tuttu, ama kanıtı daha zayıf.
+- Bir paketi kapatmak istersen `INDEX.md` satırını sil; bu çalıştırma ucuz.
 
 ## Sıradaki
 
-Dalga 2: codebase-memory-mcp ve rtk, T7 jeton testiyle. Dalga 3: alan paketleri. Unity için Unity'nin kendi resmi eklentisi var (`unity-agent-plugin`); sadece belgelerini okudum, taramadım, kurmadım; lisansı, taramayı ve senin onayını bekliyor. Tauri ve Flutter'a henüz bakmadım; Next.js var. PC gelince gerçek oturum testleri: "yapma" listesinin cazip anda tutması, mimari skill'inin kendiliğinden tetiklenmesi, hard-problems kanıtı.
+**Yazılı ama kurulmamış:** dalga 2 (codebase-memory-mcp, rtk) sadece belgelerden değerlendirildi; kurulmadı, T7 jeton testi yapılmadı. Unity'nin resmi eklentisi (`unity-agent-plugin`): belgeleri okundu, lisansı (Unity Companion License) okunmadı, taranmadı, kurulmadı; senin onayını bekliyor. Tauri, Flutter ve diğer alan paketleri yazıldı (resmi sayfalardan, 2026-10-25) ve A/B'de Tauri ile Unity denendi.
+
+**Karar bekleyenler (sen):** Pusula'nın kendi özel deposu (şimdi ilgisiz `smart_camera` içinde duruyor); Unity eklentisi ve bellek araçları (kurmadan önce taramalı); ticari oyunda lisans denetimi (`license_allow`) açık mı olsun; 403 veren şart sayfalarının (Tripo, Mixamo SSS, Google Flow Music) okunmasına izin; Unity derleme kopyasında içerik okuyucu (UABEA/AssetRipper) denemesi.
+
+**PC gelince:** Unity release build üstünde REA ölçümü (`.pusula/build-shield/pc-runbook.md`); T3 gerçek Unity menü koşusu; T1 gerçek Electron→Tauri geçişi; `/context` rakamı; T24 ("yapma" kalıcılığı); hook'ların Windows'ta çalışması; skill'in gerçek oturumda kendiliğinden tetiklenmesi; Codex eşdeğerliği.

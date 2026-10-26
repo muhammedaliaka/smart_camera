@@ -1,0 +1,4 @@
+[probe p5]
+`git rebase`, bir dalın commit'lerini başka bir commit'in üstüne yeniden oynatır.
+Böylece geçmiş, dallanma olmadan tek bir düz çizgi gibi görünür.
+Yayınlanmış commit'lerde kullanma, çünkü commit kimlikleri değişir.

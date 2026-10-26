@@ -1,0 +1,49 @@
+[probe p4]
+## 1. GLB neden yüklenmiyor
+
+`src/main.js:10` içinde `GLTFLoader`'a hiç `DRACOLoader` bağlanmamış. Projede `DRACOLoader` veya `setDRACOLoader` geçmiyor. gltf-transform ile Draco sıkıştırılmış bir dosya `KHR_draco_mesh_compression` eklentisini kullanır. Three.js bu eklenti için bir decoder ister. Decoder yoksa `loadAsync` şu hatayla reddeder:
+
+`THREE.GLTFLoader: setDRACOLoader() must be called to load compressed mesh data.`
+
+`swapModel("models/unit.glb")` çağrısında `.catch` olmadığı için hata, sessiz bir unhandled promise rejection olarak kalır. Konsolda bakarsanız görürsünüz. Ekran ise boş görünür.
+
+Çözüm, loader'a Draco decoder'ı eklemek. Kodu değiştirmemi istemediniz, o yüzden sadece taslağı veriyorum:
+
+```js
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
+const draco = new DRACOLoader();
+draco.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+loader.setDRACOLoader(draco);
+```
+
+Decoder'ı kendi sunucunuzdan vermek daha güvenli. `node_modules/three/examples/jsm/libs/draco/` klasörünü `public/draco/` altına kopyalayıp `setDecoderPath("/draco/")` kullanın. Vite bu klasörü `three` paketinden otomatik olarak sunmaz. `models/unit.glb` yolu da `public/models/` altında olmalı.
+
+Draco dışında şunlara da bakın:
+- **Meshopt veya KTX2:** gltf-transform'u `meshopt()` ya da KTX2 dönüşümüyle çalıştırdıysanız `setMeshoptDecoder` ve `KTX2Loader` da gerekir. Draco'yu `draco3d` ile kendiniz kodladıysanız yine decoder gerekir.
+- **Yanlış yol veya 404:** Vite, `public/` altında olmayan bir dosya için `index.html` döndürebilir. Bu durumda hata "Unexpected token <" ya da "not valid JSON" gibi görünür.
+- **Önemli:** Bu depoda `.glb` dosyası yok. `models/unit.glb` repoda bulunmuyor, ayrıca `public/` klasörü de yok. Dosyayı yerel olarak nereye koyduğunuzu göremiyorum, bu yüzden yol sorununu doğrulayamadım.
+
+## 2. swapModel'de bellek sızıntısı
+
+Evet, sızıntı var. `scene.remove(current)` modeli sahneden çıkarır ama GPU kaynaklarını serbest bırakmaz.
+
+- Geometriler, materyaller ve dokular `dispose()` edilmiyor. Her takasta VRAM birikir.
+- Eski model kaldırılmadan önce yeni model yükleniyor. Bu yüzden bir an için ikisi birden bellekte durur.
+- `loadAsync` sırasında art arda iki `swapModel` çağrısı yapılırsa bir yarış durumu oluşur. Önce biten, sonra gelen tarafından ezilir. Ezilen model `current`'a hiç atanmaz ve sahnede sonsuza kadar kalır.
+- Hata durumunda `current` korunur, bu iyi. Ama hata yutulduğu için fark etmezsiniz.
+
+Düzeltme yaklaşımı: eski modeli `traverse` ile gezip her `mesh.geometry.dispose()` çağırın. Materyali ve materyalin içindeki her doku alanını (`map`, `normalMap`, `roughnessMap` vb.) `dispose()` edin. Sonra `renderer.renderLists.dispose()` çağırın. Art arda çağrıları ise bir istek sayacıyla (en son istek kazanır) güvenli hale getirin.
+
+## 3. Dosyanın geçerli olduğunu doğrulama
+
+Bu ortamda internet ve dosya yok, bu yüzden aşağıdakileri çalıştırmadım. Kendi makinenizde şu sırayla deneyin:
+
+1. **Başlık kontrolü:** `xxd models/unit.glb | head -1` çıktısı `glTF` (`676c 5446`) ile başlamalı. Eğer `<!DOC` görüyorsanız, aldığınız şey HTML'dir (yani 404 sayfası).
+2. **Resmi doğrulayıcı:** `npx gltf-validator models/unit.glb`. Bu Khronos'un aracıdır, şema ve erişimci hatalarını verir. Tarayıcıda `https://github.khronos.org/glTF-Validator/` adresine dosyayı sürükleyebilirsiniz.
+3. **gltf-transform ile inceleme:** `npx @gltf-transform/cli inspect models/unit.glb`. Çıktıda `extensionsUsed` altında `KHR_draco_mesh_compression` görürseniz Draco decoder gerektiğini doğrulamış olursunuz. Ayrıca `npx @gltf-transform/cli validate models/unit.glb` komutu da var.
+4. **Gidiş-dönüş testi:** `npx @gltf-transform/cli copy models/unit.glb /tmp/out.glb`. Bu komut dosyayı okuyup yeniden yazar. `draco3d` decoder'ı da yüklü olduğu için bozuk sıkıştırılmış veri varsa burada patlar.
+5. **Sıkıştırmasız karşılaştırma:** `npx @gltf-transform/cli uncompress models/unit.glb /tmp/plain.glb` ile Draco'yu açın. Açılmış dosya three.js'te decoder'sız yükleniyorsa sorun yalnızca decoder eksikliğidir, dosya sağlamdır.
+6. **Tarayıcı tarafı:** DevTools Network sekmesinde `unit.glb` isteğinin `200` ve doğru boyutta döndüğünü, `.wasm`/`draco_decoder.js` isteklerinin de 404 vermediğini kontrol edin.
+
+En olası neden, birinci bölümdeki eksik `DRACOLoader`.

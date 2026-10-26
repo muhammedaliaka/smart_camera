@@ -1,0 +1,55 @@
+[probe p3]
+**Kısa cevap: Hayır, güvenli değil.** CI'da lint de çalışmıyor.
+
+## 1. Silme neden güvensiz
+
+`app/dashboard/actions.ts:6` içindeki `deleteInvoice` bir "Server Action". Bu, herkese açık bir POST adresidir. Sayfadaki `redirect("/login")` (`page.tsx:8`) bu adresi korumaz.
+
+İki açık var:
+
+- **Giriş kontrolü yok.** Giriş yapmamış biri action'ı doğrudan çağırabilir.
+- **Sahiplik kontrolü yok.** SQL sadece `where id = $1` diyor. Giriş yapmış herhangi biri başkasının faturasını silebilir. Fatura id'sini bilmesi yeterli.
+
+Üçüncü bir sorun daha var: `lib/auth.ts:13`. `verifyToken` imzayı kontrol etmiyor. Çerezdeki `session` değerinin ilk parçasını kullanıcı id'si sayıyor. Biri `session=5.x` çerezi yazarsa, 5 numaralı kullanıcı olur. Giriş ve sahiplik kontrolünü eklesen bile bu açık hepsini boşa çıkarır. Dosyadaki yorum ("signature check lives here") imzanın başka yerde olduğunu düşündürüyor. Ama kodda yok. Bunu gerçek bir imza doğrulamasıyla (JWT/HMAC) değiştir. Kullandığın oturum yöntemini bilmiyorum. Bu bir varsayım.
+
+## 2. Tam olarak ne değiştirmelisin
+
+**`app/dashboard/actions.ts`:**
+
+1. `getSessionUser()` çağır. `null` ise hata fırlat.
+2. `id` değerini sunucuda doğrula (`typeof id === "string"`, boş değil).
+3. SQL'e sahiplik şartı ekle: `delete from invoices where id = $1 and owner_id = $2 returning id`. Parametreler: `[id, user.id]`.
+4. Satır dönmediyse "bulunamadı" hatası fırlat. Sessiz geçme.
+5. Ham satırı döndürme (`result.rows[0]`). Sadece UI'ın ihtiyacı olanı döndür, örneğin `{ id }`.
+6. `revalidatePath` sadece başarıdan sonra çalışsın.
+
+Admin silebilecekse bunu `user.role` ile açıkça yaz. Şu an `verifyToken` herkese `"user"` veriyor.
+
+**`lib/auth.ts`:** `verifyToken` içinde imzayı gerçekten doğrula. Gizli anahtarı env'den oku. Koda yazma.
+
+**`app/dashboard/invoice-list.tsx` (küçük işler):**
+
+- `invoices: any[]` yerine gerçek bir tip kullan.
+- Silme sırasında bekleme durumu ve hata mesajı göster. Bu bizim UI kuralımız.
+- `"Sil"` metnini sabit yazma. Anahtar/config'e taşı.
+- Silmeden önce onay iste. Bu geri alınamaz bir işlem.
+
+**Not:** `middleware`/`proxy` dosyası yok. Gerek de yok, ama o zaman kontrol action'ın içinde olmak zorunda.
+
+## 3. CI lint çalıştırıyor mu?
+
+**Hayır.** `ci.yml` sadece `npm ci` ve `npm run build` çalıştırıyor. Üç neden:
+
+- Next.js 16'dan beri `next build` linter'ı çalıştırmıyor. (Bu bilgi projedeki `nextjs.md` paketinden. Resmi doküman olarak etiketli. İnternet olmadığı için ben doğrulayamadım.)
+- `package.json` içinde `"lint": "eslint"` script'i var. CI onu çağırmıyor.
+- Repoda ESLint config dosyası (`eslint.config.*`) bulamadım. ESLint 9 config olmadan çalışmaz. Yani `npm run lint` bugün büyük ihtimalle hata verir. Çalıştırıp doğrulamadım.
+
+**Yapılacaklar:**
+
+1. `eslint.config.mjs` ekle. `eslint-config-next` 16.4.3 kullan. Tam içeriği Next.js 16 dokümanından (`node_modules/next/dist/docs/`) oku.
+2. `ci.yml`'ye `- run: npm run lint` adımını `npm run build`'den önce ekle.
+3. İstersen `npx tsc --noEmit` adımı da ekle.
+
+Önemli sınır: ESLint bu güvenlik açığını yakalamaz. "Action içinde auth kontrolü yok" diye bir kuralı yoktur. Bu açık için bir test gerekir. Örnek: giriş yapmadan çağır, başkasının faturasını sil, ikisinin de reddedildiğini doğrula.
+
+Kodu değiştirmedim. Hiçbir komut çalıştırmadım. Her şey kodu okuyarak çıkarıldı.

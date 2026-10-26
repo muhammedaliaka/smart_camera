@@ -1,0 +1,85 @@
+[probe p3]
+**Hayır, güvenli değil.** Kodu değiştirmedim.
+
+## Sorun
+
+`app/dashboard/page.tsx:8` içindeki `redirect("/login")` sadece sayfa render'ını korur. `deleteInvoice` ise `"use server"` ile işaretli, yani herkese açık bir POST uç noktasıdır. Action ID'sini bilen biri `/dashboard`'a hiç girmeden doğrudan çağırabilir. Action ID'si istemci paketinde görünür.
+
+`app/dashboard/actions.ts:7` şu sorguyu çalıştırıyor:
+
+```sql
+delete from invoices where id = $1 returning *
+```
+
+Bu sorguda iki açık var:
+
+1. **Kimlik doğrulama yok.** Oturumsuz biri de silebilir.
+2. **Sahiplik kontrolü yok (IDOR).** Giriş yapmış herhangi bir kullanıcı başkasının faturasını `id` tahmin ederek silebilir. Sayfadaki `where owner_id = $1` filtresi silmede yok.
+
+`returning *` yüzünden silinen satır istemciye de döner. Bu, başkasının fatura verisini sızdırır.
+
+## Ek bulgu: oturum doğrulaması sahte
+
+`lib/auth.ts:13` içindeki `verifyToken` imza kontrolü yapmıyor. Yalnızca `token.split(".")[0]` değerini kullanıcı ID'si sayıyor. Yorum satırı "signature check lives here" diyor ama kod yok. `session=<herhangi-bir-id>` çerezi göndermek, o kullanıcı olarak giriş yapmak demek. Yukarıdaki düzeltmeler bu açık kapanmadan gerçek koruma sağlamaz. Bu kısmı mutlaka düzeltin (ör. HMAC/JWT imzası ya da veritabanında oturum tablosu).
+
+## Ne değiştirmelisiniz
+
+`app/dashboard/actions.ts` dosyasını şu hale getirin:
+
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { query } from "@/lib/db";
+import { getSessionUser } from "@/lib/auth";
+
+export async function deleteInvoice(id: string) {
+  const user = await getSessionUser();
+  if (!user) throw new Error("Unauthorized");
+  if (typeof id !== "string") throw new Error("Bad request");
+
+  const result = await query(
+    "delete from invoices where id = $1 and owner_id = $2 returning id",
+    [id, user.id],
+  );
+  if (result.rowCount === 0) throw new Error("Not found");
+
+  revalidatePath("/dashboard");
+}
+```
+
+- Oturum kontrolü action'ın içinde yapılıyor.
+- `owner_id = $2` ile sahiplik, silme sorgusunun içinde ve atomik olarak zorlanıyor. Önce `select` yapıp sonra silmek yarış durumu yaratır.
+- `returning id` ile geriye sadece ID dönüyor, tüm satır dönmüyor.
+- Başkasının faturası için "yok" ile "yetkisiz" ayrımı yapmıyorum. Böylece ID'lerin varlığı sızmaz.
+
+Admin rolü silebilsin istiyorsanız `user.role === "admin"` için ayrı bir dal ekleyin. Şu an `verifyToken` rolü hep `"user"` yaptığı için bunun anlamı yok.
+
+İkinci katman olarak, `middleware`/`proxy` ile `/dashboard`'u korumak da düşünülebilir. Ancak bu server action'ı korumaz, çünkü action çağrıları da aynı yola POST eder. Asıl güvence action içindeki kontroldür.
+
+## CI: lint kapsanıyor mu?
+
+**Hayır.** `next build` Next.js 16'da artık lint çalıştırmıyor (15.5'te kullanımdan kalktı, 16'da kaldırıldı). `package.json` içindeki `"lint": "eslint"` betiği build'e bağlı değil. Üstelik repoda ESLint yapılandırma dosyası (`eslint.config.*`) da yok. Yani şu an `eslint` çalıştırsanız bile bir şey kontrol etmez.
+
+`next build` tip kontrolünü yapar, bu yüzden TypeScript hataları yakalanır. Ancak lint kuralları yakalanmaz.
+
+Yapmanız gerekenler:
+
+1. Kök dizine `eslint.config.mjs` ekleyin:
+   ```js
+   import { defineConfig } from "eslint/config";
+   import nextVitals from "eslint-config-next/core-web-vitals";
+   import nextTs from "eslint-config-next/typescript";
+
+   export default defineConfig([...nextVitals, ...nextTs]);
+   ```
+2. CI'a ayrı bir adım olarak `npm run lint` ekleyin (`next build`'den önce ya da paralel).
+
+Bu yapılandırmanın tam biçimi sürüme göre değişebilir. İnternet erişimim olmadığı için `eslint-config-next@16.4.3`'ün dışa aktarımlarını doğrulayamadım. `node_modules` kurulu değil. Kurduktan sonra `npm run lint` ile deneyin.
+
+Lint, güvenlik açığını yakalamaz. Eksik yetkilendirme kontrolünü hiçbir standart kural bulmaz. Bunu testle veya kod incelemesiyle yakalamanız gerekir.
+
+## Küçük notlar
+
+- `invoice-list.tsx:5` içindeki `invoices: any[]` tipini gerçek bir `Invoice` tipiyle değiştirin.
+- Silme düğmesinde hata yönetimi yok. Action hata fırlatırsa kullanıcı bir şey görmez.

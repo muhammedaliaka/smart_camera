@@ -1,0 +1,31 @@
+[probe p2]
+**Kısa cevap: Hayır, bu haliyle serbest değil. İkisi de sorunlu.**
+
+İnternetim yok. Aşağıdakiler hafızamdan geliyor ve resmî kaynakla doğrulanmadı (UNVERIFIED). Karar vermeden önce her modelin `LICENSE` dosyasını kendiniz okuyun.
+
+## 1. MusicGen (Meta)
+- Kod MIT lisanslı. Ağırlıklar (weights) CC-BY-NC 4.0 lisanslı. "NC" ticari kullanım yok demek.
+- Satılan bir Steam oyunu ticari kullanımdır.
+- Üretilen müziğin lisanslanıp lisanslanmadığı tartışmalı. Yine de risk yüksek. Ben kullanmazdım.
+- **Ne yapın:** Ticari kullanıma açık bir model seçin. Örnekler: ACE-Step (Apache 2.0 olduğunu hatırlıyorum) veya Stable Audio Open (Stability Community License, gelir sınırı var). İkisini de önce lisans dosyasından doğrulayın.
+- Ya da müziği lisanslı bir kütüphaneden alın, ya da bir besteciyle çalışın.
+
+## 2. Hunyuan3D 2.0 (Tencent)
+- Lisansı "Tencent Hunyuan Community License". Bu lisans AB, Birleşik Krallık ve Güney Kore'de geçerli değil.
+- Siz Almanya'dasınız, yani AB'desiniz. Modeli kullanma hakkınız büyük olasılıkla yok.
+- Oyunun dünya genelinde satılması bunu değiştirmez. Sorun, modeli nerede çalıştırdığınız ve siz kimsiniz.
+- Lisansta ayrıca şunlar var: 1 milyon aylık kullanıcıyı geçerseniz ayrı lisans gerekir. Çıktıyla başka bir yapay zekâ modeli eğitemezsiniz.
+- **Ne yapın:** Bu modeli kullanmayın. Ticari kullanıma açık, AB'yi dışlamayan bir 3D modeli arayın (MIT veya Apache 2.0). Ya da 3D varlıkları elle veya lisanslı paketlerden yapın.
+- Tencent'ten yazılı özel izin almak da bir yol, ama sonucu belirsiz.
+
+## 3. Diğer noktalar
+- **Telif:** Almanya'da telif hakkı için insan emeği gerekir. Saf yapay zekâ çıktısı büyük olasılıkla korunmaz. Başkaları müziğinizi veya modellerinizi serbestçe kopyalayabilir. İnsan katkınızı (düzenleme, elle işleme) belgeleyin.
+- **Steam:** Valve, yapay zekâyla üretilmiş içeriği mağaza formunda bildirmenizi istiyor. Bildirim yapın.
+- **Kayıt:** Her model için sürüm, indirme tarihi ve lisans metnini kaydedin. İleride kanıt olur.
+
+## Önerilen sıra
+1. İki modeli de bırakın. Alternatifleri seçin.
+2. Alternatiflerin `LICENSE` dosyalarını okuyun. Dosyalar diskinizdeyse ben okuyup özetleyebilirim.
+3. Yayından önce bir fikri mülkiyet avukatına danışın. Bu hukuki tavsiye değil.
+
+**Varsayımlar:** Bireysel veya şirket olarak AB'de yerleşiksiniz. Modelleri bu lisans sürümleriyle indirdiniz. Lisanslar sonradan değişmediyse yukarıdaki sonuç geçerli.

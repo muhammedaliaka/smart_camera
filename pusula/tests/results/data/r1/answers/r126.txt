@@ -1,0 +1,65 @@
+[probe p3]
+**Kısa cevap: güvenli değil.** Sayfa korunuyor ama silme işlemi korunmuyor. Ayrıca oturum doğrulaması sahte.
+
+## Sorunlar
+
+1. **`deleteInvoice` herkese açık.** `app/dashboard/actions.ts:6`: Server Action, herkesin çağırabileceği bir POST adresidir. `/dashboard` içindeki yönlendirme onu korumaz. Girişsiz biri de çağırabilir.
+2. **Sahiplik kontrolü yok.** Sorgu sadece `where id = $1` diyor. Giriş yapan herkes başkasının faturasını silebilir.
+3. **Oturum doğrulaması sahte.** `lib/auth.ts:13`: `verifyToken` imza kontrol etmiyor. Çerez `session=BASKASININ_ID.x` olursa o kişi gibi girilir. Bu, 1 ve 2'yi daha da kötü yapar. Bunu önce düzeltin.
+4. **Ham satır dönüyor.** `returning *` tüm satırı istemciye verir. Sadece `id` yeterli.
+5. **Küçük not:** `invoice-list.tsx` içinde bekleme, hata ve boş liste durumu yok. Proje kuralı bunları ister.
+
+## Tam olarak ne değişmeli
+
+**1) `lib/auth.ts` — `verifyToken`:** Token'ı imzalı üretin ve burada doğrulayın.
+- Örnek: HMAC-SHA256 ve `.env` içinde bir `SESSION_SECRET`.
+- Karşılaştırmada `crypto.timingSafeEqual` kullanın.
+- İmza geçersizse `null` dönün.
+- ID'yi yalnızca doğrulanmış token'dan okuyun.
+
+**2) `app/dashboard/actions.ts`:**
+
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { query } from "@/lib/db";
+import { getSessionUser } from "@/lib/auth";
+
+export async function deleteInvoice(id: string) {
+  const user = await getSessionUser();
+  if (!user) throw new Error("unauthorized");
+  if (typeof id !== "string" || id === "") throw new Error("invalid_id");
+
+  const result = await query(
+    "delete from invoices where id = $1 and owner_id = $2 returning id",
+    [id, user.id],
+  );
+  if (result.rowCount === 0) throw new Error("not_found");
+
+  revalidatePath("/dashboard");
+}
+```
+
+- Kimlik kontrolü action'ın içinde.
+- Sahiplik kontrolü SQL'in içinde (`owner_id = $2`). Başkasının faturası silinmez.
+- Dönüş değeri yok, veri sızmaz.
+- Proje kuralı gereği hata metinleri de config veya anahtar dosyasına gitmeli. Burada örnek için kısa tuttum.
+
+**3) `invoice-list.tsx`:** Silme sırasında `useTransition` ile bekleme durumu, hata mesajı ve boş liste durumu ekleyin.
+
+Bu kodu çalıştırmadım. Durumu: UNVERIFIED. Sebep: bu oturumda değişiklik yapmadım ve internet yok.
+
+## CI: lint kapsanıyor mu?
+
+**Hayır.** `next build` lint çalıştırmaz.
+- Projenin kendi notu (`.claude/skills/recipes/packs/nextjs.md`, madde 8) Next.js 16'dan beri böyle olduğunu söylüyor. Resmi dokümana bakamadım (internet yok). Bu yüzden bilgi projenin notuna dayanıyor.
+- `package.json` içinde `"lint": "eslint"` var ama CI onu çağırmıyor.
+- Kökte `eslint.config.*` dosyası da yok. ESLint 9 bu dosya olmadan çalışmaz.
+
+Yapılacaklar:
+1. `eslint.config.mjs` ekleyin (`eslint-config-next` ile).
+2. CI'a `npm run lint` adımını `next build` öncesine ekleyin.
+3. İsterseniz `npx tsc --noEmit` de ekleyin.
+
+Lint güvenlik açığını yakalamaz. Eksik yetki kontrolü bir lint kuralı değil. Bunun için kod incelemesi veya test gerekir. Örnek test: girişsiz çağrı reddedilmeli, başka kullanıcının faturası silinmemeli.

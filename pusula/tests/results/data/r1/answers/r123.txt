@@ -1,0 +1,36 @@
+[probe p2]
+**Kısa cevap:** Mevcut planınız serbest değil. İki bileşenin de lisansı sorunlu. Aşağıdakiler hukuki danışmanlık değil ve internetim olmadığı için hafızamdan yazıyorum. Kullanacağınız sürümlerin lisans metinlerini mutlaka kendiniz doğrulayın.
+
+## 1. MusicGen (Meta)
+- Audiocraft **kodu** MIT lisanslıdır. **Model ağırlıkları** ise **CC-BY-NC 4.0** ile yayımlanmıştır ve ticari kullanıma izin vermez.
+- Ticari bir Steam oyununda bu ağırlıklarla üretilmiş müziği kullanmak lisans ihlali riski taşır. Çıktıların lisansı tartışmalı bir konu, ama bu riski almanızı önermem.
+- **Ne yapmalı:**
+  - Meta'dan yazılı ticari izin isteyin. Verirlerse sorun kalmaz, ama verme ihtimalleri düşük.
+  - Ticari kullanıma açık bir müzik modeli seçin. Örneğin Stable Audio Open'ın Stability Community License'ı, yıllık gelir eşiğinin altında ticari kullanıma izin veriyor. Bu eşiği ve kapsamı kontrol edin.
+  - Ticari haklar veren ücretli bir servis kullanın. Plan ve şartlarını sözleşmeyle saklayın.
+  - Bir besteciyle çalışın veya lisanslı müzik kütüphanesi kullanın.
+
+## 2. Hunyuan3D 2.0 (Tencent)
+- Lisansı **Tencent Hunyuan 3D 2.0 Community License**. Bu lisansın kapsadığı bölge (Territory) **AB, Birleşik Krallık ve Güney Kore'yi dışarıda bırakıyor**.
+- Almanya AB'de olduğu için, modeli kendi bilgisayarınızda çalıştırsanız bile **bu lisans size hak vermiyor**. Oyunun dünya genelinde satılması bunu değiştirmiyor. Kısıtlama sizin bulunduğunuz yer ve kullanımınızla ilgili.
+- Lisansta ayrıca şunlar da var:
+  - Aylık aktif kullanıcı sayısı 1 milyonu aşarsa ayrı lisans gerekir.
+  - Çıktıları başka bir AI modelini iyileştirmek için kullanamazsınız.
+  - Atıf/bildirim şartı vardır.
+- **Ne yapmalı:**
+  - Tencent'ten AB için ayrı, yazılı bir lisans isteyin.
+  - Veya AB'de kullanılabilir bir alternatife geçin. TRELLIS (Microsoft, MIT) ve TripoSR (MIT) gibi seçenekler var. Hunyuan3D'nin daha yeni sürümlerinin lisansını da ayrıca kontrol edin, çünkü benzer bölge kısıtları olabilir.
+
+## 3. Her iki durumda geçerli noktalar
+- **Telif koruması:** Almanya/AB'de ve ABD'de telif hakkı insan yaratıcılığı ister. Tamamen AI ile üretilmiş müzik ve modeller büyük olasılıkla korunmaz. Başkaları bunları serbestçe kopyalayabilir. İnsan katkınızı (düzenleme, elle modelleme, miksaj) belgeleyin ve güçlendirin.
+- **Girdi görselleri:** Hunyuan3D'ye verdiğiniz referans görseller sizin olmalı veya lisanslı olmalı.
+- **Steam:** Steamworks içerik anketinde AI ile üretilmiş içeriği bildirmeniz ve gerekli haklara sahip olduğunuzu beyan etmeniz gerekiyor.
+- **AB AI Act:** Sentetik içerik için şeffaflık yükümlülükleri 2026'dan itibaren devreye giriyor. Oyununuzun bu kapsamda olup olmadığını kontrol edin.
+- **Kayıt tutun:** Model adı ve sürümü, lisans metninin o günkü kopyası, üretim tarihi, prompt'lar ve girdi dosyaları. Bir uyuşmazlıkta işe yarar.
+
+## Önerilen yol
+1. MusicGen ve Hunyuan3D 2.0'ı ticari üretimde kullanmayın.
+2. Yukarıdaki alternatiflerden birini seçin ve onun lisansını arşivleyin.
+3. Yayın öncesinde fikri mülkiyet/oyun hukuku konusunda uzman bir avukata (Almanya'da IT-Recht uzmanı) kısa bir danışma yaptırın. Maliyeti, olası bir Steam kaldırma talebi veya dava riskine kıyasla küçük kalır.
+
+İsterseniz bir sonraki adımda alternatif modellerin lisanslarını karşılaştıran bir kontrol listesi hazırlayabilirim.

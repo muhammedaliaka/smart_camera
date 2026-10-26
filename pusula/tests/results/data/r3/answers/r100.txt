@@ -1,0 +1,47 @@
+[probe p8]
+Projeye baktım. Henüz hiçbir şeyi değiştirmedim.
+
+## Projede bulduklarım
+
+Repoda tek bir kod dosyası var: `Assets/Scripts/UI/MainMenu.cs`. Şunlar yok:
+- `.unity` sahne dosyası ve prefab
+- Canvas, CanvasScaler ve düzen (layout) ayarları
+- font, sprite ve arka plan varlıkları
+- test ve ekran görüntüsü
+
+Unity 6000.0.23f1 kullanılıyor. Paketler: URP 17, ugui 2.0.0 ve Input System. Git geçmişinde tek bir commit var (`x`).
+
+Bu yüzden menünün neden kötü göründüğünü şu an kanıtlayamıyorum. Görünümü belirleyen sahne bu repoda yok. Aşağıdakiler yalnızca koddan çıkan güçlü şüphelerim.
+
+**Düzeltmelerin geri bozulmasına yol açabilecek şeyler:**
+1. **`Start()` görünümü her açılışta eziyor.** Başlık metni, rengi ve boyutu (`fontSize = 48`) kodla ayarlanıyor. Sahnede ya da inspector'da yaptığınız her düzeltme, oyun çalışınca bu satırlarla sessizce eziliyor. Editörde düzgün görünüp çalışırken bozuk görünmesinin en olası nedeni bu.
+2. **Sabit piksel değerleri var.** `fontSize = 48` çözünürlükten bağımsız değil. CanvasScaler ayarını göremiyorum, ama farklı en-boy oranlarında taşma ya da küçük kalma bekleyebilirim.
+3. **Eski `UnityEngine.UI.Text` kullanılıyor.** Sahne URP ile kurulu. Metinler bulanık çıkabilir ve font ya da yerelleştirme kontrolü zayıf.
+4. **Metinler koda gömülü.** "OYNA" ve "AYARLAR" gibi etiketler kodda duruyor. Bu yüzden sahnedeki etiketle çalışırken görünen etiket birbirinden farklı olabiliyor.
+5. **Ayarlar butonuna bağlantı yok.** `optionsButton` için dinleyici eklenmemiş. Tıklanınca hiçbir şey olmuyor.
+6. **Referanslar `[SerializeField]` ile bağlanıyor.** Sahnede biri bu referansı boş bırakırsa `Start()` içinde `NullReferenceException` oluşur ve menü yarım kalır.
+7. **"Game" sahnesi build ayarlarında yoksa** `LoadScene` çalışmaz. Bunu da doğrulayamadım.
+
+## Nasıl ilerleyeceğim
+
+1. **Önce sahneyi bulmam gerekiyor.** Menü sahnesi ve prefab'lar bu repoya girmemiş olabilir. Bana gönderebilir misiniz? Gerekirse `.meta` dosyalarıyla birlikte olsun. Sahne olmadan yapacağım her düzeltme tahmin olur, tekrar bozulmasının sebebi de bu olur.
+2. **Hedef görünümü sizinle netleştireceğim.** Referans görsel veya "böyle olsun" tarifi lazım. Elimde bugünkü bozuk halin de ekran görüntüsü yok. Hedefi bilmeden "doğru" olup olmadığını ölçemem.
+3. **Görünümü koddan çıkarıp sahneye/prefab'a taşıyacağım.** `MainMenu.cs` sadece davranışı yönetecek (sahne yükleme, çıkış, ayarlar). Renk, boyut ve metin sahnede tek bir yerde duracak. Böylece iki kaynak birbirini ezmeyecek.
+4. **Düzeni çözünürlükten bağımsız yapacağım.** CanvasScaler "Scale With Screen Size" olacak. Anchor'lar ve Layout Group'lar kullanılacak. Sabit piksel konumlarını kaldıracağım.
+5. **Küçük ve tek tek doğrulanan adımlarla ilerleyeceğim.** Her adımdan sonra aynı ekran görüntüsü setini alıp önceki adımla karşılaştıracağım.
+
+## "Bitti" demek için göstereceklerim
+
+- **Ekran görüntüleri:** Menü en az 16:9 (1920×1080), 16:10, 21:9 ve dikey/küçük bir çözünürlükte, hedef görünümün yanında gösterilecek.
+- **Çalışırken alınmış görüntü:** Editörde durağan hali yetmez. Play modunda `Start()` çalıştıktan sonraki hali gösterilecek. Önceki düzeltmelerin bozulduğu yer burası.
+- **Konsol temiz olacak:** Menü açılışında hata ve uyarı olmayacak. Ekran görüntüsüyle birlikte gösterilecek.
+- **Butonlar sınanacak:**
+  - OYNA, "Game" sahnesini yükleyecek.
+  - AYARLAR bir şey yapacak ya da açıkça devre dışı görünecek.
+  - ÇIKIŞ build'de çalışacak. Editörde `Application.Quit` işe yaramaz, bunu açıkça belirteceğim.
+- **Bir EditMode/PlayMode testi:** Menü sahnesi yüklenince referansların dolu olduğunu ve metinlerin beklenen değerde kaldığını doğrulayacak. Böylece birisi tekrar bozarsa test kırmızı olur.
+- **Değişen dosyaların listesi:** Sahne ve prefab dosyaları da commit'e girmiş olacak. Bu sefer yalnızca kod değil, görünümün kendisi de repoda kalacak.
+
+Dürüst bir sınır: Bu ortamda Unity editörü çalıştırabildiğimi görmüyorum. Bash de kapalı. Ekran görüntülerini siz alabilirsiniz ya da editörü çalıştırabileceğim bir ortam gerekir. Bunu çözemezsem "bitti" yerine "kod tarafı hazır, görsel doğrulama sizde" diyeceğim.
+
+İlerlemek için bana iki şey lazım: **menü sahnesi (veya prefab) dosyaları** ve **hedef görünüm** (görsel ya da tarif). İsterseniz sahne gelmeden de `MainMenu.cs` tarafını (madde 3'ün kod kısmı ve ayarlar butonu) hazırlayabilirim.

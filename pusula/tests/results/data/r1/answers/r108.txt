@@ -1,0 +1,2 @@
+[probe p5]
+`git rebase`, bir dalın commit'lerini başka bir commit'in üstüne yeniden uygular. Böylece geçmiş düz bir çizgi olur ve gereksiz merge commit'leri oluşmaz. Commit'ler yeniden yazıldığı için hash'leri değişir; paylaşılmış dallarda dikkatli kullan.

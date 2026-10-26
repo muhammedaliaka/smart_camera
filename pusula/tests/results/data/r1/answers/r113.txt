@@ -1,0 +1,47 @@
+[probe p1]
+Hedef çıkış tarihi vermediğin için şöyle varsaydım: bugün 25 Ekim 2026 (Pazar) ve Steamworks'te henüz ücret, vergi ve banka işlemleri yapılmamış. Bu varsayımla en makul çıkış **Perşembe 3 Aralık 2026**. İnternetim olmadığı için Steam kurallarını bilgimden yazıyorum. Rakamları, özellikle indirim aralıklarını, Steamworks'te doğrula.
+
+## Steam kuralları (somut)
+
+| Kural | Değer |
+|---|---|
+| App ücreti | 100 $ (ciro 1.000 $'ı geçince geri alınır) |
+| Ücret sonrası bekleme | Ödemeden **30 gün** sonra çıkış yapılabilir |
+| "Coming Soon" sayfası | Çıkıştan en az **2 hafta** önce yayında olmalı |
+| Mağaza sayfası incelemesi | **3–5 iş günü** |
+| Build incelemesi | **3–5 iş günü** (Valve en az 1–2 hafta önce göndermeni önerir) |
+| Lansman indirimi | Genelde %10–40 arası, en fazla 2 hafta (ben 1 hafta öneriyorum) |
+| İndirim sonrası bekleme | Bir indirim bittikten sonra yeni indirim için yaklaşık **30 gün** bekleme var (sezon satışları için istisna olup olmadığını Steamworks'te teyit et) |
+| Fiyat paritesi | Başka mağazada ve key'lerde Steam'den ucuza satamazsın |
+| Ödeme | Ay sonundan yaklaşık 30 gün sonra, 100 $ eşiğiyle |
+
+Türkiye'den W-8BEN vergi formunu doldurman gerekir. Türkiye–ABD anlaşmasına göre stopaj oranını Steamworks'teki vergi sihirbazı sana gösterir.
+
+## Tarihli plan
+
+| Tarih | Adım |
+|---|---|
+| **Paz 25 Eki** | Steamworks hesabı, kimlik, banka ve vergi bilgileri (W-8BEN). Mağaza görsellerini (kapsül görselleri, 5+ ekran görüntüsü, fragman, açıklama) hazırlamaya başla. |
+| **Pzt 26 Eki** | 100 $ app ücretini öde. 30 günlük sayaç başlar, en erken çıkış **25 Kas**. |
+| **Cum 30 Eki** | Mağaza sayfasını incelemeye gönder. |
+| **Sal 3 – Cum 6 Kas** | Onay gelir. "Coming Soon" sayfasını yayınla (2 hafta sayacı başlar, en erken çıkış 17–20 Kas). Temel fiyatı **14,99 $** gir, bölgesel fiyatları kontrol et. Wishlist toplamaya başla. |
+| **Kas ortası** | Demo, Steam duyuruları ve Discord ile wishlist biriktir. |
+| **Cum 13 Kas** | Build'i incelemeye gönder, 3–5 iş günü sürer. Red gelirse düzeltip tekrar göndermek için 2 haftalık tampon kalır. |
+| **Cum 20 Kas** | Build onaylı olmalı. Çıkış tarihini 3 Aralık olarak Steamworks'e gir. |
+| **Çar 25 Kas** | 30 günlük bekleme dolar. Basın ve içerik üreticilerine key gönder. |
+| **Per 26 Kas** | Lansman indirimini planla: **%40, 3 Aralık – 10 Aralık**. Fiyat: 14,99 $ → **8,99 $**. |
+| **Per 3 Aralık** | **ÇIKIŞ.** "Release" düğmesine 10:00 PT'de bas (TR saatiyle 21:00). İndirim aynı anda aktif olur. |
+| **Per 10 Aralık** | İndirim biter. Temel fiyatı **19,99 $** yap. İndirim sürerken temel fiyat değişikliği yapamıyorsan, bitişin hemen ardından gir. |
+
+## Fiyat adımları
+
+1. **Şimdi – 3 Aralık:** Mağazada 14,99 $.
+2. **3–10 Aralık:** %40 indirimle 8,99 $ (14,99 × 0,60 = 8,994).
+3. **10 Aralık sonrası:** 19,99 $. Bu %33'lük bir artış. Yorumlar ve wishlist geri bildirimi iyiyse sorun olmaz, ilk hafta yorumlar zayıfsa fiyat artışını ertele.
+
+## Riskler
+
+- **Kış satışı çakışması:** Steam Kış Satışı genelde 17 Aralık civarında başlıyor (tarihi doğrulayamıyorum). 10 Aralık'ta biten lansman indiriminden sonra 30 gün bekleme kuralı seni satışın dışında bırakabilir. Steamworks'teki satış takviminde kuralın sezon satışlarına uygulanıp uygulanmadığına bak. Uygulanıyorsa iki seçenek var: indirimi 1 hafta yerine hiç yapma ya da çıkışı Ocak sonuna kaydır.
+- **Sonbahar Satışı:** Yaklaşık 25 Kas – 2 Aralık arasına denk gelir. Satışın içinde çıkarsan görünmezliğin artar, o yüzden 3 Aralık'ı seçtim.
+- **Wishlist süresi:** Sayfa yayına girdikten sonra çıkışa yalnızca yaklaşık 4 hafta var. Bir RTS için bu kısa. Daha fazla wishlist ve Steam Next Fest demosu istiyorsan çıkışı Şubat–Mart 2027'ye kaydırmak daha sağlam olur. Plandaki adımlar aynı kalır, yalnızca tarihler kayar.
+- **Zaten ücret ve belgeler tamamsa:** 30 gün kuralı zaten işlemeye başlamıştır. Çıkışı Kasım ortasına çekebilirsin, ama "Coming Soon" sayfasının 2 haftalık süresini ve build incelemesini yine hesaba kat.

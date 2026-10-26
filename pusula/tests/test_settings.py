@@ -55,6 +55,12 @@ class LockGuard(ProjectCase):
         self.assertEqual(self.decision("Bash", command="wc -l < package-lock.json"), "ask")
         self.assertEqual(self.decision("Bash", command="python -c \"open('uv.lock').read()\""), "ask")
 
+    def test_windows_and_powershell_paths_ask(self):
+        for cmd in (r"type apps\web\yarn.lock", r"Get-Content .\Cargo.lock", r"Get-Content -Path 'C:\work\game\package-lock.json'",
+                    r"dir Library\ScriptAssemblies"):
+            self.assertEqual(self.decision("Bash", command=cmd), "ask", cmd)
+        self.assertIsNone(self.decision("Bash", command=r"type src\app.ts"))
+
     def test_grep_tool_path_asks(self):
         self.assertEqual(self.decision("Grep", pattern="x", path="package-lock.json"), "ask")
 

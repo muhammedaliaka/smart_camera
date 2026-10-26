@@ -1,0 +1,105 @@
+[probe p7]
+Plan dosyasını yazamadım, çünkü `Write` aracı kapalı. Planı burada veriyorum. Dosya kuralı için aşağıda not var.
+
+# RTS planı: ağ, performans, asset (taslak)
+
+## Sonuç
+Ağ modeli olarak **deterministic lockstep** öneriyorum. Ağda sadece komutlar gider, birim durumu gitmez. Nedeni şu: 8 × 200 = 1600 birimin durumunu 8 ev bağlantısına göndermek zor. Komutlar ise çok küçüktür.
+
+## 1. Ağ modeli
+**Seçenekler**
+- **A. Lockstep (önerilen).** Bant genişliği çok düşük. Replay bedava gelir. Bedeli: simülasyon her makinede birebir aynı çalışmalı.
+- **B. Sunucu otoriteli durum aktarımı.** Float farklarına dayanıklı, geç katılım kolay. Ama 1600 birim için ağır sıkıştırma ve sunucu maliyeti gerekir. Bant genişliğini ölçmedim. [reasoning]
+- B, yedek plan olarak kalır.
+
+**Kararlar**
+- Komutlar yaklaşık 200 ms'lik turlarda toplanır. Komut, verildikten 2 tur sonra çalışır. Age of Empires ekibine göre 250 ms gecikme fark edilmemiş, 500 ms üstü fark edilmiş. Tur süresi config değeri olur. [first-party account: gamedeveloper.com, "1500 Archers on a 28.8"]
+- Simülasyon **tamsayı veya fixed-point** kullanır. Unity float, Physics ve NavMesh simülasyona girmez. Float sonuçları derleyiciye ve CPU'ya göre değişebilir. [secondary: gafferongames.com]. Fixed-point seçimi benim çıkarımım. [reasoning]
+- Simülasyon ile görüntü ayrı katmanlardır. Görüntü sadece okur ve ara değer (interpolation) çizer.
+- Simülasyon için tek bir seed'li RNG kullanılır. Kozmetik efektler için ayrı bir RNG kullanılır.
+- Her turda checksum karşılaştırılır (dünya, nesneler, yol bulma, hedefleme). İlk uyuşmazlıkta oyun durur. [first-party account]
+- Geç katılım için host periyodik tam snapshot alır. Katılan oyuncu snapshot'tan başlar, sonra komutları oynatır. [reasoning]
+- Taşıma katmanı: Unity Transport ve relay. Sadece güvenilir, sıralı komut iletimi gerekir. [unverified] Projenin sürümüne ait paket dokümanı okunmalı.
+
+## 2. Performans planı
+Önce ölç. Editor profili yanıltır. Hedef donanımda **build** ile profil al. [common practice]
+
+1. **Simülasyon yükü:** 1600 birimin işini tur içinde kareye yay. Uzak veya boşta birimler daha seyrek güncellenir. [common practice]
+2. **Menzil sorguları:** Physics yerine spatial hash grid kullan. [common practice]
+3. **Çizim** [official, Unity 6 manual]:
+   - URP, SRP Batcher ve GPU Resident Drawer kullan.
+   - Materyalleri paylaş. Değişiklik için Material Variant kullan.
+   - URP'de `MaterialPropertyBlock` kullanma.
+   - Static batching, GPU Resident Drawer ile birlikte çalışmaz.
+4. **LOD:** Mesafeye göre seviye seçilir. En düşük seviye billboard olabilir. [official] Çok birim için baked vertex animation düşünülebilir. [common practice, unverified]
+5. **Pooling:** Mermi, efekt ve can çubukları için `UnityEngine.Pool.ObjectPool<T>`. `maxSize` değeri config'den gelir. [official]
+6. **Bellek:** Simülasyon ve görüntü döngülerinde kare başına allocation olmasın. Profiler ile kontrol et.
+7. **Ses:** Max Virtual Voices, çalan ses sayısından büyük olmalı. Max Real Voices sınırlanır. Mixer snapshot ve ducking kullan. [official]
+8. **UI:** Ekran başına tek atlas. Can çubuğu sadece ekrandaki veya seçili birimlerde. UI Toolkit, ekran HUD'u için uygun. [official, unity.md]
+9. **Ağ:** Bir turun tüm komutları tek pakette. Tur başına byte ölç.
+10. **Birim sayısı yolu:** GameObject mi, Entities + Jobs + Burst mu? Unity dokümanı sayı vermiyor. Kendi sahnenin profiline göre karar ver. [reasoning]
+
+## 3. Gereken asset sınıfları
+Her sınıf için dört soru: Gerekli mi? Nasıl üretilir? Bütçe? Ledger satırı? Bütçeler proje config'ine gider.
+
+| Sınıf | İçerik |
+|---|---|
+| 3D | Birimler, binalar (inşaat aşamaları, yıkıntı), kaynak noktaları, props, mermiler, arazi, su, gökyüzü |
+| Yüzey | Albedo, normal, metallic-roughness, emission, takım rengi maskesi, döşenebilir zemin, splat map, decal, atlas |
+| Rig ve animasyon | İskelet, idle/walk/attack/death/hit, topla/inşa/taşı klipleri, animator, animation event |
+| VFX | Vuruş efekti, seçim halkası, menzil işareti, yetenek efektleri, savaş sisi, post-process |
+| Ses | SFX, birim sesleri, anonsçu, müzik durumları, ortam sesi, mixer grupları |
+| UI | HUD, minimap, komut paneli, ikon, portre, imleç, can çubuğu, seçim kutusu, menüler, fontlar |
+| Seviye verisi | Harita boyutu, 8 başlangıç noktası, kaynak yerleri, navigasyon verisi (kendi formatın), sis verisi |
+| Oyun verisi | Birim ve bina değerleri, teknoloji ağacı, denge tabloları, yerelleştirme, bot profilleri, tuş atamaları, replay formatı |
+| Hikâye ve yayın | Konsept sanat, logo, fragman, mağaza görselleri, EULA, gizlilik metni (sonraya kalabilir) |
+
+Bu tasarım için ek **kod tarafı** sınıfları:
+- fixed-point matematik kütüphanesi,
+- komut şeması,
+- replay dosya formatı,
+- checksum seti,
+- config asset'leri (tur süresi, bütçeler, ses limitleri).
+
+Her asset için lisans ledger'ı tutulur. Yapay zekâ ile üretilen asset'lerde lisans ve Steam bildirimi gerekir.
+
+## 4. Adımlar (her biri bir kontrolle)
+1. Unity 6 projesi aç, `ProjectVersion.txt` kaydet. Kontrol: dosya var. Öneri: 6.3 LTS (Aralık 2027'ye kadar destekli). [official]
+2. Unity'siz saf C# simülasyon çekirdeği yaz. Kontrol: edit-mode testleri geçer, assembly'de `UnityEngine` referansı yok.
+3. **Determinizm denemesi:** 1600 sahte birim, 20 dakika, iki farklı makine. Kontrol: checksum uyuşmazlığı yok. Başarısızsa B seçeneğine dön.
+4. Sahte gecikme ve paket kaybıyla yerel lockstep. Kontrol: aynı komut + seed iki kez aynı checksum'ı verir.
+5. Ağ katmanı: relay, lag zaman aşımı, desync raporu. Kontrol: 8 sahte istemci, biri yavaş.
+6. Görüntü katmanı: 1600 birim çiz. Kontrol: birkaç dakikalık ölçekli sahnede kare süresi ve bellek sabit.
+7. Yol bulma ve savaş sisi. Kontrol: yavaş referans ile hızlı sürüm rastgele haritalarda aynı sonucu verir.
+8. Asset hattı ve ledger.
+9. Geç katılım ve yeniden bağlanma. Kontrol: 10. dakikada katılan istemcinin checksum'ı uyar.
+10. 8 oyunculu 30 dakikalık maç, gerçek build, hedef PC. Kontrol: desync yok, kare süresi bütçede.
+
+## 5. Ana riskler
+1. Simülasyona float veya Unity API sızar. Önlem: simülasyon assembly'sinde Unity referansı yok.
+2. Desync sadece başka CPU markasında çıkar. Önlem: adım 3'ü iki farklı makinede çalıştır.
+3. `Dictionary`/`HashSet` sırası farklı çıkar. Önlem: dizi ve sıralı id kullan. [reasoning]
+4. Tek yavaş oyuncu 7 kişiyi bekletir. Önlem: lag zaman aşımı ve çıkarma/AI devralma kuralı.
+5. Komut gecikmesi hantal hissettirir. Önlem: anında yerel geri bildirim, tur süresi config'de.
+6. Toplu ölümde kare süresi sıçrar. Önlem: pooling ve ölçek sahnesine toplu ölüm ekle.
+7. Ses taşar. Önlem: ses sınırları.
+8. İstemcilerde farklı denge verisi. Önlem: el sıkışmada veri hash'i.
+9. Maphack. Lockstep'te herkes tüm durumu bilir. Savaş sisi sadece istemcidedir. Bu riski kabul etmen gerekir. [reasoning]
+10. Sadece editor profiline güvenmek. Önlem: yalnız build ölçümü sayılır.
+
+## 6. Cevaplamam gereken ama bilmediğim şeyler
+Bunlara cevabın yoksa bu varsayımlarla ilerlerim: PC, internet + LAN, kopan oyuncu yerine AI devralır, hedef 60 FPS.
+
+1. Hedef kare hızı ve minimum PC özellikleri nedir?
+2. Ekip büyüklüğü ve teslim tarihi nedir?
+3. Sadece internet mi, LAN de var mı? Relay için bütçe var mı?
+4. Oyuncu koparsa ne olsun: duraklat, at, AI devralsın?
+5. Burst/Jobs farklı CPU'larda aynı tamsayı sonucunu verir mi? Henüz doğrulamadım. Adım 3 test edecek.
+
+## Not
+- **Dosya kuralı:** Kurallar planın dosyada tutulmasını istiyor (`.pusula/rts-network-perf/plan.md`). `Write` aracı kapalı olduğu için kaydedemedim. Araç açılırsa bu planı aynen o dosyaya yazarım.
+- **Kod yok:** İstediğin gibi hiç kod yazmadım.
+- **Doğrulama:** Bu bir plan. Hiçbir şeyi Unity'de çalıştırmadım. Ölçüm gerektiren her iddia henüz doğrulanmamıştır.
+- **Kaynaklar:** `[official]` etiketli bilgiler Unity pack'inden ve oyun üretim pack'inden geliyor. Bu oturumda Unity sitesini ayrıca açıp okumadım.
+
+Bu plan istediğin şeyi yakalıyor mu? Evetse yukarıdaki sorulara cevap ver, adım 1'e geçeriz.

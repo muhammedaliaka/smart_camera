@@ -1,0 +1,70 @@
+[probe p3]
+**Kısa cevap: Güvenli değil.**
+
+## 1. Silme işlemi güvensiz
+
+`/dashboard` sayfasındaki `redirect("/login")` kontrolü (`app/dashboard/page.tsx:7-8`) yalnızca sayfa render'ını korur. `deleteInvoice` (`app/dashboard/actions.ts:6`) ise `"use server"` ile işaretli, yani herkese açık bir POST endpoint'idir. Action ID'sini bilen (istemci bundle'ından okunabilir) herkes bunu `/dashboard`'a hiç girmeden çağırabilir. Bu fonksiyonda hiçbir kontrol yok:
+
+- **Kimlik doğrulama yok.** Oturumsuz biri de silebilir.
+- **Sahiplik kontrolü yok (IDOR).** SQL `where id = $1` ile siliyor, `owner_id` bakılmıyor. Giriş yapmış herhangi bir kullanıcı, başkasının fatura id'sini göndererek onu silebilir.
+- **Girdi doğrulaması yok.** `id` istemciden geliyor ve `string` olduğu varsayılıyor. Çalışma anında bir şey garanti edilmiyor.
+- **Dönen değer sızıntısı.** `returning *` ile silinen satırın tamamı istemciye geri dönüyor.
+
+Ek bulgu: `lib/auth.ts:13`'te `verifyToken` imza doğrulaması yapmıyor. Çerezi `"123.x"` yapan biri `id=123` kullanıcısı olur. Yukarıdaki düzeltmeleri bu haliyle yapsanız bile kimlik taklit edilebilir. Bunu gerçek bir imza/JWT/oturum-tablosu doğrulamasıyla değiştirmeniz şart. Yorum satırı ("signature check lives here") bir TODO gibi duruyor.
+
+## 2. Tam olarak ne değiştirmelisiniz
+
+**`app/dashboard/actions.ts`:**
+
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { getSessionUser } from "@/lib/auth";
+import { query } from "@/lib/db";
+
+export async function deleteInvoice(id: string) {
+  const user = await getSessionUser();
+  if (!user) throw new Error("Unauthorized");
+  if (typeof id !== "string" || id.length === 0) throw new Error("Invalid id");
+
+  const result = await query(
+    "delete from invoices where id = $1 and owner_id = $2 returning id",
+    [id, user.id],
+  );
+  if (result.rowCount === 0) throw new Error("Not found");
+
+  revalidatePath("/dashboard");
+}
+```
+
+Önemli noktalar:
+- Yetkilendirme action'ın **içinde** yapılıyor, çağıran sayfaya güvenilmiyor.
+- Sahiplik, ayrı bir `select` yerine tek SQL'de `and owner_id = $2` ile zorlanıyor. Bu yarış durumlarını da önler.
+- Başkasının faturasında "Not found" dönüyor, böylece varlığı sızdırılmıyor.
+- Admin silebilsin istiyorsanız: `user.role === "admin"` ise `owner_id` koşulunu atlayan ayrı bir dal ekleyin.
+- `lib/auth.ts` içinde `verifyToken`'ı gerçek imza doğrulamasıyla (ör. `jose` ile `jwtVerify` veya DB'de oturum arama) değiştirin.
+
+İsteğe bağlı: `invoice-list.tsx`'teki `any[]` yerine tip tanımlayın, ama bu güvenlikle ilgili değil.
+
+## 3. CI lint'i kapsıyor mu?
+
+**Hayır.** `.github/workflows/ci.yml` yalnızca `npm ci` ve `npm run build` çalıştırıyor. Üstelik Next.js 16'da `next build` artık lint çalıştırmıyor (Next 15.5'ten beri `next lint` kullanımdan kalkmaya başladı, 16'da kaldırıldı). Yani lint hiç koşmuyor. Ayrıca:
+
+- `package.json`'da `"lint": "eslint"` var, ama repoda **ESLint config dosyası yok** (`eslint.config.*` ve `.eslintrc*` bulunamadı). Config olmadan ESLint 9 hata verir veya hiçbir şeyi kontrol etmez.
+- `eslint-config-next` yüklü ama kullanılmıyor.
+
+Yapılacaklar:
+1. Kök dizine `eslint.config.mjs` ekleyin:
+   ```js
+   import next from "eslint-config-next";
+   export default [...next];
+   ```
+   (Sürümünüzün config export biçimi farklıysa `eslint-config-next` dokümanına bakın. Bunu burada internet olmadığı için doğrulayamadım.)
+2. `package.json`'daki scripti `"lint": "eslint ."` yapın.
+3. `ci.yml`'e `build`'den önce `- run: npm run lint` adımı ekleyin.
+4. İsterseniz `- run: npx tsc --noEmit` de ekleyin. `next build` tip kontrolü yapar, ama ayrı adım hatayı daha net gösterir.
+
+Not: Lint, yukarıdaki yetkilendirme açığını yakalamaz. Standart kurallar "bu server action'da auth kontrolü var mı" diye bakmaz. Bunun için kod incelemesi veya action'ları saran ortak bir `requireUser()` yardımcısı kullanmak daha sağlam olur.
+
+Hiçbir dosyayı değiştirmedim.

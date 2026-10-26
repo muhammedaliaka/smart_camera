@@ -1,0 +1,73 @@
+[probe p4]
+## 1. Draco GLB neden yüklenmiyor
+
+`src/main.js:10` içinde `GLTFLoader` var ama `DRACOLoader` yok. `gltf-transform ... draco` ile sıkıştırılmış dosyalar `KHR_draco_mesh_compression` eklentisini `extensionsRequired` içinde ister. `GLTFLoader` de bu eklenti için bir decoder bulamaz ve `THREE.GLTFLoader: setDRACOLoader() must be called before loading Draco compressed files` hatası verir. `loadAsync` promise'i reject olur. Bu reject'i yakalayan bir `.catch` yok, bu yüzden sayfa sessizce boş kalır ve hata yalnızca konsolda görünür.
+
+Düzeltme:
+
+```js
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
+const draco = new DRACOLoader();
+draco.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/"); // veya yerel
+loader.setDRACOLoader(draco);
+```
+
+Yerel kullanım için `node_modules/three/examples/jsm/libs/draco/gltf/` klasörünü Vite'ın `public/draco/` dizinine kopyalayın ve `setDecoderPath("/draco/")` kullanın. Decoder dosyaları `draco_decoder.js`, `draco_decoder.wasm` ve `draco_wasm_wrapper.js`'dir. Bunlardan biri 404 dönerse ya da HTML döndürürse (Vite'ta yanlış yol SPA fallback'iyle `index.html` verir) yükleme yine başarısız olur. Network sekmesinde bunu kontrol edin.
+
+Diğer olası nedenler:
+- Dosyayı `gltf-transform optimize` ile ürettiyseniz varsayılan olarak **meshopt** ve **KTX2/Basis** de kullanılmış olabilir. O durumda `loader.setMeshoptDecoder(MeshoptDecoder)` ve `KTX2Loader` (`detectSupport(renderer)` ile) gerekir. Draco ekleniyorsa bile bu eklentiler eksikse yükleme yine başarısız olur.
+- `models/unit.glb` yolu `public/models/` altında olmalı. Aksi halde 404 alırsınız.
+
+Hangi eklentilerin zorunlu olduğunu aşağıdaki doğrulama adımından görebilirsiniz.
+
+## 2. `swapModel` bellek sızıntısı
+
+Evet, sızıntı var:
+
+- `scene.remove(current)` yalnızca nesneyi sahneden çıkarır. GPU kaynakları (geometry buffer'ları, materyaller, texture'lar) serbest kalmaz. Her swap'ta GPU belleği büyür. Şu çağrıların hiçbiri yok: `geometry.dispose()`, `material.dispose()`, `texture.dispose()`.
+- Materyalin `map`, `normalMap`, `roughnessMap` gibi texture alanlarını da tek tek dispose etmek gerekir.
+- Draco'ya geçince `DRACOLoader` worker havuzu da oluşur. Tek bir loader paylaşılıyor, bu iyi. Ama gerekirse `draco.dispose()` ile worker'ları sonlandırmayı unutmayın.
+- Yarış durumu var: `swapModel`'i art arda çağırırsanız, yükleme sırası karışabilir. Geç biten eski yükleme `current`'ı ezer ve ara modeller hiç dispose edilmeden sahnede kalır. En son istek geçerli sayılmalı, eskiler dispose edilmeli.
+- Hata durumunda `.catch` yok.
+
+Örnek temizlik:
+
+```js
+function disposeObject(root) {
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    o.geometry?.dispose();
+    for (const m of [].concat(o.material)) {
+      for (const v of Object.values(m)) if (v?.isTexture) v.dispose();
+      m.dispose();
+    }
+  });
+}
+```
+
+`SkinnedMesh` kullanıyorsanız `o.skeleton?.dispose()` de ekleyin. Texture'ları birden fazla model paylaşıyorsa, paylaşılanı dispose etmemeye dikkat edin. Doğrulamak için `renderer.info.memory` içindeki `geometries` ve `textures` sayılarını her swap sonrası loglayın. Sızıntı varsa bu sayılar sürekli artar.
+
+## 3. Dosyanın geçerli olduğunu doğrulama
+
+Bu ortamda internet ve çalıştırma yapmadım. Aşağıdakileri kendi makinenizde çalıştırın:
+
+```bash
+# Resmî Khronos doğrulayıcı: şema, accessor, bufferView hatalarını verir
+npx gltf-validator public/models/unit.glb
+
+# gltf-transform ile yapı, eklentiler ve boyutlar
+npx @gltf-transform/cli inspect public/models/unit.glb
+npx @gltf-transform/cli validate public/models/unit.glb
+
+# Başlığı elle kontrol: "glTF" (67 6C 54 46) ile başlamalı, sürüm 2
+xxd -l 12 public/models/unit.glb
+```
+
+Neye bakmalı:
+- `inspect` çıktısındaki **extensionsRequired** listesine bakın. `KHR_draco_mesh_compression` dışında `EXT_meshopt_compression` veya `KHR_texture_basisu` varsa, onlara ait decoder'ları da eklemeniz gerekir.
+- İlk 4 bayt `glTF` değilse dosya bozuktur. Çoğunlukla bir HTML hata sayfası, Git LFS pointer dosyası ya da yarım inmiş bir dosya olur. Dosya boyutunun birkaç yüz bayt olup olmadığına bakın.
+- `gltf-validator` temiz çıkıp tarayıcıda hâlâ hata varsa sorun dosyada değil, decoder yapılandırmasındadır. Bu en olası senaryo.
+- Hızlı bir görsel kontrol için dosyayı https://gltf-viewer.donmccurdy.com/ üzerinde açabilirsiniz. Orada açılıp sizde açılmıyorsa sorun kesinlikle kod tarafındadır.
+
+**Özet:** Yükleme hatasının asıl nedeni büyük olasılıkla `DRACOLoader` eksikliği. Bellek sızıntısı gerçek: dispose yok, eşzamanlılık kontrolü yok. Doğrulama için `gltf-validator` ve `gltf-transform inspect` kullanın. Kodu değiştirmedim.

@@ -1,0 +1,66 @@
+[probe p6]
+# Notes Desk: Electron → Tauri v2 geçiş planı
+
+Projede 5 dosya var (`package.json`, `main.js`, `preload.js`, `index.html`, `renderer.js`) ve toplam yaklaşık 70 satır. Geçiş küçük ama üç yerde risk var: veri yolu, otomatik güncelleme ve CDN'den yüklenen `marked`.
+
+## 1. Dosya eşlemesi
+
+| Mevcut | Tauri karşılığı | Not |
+|---|---|---|
+| `main.js` (pencere, 900×600) | `src-tauri/tauri.conf.json` → `app.windows` | Pencere boyutu config'e gider. `window-all-closed` mantığı Tauri'de varsayılan davranış, kod gerekmez. |
+| `main.js` → `notes:read`, `notes:save` | `src-tauri/src/lib.rs` içinde `#[tauri::command] read_notes` ve `save_notes` | `app.getPath("userData")` yerine `app.path().app_data_dir()` kullanılır. Dosya yoksa `""` dönmesi korunur. Rust tarafında `create_dir_all` gerekir, çünkü Electron bunu kendisi yapıyordu. |
+| `main.js` → `file:pick` | `tauri-plugin-dialog` + `tauri-plugin-fs` | Filtre `txt`/`md` aynen taşınır. İptal edilirse `null` dönme sözleşmesi korunur. |
+| `main.js` → `autoUpdater` | `tauri-plugin-updater` (+ `tauri-plugin-process` ile yeniden başlatma) | Aşağıdaki "Riskler" bölümüne bakın. |
+| `preload.js` | **Silinir** | `contextBridge` yerine `invoke(...)` kullanılır. Yerine ince bir `api.js` sarmalayıcı yazılır. Bu sarmalayıcı `readNotes`, `saveNotes` ve `pickFile` imzalarını korur, böylece `renderer.js` neredeyse hiç değişmez. |
+| `renderer.js` | `src/renderer.js` | `window.api.*` çağrıları yeni sarmalayıcıya bağlanır. Mantık aynı kalır. |
+| `index.html` | `src/index.html` | `marked` CDN etiketi kaldırılıp yerel pakete geçilir (aşağıya bakın). |
+| `package.json` | Aynı dosya, sadeleşmiş hali | `electron`, `electron-builder` ve `electron-updater` çıkar. `@tauri-apps/cli` ve `@tauri-apps/api` girer. Script'ler `tauri dev` ve `tauri build` olur. |
+| (yok) | `src-tauri/Cargo.toml`, `build.rs`, `src/main.rs`, `capabilities/default.json`, `icons/` | Yeni dosyalar. `capabilities` içinde yalnızca gereken izinler verilir: dialog open, fs read, updater, process restart. |
+
+Frontend için bundler eklemeyeceğim. Düz HTML/JS olarak kalır ve `frontendDist` doğrudan `src/` klasörünü gösterir. `marked` için `npm i marked` yapıp `dist/marked.min.js` dosyasını `src/vendor/` altına kopyalarım.
+
+## 2. Riskler ve kararlar
+
+1. **Notların taşınması.** Electron'da notlar Linux'ta `~/.config/notes-desk/notes.txt` yolunda duruyor. Tauri'de yol `identifier` değerine göre değişir. Mevcut kullanıcıların notu kaybolmasın diye ilk açılışta eski yol okunup yenisine kopyalanacak (tek seferlik göç). Bunun testini ayrıca yazacağım.
+2. **Güncelleyici uyumsuzluğu.** `electron-updater` eski kurulumları Tauri sürümüne yükseltemez, çünkü imza ve manifest biçimi farklı. Tauri updater için şunlar gerekir: imza anahtar çifti (`tauri signer generate`), `latest.json` yayını ve `pubkey` config'i. `package.json`'da `publish`/`build` bölümü yok, yani şu an güncellemelerin nereden dağıtıldığını repodan çıkaramıyorum. **Sizden netleştirmenizi istediğim nokta:** Electron sürümünü kullananlar için son bir "köprü" Electron sürümü mü çıkaracağız (kullanıcıyı Tauri kurulumuna yönlendiren), yoksa kullanıcılar elle mi geçecek?
+3. **CSP ve CDN.** Tauri varsayılan olarak sıkı bir CSP uygular. CDN'den `marked` yüklemek hem buna takılır hem de çevrimdışı çalışmayı bozar. Bu yüzden yerel pakete geçiyorum.
+4. **Mevcut XSS açığı.** `preview.innerHTML = marked.parse(...)` çıktıyı temizlemeden basıyor, ve `file:pick` ile açılan herhangi bir `.md` dosyası script taşıyabilir. Electron'da da vardı, ama Tauri'de bu script `invoke` üzerinden Rust komutlarına ulaşabilir. Geçişte `DOMPurify` ekleyeceğim. Bunu kapsam dışı bırakmak isterseniz söyleyin.
+5. **Her tuş vuruşunda kayıt.** `refresh()` her `input` olayında diske yazıyor. Tauri'de de çalışır, ama ayrı bir iyileştirme (debounce) olarak not düşüyorum. Davranış değişikliği olacağı için geçişle karıştırmayacağım.
+6. **Platform farkı.** Tauri sistem WebView'ını kullanır (WebView2 / WKWebView / WebKitGTK). CSS ve JS davranışı Chromium'dan farklı olabilir. Uygulama basit olduğu için risk düşük, ama üç platformda elle bakılacak.
+
+## 3. Dayanacağım kaynaklar
+
+- Tauri v2 resmi dokümanları: *Create a project*, *Calling Rust from the Frontend* (commands), *Capabilities / Permissions*, *Distribute → Updater*. Eski v1 örnekleri kullanmayacağım, çünkü API ve izin modeli farklı.
+- Eklenti dokümanları: `plugins-workspace` deposundaki `dialog`, `fs`, `updater`, `process` README'leri.
+- Electron tarafı için bu reponun kendisi (yukarıdaki 5 dosya). Davranış referansı olarak yalnızca mevcut kodu kullanıyorum.
+- Bu oturumda ağ erişimim yok. Bu yüzden Tauri/eklenti sürüm numaralarını ve API imzalarını uygulama sırasında `cargo add` ile gelen gerçek sürümlerden ve dokümandan doğrulayacağım. Plana sabit sürüm yazmıyorum.
+
+## 4. Adımlar
+
+1. Yeni bir `tauri-migration` dalı açılır.
+2. `src-tauri` iskeleti kurulur. Boş pencere `tauri dev` ile açılır.
+3. Frontend `src/` altına taşınır, `marked` yerel hale getirilir, `api.js` sarmalayıcısı yazılır.
+4. `read_notes` ve `save_notes` komutları yazılır, ardından eski yoldan veri göçü eklenir.
+5. Dosya seçici (dialog + fs) bağlanır, izinler en dar kapsamla tanımlanır.
+6. Updater eklenir. Anahtar ve yayın akışı, yukarıdaki 2. maddedeki karara göre yapılır.
+7. DOMPurify eklenir.
+8. Electron dosyaları (`main.js`, `preload.js`) ve bağımlılıkları silinir. Bu en son yapılır, tüm kontroller geçmeden silmem.
+
+## 5. "Bitti" nasıl gösterilecek
+
+Aşağıdakilerin hepsini çıktısıyla birlikte raporlayacağım. Çalıştıramadığım bir şey olursa "doğrulanmadı" diye açıkça yazacağım.
+
+- **Derleme:** `cargo check` ve `tauri build` hatasız bitiyor. Kurulum paketi üretiliyor (Linux'ta `.deb` veya `.AppImage`, burada çalıştırabildiğim kadarıyla).
+- **Rust testleri:** `read_notes` dosya yokken `""` dönüyor. `save_notes` sonra `read_notes` ile aynı metni geri veriyor. Eski yoldan veri göçü, geçici dizinle test edilmiş durumda.
+- **Davranış eşitliği:** Elle kontrol listesi, Electron sürümüyle yan yana:
+  1. Uygulama 900×600 açılıyor.
+  2. Yazılan metin önizlemede Markdown olarak görünüyor.
+  3. Uygulama kapatılıp açılınca not geri geliyor.
+  4. "Open file" yalnızca `txt`/`md` gösteriyor. İptal edince editör bozulmuyor.
+  5. Çevrimdışıyken önizleme çalışıyor (CDN bağımlılığı yok).
+- **Güvenlik:** `<img src=x onerror=alert(1)>` içeren bir `.md` açıldığında script çalışmıyor.
+- **Updater:** Yerelde sahte bir `latest.json` ile güncelleme bulunuyor ve imza doğrulaması başarısız/başarılı durumları ayrı ayrı görülüyor. Gerçek uçtan uca yayın testi, dağıtım yeriniz belli olmadan yapılamaz.
+- **Temizlik:** `grep -ri electron` repoda sonuç vermiyor (bu belge ve commit mesajları hariç).
+- **Platform:** Yalnızca Linux'ta çalıştırabileceğim için macOS ve Windows "doğrulanmadı" olarak işaretlenir. Bunlar için CI matrisi önerisini ayrıca yazarım.
+
+Başlamadan önce iki sorum var: güncelleme dağıtımı nerede yapılıyor ve mevcut kullanıcılar nasıl geçecek (madde 2), ve DOMPurify eklememi istiyor musunuz (madde 4)? Onay verirseniz uygulamaya geçerim.

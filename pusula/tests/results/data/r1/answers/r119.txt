@@ -1,0 +1,54 @@
+[probe p4]
+**Sonuç:** Hem yükleme hatasının hem de sızıntının nedeni `src/main.js` içinde. Kodu değiştirmedim.
+
+## 1. GLB neden yüklenmiyor
+
+Neden büyük olasılıkla `src/main.js:10`. `GLTFLoader` var, ama `DRACOLoader` kayıtlı değil.
+
+- Draco sıkıştırmalı GLB, `KHR_draco_mesh_compression` eklentisini kullanır.
+- Loader bu eklentiyi çözemez. Yükleme hata verir ve `swapModel` promise'i reject olur.
+- `swapModel("models/unit.glb")` çağrısında (`src/main.js:21`) `.catch` yok. Hata sessiz kalır.
+- Tarayıcı konsolunda "DRACOLoader instance required" benzeri bir hata görmelisin. Bunu çalıştırıp doğrulamadım.
+
+Dayanak: repodaki `threejs-glb.md` notu, madde 2. Not "official" etiketli. Bu oturumda internetten doğrulamadım.
+
+Düzeltme şu üç adımdan oluşur:
+
+1. `DRACOLoader` import et.
+2. `setDecoderPath` ile decoder dosyalarının yolunu ver.
+3. `loader.setDRACOLoader(...)` çağır.
+
+Decoder dosyaları `node_modules/three/examples/jsm/libs/draco/` içinde olmalı. Bu klasörü aramam sonuç vermedi, `node_modules` kurulu değil. Dosyaları `public/` altına kopyalayıp oradan servis etmen gerekir. Yolu config'e koy.
+
+Başka kontrol edilecekler:
+
+- `models/unit.glb` repoda yok. Yol yanlış olabilir. `public/models/` altında olmalı (Vite).
+- Sayfayı `file://` ile açma. HTTP ile aç (`npm run dev`).
+- Texture'ı KTX2 ile sıkıştırdıysan `KTX2Loader` da gerekir. Meshopt kullandıysan `setMeshoptDecoder` gerekir.
+
+## 2. `swapModel` içinde bellek sızıntısı
+
+**Evet, var.** `src/main.js:15` sadece `scene.remove(current)` yapıyor.
+
+- Sahneden çıkarmak GPU belleğini boşaltmaz.
+- Eski modelin geometry, material ve texture nesneleri bellekte kalır.
+- Her model değişiminde bellek artar.
+
+Bir sorun daha var. Yeni model yüklenirken hata olursa eski model sahnede kalır. Bu sızıntı değil, ama bilmen iyi.
+
+Düzeltme için `scene.remove` sonrası eski modeli dolaşıp `geometry.dispose()` çağır. Material ve onun texture'larını da `dispose()` et. Paylaşılan kaynakları iki kez dispose etme. Yeni modelle paylaşılıyorsa dispose etmek onu bozar.
+
+Sızıntıyı ölçmek için: `swapModel` çağrılarından sonra `renderer.info.memory` içindeki `geometries` ve `textures` sayılarına bak. Düzeltmeden önce artar. Düzeltmeden sonra sabit kalmalı.
+
+## 3. Dosyanın geçerli olduğunu doğrulama
+
+Üç adım, sırayla:
+
+1. **Khronos validator.** `npm install --save-dev gltf-validator`. Sonra `validateBytes(new Uint8Array(bytes))` çağır. Hata kodlarını ve pointer'ları yazdırır. npm paketi komut satırı aracı değil, kütüphanedir.
+   - Repodaki notta `.pusula/checks/validate_glb.mjs` sarmalayıcısı geçiyor. Bu dosya bu çalışma kopyasında yok.
+2. **gltf-transform ile incele.** `gltf-transform inspect unit.glb` boyutları ve sorunları gösterir. Çıktıda `KHR_draco_mesh_compression` görünmeli.
+3. **Tarayıcıda dene.** Sayfayı HTTP üzerinden aç. Konsolun boş olduğuna bak. Modeli ekranda gör.
+
+Validator geçse bile 1. bölümdeki decoder eksikse model yine yüklenmez. Dosya geçerli olabilir, sorun koddadır.
+
+İstersen düzeltmeyi uygularım.

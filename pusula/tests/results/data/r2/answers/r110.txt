@@ -1,0 +1,40 @@
+[probe p4]
+**Kısa sonuç:** Yüklenmeme nedeni kesin: `GLTFLoader` için Draco çözücüsü kayıtlı değil. Evet, `swapModel` GPU belleği sızdırıyor.
+
+## 1. Neden yüklenmiyor
+
+`src/main.js:10` içinde `new GLTFLoader()` var. `DRACOLoader` yok. Draco ile sıkıştırılmış GLB, çözücü olmadan açılmaz. Loader bir hata fırlatır. (Resmi kural. Bkz. `threejs-glb.md`, madde 2.)
+
+Ayrıca `swapModel("models/unit.glb")` çağrısında `.catch` yok. Hata sessiz kalır. Konsolda "unhandled rejection" görürsün.
+
+Repoda `models/` ve `public/` klasörü yok. Dosya yolunu da kontrol et. Vite sadece `public/` altındaki dosyayı `models/unit.glb` adresinde sunar. Yol yanlışsa hata farklı olur: 404 ya da JSON ayrıştırma hatası. Konsoldaki asıl hata mesajını bana yapıştırırsan emin olurum.
+
+Düzeltme yönü (kodu değiştirmedim):
+- `DRACOLoader` içe aktar.
+- `setDecoderPath(...)` ile çözücü dosyalarının yolunu ver.
+- `loader.setDRACOLoader(...)` çağır.
+- Çözücü dosyalarını kendi sunucundan ver. Bunlar `three/examples/jsm/libs/draco/` altında. Sürümü `three` ile aynı tut (`^0.186.0`).
+
+`gltf-transform optimize` varsayılan olarak başka sıkıştırma da ekleyebilir. Meshopt veya KTX2 kullandıysan onların çözücüleri de gerekir. `gltf-transform inspect unit.glb` hangi uzantıların kullanıldığını gösterir.
+
+## 2. `swapModel` bellek sızıntısı
+
+Sızıntı var. `src/main.js:15` sadece `scene.remove(current)` yapıyor. Bu GPU belleğini boşaltmaz. Geometri, materyal ve texture'lar canlı kalır. Her model değişiminde bellek artar. (Resmi kural, `threejs-glb.md` madde 3.)
+
+Diğer sorunlar:
+- **Yarış durumu:** İki `swapModel` çağrısı üst üste gelirse eski yanıt sonra gelebilir. Yanlış model ekranda kalır. Biri `current` olmadan sahneye eklenir ve sonsuza dek sızar.
+- **Paylaşılan kaynak:** `dispose()` yaparken başka mesh'in kullandığı materyal ya da texture'ı silmemeye dikkat et. Sadece kaldırılan modelin kaynaklarını gez.
+- **Texture'lar:** Materyalin `map`, `normalMap` gibi alanlarını da dispose et.
+
+Kontrol için: model değiştirdikten sonra `renderer.info.memory` içindeki `geometries` ve `textures` sayısına bak. Sayı sabit kalmalı. Şu an her değişimde artar. (Bunu çalıştırmadım, kodu okuyarak çıkardım.)
+
+## 3. Dosya geçerli mi, nasıl doğrularsın
+
+1. **Khronos doğrulayıcı:** `npm install --save-dev gltf-validator`. Paketin komutu yok. Kütüphane olarak `validateBytes(new Uint8Array(bytes))` çağırırsın. Hata kodu ve konumu verir.
+2. **gltf-transform:** `gltf-transform inspect unit.glb`. Boyut, uzantı ve sorunları listeler.
+3. **Gerçek tarayıcı:** Sayfayı `vite` ile HTTP üzerinden aç. `file://` ile GLB yüklenmez. Konsolu oku.
+4. **Karşılaştırma:** Draco'suz hali (`optimize` olmadan) yükleniyorsa sorun dosyada değil, çözücüde.
+
+Not: Pusula paketinde `.pusula/checks/validate_glb.mjs` sarmalayıcısı anılıyor. Bu repoda yok. Yukarıdaki 1. adımı kendin yazman gerekir.
+
+**Kanıt durumu:** Hiçbir şeyi çalıştırmadım. Sonuçlar kod okumasına ve three.js kurallarına dayanıyor. Gerçek dosya repoda olmadığı için GLB'yi doğrulayamadım.

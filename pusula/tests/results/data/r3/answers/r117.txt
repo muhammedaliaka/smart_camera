@@ -1,0 +1,43 @@
+[probe p8]
+Projede ana menüyle ilgili tek bir dosya var ve görünüşün büyük kısmı o dosyada değil. Aşağıda bulduklarımı, planı ve "bitti" için göstereceğim kanıtı yazdım. Kod değiştirmedim.
+
+## Bulduklarım
+
+Repoda sadece şunlar var: `Assets/Scripts/UI/MainMenu.cs`, `Packages/manifest.json`, `ProjectSettings/ProjectVersion.txt`. Unity sürümü 6000.0.23f1, URP 17 ve `com.unity.ugui` 2.0.0 kullanılıyor.
+
+- **Sahne ve prefab yok.** Menünün gerçek düzeni (Canvas, Canvas Scaler, anchor'lar, buton boyutları, arka plan) bu repoda değil. Büyük ihtimalle commit'lenmemiş ya da sende yerelde duruyor. Tek commit'in mesajı da sadece "x".
+- **Görünüm kodla eziliyor.** `MainMenu.Start()` başlığın metnini, rengini ve font boyutunu (`48`) koddan yazıyor. Buton yazıları da koddan geliyor. Editörde yaptığın her düzeltme, oyun çalışınca bu satırlar yüzünden geri bozuluyor olabilir. "Her düzeltmede yine bozuk geliyor" şikâyetinin en olası nedeni bu.
+- **Sabit font boyutu.** `fontSize = 48` sabit ve çözünürlüğe göre ölçeklenmiyor. Canvas Scaler ayarı da görünmüyor.
+- **Eski `UnityEngine.UI.Text` kullanılıyor.** TextMeshPro'ya göre bulanık render eder ve Türkçe karakter desteği zayıftır. Kodda "CIKIS" yazıyor, "ÇIKIŞ" değil. Bu bilerek mi yapıldı, font Türkçe karakteri desteklemediği için mi, bilmiyorum.
+- **Eksik bağlantı.** `optionsButton`'a hiçbir listener bağlanmamış, "AYARLAR" tıklanınca bir şey olmuyor.
+- **Null riski.** `title` ve butonlar inspector'dan atanıyor. Biri boşsa `Start()` NullReferenceException atar ve menü yarım kalır. `GetComponentInChildren<Text>()` de aynı şekilde null dönebilir.
+
+## Nasıl ilerleyeceğim
+
+1. **Önce hedefi netleştirmek için senden şunları isteyeceğim:**
+   - Menü sahnesi (`.unity`) ve ilgili prefab'lar. Repoda yoklar.
+   - Şu anki halin ekran görüntüsü ve "kötü" ile kastettiğin şey (hizalama, boyut, renk, font, çözünürlük uyumu?).
+   - Varsa referans ya da istediğin görünüm.
+   - Hangi çözünürlük ve en-boy oranlarını hedefliyorsun? Örneğin 16:9, 16:10, 21:9, mobil dikey.
+2. **Neyin neyi ezdiğini belirlemek.** Her görsel özelliğin tek bir sahibi olacak. Düzen, renk ve boyut sahnede ya da prefab'da duracak. `MainMenu.cs` sadece davranışı yürütecek: buton olayları, sahne yükleme. Başlık metni, renk ve font boyutu atamalarını koddan kaldıracağım. Yerelleştirme gerekiyorsa metinler ayrı bir yerden gelecek.
+3. **Düzeni çözünürlükten bağımsız kurmak.** Canvas Scaler'ı Scale With Screen Size olarak ayarlayacağım. Anchor'lar ve bir Vertical Layout Group kullanacağım, sabit piksel konumları kullanmayacağım. Metinleri TextMeshPro'ya çevireceğim ve Türkçe karakterleri içeren bir font asset'i kullanacağım.
+4. **Kod tarafını sağlamlaştırmak.** Null kontrolleri ekleyeceğim ve `OnDestroy`'da listener'ları temizleyeceğim. Ayarlar butonuna ya gerçek bir panel bağlayacağım ya da kapalı gösterip bilerek işaretleyeceğim.
+5. **Değişiklikleri küçük ve ayrı commit'ler halinde yapmak.** Böylece bir şey bozulursa hangi adımın bozduğu bellidir.
+
+## "Bitti" demek için göstereceğim kanıt
+
+"Düzelttim" demek yetmez. Şunları göstereceğim:
+
+- **Ekran görüntüleri, önce ve sonra.** Menü Play Mode'da çalışırken, yani `Start()` koşup her şeyi uyguladıktan sonra alınmış olacak. Sadece Edit Mode görüntüsü yetmez, bozulma tam orada oluyor.
+- **Birden fazla çözünürlükte aynı görüntü.** En az 1920×1080, 2560×1080 (ultrawide), 1280×800 ve 1080×1920 (dikey) çözünürlüklerinde bakacağım. Hiçbirinde taşma, kesilme ya da üst üste binme olmayacak.
+- **Konsolda hata olmaması.** Menü açılırken ve butonlara basınca Console'da NullReference ya da uyarı çıkmayacak.
+- **Butonların çalıştığının kanıtı.** OYNA `Game` sahnesini yüklüyor (sahne Build Settings'te kayıtlı mı diye de bakacağım). ÇIKIŞ çalışıyor, bunu editörde `Application.Quit` işe yaramadığı için log ya da build ile göstereceğim. AYARLAR beklenen şeyi yapıyor.
+- **Kalıcılık testi.** Sahneyi kaydedip Unity'yi kapatıp yeniden açacağım ve Play'e basacağım. Görünüm aynı kalmalı. Böylece "her düzeltmede bozuluyor" sorununun gerçekten bittiğini görmüş olacağım.
+- **Değişikliklerin tam listesi** (`git diff`).
+
+## Kısıtlar
+
+- Bu ortamda Unity editörü çalıştıramıyorum. Shell erişimim de kapalı, ayrıca ekran görüntüsü alamam. Bu yüzden Play Mode ekran görüntüleri ve çözünürlük testlerini senin makinende almamız gerekebilir. Ben sahne/prefab değişikliklerini ve kodu hazırlarım. Sen de bana görüntüleri ve Console çıktısını gönderirsin, ben de doğrulamayı onlara bakarak yaparım. Yani "bitti" kararı gerçek görüntülere dayanacak, tahmine değil.
+- Sahne dosyası olmadan düzen kısmına başlayamam. Sadece kod tarafını (madde 2 ve 4) yapabilirim.
+
+Hangi dosyaları ve ekran görüntüsünü paylaşabileceğini söylersen başlarım.

@@ -1,0 +1,69 @@
+[probe p6]
+Planı dosyaya yazamadım. Bu oturumda `Write` aracı kapalı. Planı aşağıya koydum. İstersen yazma izni verdikten sonra `.pusula/electron-to-tauri/plan.md` olarak kaydederim.
+
+Bir not: Tauri sayfalarını bu oturumda kendim açmadım. Kaynaklar `tauri-rust.md` paketinden geliyor (bugün okunmuş). Pakette olmayan satırlara UNVERIFIED yazdım. Adım 2'de bunları resmi sayfadan okuyacağım.
+
+## Plan: notes-desk, Electron → Tauri v2
+
+**Goal:** Aynı uygulama (editör, markdown önizleme, otomatik kayıt, .txt/.md açma, otomatik güncelleme) Tauri v2'de çalışır. Eski notlar korunur. Electron kalkar.
+
+**Out of scope:** yeni özellik, yeni tasarım, bundler, TypeScript, Tauri 3.0 alpha, OS kod imzalama sertifikaları.
+
+### Hangi dosya neye dönüşecek
+| Bugün | Sonra |
+| --- | --- |
+| `main.js` | `src-tauri/src/lib.rs` (kurulum, `invoke_handler`) ve `src-tauri/src/notes.rs` (3 komut) |
+| `preload.js` | Yok. Yerine capability dosyası ve komutlar gelir. |
+| `index.html`, `renderer.js` | `ui/index.html`, `ui/renderer.js`. `window.api.*` çağrıları `invoke(...)` olur. |
+| CDN'deki `marked@12.0.2` | `ui/vendor/marked.min.js` (aynı sürüm). CDN script'i CSP için sorun. |
+| `package.json` | Electron paketleri çıkar, `@tauri-apps/cli` girer. |
+| Yok | `src-tauri/` (Cargo.toml, build.rs, main.rs, `tauri.conf.json`, `capabilities/default.json`, icons) |
+
+Eşleme tablosu (old → new → resmi sayfa → boşluk) 14 satır. Ana satırlar:
+- `ipcMain.handle` → `#[tauri::command]`. Kaynak: https://v2.tauri.app/develop/calling-rust/
+- `contextBridge` → capability + komut. Kaynak: https://v2.tauri.app/security/capabilities/
+- `electron-updater` → `tauri-plugin-updater`. Kaynak: https://v2.tauri.app/plugin/updater/
+- `dialog.showOpenDialog` → dialog plugin. UNVERIFIED.
+- `userData` → app data dir. UNVERIFIED.
+- CDN script → yerel kopya + `csp`. Kaynak: https://v2.tauri.app/security/csp/
+
+### Kararlar
+- Dosya okuma/yazma ve dosya seçici Rust komutlarında olur. `fs` plugin yok, böylece webview'a dosya yolu verilmez.
+- Komutlar: `read_notes`, `save_notes`, `pick_file`.
+- Capability sadece `main` penceresi için, en az izinle.
+- Pencere boyutu, dosya adı ve filtre config'e gider (AGENTS: sabit değer yok).
+- Eski notlar: yeni dosya yoksa ve eskisi varsa bir kez kopyalanır. Eski dosya silinmez.
+- Electron dosyaları ancak eşdeğerlik kanıtından sonra ve sizin açık onayınızla silinir.
+
+### Adımlar (her birinin kontrolü var)
+1. `architecture-standard` oku. Electron'da taban çizgisini kaydet. | Kontrol: her satır için ekran görüntüsü veya log.
+2. UNVERIFIED sayfaları oku, `findings.md`'yi güncelle. | Kontrol: adım 3–9'daki satırlarda UNVERIFIED kalmaz.
+3. `src-tauri/` iskeleti. | Kontrol: `cargo build` geçer, `tauri dev` boş pencere açar.
+4. Dosyaları `ui/`'ye taşı, marked'ı yerele al. | Kontrol: `grep -r "https://" ui/` script kaynağı bulmaz.
+5. Önce testler, sonra `notes.rs`. | Kontrol: dosya yoksa `""`, kaydet-oku aynı metni verir, yazma hatası `Err` döner (sessiz hata yok).
+6. `pick_file` ekle. | Kontrol: clippy (uyarılar hata) temiz. İptal `null` döner.
+7. `renderer.js`'yi `invoke`'a bağla, capability yaz. | Kontrol: uygulama açılır, komut çağrısı log'da görünür. İzin kaldırılınca çağrı başarısız olur.
+8. Eski not kopyalama. | Kontrol: üç durum testi (sadece eski / ikisi de / hiçbiri).
+9. Updater (Unknown 1 cevaplanınca). Özel anahtar sizin kabuk ortamınızda kalır, dosyaya yazılmaz. | Kontrol: düşük sürüm, imzalı test güncellemesini bulur ve kurar.
+10. Her hedef OS için paket üret, parity listesini çalıştır. | Kontrol: hepsi geçer ya da "görülmedi" yazılır.
+11. Onayınızla `main.js`, `preload.js` silinir, Electron bağımlılıkları çıkar. `cargo clippy`, `cargo test`, `cargo audit`, `npm audit` çalışır. | Kontrol: çıktılar okunur, `grep -ri electron .` temiz.
+
+### Bitti sayılması için kanıt
+Clippy ve testler geçer. Audit çıktıları okunur. Pencere etiketi `main` için capability vardır. Uygulama açılıp bir komut çağrısı çalışırken görülür (ekran görüntüsü veya log). Parity listesi her hedef OS'ta geçer. UNVERIFIED kalan satırlar raporlanır.
+
+### Ana riskler
+1. **Veri klasörü değişir**, notlar kayıp görünür. Önlem: adım 8.
+2. **`innerHTML = marked.parse(...)` temizlenmiyor.** Bu Electron'da da açıktı. Tauri'de sayfadaki bir script komutları çağırabilir. Önlem: sıkı CSP ve tek capability. Sanitizer eklemek sizin kararınız.
+3. **Güncelleme anahtarı kaybolursa** kurulu uygulamalar güncellenemez.
+4. **Mevcut Electron kurulumları** kendiliğinden Tauri'ye geçemez.
+5. **Capability hatasını Cargo görmez.** Adım 7 uygulamayı çalıştırır.
+6. **Webview her OS'ta farklıdır.** macOS'ta pencere kapatma davranışını ayrıca test edeceğim.
+
+### Sorular
+1. Güncellemeler bugün nerede barındırılıyor? `package.json`'da yayın ayarı yok.
+2. Notları olan gerçek kullanıcılar var mı?
+3. Markdown önizlemeye sanitizer eklensin mi, yoksa davranış aynı mı kalsın?
+4. Hangi işletim sistemleri çıkacak: Windows, macOS, Linux?
+5. Kayıt veya açma hatasında görünür bir mesaj eklensin mi? Şu an hiç hata durumu yok.
+
+Sonraki adım: 1 ve 4. soruları cevaplayın ve plana evet deyin. Sonra adım 1'den başlarım.

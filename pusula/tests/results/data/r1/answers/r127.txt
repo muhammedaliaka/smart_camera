@@ -1,0 +1,89 @@
+[probe p4]
+## 1. GLB neden yüklenmiyor
+
+Kök neden `src/main.js:10`. `GLTFLoader` için `DRACOLoader` tanımlanmamış:
+
+```js
+const loader = new GLTFLoader();   // setDRACOLoader yok
+```
+
+gltf-transform'un `draco()` işlemi dosyaya `KHR_draco_mesh_compression` uzantısını zorunlu (`extensionsRequired`) olarak yazar. DRACOLoader olmayınca GLTFLoader şu hatayı fırlatır: `THREE.GLTFLoader: setDRACOLoader must be called before loading compressed files`. `loadAsync` bu hatayla reddedilir. `swapModel("models/unit.glb")` çağrısında (`main.js:21`) `.catch` olmadığı için hata konsolda "Uncaught (in promise)" olarak görünür.
+
+Düzeltme (kodu değiştirmedim, sadece öneri):
+
+```js
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
+const draco = new DRACOLoader();
+draco.setDecoderPath("/draco/");           // public/draco/ altına kopyalanmış olmalı
+loader.setDRACOLoader(draco);
+```
+
+Decoder dosyalarını `node_modules/three/examples/jsm/libs/draco/gltf/` klasöründen `public/draco/` altına kopyalayın. Bu klasörde `draco_decoder.js`, `draco_decoder.wasm` ve `draco_wasm_wrapper.js` bulunur. Alternatif olarak `https://www.gstatic.com/draco/versioned/decoders/1.5.7/` adresini kullanabilirsiniz.
+
+Başka olası nedenler:
+- **Decoder yolu yanlış.** Vite'ta yol `public/` altından `/draco/` olarak sunulur. Yol yanlışsa Network sekmesinde 404 görürsünüz. Vite SPA fallback'i yüzünden 404 yerine `index.html` dönebilir. Bu durumda "WebAssembly.instantiate: expected magic word" benzeri bir hata çıkar.
+- **`models/unit.glb` yolu.** Bu yol `public/models/` altında olmalı. Repoda hiç `.glb` dosyası görmedim (Glob sonucunda yok), yani dosya ya `.gitignore`'da ya da hiç eklenmemiş olabilir. Bu da 404 veya HTML dönüşüne yol açar, hata mesajı "Unexpected token '<'" gibi görünür.
+- **Başka sıkıştırma türleri.** Pipeline'da `meshopt()` veya `uastc`/`etc1s` (KTX2) de kullandıysanız, `MeshoptDecoder` ve `KTX2Loader` da gerekir.
+
+## 2. `swapModel` bellek sızıntısı
+
+Evet, sızıntı var. `scene.remove(current)` sahneden çıkarır ama GPU kaynaklarını serbest bırakmaz. Geometri buffer'ları, materyaller ve dokular `dispose()` çağrılana kadar VRAM'de kalır. Her model değişiminde VRAM artar.
+
+Ek sorunlar:
+- **Yarış durumu.** İki `swapModel` çağrısı arka arkaya yapılırsa ikisi de `current`'ı görür. İlk biten, ikincisi bittiğinde `current`'ı kaldırır. Ama araya girme sırasına göre eski bir modelin sahnede kalması (yetim kalması) mümkündür.
+- **Hata durumunda eski model korunur.** Bu iyi. Ancak `.catch` olmadığı için hata kullanıcıya yansımaz.
+- **Draco ile ilgisi:** `DRACOLoader` kendi worker'larını açar. Uygulama kapanırken `draco.dispose()` çağrılmalıdır. Sürekli kullanımda tek örnek yeterlidir.
+
+Önerilen temizleme fonksiyonu:
+
+```js
+function disposeObject(root) {
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    o.geometry.dispose();
+    for (const m of [].concat(o.material)) {
+      for (const v of Object.values(m)) if (v?.isTexture) v.dispose();
+      m.dispose();
+    }
+  });
+}
+```
+
+`swapModel` içinde `scene.remove(current)` sonrası `disposeObject(current)` çağırın. Modeller arasında paylaşılan texture/materyal varsa dikkat edin, çünkü her yüklemede yeni örnek oluşur, bu yüzden burada paylaşım riski düşüktür. Yarış durumu için bir istek sayacı (`const id = ++req; ... if (id !== req) { disposeObject(gltf.scene); return; }`) kullanabilirsiniz.
+
+Doğrulamak için tarayıcıda `renderer.info.memory` değerine bakın. `geometries` ve `textures` sayıları her swap'ta artıyorsa sızıntı vardır.
+
+## 3. GLB dosyasının geçerli olduğunu doğrulama
+
+Sırayla:
+
+1. **Khronos glTF-Validator** (en kesin yöntem):
+   ```bash
+   npx gltf-validator models/unit.glb
+   ```
+   veya https://github.khronos.org/glTF-Validator/ adresine sürükleyin. `numErrors: 0` olmalı. Draco uzantısı hatasızsa bile uyarılar (warnings) önemlidir.
+
+2. **gltf-transform ile inceleme:**
+   ```bash
+   npx gltf-transform inspect models/unit.glb
+   ```
+   Çıktıda `extensionsUsed: KHR_draco_mesh_compression` görmeli, mesh/texture boyutlarını kontrol etmelisiniz.
+
+3. **Başlığı elle kontrol:** İlk 4 bayt `glTF` (`67 6C 54 46`) olmalı, sürüm 2 olmalı:
+   ```bash
+   xxd -l 12 models/unit.glb
+   ```
+   Bu `<!DOCTYPE` ile başlıyorsa dosya aslında bir HTML hata sayfasıdır (404 fallback).
+   `ls -l` ile boyutun ~0 olmadığını da kontrol edin. Git LFS kullanıyorsanız dosya yalnızca bir pointer metni olabilir.
+
+4. **Sıkıştırmayı geri açarak kıyaslama:**
+   ```bash
+   npx gltf-transform copy models/unit.glb /tmp/out.glb   # uzantılar korunur
+   npx gltf-transform draco --method edgebreaker in.glb out.glb
+   ```
+   Orijinal sıkıştırılmamış dosyayla görsel olarak karşılaştırın. Draco kayıplıdır: `--quantize-position` gibi ayarlar çok düşükse model bozulur veya kaybolur.
+
+5. **Tarayıcıda izole test:** three.js editor'e (https://threejs.org/editor/) dosyayı atın. Orada açılıyorsa dosya sorunlu değildir, sorun projenizin loader kurulumundadır. Bu sizin durumunuzda büyük ihtimalle böyle çıkar.
+
+Kısaca: dosya büyük ihtimalle geçerli. Eksik olan `setDRACOLoader`. `swapModel`'e de dispose eklemeniz gerekiyor.

@@ -1,0 +1,60 @@
+[probe p8]
+Projeye baktım. Kodu değiştirmedim. Aşağıda plan ve "bitti" kanıtı var.
+
+## Bulduklarım
+
+- **Sürüm:** Unity 6000.0.23f1. UI paketi uGUI 2.0.0. Input System 1.11.2 ve URP 17.0.3 de var.
+- **Tek UI dosyası:** `Assets/Scripts/UI/MainMenu.cs`. Projede sahne, prefab veya tema dosyası yok.
+- **Kod görünümü kodla belirliyor.** `Start()` içinde başlık rengi, yazı boyutu (48) ve tüm metinler sabit yazılmış.
+- **Bu kural ihlali.** AGENTS.md sabit değer yasaklıyor. "Her düzeltmede bozulur" belirtisinin sebebi büyük ihtimalle bu. Kesin değil, sahneyi görmedim. Kod her açılışta sahnedeki ayarı eziyor olabilir.
+- **Eksikler:** `optionsButton` hiçbir şey yapmıyor. "CIKIS" yazısında Türkçe karakter yok (`ÇIKIŞ` olmalı). Yazı tipi `Text` (eski tür), TextMeshPro değil.
+- **Unity bu makinede yok.** Editörü çalıştıramam. Pusula kuralı: kanıt tablosuna "not run in Unity" yazılır.
+
+## Önce ihtiyacım olan tek şey
+
+"Kötü görünüyor" ne demek? İki okuma var:
+
+1. **Yerleşim bozuk:** düğmeler kayıyor, ekran boyutuna uymuyor.
+2. **Stil çirkin:** renk, font, boşluk beğenilmiyor.
+
+Bence ilki. Çünkü "her düzeltmede yine bozuk" yerleşim ve kod ezmesi sorunu gibi duruyor. Emin değilim.
+
+Lütfen bir şey ver: şimdiki menünün ekran görüntüsü ve beğendiğin bir referans. Hedef çözünürlükleri de yaz. Şimdi cevaplayamazsan varsayım yazıp devam ederim: 1920x1080, 1280x720 ve 2560x1080.
+
+## Nasıl ilerleyeceğim
+
+1. **Kriterleri yaz.** `.pusula/main-menu/ui-criteria.md` dosyasında. Numaralı, ekran görüntüsünden yargılanabilir maddeler. Kod yazmadan önce. (`ui-acceptance`)
+2. **Resmi Unity dokümanını oku.** 6000.0 sürümü: Canvas Scaler ve anchor sayfaları. Kaynağı etiketlerim. (`source-driven-development`)
+3. **Kök nedeni bul.** Sahnede ne var, kod neyi eziyor, bakıp yazarım. Tahmin yok. (`systematic-debugging`)
+4. **Küçük düzeltme yap.**
+   - Renk, boyut ve metinler tema asset'ine ve metin anahtarlarına taşınır.
+   - `MainMenu.cs` sadece düğmeleri bağlar.
+   - Boş, yükleniyor ve hata durumları dahil edilir.
+   - Gerekmeyen refactor yok.
+5. **Sahneyi editörden düzenle.** Metin olarak düzenlenen sahne GUID'leri bozabilir (unverified). Bu yüzden bu adımı senin makinende yapmak gerekebilir.
+6. **Bitti de.** Aşağıdaki kanıtla.
+
+## "Bitti" demek için göstereceğim kanıt
+
+| Ne | Nasıl |
+|---|---|
+| Derleme | Unity batch build logu, yeni uyarı yok |
+| Testler | EditMode testi: metin anahtarları dolu, düğmeler bağlı. Sonuç XML'i okunur |
+| Her ekran boyutu | Game view ekran görüntüsü, boyut başına bir tane |
+| Her durum | Normal, odak, basılı, pasif, çok uzun metin |
+| Kriter tablosu | Her satır pass, fail veya "not seen" |
+| Kontrol betiği | `.pusula/checks/pusula_check.py` yok. Çalıştıramam, bunu raporlarım |
+
+## Dürüst sınır
+
+Bu makinede Unity yok. Derleme ve ekran görüntüsü senin PC'nde alınmalı. İki yol var:
+
+- **A:** Sen komutu çalıştırıp logu ve görüntüleri bana verirsin. Ben kriterlere göre yargılarım.
+- **B:** Ben her şeyi yazarım, ama rapora "not run in Unity" ve "UI not seen" yazarım. Kullanıcıya "tamam" demem.
+
+Bence A. "Bu sefer doğru olsun" isteğine ancak A uyuyor.
+
+## Soruların
+
+1. Ekran görüntüsü ve referans verebilir misin?
+2. A mı B mi?

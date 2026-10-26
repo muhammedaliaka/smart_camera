@@ -1,0 +1,78 @@
+[probe p3]
+**Kısa cevap: güvenli değil.** Dashboard sayfası korumalı, ama silme işlemi korumasız. Ayrıca CI lint çalıştırmıyor.
+
+## 1. Silme işlemi güvenli değil
+
+`app/dashboard/actions.ts` içindeki `deleteInvoice` bir Server Action. Next.js bunu herkese açık bir HTTP uç noktası yapar. Sayfayı koruman, bu uç noktayı korumaz. Birinin sayfaya girmesi gerekmez, doğrudan çağırabilir.
+
+Üç sorun var:
+
+- **Giriş kontrolü yok.** `actions.ts` içinde `getSessionUser()` çağrısı yok. Giriş yapmamış biri de silebilir.
+- **Sahiplik kontrolü yok.** SQL sadece `where id = $1` diyor. Giriş yapan herhangi biri, başkasının faturasının `id`'sini göndererek onu silebilir. Buna IDOR denir (başkasının kaydına erişme açığı). Sayfa `owner_id` ile filtreliyor ama silme filtrelemiyor.
+- **Oturum doğrulaması sahte.** `lib/auth.ts` içindeki `verifyToken` imzayı kontrol etmiyor. Sadece `token.split(".")[0]` alıp kullanıcı kimliği sayıyor. Biri `session=<başkasının id'si>` çerezini elle yazarak o kişi gibi girebilir. Önceki iki düzeltme bunu kapatmaz.
+
+## 2. Tam olarak ne değiştirmelisin
+
+**`app/dashboard/actions.ts`:**
+
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { getSessionUser } from "@/lib/auth";
+import { query } from "@/lib/db";
+
+export async function deleteInvoice(id: string) {
+  if (typeof id !== "string") throw new Error("Invalid id");
+  const user = await getSessionUser();
+  if (!user) throw new Error("Unauthorized");
+  const result = await query(
+    "delete from invoices where id = $1 and owner_id = $2 returning id",
+    [id, user.id],
+  );
+  revalidatePath("/dashboard");
+  return result.rows[0] ?? null;
+}
+```
+
+Değişenler:
+
+- Giriş kontrolü eklendi.
+- `owner_id = $2` ile sahiplik kontrolü eklendi.
+- `returning *` yerine `returning id` kullanıldı. Silinen faturanın tüm alanları istemciye dönmüyor.
+
+**`lib/auth.ts`:** `verifyToken` içine gerçek imza kontrolü yaz. Örneğin sunucu sırrıyla HMAC kullan, ya da hazır bir oturum kütüphanesi kullan. Sır `process.env` içinde durmalı, koda yazılmamalı. Bu düzeltme olmadan 1. adım gerçek koruma sağlamaz.
+
+**Admin rolü:** `role` şu an hep `"user"`. Admin için ayrı kural yazma, kimse admin olamıyor.
+
+Bu cevapta kodu çalıştırmadım. Önerileri kodu okuyarak çıkardım.
+
+## 3. CI lint'i kapsıyor mu?
+
+**Hayır.** İki neden var:
+
+- **Build lint çalıştırmıyor.** Next.js 16'da `next build` artık lint yapmıyor. Bunu internetsiz doğrulayamadım. Resmi sürüm notlarından bildiğim bilgi bu, "doğrulanmadı" say. `ci.yml` sadece `npm run build` çalıştırıyor. Build yalnızca derleme ve tip kontrolü yapar.
+- **ESLint ayarı yok.** Projede `eslint.config.*` dosyası yok. `npm run lint` bugün çalışsa bile ayar bulamayıp hata verir.
+
+Yapılacaklar:
+
+1. `ci.yml` içinde `npm run build` satırından önce `- run: npm run lint` ekle.
+2. Kök dizine `eslint.config.mjs` ekle. Aşağıdaki içerik Next 16 belgelerinden aklımda kalan şekil. Resmi belgeyle kontrol et:
+
+   ```js
+   import { defineConfig, globalIgnores } from "eslint/config";
+   import nextVitals from "eslint-config-next/core-web-vitals";
+   import nextTs from "eslint-config-next/typescript";
+
+   export default defineConfig([
+     ...nextVitals,
+     ...nextTs,
+     globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+   ]);
+   ```
+
+3. `defineConfig`, `eslint/config` içinde ESLint 9.22 ve sonrasında var. `package.json` şu an `eslint: 9.0.0` diyor. Sürümü yükseltmen gerekebilir.
+
+Önemli bir uyarı: ESLint bu güvenlik açığını yakalamaz. Eksik yetki kontrolünü hiçbir lint kuralı görmez. Bunun için `deleteInvoice` testi yaz. Girişsiz çağrı hata vermeli, başkasının faturası silinmemeli.
+
+Kodu değiştirmedim, sadece okudum.

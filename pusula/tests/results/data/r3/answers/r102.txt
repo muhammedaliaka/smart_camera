@@ -1,0 +1,59 @@
+[probe p8]
+Kodu değiştirmedim. Sadece okudum.
+
+## Gördüklerim
+
+- Unity sürümü **6000.0.23f1** (Unity 6.0). Paketler: `ugui 2.0.0`, `inputsystem 1.11.2`, URP, Test Framework.
+- Repoda menü için **tek dosya** var: `Assets/Scripts/UI/MainMenu.cs`.
+- Repoda **sahne (`.unity`), prefab veya stil dosyası yok**. Menünün gerçek görünümü burada değil. Muhtemelen sahne dosyaları repoya hiç girmedi.
+- Script her `Start()` içinde görünümü kodla eziyor:
+  - Renk (`new Color(0.9f, 0.8f, 0.2f)`) ve boyut (`48`) koda gömülü.
+  - Metinler ("OYNA", "AYARLAR", "CIKIS") koda gömülü.
+  - "AYARLAR" düğmesine hiç işlev bağlanmamış.
+  - Başlık için boş/hata durumu yok.
+- Bu makinede Unity editörü yok (ben kontrol etmedim, varsayıyorum). Yani menüyü burada çalıştırıp ekran görüntüsü alamam.
+
+## Tahminim: neden hep bozuk geliyor
+
+Bunlar tahmin, kanıtım yok.
+
+1. Script görünümü her başlangıçta eziyor. Editörde yapılan düzeltme çalışınca siliniyor.
+2. Hiç referans ve kabul ölçütü yok. Bu yüzden "düzeldi" demek kimsenin gözüne kalıyor.
+3. Kimse çözünürlük değiştirip bakmamış olabilir (Canvas Scaler, anchor).
+
+## Nasıl ilerleyeceğim
+
+1. **Referansı alacağım.** İki şey lazım: şu anki bozuk halin ekran görüntüsü ve beğendiğin bir menü örneği. Şimdi veremezsen iki seçenek öneririm, birini varsayım olarak yazar ve devam ederim.
+2. **Ölçütleri koddan önce yazacağım.** Dosya: `.pusula/main-menu/ui-criteria.md`. Her ölçüt numaralı ve ekran görüntüsünden yargılanabilir olacak:
+   - Her hedef çözünürlükte yerleşim (liste sana soracağım).
+   - Durumlar: normal, odak/üzerine gelme, basılı, pasif, çok uzun metin.
+   - Metin kontrastı 4.5:1; düğme boyutu yeterli.
+   - Renk, boyut ve metin tek bir yerde (token/tema), kodda sabit yok.
+   - Klavye ve gamepad ile gezinme sırası.
+3. **Önce kök nedeni bulacağım** (`systematic-debugging`). Sahne dosyasını görmem gerekecek. Sahne yoksa bunu sana söyler ve dosyayı isterim.
+4. **En küçük düzeltmeyi yapacağım.** Görünüm bilgisi koddan çıkıp tema/token'a gider. `MainMenu.cs` sadece davranışı yönetir. Sahne ve prefab'ı elle değil, editörden düzenlemek gerekir (GUID bozulabilir, doğrulanmadı).
+5. **Önce tek soru soracağım:** uGUI'de mi kalalım, UI Toolkit'e mi geçelim? Unity, ekran menüleri için UI Toolkit'i öneriyor. Ama geçiş büyük bir değişiklik. Önerim: uGUI'de kal, sorunu çöz. Karar senin.
+
+## "Bitti" demek için göstereceğim kanıt
+
+| Kanıt | Durum |
+|---|---|
+| Ölçüt dosyası, düzeltmeden **önce** yazılmış (git tarihi gösterir) | Yapabilirim |
+| Her çözünürlük ve her durum için Game view ekran görüntüsü, `.pusula/main-menu/shots/` altında | **Unity gerekir** |
+| Ölçüt tablosu: her satır pass / fail / "görülmedi" | Yapabilirim |
+| Menüyü bozmadan yeniden başlatma testi (play mode'u iki kez aç, aynı görüntü) | **Unity gerekir** |
+| Test Framework çıktısı (EditMode/PlayMode, XML sonucu) | **Unity gerekir** |
+| Derleme logunda yeni uyarı yok | **Unity gerekir** |
+| `.pusula/checks/pusula_check.py` (dosya yok; varsa commit öncesi çalışır) | Dosya yok, belirtirim |
+
+## Dürüst sınır
+
+Unity bu makinede yoksa menüyü çalıştıramam. O zaman rapora "Unity'de çalıştırılmadı" yazarım. Ekran görüntüsü satırları "görülmedi" kalır. "Düzeldi" demem. Görüntüleri sen kendi bilgisayarında alırsan tabloyu birlikte doldururuz.
+
+## Senden gereken
+
+1. Bozuk menünün ekran görüntüsü.
+2. Beğendiğin bir örnek (oyun veya site).
+3. Sahne ve prefab dosyaları repoda yok. Neden olduğunu biliyor musun?
+
+İlk adımı onayla, ölçüt dosyasını yazayım.

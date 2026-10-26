@@ -1,0 +1,98 @@
+[probe p7]
+# 8 Oyunculu RTS (Unity 6) Planı
+
+Bu planın temel kararı: **birim durumunu ağdan göndermeyin, yalnızca komutları gönderin.** Bu yüzden deterministik lockstep öneriyorum.
+
+## 1. Ağ modeli
+
+### Neden lockstep?
+- Azami 8 × 200 = **1600 birim** var. Bunların konumunu snapshot ile senkronlamak (Netcode for Entities/GameObjects) istemci başına sürekli yüksek bant genişliği ve karmaşık interest management gerektirir.
+- Lockstep'te yalnızca oyuncu komutları (seç, hareket, saldır, inşa et) gidip gelir. Trafik birim sayısından bağımsızdır ve yüzlerce bayt/sn düzeyinde kalır.
+- Replay, gözlemci modu ve kayıttan hata ayıklama neredeyse bedavaya gelir.
+
+Bedeli: Simülasyon **tamamen deterministik** olmak zorunda, ve bu en büyük risktir.
+
+### Mimari
+- **Topoloji:** Peer-to-peer değil, **relay üzerinden yıldız yapı**. Relay komutları sıralayıp herkese dağıtır. Seçenekler: Unity Relay + Lobby (UGS) veya Steam Datagram Relay. NAT sorunu çıkmaz.
+- **Taşıma katmanı:** Unity Transport (UTP). Komutlar için güvenilir-sıralı kanal, kontrol toplamları için ayrı kanal.
+- **Turn yapısı:** Simülasyon sabit tick'te (öneri **15 Hz**, 66 ms) çalışır. Komutlar "N tick sonra uygula" damgasıyla gönderilir. Input delay **2–3 tick (~130–200 ms)**, ping'e göre dinamik ayarlanır.
+- **Bekleme:** Bir oyuncunun turn paketi gelmezse herkes bekler. Zaman aşımında oyuncu atılır veya AI devralır.
+- **Determinizm kuralları:**
+  - Simülasyon matematiği **sabit noktalı (fixed-point) sayılarla** yapılır. Float yalnızca render tarafında kullanılır.
+  - Unity Physics, NavMesh, `Random`, `Time.deltaTime` simülasyonda kullanılmaz. Kendi çarpışma ve yol bulma sisteminizi yazarsınız.
+  - Tek bir seed'li PRNG kullanılır.
+  - Sözlük/hash sırasına bağımlılık yoktur. İterasyon sırası sabittir.
+- **Desync tespiti:** Her 30–60 tick'te durumun checksum'ı (konumlar, can, kaynak) hesaplanıp karşılaştırılır. Uyuşmazlıkta iki tarafın state dump'ı kaydedilir.
+- **Geç katılım/yeniden bağlanma:** Periyodik tam snapshot kaydı veya başlangıçtan komut replay'i.
+- **Hile:** Lockstep'te her istemci tüm durumu bilir, yani harita hilesi (maphack) mümkündür. Rekabetçi hedefiniz varsa bunu baştan kabul edin veya sunucu doğrulamalı hibrit modele bakın.
+
+### Alternatif (daha kolay ama pahalı)
+Cross-platform determinizm sizi aşıyorsa **sunucu-otoriter + snapshot** modeli (Netcode for Entities) seçilebilir. Bu durumda ghost sayısını kırpmanız, delta sıkıştırma ve yakınlık/görüş alanı filtresi uygulamanız gerekir. Bant genişliği ve sunucu maliyeti belirgin artar. 1600 birim için ilk tercihim değil.
+
+## 2. Performans planı
+
+### Hedef bütçe
+| Alan | Hedef |
+|---|---|
+| Render | 60 FPS (orta seviye PC), 16.6 ms kare |
+| Simülasyon tick | 66 ms'lik tick'in en fazla ~20 ms'si (arka planda job'larla) |
+| GC | Oyun içinde sıfır tahsis |
+| Ağ | < 5 KB/sn istemci başına |
+
+### Teknik yaklaşım
+- **DOTS/ECS + Burst + Jobs** ile simülasyon. 1600 birim için rahat, ama asıl kazanç cache dostu veri düzeninden gelir.
+- **Simülasyon/render ayrımı:** Sim 15 Hz çalışır, görsel katman önceki ve sonraki tick arasında interpolasyon yapar. Böylece sim ağırlığı kare hızını etkilemez.
+- **Yol bulma:** Grup hareketi için **flow field** (hedef başına bir alan, çok sayıda birim paylaşır), uzun mesafe için hiyerarşik A*. Birim başına A* kullanmayın.
+- **Kaçınma/ayrışma:** Spatial hash grid üzerinde komşu sorgusu + hafif ayrışma kuvveti (ORCA yerine boids benzeri). Tüm birimler her tick'te değil, **kademeli (staggered)** güncellenir.
+- **Hedef seçme/menzil:** Yine spatial hash. Her birim her tick hedef aramaz, 3–5 tick'te bir arar.
+- **Render:** Entities Graphics / BatchRendererGroup ile GPU instancing. Animasyon için **vertex animation texture (VAT)** veya GPU skinning. 1600 Animator kullanmayın.
+- **LOD ve culling:** Birim başına 2–3 LOD, uzakta impostor/sprite. Kamera frustum culling.
+- **Fog of war:** Düşük çözünürlüklü grid, görüş hesabı job'da, sonuç GPU texture'a yazılır.
+- **Mermi/VFX:** Pooling, GPU particle (VFX Graph) ve efekt sayısı sınırı.
+- **UI:** UI Toolkit, minimap RenderTexture + düşük güncelleme sıklığı.
+- **Bellek:** Birim verisi blittable struct; yönetilen koleksiyon yok.
+
+### Ölçüm süreci
+1. İlk haftalarda **stres sahnesi**: 1600 birim, rastgele emir, 8 bot. Sürekli çalıştırılır.
+2. Profiler + Profile Analyzer, her sprintte CPU/GPU/bellek baseline'ı.
+3. CI'da otomatik **determinizm testi**: aynı seed ve komut kaydı iki kez koşulur, checksum'lar eşit olmalı. Ayrıca farklı makine/derleme (Mono/IL2CPP) arasında karşılaştırılır.
+4. Ağ testi: Network Link Conditioner ile 100–200 ms ping, %5 paket kaybı.
+
+## 3. Gerekli asset sınıfları
+
+### İçerik asset'leri
+- **Birim modelleri:** Birim tipi başına mesh, 2–3 LOD, VAT animasyon (yürüme, saldırı, ölüm, boşta), takım rengi maskesi.
+- **Binalar:** Normal, inşaat aşaması, hasarlı, yıkım varyantları.
+- **Arazi:** Terrain veya modüler tile, yüksekliğe dayalı yürünebilirlik haritası, ağaç/kaya gibi engeller.
+- **VFX:** Vuruş, patlama, ölüm, seçim halkası, hedef işaretçisi, inşaat tozu.
+- **UI:** HUD, komut paneli, minimap, kaynak göstergesi, ikonlar (birim, bina, yetenek), lobi ve ayarlar ekranları.
+- **Ses:** Birim sesleri (seçim/emir/saldırı), ortam, müzik, uyarı sesleri. Önemli olanlarda ses sayısı sınırı ve öncelik.
+- **Oyuncu rengi/takım:** 8 oyuncu için ayırt edilebilir, renk körlüğüne duyarlı palet.
+
+### Veri asset'leri (ScriptableObject → build'de sabit tabloya "bake")
+- `UnitDefinition` (can, hız, menzil, hasar, maliyet, üretim süresi, tüm sayılar sabit noktalı)
+- `BuildingDefinition`, `UpgradeDefinition`, `AbilityDefinition`
+- `FactionDefinition`, `MapDefinition` (başlangıç noktaları, kaynak yerleşimi)
+- `BalanceTable`: tek yerde denge sayıları. **Sürüm numarası/hash'i** lobide eşleştirilir. Farklı veriyle oynayan istemci desync yapar.
+
+### Yazılım modülleri (sınıf grupları, kod değil)
+- **Sim çekirdeği:** sabit nokta matematik, PRNG, tick yöneticisi, komut kuyruğu, checksum.
+- **Komutlar:** Move/Attack/Build/Train/Stop gibi serileştirilebilir komut tipleri.
+- **Ağ katmanı:** lobi, relay bağlantısı, turn senkronizasyonu, gecikme ayarı, desync raporlama.
+- **Sistemler:** hareket, yol bulma, kaçınma, savaş, ekonomi, üretim, fog of war.
+- **Sunum katmanı:** interpolasyon, kamera, seçim kutusu, emir geri bildirimi, minimap.
+- **Araçlar:** replay kaydedici/oynatıcı, stres test sahnesi, desync analiz aracı, harita editörü.
+
+## 4. Önerilen yol haritası
+1. **Prototip (2–4 hf):** Sabit nokta sim, 200 birim, tek makinede 2 istemci lockstep, checksum.
+2. **Ölçek (4 hf):** 1600 birim, flow field, spatial hash, render optimizasyonu, profil bütçesi.
+3. **Ağ sağlamlığı (4 hf):** Relay/lobi, input delay uyarlaması, kopma/yeniden bağlanma, replay.
+4. **İçerik ve denge:** Birim/bina üretimi, araçlar, oynanış testleri.
+5. **Cila:** Ses, VFX, UI, 8 kişilik gerçek ağ testleri.
+
+## En büyük riskler
+1. **Determinizm hataları** (float sızıntısı, sıra bağımlılığı). Çözüm: erken CI testi.
+2. **Yol bulma/kaçınma maliyeti** kalabalıkta. Çözüm: flow field ve kademeli güncelleme.
+3. **En yavaş oyuncuya bağlı bekleme.** Çözüm: dinamik input delay ve zaman aşımı politikası.
+
+İsterseniz bunu paylaşılabilir bir sayfa olarak da yayınlayabilirim. Hedef platform (PC/konsol/mobil) ve rekabetçi mi kooperatif mi olduğunu söylerseniz modeli ona göre netleştiririm.

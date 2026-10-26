@@ -1,0 +1,47 @@
+[probe p4]
+**Kısa cevap:** Büyük ihtimalle `src/main.js` içinde Draco decoder yok. Evet, `swapModel` bellek sızdırıyor. Dosyayı `gltf-validator` ile doğrularsın.
+
+Kodu değiştirmedim. Bu projede `models/` klasörü ve `node_modules` da yok. GLB dosyanı ve tarayıcı konsolunu görmedim. Bu yüzden nedeni kesin bilmiyorum.
+
+## 1. GLB neden yüklenmiyor
+
+`src/main.js:10` satırı `new GLTFLoader()` ile başlıyor. `DRACOLoader` hiç yok. Draco'lu GLB bu loader'la açılmaz. (Resmî kural, three.js dokümanı.)
+
+Konsolda muhtemelen şu hata var: `THREE.GLTFLoader: setDRACOLoader must be called before loading compressed files`. Bunu doğrulamak için konsola bak.
+
+Düzeltme, kodla birlikte şöyle olur:
+
+```js
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
+const draco = new DRACOLoader();
+draco.setDecoderPath("/draco/"); // kendi sunduğun klasör
+loader.setDRACOLoader(draco);
+```
+
+- Decoder dosyaları `node_modules/three/examples/jsm/libs/draco/gltf/` içinde olur. Bunları Vite'ın `public/draco/` klasörüne kopyala.
+- `models/unit.glb` dosyası da `public/models/` altında olmalı. Yoksa Vite HTML döndürür ve hata yanıltıcı olur.
+- `gltf-transform optimize --texture-compress ...` ile KTX2 kullandıysan `setKTX2Loader` da gerekir. Meshopt kullandıysan `setMeshoptDecoder` gerekir.
+- Sayfayı `file://` ile açma. HTTP ile sun (`npm run dev`).
+
+## 2. `swapModel` bellek sızıntısı
+
+Evet, sızıntı var. `scene.remove(current)` (`src/main.js:15`) sadece sahneden çıkarır. GPU belleğini boşaltmaz. Eski modelin geometri, materyal ve texture'ları bellekte kalır.
+
+İki küçük sorun daha var:
+- **Yarış durumu:** İki çağrı üst üste gelirse, geç biten eski yükleme sonucu ezebilir.
+- **Sessiz hata:** `.catch` yok. Yükleme hatası kimseye gösterilmiyor.
+
+Çözüm: eski modeli çıkarırken `traverse` ile her `geometry`, `material` ve materyaldeki her texture için `dispose()` çağır. Paylaşılan kaynak varsa dikkat et. Başka bir mesh kullanıyorsa onu dispose etme.
+
+Kontrol için `renderer.info.memory` değerini yazdır (`geometries`, `textures`). Birkaç kez model değiştirdikten sonra sayılar sabit kalmalı. Artıyorsa sızıntı sürüyor.
+
+## 3. Dosya geçerli mi
+
+1. **Doğrulama:** `npm install --save-dev gltf-validator`. Bu paket komut değil, kütüphane. `validateBytes(new Uint8Array(bytes))` çağıran küçük bir Node betiği yaz. Çıktıdaki `numErrors` değeri 0 olmalı.
+2. **Boyut ve içerik:** `gltf-transform inspect unit.glb` komutunu çalıştır. Çıktıda `KHR_draco_mesh_compression` uzantısını gör.
+3. **Gerçek test:** Tarayıcıda yükle ve konsolu oku.
+
+Not: Projenin rehberi `.pusula/checks/validate_glb.mjs` adlı bir sarmalayıcıdan söz ediyor. Bu repoda o dosya yok. Betiği sıfırdan yazman gerekir.
+
+İstersen düzeltmeleri ben uygularım. Bunun için açıkça söylemen yeterli.

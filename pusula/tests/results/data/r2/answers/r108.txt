@@ -1,0 +1,37 @@
+[probe p4]
+Üç cevap de kodda ve projenin three.js notlarında var. Bu oturumda hiçbir şeyi çalıştırmadım. Kodu da değiştirmedim.
+
+## 1. Draco GLB neden yüklenmiyor?
+
+**Neden:** `src/main.js:10` içinde `new GLTFLoader()` var, ama Draco decoder'ı (açıcı kod) bağlı değil. Sıkıştırılmış dosya açılamaz ve yükleme hata verir. Bu, paket notundaki 2. tuzakla aynı. [official]
+
+**Düzeltme (uygulamadım):**
+```js
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+const draco = new DRACOLoader();
+draco.setDecoderPath("/draco/"); // decoder dosyaları burada servis edilmeli
+loader.setDRACOLoader(draco);
+```
+- Decoder dosyaları `node_modules/three/examples/jsm/libs/draco/` içinde olmalı. Bu klasörü bu ortamda bulamadım, çünkü `node_modules` yok. `public/draco/` altına kopyalaman gerekir.
+- Dosya `models/unit.glb` yolunda da yok. Yani yükleme başka bir nedenle de düşüyor olabilir. Tarayıcı konsolundaki asıl hata mesajına bak. Bu, tahminimi doğrular ya da çürütür.
+- İkinci olasılık: `--compress draco` ile gelen WebP dokuları `EXT_texture_webp` ister. Three.js bunu destekler ama eski tarayıcılar desteklemez. [not official, tahmin]
+
+## 2. `swapModel` bellek sızıntısı
+
+**Evet, sızıntı var.** `src/main.js:15` yalnızca `scene.remove(current)` çağırıyor. Bu GPU belleğini boşaltmaz. Geometri, materyal ve doku bellekte kalır. Her değişimde GPU belleği büyür. [official/reasoning]
+
+İki küçük sorun daha var:
+- Yükleme sürerken iki `swapModel` çağrısı gelirse, geç biten kazanır. Yani sıra bozulabilir.
+- Yükleme hatası yakalanmıyor. Hata sessiz kalır, bu da projenin "no silent errors" kuralına aykırı.
+
+**Düzeltme fikri:** `current.traverse` ile her mesh'in `geometry` ve materyalini `dispose()` et. Materyalin doku alanlarını da dispose et. Modeller arasında paylaşılan kaynak yoksa bu güvenlidir. Paylaşılan kaynağı dispose edersen diğer mesh'ler bozulur. [reasoning]
+
+## 3. Dosya geçerli mi, nasıl doğrularsın?
+
+1. **Khronos doğrulayıcı:** `npm i -D gltf-validator`. Paket bir kütüphanedir, komutu yoktur. `validateBytes(new Uint8Array(bytes))` ile çağırılır. [official]
+2. **Proje sarmalayıcısı:** Notlar `.pusula/checks/validate_glb.mjs` dosyasından söz ediyor. Bu repoda o dosya yok. Kendin yazman gerekir. Çıkış kodları şöyle olmalı: 0 temiz, 1 hata, 2 kontrol edilemedi.
+3. **gltf-transform ile bak:** `gltf-transform inspect unit.glb`. Boyut ve sorunları gösterir. [official]
+4. **Sıkıştırmadan önce de doğrula.** Böylece hatanın kaynağı sıkıştırma mı, orijinal dosya mı anlarsın.
+5. **Tarayıcıda dene.** HTTP üzerinden servis et (`file://` çalışmaz). Konsolu oku. Değişimden önce ve sonra `renderer.info.memory` değerlerine bak. Düzeltmeden sonra bu sayılar sabit kalmalı. [official]
+
+İstersen düzeltmeyi uygulayabilirim.

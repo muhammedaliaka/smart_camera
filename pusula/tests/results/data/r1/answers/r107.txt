@@ -1,0 +1,60 @@
+[probe p1]
+Plan dosyasını yazamadım, çünkü bu oturumda `Write` aracı kapalı. Planı burada veriyorum. İstersen aracı açtıktan sonra `.pusula/plans/steam-launch-pricing.md` dosyasına kaydederim.
+
+İnternet yok. Aşağıdaki Steam kuralları hafızamdan geliyor. Hepsi **UNVERIFIED** (doğrulanmadı). Resmi sayfa: `partner.steamgames.com/doc/store/pricing` ve `/doc/store/releasing`.
+
+## Varsayımlar
+- Çıkış tarihi vermedin. Ben **T = Salı 17 Kasım 2026** aldım. Tarih değişirse tabloyu T'ye göre kaydır.
+- Mağaza sayfası ve build henüz gönderilmedi.
+- Lansman indirimi 7 gün sürecek.
+
+## Steam kuralları (UNVERIFIED)
+- **R1:** "Coming Soon" sayfası çıkıştan en az 14 gün önce yayında olmalı.
+- **R2:** Mağaza sayfası incelemesi yaklaşık 3–5 iş günü sürer.
+- **R3:** Build incelemesi yaklaşık 3–5 iş günü sürer.
+- **R4:** Uygulama ücreti 100 dolardır. 1.000 dolar gelirden sonra geri döner.
+- **R5:** Kimlik, banka ve vergi formları çıkıştan önce tamamlanmalı.
+- **R6:** Lansman indirimi genelde en çok %40 olabilir. Süresi yaklaşık 14 güne kadardır.
+- **R7:** İndirimler Pasifik saatiyle 10:00'da başlar ve biter. Kasım'da bu, Türkiye'de 21:00 eder.
+- **R8:** İndirim sürerken temel fiyat değişmez.
+- **R9:** İndirim bitince ve fiyat değişince yaklaşık 30 gün sonra yeni indirim açılabilir.
+- **R10:** Fiyat değişikliği için Steamworks'te "Publish" gerekir. Mağazada görünmesi birkaç saat sürebilir.
+
+## Fiyat adımları
+| Adım | Temel fiyat | Görünen fiyat | Tarih |
+|---|---|---|---|
+| Çıkış | $14.99 | $8.99 (%40 indirim; yuvarlama UNVERIFIED) | 17 Kasım |
+| İndirim biter | $14.99 | $14.99 | 24 Kasım, 21:00 TRT |
+| Fiyat artışı | $19.99 | $19.99 | 25 Kasım |
+| Sonraki indirim | $19.99 | sen seç | 25 Aralık veya sonrası |
+
+Artış %33'tür. Bunu mağaza sayfasında tek satırla duyur.
+
+## Tarihli plan
+| Tarih | Adım | Kontrol |
+|---|---|---|
+| Paz 25 Eki | Varsayımları onayla. Steamworks'te form ve ücreti kontrol et (R4, R5). | Kırmızı uyarı yok. |
+| Pzt 26 Eki | Mağaza varlıklarını bitir. Fiyatı $14.99 gir. Sayfayı incelemeye gönder. | Durum "In review". |
+| 27 Eki – 2 Kas | İnceleme beklenir. Red gelirse aynı gün düzelt. | En geç 2 Kasım'da "Approved". |
+| Pzt 2 Kas | Release build'i yükle. Build incelemesine gönder (R3). | Durum "In review". |
+| Sal 3 Kas | "Coming Soon" sayfasını yayınla. | T'ye 14 gün var (R1). Geç kalırsan T'yi aynı gün kadar ertele. |
+| En geç Pzt 9 Kas | Build onayı gelir. Çıkış tarihini ve %40 / 7 gün indirimi gir. | Steamworks ikisini de gösterir. |
+| Sal 10 Kas | Temiz bir PC'ye Steam'den kur ve oyna. | Açılır, kaydeder, kapanır. |
+| Pzt 16 Kas | Son kontrol. Build default branch'te hazır olsun. | Branch listesi doğru. |
+| Sal 17 Kas | Sabah (Pasifik saati) "Release" bas. | Mağazada $8.99, üstü çizili $14.99. |
+| Sal 24 Kas | İndirim 21:00 TRT'de biter. | Mağazada $14.99. |
+| Çar 25 Kas | Temel fiyatı $19.99 yap ve Publish et (R8, R10). | Mağazada $19.99. Ekran görüntüsü al. |
+| Cum 25 Ara | En erken yeni indirim (R9). | Steamworks izin verir. |
+
+## Riskler
+- İnceleme reddi gün kaybettirir. Tampon bıraktım, gerekirse T kayar.
+- Limit veya yuvarlama farklı çıkabilir. 9 Kasım'dan önce fiyat sayfasını oku.
+- Fiyat artışı yorumları bozabilir. Önceden duyur.
+- Kış indirimi (yaklaşık 17 Aralık) R9 yüzünden kapalı olabilir. Sale sayfasından kontrol et.
+- Avrupa'da "son 30 günün en düşük fiyatı" yazısı çıkabilir (UNVERIFIED).
+
+## Bilinmeyenler
+- Gerçek çıkış tarihin.
+- Form ve ücretin tamam olup olmadığı.
+- R1–R10'un güncel hali. Her birini resmi sayfadan doğrula.
+- Kasım–Aralık 2026 Steam indirim tarihleri.

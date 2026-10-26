@@ -1,0 +1,63 @@
+[probe p1]
+Planı dosyaya yazamadım. Bu oturumda `Write` aracı kapalı. Plan aşağıda. İstersen sonra `.pusula/steam-launch/plan.md` içine kaydedilir.
+
+## Önemli uyarı
+Bu oturumda internet yok. Aşağıdaki Steam kuralları hafızamdan geliyor. **Resmi kaynaktan doğrulanmadı** (UNVERIFIED). Her adımdan önce Steamworks panelini ve https://partner.steamgames.com/doc/store sayfalarını kontrol et. Panel bu plandan daha doğrudur.
+
+## Varsayımlar
+- Çıkış tarihi vermedin. Ben **Salı 1 Aralık 2026** aldım.
+- "Sonra fiyatı artır" derken, indirim biter bitmez artırmayı kabul ettim. Diğer okuma: en az 30 gün beklemek.
+- Taban fiyat 14,99 dolar. %40 indirimle fiyat **8,99 dolar** olur (14,99 × 0,60 = 8,994).
+
+## Hatırladığım Steam kuralları (UNVERIFIED)
+- Steam Direct ücreti oyun başına 100 dolar. 1.000 dolar gelirden sonra iade edilir.
+- Evrak ve ücret bittikten sonra 30 gün beklemen gerekir.
+- Mağaza sayfası incelemesi yaklaşık 3-5 iş günü sürer.
+- Build incelemesi yaklaşık 3-5 iş günü sürer.
+- "Coming soon" sayfası çıkıştan en az 14 gün önce herkese açık olmalı.
+- Lansman indirimi en fazla %40 ve yaklaşık 14 gün olabilir.
+- Bir indirim bitince, sonraki indirim için yaklaşık 30 gün beklenir.
+
+## Tarihli plan
+
+| Tarih | İş | Kontrol |
+| --- | --- | --- |
+| Paz 25 Eki | Steamworks hesabı aç. 100 dolar öde. Vergi ve banka formunu başlat. | Panelde ücret "ödendi" görünür. |
+| 26-28 Eki | Vergi (W-8BEN) ve banka bilgisini bitir. | İkisi de "complete". 30 gün saati burada başlar. |
+| 29 Eki-1 Kas | Mağaza sayfasını hazırla: kapak görselleri, en az 5 ekran görüntüsü, fragman, metin, yaş anketi. | Her bölüm tamam görünür. |
+| Pzt 2 Kas | Mağaza sayfasını incelemeye gönder. | Durum "submitted". |
+| Pzt 9 Kas | Çıkış build'ini yükle. | Build "Builds" listesinde. Temiz bir bilgisayarda çalıştır. |
+| Sal 10 Kas | "Coming soon" sayfasını yayınla. Çıkıştan 21 gün önce. | Gizli pencerede açılır. İstek listesi düğmesi çalışır. |
+| Per 12 Kas | Sayfa ret aldıysa düzeltme için son gün. | Sayfa onaylı. |
+| Pzt 16 Kas | Taban fiyatı 14,99 dolar yap. Çıkış tarihini 1 Aralık yap. Build ve çıkışı incelemeye gönder. | Fiyat ve tarih panelde doğru. Bölgesel fiyatlara da bak. |
+| Cum 20 Kas | %40 lansman indirimini kur: 1-15 Aralık. | Panelde 8,99 dolar ve bitiş tarihi görünür. |
+| Pzt 23 Kas | Build sonucu beklenir. Ret varsa düzelt ve tekrar gönder. | Build "approved". |
+| Pzt 30 Kas | Son kontrol: fiyat, indirim, build, sayfa. | Dördü de hazır. |
+| **Sal 1 Ara** | **Çıkış düğmesine bas.** | Mağazada 8,99 dolar ve -%40 görünür. |
+| Sal 15 Ara | İndirim biter. | İndirim rozeti kalkar. |
+| **Çar 16 Ara** | **Taban fiyatı 19,99 dolar yap.** | Mağazada 19,99 dolar görünür. |
+| Per 17 Ara | Gizli pencerede ve Türkiye görünümünde fiyata bak. | Fiyat doğru. |
+
+## Fiyat adımları
+1. Çıkıştan önce: 14,99 dolar.
+2. 1-15 Aralık: 8,99 dolar (%40 indirim).
+3. 16 Aralıktan sonra: 19,99 dolar.
+
+## Riskler
+- **Evrak gecikirse** çıkış kayar. 30 günü evrak bitiş tarihinden say. Gecikme kadar her tarihi ötele.
+- **Winter Sale'i kaçırabilirsin.** Steam genelde Aralık sonunda büyük indirim yapar (UNVERIFIED). İndirim sonrası 30 gün bekleme kuralı geçerliyse, 15 Aralıktan sonra o indirime giremezsin.
+- **Fiyat artışı engellenebilir.** İndirimden hemen sonra artış için bir kural olabilir. 1 Aralıktan önce fiyatlandırma belgesine bak.
+- **İstek listesindekiler kızabilir.** Fiyat %33 artıyor. Lansman yazısına "lansman fiyatı 15 Aralıkta biter" yaz.
+- **İnceleme reddi** bir hafta kaybettirir. Bu yüzden iki incelemeye de bolca tampon bıraktım.
+
+## Önerim
+Eğer istek listen yaklaşık 5.000'in altındaysa, çıkışı **12 Ocak 2027** civarına al. Bu sayıyı resmi kaynaktan almadım, kendi tahminim. Böylece Winter Sale çakışması olmaz ve istek listesi büyür. Tarihleri aynı gün sayısı kadar kaydır.
+
+## Bilinmeyenler
+- Bugünkü gerçek bekleme ve inceleme süreleri.
+- Lansman indiriminden sonra 30 gün kuralı var mı, Winter Sale'i engeller mi?
+- İndirimden hemen sonra taban fiyat artırılabilir mi?
+- Lansman indiriminin azami süresi.
+- Türkiye'den vergi kesintisi. Bunu bir mali müşavire sor.
+
+**İlk adım:** Bugün Steamworks hesabını aç, ücreti öde, vergi formunu başlat.

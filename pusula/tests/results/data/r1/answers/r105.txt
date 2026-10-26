@@ -1,0 +1,58 @@
+[probe p3]
+**Güvenli değil.** Üç sorun var. Hiçbir komut çalıştırmadım, sadece dosyaları okudum.
+
+## 1. `deleteInvoice` herkese açık (kritik)
+`app/dashboard/actions.ts:6` oturum kontrolü yapmıyor. `"use server"` dosyasındaki her fonksiyon herkese açık bir POST adresidir. Sayfadaki `redirect` bu fonksiyonu korumaz. Giriş yapmamış biri de, başkasının faturasının `id` değeriyle çağırabilir.
+
+**Değişiklik** (`app/dashboard/actions.ts`):
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { getSessionUser } from "@/lib/auth";
+import { query } from "@/lib/db";
+
+export async function deleteInvoice(id: string) {
+  const user = await getSessionUser();
+  if (!user) throw new Error("Unauthorized");
+  const result = await query(
+    "delete from invoices where id = $1 and owner_id = $2 returning id",
+    [id, user.id],
+  );
+  if (result.rowCount === 0) throw new Error("Not found");
+  revalidatePath("/dashboard");
+}
+```
+- `owner_id = $2` başkasının faturasını silmeyi engeller.
+- `returning id` tüm satırı geri sızdırmaz.
+- Admin silebilsin istiyorsan `user.role === "admin"` için ayrı bir dal ekle. Bunu sen karar ver.
+
+## 2. Oturum çerezi sahte üretilebilir (kritik)
+`lib/auth.ts:13` imzayı kontrol etmiyor. Yorum satırı "signature check lives here" diyor, ama kod yok. Biri `session=VICTIM_ID.x` çerezi koyarsa o kullanıcı olur. Yani 1. düzeltme tek başına yetmez.
+
+**Değişiklik:** `verifyToken` içinde gerçek doğrulama yap. İmzalı bir JWT veya hazır bir kütüphane kullan. Gizli anahtarı env değişkeninden oku. Anahtarı koda yazma.
+
+## 3. Küçük noktalar
+- `redirect("/login")` sayfayı korur, ama sunucu eylemini korumaz. Her eylemde kendi kontrolünü yap (1. madde).
+- `invoices: any[]` türü `invoice-list.tsx:5` içinde tip güvenliğini kapatıyor. Güvenlik açığı değil, ama düzeltmeye değer.
+- Projede `middleware` veya `proxy` dosyası yok. Ek bir koruma katmanı yok.
+
+## CI: lint kapsanıyor mu?
+**Hayır, büyük olasılıkla kapsanmıyor.** `.github/workflows/ci.yml` sadece `npm run build` çalıştırıyor. Next.js 16 sürümünde `next build` artık lint çalıştırmıyor. Bu bilgi benim bildiğim sürüm notlarından geliyor. İnternet olmadığı için bu oturumda doğrulamadım. Resmî Next.js 16 yükseltme notundan teyit et.
+
+Ek bulgu: repoda ESLint config dosyası (`eslint.config.*`) yok. `npm run lint` bu haliyle çalışmayabilir. `tsconfig.json` da görünmüyor.
+
+**Değişiklik:**
+1. `eslint.config.mjs` ekle. `eslint-config-next` paketini kullan. Resmî dokümandaki flat config örneğini al.
+2. `ci.yml` içinde `npm run build` satırından önce şunu ekle:
+```yaml
+      - run: npm run lint
+```
+3. Önce yerelde `npm run lint` çalıştır. Hata varsa düzelt, sonra CI'ya ekle.
+
+## Öncelik
+1. `verifyToken` (2. madde), çünkü her şey ona dayanıyor.
+2. `deleteInvoice` (1. madde).
+3. Lint (CI).
+
+Varsayım: `invoices` tablosunda `owner_id` sütunu var. `page.tsx:9` bunu zaten kullanıyor.

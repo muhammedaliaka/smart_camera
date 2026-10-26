@@ -1,0 +1,78 @@
+[probe p1]
+# Steam fiyat ve çıkış planı (25 Ekim 2026 → çıkış)
+
+**Varsayım:** Çıkış tarihi vermediniz, soru da istemediniz. Bu yüzden çıkışı **Perşembe 21 Ocak 2027** olarak aldım (R). Gerekçem şu:
+- Kasım ve Aralık'taki Steam indirim dönemlerinin (yaklaşık 25 Kas–2 Ara ve 17 Ara–5 Oca) arasına çıkış koymak istemedim.
+- Ayrıca önünüzde mağaza sayfası ve wishlist için yeterli süre kalıyor.
+
+Tarihiniz farklıysa sadece "R" ile gösterilen göreli kuralları kaydırmanız yeterli. İnternetim olmadığından aşağıdakiler bilgi birikimime dayanıyor. Kesin olanlarla "Steamworks'te doğrula" diyeceklerimi ayırdım.
+
+## Steam kuralları
+
+| Kural | Değer | Güven |
+|---|---|---|
+| Steam Direct ücreti | 100 $ (1.000 $ gelirden sonra iade edilir) | Kesin |
+| Ücret ve vergi/banka evrakından çıkışa bekleme | **En az 30 gün** | Kesin |
+| "Coming Soon" sayfası çıkıştan önce yayında | **En az 2 hafta** | Kesin |
+| Mağaza sayfası ve build incelemesi | Her biri **3–5 iş günü** (tatillerde uzar) | Kesin |
+| Çıkış (launch) indirimi üst sınırı | **%40**, en fazla 2 hafta | Büyük ölçüde kesin |
+| Bir indirimin en uzun süresi | **14 gün** | Kesin |
+| İndirim bittikten sonra yenisi için bekleme | **30 gün** | Kesin (çıkış indirimi için de böyle varsayın) |
+| Baz fiyat artışından sonra indirim başlatma | 30 gün bekleme olabilir | **Steamworks'te doğrula** |
+| Türkiye bölge fiyatı | 2023'ten beri USD bazlı olduğunu hatırlıyorum | **Steamworks'te doğrula** |
+
+İndirimler ve çıkış saati **10:00 Pasifik** ile işler. Kışın bu, Türkiye'de **21:00** demek.
+
+## Takvim
+
+**25 Eki (Paz) – bugün**
+- Steamworks'te şunları kontrol edin: 100 $ ücret ödendi mi, vergi formu (W-8BEN, ABD–Türkiye anlaşması), banka ve kimlik doğrulaması tamam mı?
+- Bunları bugün bitirirseniz 30 günlük sayaç bugün başlar ve en erken çıkış **24 Kas 2026** olur. Planımız bu sınırın çok ötesinde.
+- Mağaza sayfası varlıklarını (capsule görselleri, trailer, açıklama) hazırlamaya başlayın.
+
+**1 Kas (Paz)**
+- Mağaza sayfasını incelemeye gönderin.
+- Baz fiyatı **14,99 $** olarak girin. Fiyat paketi de incelemeden geçer.
+
+**~9 Kas (Pzt)**
+- İnceleme biter (5 iş günü payıyla) ve "Coming Soon" sayfasını yayına alırsınız.
+- Bu, 2 haftalık zorunlu süreden çok daha uzun, yaklaşık 10 hafta. Wishlist biriktirmek için bu süreyi kullanın.
+
+**Kasım – Aralık**
+- Wishlist toplayın.
+- Steam'in büyük indirim dönemlerinde sayfanız çok ziyaret alır, ama çıkış yapmayın.
+
+**4 Oca (Pzt)**
+- Final build'i incelemeye gönderin.
+- Kural 3–5 iş günü, ama yılbaşı tatili birikme yaratır. Bu tarih benim tavsiyem.
+- Çıkış tarihini Steamworks'te bu sırada kesinleştirin.
+
+**7 Oca (Per)**
+- "Coming Soon" için 2 haftalık zorunlu eşik. Bu tarihte sayfanız zaten yayında olmalı.
+
+**14 Oca (Per)**
+- Build onaylı olmalı.
+- Çıkış indirimini Steamworks'te tanımlayın: **%40, 14 gün**.
+- Fiyat sırası: 14,99 $ → **8,99 $** (14,99 × 0,6 = 8,994, yani 8,99 $).
+
+**21 Oca (Per), 21:00 TSİ – ÇIKIŞ**
+- Oyun 8,99 $ ile açılır.
+- Wishlist'tekilere Steam otomatik bildirim gönderir.
+
+**4 Şub (Per), 21:00 TSİ**
+- Çıkış indirimi biter, fiyat 14,99 $'a döner.
+- 30 günlük indirim bekleme süresi başlar. Sonraki indirim en erken **6 Mar 2027** olur.
+
+**5 Şub (Cum) – fiyat artışı**
+- Baz fiyatı **19,99 $** yapın. Artış +%33.
+- İndirim sürerken artış yapmayın.
+- Önce bölge fiyatlarını kontrol edin. Steam önerilen bölge fiyatlarını yeniden hesaplar, özel ayarlarınız varsa bozulabilir.
+
+**6 Mar (Cmt) ve sonrası**
+- Yeni indirim mümkün olur, ama artık 19,99 $ üzerinden uygulanır (örneğin %20 → 15,99 $).
+
+## Dikkat edin
+
+- **Artışı koşula bağlayın.** İnceleme skoru "Çok Olumlu" civarındaysa ve satışlar 14,99 $'da sağlıksızca yavaşlamadıysa artırın. Skor zayıfsa 5 Şub'de artırmak satışı daha da düşürür. Bu durumda 14,99 $'da kalın.
+- **Aylar içinde fiyat bozulabilir.** Çıkış sonrası 19,99 $'a çıkıp birkaç hafta içinde indirime girerseniz "sahte indirim" algısı yaratır. Bu yüzden 6 Mar sonrası ilk indirimi küçük tutmanızı öneririm.
+- **Alternatif:** Baz fiyatı baştan 19,99 $ koyup %40 indirimle 11,99 $'dan çıkmak. Bu yolda artış adımı ve fiyat riski olmaz. Yalnızca baştan 14,99 $ istediğiniz için bunu ana plana koymadım.

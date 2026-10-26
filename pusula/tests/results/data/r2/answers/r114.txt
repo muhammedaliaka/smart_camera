@@ -1,0 +1,78 @@
+[probe p1]
+Plan dosyası yazamadım. Bu oturumda `Write` aracı kapalı. Bu yüzden planı burada veriyorum. İstersen sonra `plans/steam-launch-pricing-plan.md` olarak kaydederim.
+
+## Sonuç
+Sıran geçerli: önce indirim, sonra zam. Ters sıra indirimi 30 gün bloklardı.
+
+Tahmini çıkış tarihi **1 Aralık 2026 (Salı)**. En erken yasal tarih 25 Kasım. Fiyat zammı **4 Ocak 2027**'de yapılır. Zamdan sonra ilk normal indirim yaklaşık **5 Şubat 2027**'de olur.
+
+## Varsayımlarım
+- Steamworks hesabı, ücret, vergi formu ve mağaza sayfası henüz yok.
+- Bireysel yayıncısın, şirket değil.
+- 100 dolarlık ücreti 26 Ekim'de ödersin. Geç ödersen tüm tarihler aynı gün sayısı kadar kayar.
+- Lansman indirimi 7 gün sürer. Azami süre benim kaynaklarımda yok (UNVERIFIED). Steamworks'ten kontrol et.
+
+## Steam kuralları
+Bunlar Steamworks sayfalarından alınmış notlardır (official). İnternetim yok, bu oturumda yeniden doğrulayamadım.
+
+| Kural | Süre |
+|---|---|
+| Uygulama ücreti | 100 dolar. 1.000 dolar brüt gelirde geri döner |
+| Banka, vergi, kimlik kontrolü | 15-30 gün |
+| İlk çıkış | Ücretten en az 30 gün sonra |
+| "Yakında" sayfası | Çıkıştan en az 2 hafta önce herkese açık |
+| Sayfa incelemesi | 3-5 iş günü |
+| Build incelemesi | 1-5 gün |
+| Çıkış başvurusu | Çıkıştan en az 7 gün önce |
+| Çıkış | Elle yapılır. "Release App" tuşu çıkış saatini o an yapar |
+| Fiyat değişikliği | Çıkıştan sonra 30 gün yok |
+| Fiyat incelemesi | Genelde 1-2 iş günü |
+| İndirim engeli 1 | Çıkıştan sonra 30 gün yok |
+| İndirim engeli 2 | Lansman indirimi bittikten sonra 30 gün yok |
+| İndirim engeli 3 | Fiyat artışı 30 günlük indirim beklemesi başlatır |
+| Para birimi | 37 para birimi. Biri eksikse oyun o bölgede satılmaz |
+
+Steam'in gelir payı yüzdesi notlarımda yok. Güncel sözleşmeden oku.
+
+## Tarihli adımlar
+| Tarih | Adım | Kontrol |
+|---|---|---|
+| Pzt 26 Eki | Steamworks kaydı, vergi ve banka formları. Banka hesap adı kimliğinle aynı olmalı | Durum "inceleniyor" |
+| Pzt 26 Eki | 100 dolar ücreti sen ödersin | Makbuz var, tarih not edildi |
+| 27 Eki - 6 Kas | Mağaza sayfasını hazırla | Metin ve görseller hazır |
+| Pzt 9 Kas | Sayfayı incelemeye gönder | En geç 16 Kas'a kadar onay |
+| Per 12 Kas | Fiyat tablosunu gir, incelemeye gönder | 37 para birimi dolu |
+| Pzt 16 Kas | Sayfayı yayınla ("Yakında" açık olur) | En geç 17 Kas'ta herkese açık |
+| Pzt 16 Kas | Build'i incelemeye gönder | En geç 23 Kas'a kadar onay |
+| Cum 20 Kas | Çıkış başvurusu ve %40 lansman indirimi (7 gün) | Çıkış sayfasında "hazır" |
+| Sal 24 Kas | Başvuru için son gün | Bekleyen inceleme yok |
+| **Sal 1 Ara** | **"Release App" tuşuna sen basarsın** | Mağazada -%40 görünür |
+| Sal 8 Ara | Lansman indirimi biter | Fiyat 14,99'a döner |
+| **Pzt 4 Oca 2027** | **14,99 → 19,99 fiyat değişikliğini gönder** | 6 Oca'ya kadar onay |
+| ~Çar 6 Oca | Yeni fiyat yayında. 30 günlük indirim beklemesi başlar | Mağazada 19,99 |
+| ~Cum 5 Şub 2027 | İlk normal indirim planlanabilir | Steamworks isteği kabul eder |
+
+Zam için 31 Aralık yeterli olurdu (çıkıştan 30 gün sonra). 4 Ocak'ı iki gün pay için seçtim.
+
+## Fiyat adımları
+| Aşama | USD |
+|---|---|
+| Taban | 14,99 |
+| Lansman, -%40 | 8,99 (14,99 × 0,6 = 8,994, Steam yuvarlar) |
+| 4 Ocak'tan sonra | 19,99 |
+
+Diğer 36 para birimini uydurmadım. Steamworks'ün önerdiği fiyatlardan doldur. Kaydetmeden önce tabloyu baştan sona oku. Tek bir yazım hatası oyunu bir bölgede kapatabilir veya çok ucuz yapabilir.
+
+## Riskler
+1. **Banka ve vergi kontrolü 30 güne kadar sürebilir.** Bu en erken çıkış tarihini zorlar. Bugün başla.
+2. **Kış indirimleri kaçar.** 1 Ara - 5 Şub arası hiçbir indirime giremezsin. Steam sezon tarihleri benim kaynaklarımda yok (UNVERIFIED). Bu, zammın bedelidir.
+3. **İnceleme kayarsa** çıkış da aynı gün kadar kayar.
+4. **Zam satışı düşürebilir.** Elimde veri yok. Satış tahmini yazmadım.
+5. **Türkiye'deki vergi ve stopaj kuralları** bu planda okunmadı (UNVERIFIED). Bir muhasebeciye sor.
+
+## Steamworks'te kontrol edilecekler
+- Lansman indiriminin azami süresi ve 14,99 dolarlık kademe için azami yüzde. %40, tablodaki en düşük sınırın (%50) altında. Kademe sınırını yine de doğrula.
+- Zam başvurusu önceden zamanlanabiliyor mu, yoksa o gün mü gönderilir?
+- 30 günlük bekleme, banka ve vergi kontrolüyle aynı anda mı işliyor?
+
+Hiçbir ödeme, fiyat veya mesaj göndermedim.

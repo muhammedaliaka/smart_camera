@@ -1,0 +1,53 @@
+[probe p1]
+Plan dosyasını yazamadım, çünkü bu oturumda `Write` kapalı. Planı aşağıya koydum. Kaynak: `sales.md` paketi. Steam sayfaları 2026-10-25'te okunmuş. Bu oturumda internet yok, canlı doğrulama yapmadım.
+
+## Önemli sonuç
+Sıran doğru: önce lansman indirimi, sonra fiyat artışı. Fiyat artışından sonra 30 gün indirim yapamazsın. Çıkıştan sonra 30 gün fiyat da değiştiremezsin.
+
+## Varsayımlar
+- A1: Ücret ($100) henüz ödenmedi, evrak başlamadı. Başladıysa tüm tarihler öne çekilir.
+- A2: Çıkış hedefi Salı 2026-12-01. En erken yasal tarih Çarşamba 2026-11-25.
+- A3: Lansman indirimi 7 gün sürer. Azami süre doğrulanmadı.
+
+## Tarihli plan
+| Tarih | Adım | Kural |
+|---|---|---|
+| Paz 2026-10-25 | Planı onayla | - |
+| Pzt 10-26 | Evrakı imzala, $100 öde (sen yaparsın) | Çıkış, ödemeden en az 30 gün sonra. Ücret $1.000 brüt gelirden sonra geri döner. |
+| 10-26 → 11-09 | Banka, vergi, kimlik bilgilerini gönder | Kontrol 15-30 gün sürer. |
+| 10-26 → 11-06 | Mağaza sayfasını kur, fiyat tablosunu doldur | 37 para birimi. Boş hücre olmaz, yoksa oyun o bölgede satılmaz. |
+| Cum 11-06 | Mağaza sayfasını incelemeye gönder | İnceleme 1-5 gün. |
+| En geç Cum 11-13 | "Coming soon" sayfasını herkese aç | En az 2 hafta açık kalmalı. |
+| Sal 11-17 | Çıkış sayfasını ve build'i incelemeye gönder | İnceleme 3-5 iş günü. Çıkıştan en az 7 gün önce gönder. En geç Pzt 11-23. |
+| En geç Pzt 11-30 | %40 lansman indirimini kur | $14,99 × 0,6 = $8,99 |
+| Sal 12-01 | "Release App" düğmesine elle bas | Hiçbir şey kendiliğinden çıkmaz. |
+| Sal 12-08 | Lansman indirimi biter (A3) | - |
+| 12-01 → 12-31 | Fiyata dokunma | Çıkıştan sonra 30 gün fiyat değişmez. |
+| Pzt 2027-01-04 | Taban fiyatı $19,99 yap, tüm para birimlerini yeniden oku | İnceleme 1-2 iş günü. Yaklaşık 01-06'da yayında olur. |
+| 01-06 → 02-05 | İndirim yasağı | Fiyat artışından sonra 30 gün. Hiçbir indirime katılma. |
+| Cum 2027-02-05 | İndirim yeniden mümkün | - |
+
+Neden 12-31 değil de 01-04? Gün 30, 12-31'e denk gelir. Tatil ve inceleme süresi için pay bıraktım.
+
+## Fiyat adımları (USD)
+1. Çıkış: $14,99.
+2. Lansman indirimi %40: $8,99 (12-01 → 12-08).
+3. Artış: $14,99 → $19,99 (+%33), 2027-01-04'te gönder.
+4. Sonraki indirim: 2027-02-05'ten önce olmaz.
+
+Diğer 36 para birimini doldurmadım. Steam'in bölgesel fiyat yöntemini kullan ve her satırı elle kontrol et.
+
+## Riskler
+- Banka ve vergi kontrolü 30 günü bulursa çıkış kayar. 12-01 hedefinde pay var.
+- Tek para biriminde yazım hatası oyunu satışa kapatır ya da çok ucuz yapar. Kaydetmeden önce tabloyu baştan oku.
+- %33'lük artış, istek listendeki oyuncuları kızdırabilir. Etkisi ölçülmedi, varsayım.
+
+## Bilmediklerim (doğrulanmadı)
+- $14,99 kademesinde azami indirim yüzdesi. %40, en düşük kademenin tavanının (%50) altında. Üst kademeler daha fazlasına izin verir, ama sayfayı okumadım.
+- Lansman indiriminin azami süresi.
+- Steam'in güncel gelir payı. Pakette yok, güncel sözleşmeyi oku.
+- Türkiye için para birimi ve bölge grubu.
+- Steam mevsimlik indirim takvimi. 12-01 ve 02-05 tarihlerini ona göre kontrol et.
+- Evrakın gerçek durumu. Bu bir varsayım, soru sormadım.
+
+Hiçbir ödeme yapmadım, hiçbir fiyat değiştirmedim. İstersen `Write` açıldığında planı `.pusula/plans/steam-launch-pricing.md` dosyasına yazarım.

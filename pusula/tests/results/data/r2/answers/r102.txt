@@ -1,0 +1,50 @@
+[probe p4]
+**Kısa cevap:** Yükleme hatasının nedeni büyük ihtimalle eksik Draco kaydı. `swapModel` içinde de bellek sızıntısı var. Dosyayı Khronos doğrulayıcısıyla kontrol edebilirsin.
+
+## 1. GLB neden yüklenmiyor
+
+`src/main.js:10` satırında `new GLTFLoader()` var, ama Draco çözücüsü kayıtlı değil. Draco ile sıkıştırılmış dosya bu yüzden açılmaz. Three.js ve gltf-transform'un resmi bilgisi bu yönde. Hata mesajı büyük ihtimalle "setDRACOLoader must be called" gibi bir şey olur.
+
+Durum:
+- Ben bunu çalıştırıp görmedim. Bu bir çıkarım. Tarayıcı konsolundaki gerçek hata mesajını kontrol et.
+- Depoda `models/unit.glb` yok, bu yüzden dosyayı da inceleyemedim.
+- `node_modules` kurulu değil, yani Draco çözücü dosyalarını yerelde göremedim.
+
+Düzeltme şöyle olur (kodu ben değiştirmedim):
+
+```js
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
+const draco = new DRACOLoader();
+draco.setDecoderPath("/draco/"); // decoder dosyalarını kendi sunucundan ver
+loader.setDRACOLoader(draco);
+```
+
+- Çözücü dosyaları `three/examples/jsm/libs/draco/` altındadır. Bunları `public/draco/` altına kopyala.
+- Yol yanlışsa yine yüklenmez. Ağ sekmesinde `draco_decoder.wasm` isteğinin 200 döndüğünü gör.
+- Sayfayı `file://` ile açma. Tarayıcı bunu engeller. `npm run dev` kullan.
+- Textures için KTX2 veya meshopt kullandıysan, onların kaydı da gerekir.
+
+## 2. `swapModel` bellek sızıntısı
+
+Evet, sızıntı var (`src/main.js:15`). `scene.remove(current)` modeli sadece sahneden çıkarır. GPU belleğini boşaltmaz.
+
+- Geometri, materyal ve texture'lar GPU'da kalır.
+- Her model değişiminde bellek artar.
+- Eski model silinmeden yenisi yüklenir. Geçişte iki model aynı anda bellekte durur.
+
+Çözüm yönü: eski modeli çıkardıktan sonra `traverse` ile gez. Her mesh için `geometry.dispose()` çağır. Materyaldeki her texture için `dispose()` çağır. Sonra materyalin kendisini dispose et. Dikkat: iki mesh aynı materyali veya texture'ı paylaşıyorsa, erken dispose diğerini bozar.
+
+İkinci küçük sorun: `loadAsync` hata verirse `swapModel` reddedilir. `main.js:21` çağrısı bunu yakalamıyor. Hata sessiz kalır. Ekranda hata durumu da yok.
+
+Doğrulama: model değiştirdikten sonra `renderer.info.memory.geometries` ve `.textures` değerlerine bak. Sayılar her değişimde artmamalı.
+
+## 3. Dosyanın geçerli olduğunu doğrulama
+
+1. **Khronos doğrulayıcı.** `npm i -D gltf-validator` kur. Bu paket komut değil, kütüphanedir. `validateBytes(new Uint8Array(bytes))` ile kullanılır. Çıktıdaki `numErrors` sıfır olmalı. Bu bilgi projenin `threejs-glb.md` notundan geliyor.
+2. **gltf-transform ile bak.** `gltf-transform inspect unit.glb` boyutları ve uyarıları gösterir. Çıktıda `KHR_draco_mesh_compression` uzantısını gör.
+3. **Tarayıcıda dene.** Draco kaydından sonra sayfayı aç. Konsol boş olmalı ve model görünmeli.
+
+Not: Projede `.pusula/checks/validate_glb.mjs` adlı bir sarmalayıcı script'i varmış gibi anlatılıyor. Ama `.pusula/` klasörü yok. Yani bu script burada yok. Doğrulamayı kendin `validateBytes` ile yazman gerekir.
+
+Sıkıştırma komutu şuysa onu da kontrol et: `gltf-transform optimize in.glb out.glb --compress draco`. Çıktıyı yine doğrulayıcıdan geçir.

@@ -1,0 +1,100 @@
+[probe p7]
+Plan dosyasını yazamadım, çünkü bu oturumda `Write` aracı kapalı. Planı burada veriyorum. İstersen aracı açtıktan sonra `.pusula/rts-network-perf/plan.md` dosyasına kaydederim.
+
+Unity'yi bu makinede çalıştırmadım. Aşağıdakiler paket notlarına ve tasarım mantığına dayanıyor.
+
+## Varsayımlar (yanlışsa düzelt)
+- Unity 6 (6000.x). Sürümü `ProjectVersion.txt` dosyasından okuyacağım. Henüz görmedim.
+- Sadece PC. Orta boy harita, maç 20-40 dakika.
+- "200 birim" asker sayısıdır. Binalar ve mermiler bunun dışında.
+- Tekrar izleme (replay) isteniyor.
+
+## 1. Ağ modeli: deterministik lockstep
+- Sonuç: ağdan birim durumu değil, sadece komut gönderilir.
+- Neden: 8 × 200 = 1600 birimin durumu her tick'te gönderilemez. Komutlar çok küçüktür.
+- Kaynak: Age of Empires ekibinin makalesi (ekibin kendi anlatımı).
+
+**Nasıl çalışır:**
+- Her oyuncu simülasyonun tamamını kendi makinesinde çalıştırır.
+- Her tur (yaklaşık 200 ms) herkes bir komut paketi yollar. Komut 2 tur sonra çalışır. Bu iki değer config'de durur.
+- 8 paketin hepsi gelmeden simülasyon ilerlemez.
+- Yavaş oyuncu için zaman aşımı olur. Seçenekler: bekle, at, yapay zekâya devret.
+- Her N turda checksum karşılaştırılır. İlk farkta oyun durur ve log yazılır.
+- Her komut her makinede kurallara göre doğrulanır.
+
+**Taşıma katmanı:** Unity Transport ve bir relay servisi. Bunu henüz doğrulamadım (UNVERIFIED). Netcode for GameObjects birim durumu için kullanılmaz. Çünkü o, nesne durumu eşitler. Bu model lockstep'e uymaz.
+
+**Alternatif:** Sunucu yetkili durum eşitleme. Savaş sisi güvenli olur. Ama 1600 birim için ağır iş ve pahalı sunucu gerekir. Küçük ekip için lockstep daha uygun.
+
+**Bilinen zayıflık:** Lockstep'te harita hilesi (maphack) mümkündür. Bunu kabul edip etmediğini sorman gerek.
+
+## 2. Determinizm kuralları
+- Simülasyon saf C# olur, ayrı bir assembly'de. `MonoBehaviour`, `UnityEngine.Random`, `Time` kullanmaz.
+- `float` yok. Tam sayı veya sabit noktalı (fixed-point) sayı kullanılır. Float sonuçları CPU'ya ve derlemeye göre değişebilir.
+- Simülasyon için tek tohumlu (seeded) rastgele sayı üretici. Görsel efektler için ayrı bir tane.
+- Birimler id sırasıyla dolaşılır. `Dictionary` sırasına güvenilmez.
+- Görsel kod simülasyon durumuna yazamaz.
+- Yol bulma: tam sayı ızgara, grup için flow field. Bunlar yaygın pratik, Unity belgesi değil.
+
+## 3. Performans planı
+Önce ölç, sonra düzelt. Bütçe sayıları config'de durur.
+
+1. **Ölçek sahnesi:** 8 × 200 birim, hareket ve savaş, birkaç dakika. Derlenmiş oyunda, hedef donanımda. Editör profili yanıltır.
+2. **Simülasyon maliyeti:** tick süresine sığmalı. Yol bulma, hedefleme, ayrışma ayrı ölçülür.
+3. **Çizim:** URP kullan. SRP Batcher ve GPU Resident Drawer URP/HDRP içindir. Materyalleri paylaş. `MaterialPropertyBlock` yerine Material Variant kullan.
+4. **LOD:** mesafeye göre. En düşük seviye billboard olabilir.
+5. **Animasyon:** genelde en pahalı kalem. Uzaktaki birimde düşük hız veya vertex-animation texture (yaygın pratik).
+6. **Pooling:** mermi, efekt, can barı için `ObjectPool<T>`.
+7. **Ses:** gerçek ses sayısını sınırla. Grup başına tek ses ver. Mixer snapshot ve ducking kullan.
+8. **UI:** menü ve HUD için UI Toolkit. Can barı sadece görünen birimlerde. Mini harita düşük hızda güncellenir.
+9. **GC:** tick döngüsünde bellek ayırma yok.
+10. **Entities geçişi:** 2-9. adımlardan sonra maliyet hâlâ bütçeyi aşarsa Entities, Jobs ve Burst denenir. Unity bunun için birim sayısı vermiyor, karar kendi profilinden gelir.
+
+**Kapı:** Uzun koşuda kare süresi ve bellek sabit kalır. Havuzdaki nesneler geri döner. Replay checksum'ları tutar.
+
+## 4. Gereken asset sınıfları
+| Sınıf | İçerik |
+| --- | --- |
+| 3D | birimler, binalar (inşa aşamaları, yıkıntı), kaynak noktaları, props, silahlar, mermiler, arazi, su, gökyüzü |
+| Yüzey | albedo, normal, metallic-roughness, emission, **takım rengi maskesi**, döşenebilir zemin, splat map, decal, atlas |
+| Rig ve animasyon | iskelet, ağırlıklar, idle/yürü/saldır/öl/vurul, topla/inşa et/taşı/büyü, animator state machine, animation event, IK |
+| VFX | parçacık, iz, vuruş parlaması, seçim halkası, menzil işareti, yetenek efekti, hava, **savaş sisi**, post-process |
+| Ses | SFX, birim sesleri, anlatıcı, müzik durumları, ortam sesi, mixer kuralları |
+| UI | HUD, mini harita, komut paneli, ikonlar, portreler, imleçler, can barı, seçim kutusu, menüler, ipuçları, fontlar |
+| Harita verisi | boyut, 8 başlangıç noktası, kaynak yerleri, navigasyon verisi, sis verisi, küçük resimler, ışık |
+| Oyun verisi | birim/bina değerleri, teknoloji ağacı, denge tabloları, yerelleştirme, bot profilleri, tuş atamaları, replay formatı |
+| Hikâye ve yayın | konsept çizim, lore, ara sahne, altyazı, logo, mağaza görselleri, fragman, EULA, gizlilik metni |
+
+**Bu tasarıma özel ekler:** komut/replay dosya formatı, deterministik matematik kütüphanesi, harita checksum'ı, test haritaları, renk körlüğüne uygun 8 takım rengi.
+
+Her asset için bir ledger satırı gerekir. Üçgen, texture ve ses sayısı bütçeleri config'e gider.
+
+## 5. Adımlar ve kontroller
+1. Proje sürümü, render hattı, UI sistemini oku → kontrol: `findings.md`.
+2. `com.unity.transport`, Relay, Entities, Burst resmi belgelerini oku → kontrol: her bilgi URL ile.
+3. Ağsız deterministik çekirdek: sabit noktalı matematik, RNG, tick, komut kuyruğu → kontrol: EditMode testleri; aynı tohum ve komut, aynı checksum.
+4. Tek birim tipi, ızgara yol bulma, ayrışma → kontrol: iki derlemede replay testi.
+5. Sahte ağ (gecikme, kayıp) ve 8 sanal oyuncu → kontrol: 10 dakika checksum eşit.
+6. Gerçek taşıma ve relay → kontrol: 2, sonra 8 istemci; fişi çekilen istemcide bekleme ekranı.
+7. 1600 birimlik ölçek sahnesi → kontrol: hedef donanımda profil.
+8. Optimizasyon, yukarıdaki sırayla → kontrol: her iddia bir ölçüme dayanır.
+9. Dikey dilim (1 birim, 1 bina, 1 kaynak) ve ledger → kontrol: UI için ekran görüntüsü.
+10. Yayın sertleştirme → kontrol: `pusula_check.py --only shield` temiz.
+
+## 6. Ana riskler
+- Gizli bir `float` desync yapar. Önlem: yasak liste ve her tur checksum.
+- `Dictionary` sırası desync yapar. Önlem: sıralı dolaşma.
+- Intel ve AMD farkı. Önlem: tam sayı simülasyon, iki CPU'da test.
+- Bir yavaş oyuncu herkesi bekletir. Önlem: zaman aşımı ve kimin yavaş olduğunu göster.
+- 1600 birimin animasyonu bütçeyi aşar. Önlem: 7. adımda erken profil.
+- Kural değişince eski replay bozulur. Önlem: replay başlığında sürüm numarası.
+- Kapsam büyük. Önlem: kesme listesi (yeniden bağlanma yok, az birim tipi, küçük harita).
+
+## Sorularım (cevaplamak zorunda değilsin)
+1. 200 birim sınırı işçileri de kapsıyor mu?
+2. Harita hilesi (maphack) riskini kabul ediyor musun?
+3. Relay/sunucu için aylık bütçe var mı?
+4. İlk sürümde yeniden bağlanma ve replay şart mı?
+5. Sanat elle mi, satın alınarak mı, yapay zekâyla mı yapılacak? Bu, lisans ve Steam bildirimini etkiler.
+
+Cevap vermezsen yukarıdaki varsayımlarla devam ederim. Sonraki adım: sen planı onaylarsan 1. adım.

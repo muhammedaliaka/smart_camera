@@ -1,0 +1,63 @@
+[probe p3]
+**Hayır, güvenli değil.** Silme butonu, giriş yapmamış biri de dahil herkesin başkasının faturasını silmesine izin veriyor.
+
+## Sorunlar
+
+1. **`app/dashboard/actions.ts:6`: `deleteInvoice` yetki kontrolü yapmıyor.**
+   - `"use server"` fonksiyonları herkese açık bir POST endpoint'i olarak çalışır. `page.tsx` içindeki `redirect("/login")` yalnızca sayfa render'ını korur, action'ı korumaz.
+   - Action ID'sini bilen biri, oturum açmadan `deleteInvoice("herhangi-bir-id")` çağırabilir.
+   - SQL `where id = $1` ile siliyor, `owner_id` kontrolü yok. Giriş yapmış bir kullanıcı da başkasının faturasını silebilir (IDOR).
+   - `invoice-list.tsx` bir client component. Butonu gizlemek veya sayfayı korumak bu açığı kapatmaz.
+
+2. **`lib/auth.ts:13`: `verifyToken` bir taslak ve oturumu doğrulamıyor.**
+   - İmza kontrolü yok, yorum satırı olarak bırakılmış.
+   - `session=<kurbanId>.x` cookie'si gönderen herkes o kullanıcı olarak kabul edilir.
+   - Bunu düzeltmeden 1. maddeyi düzeltmek yarım kalır.
+
+3. **Dönüş değeri:** `return result.rows[0]` silinen satırın tamamını client'a gönderiyor. Gerek yoksa `{ ok: true }` döndürün.
+
+## Ne değiştirmelisiniz
+
+**`app/dashboard/actions.ts`:**
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { query } from "@/lib/db";
+import { getSessionUser } from "@/lib/auth";
+
+export async function deleteInvoice(id: string) {
+  if (typeof id !== "string") throw new Error("Invalid id");
+  const user = await getSessionUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const result = await query(
+    "delete from invoices where id = $1 and (owner_id = $2 or $3 = 'admin')",
+    [id, user.id, user.role],
+  );
+  if (result.rowCount === 0) throw new Error("Not found");
+
+  revalidatePath("/dashboard");
+  return { ok: true };
+}
+```
+Yetki kontrolü, sahiplik koşulu olarak SQL'in içinde. Böylece kontrol ile silme arasında yarış durumu olmaz. Bulunamayan ve sahibi olmayan durumlar aynı hatayı verir, bu yüzden başka kullanıcıların fatura ID'leri sızmaz.
+
+**`lib/auth.ts`:** `verifyToken` içinde gerçek bir imza doğrulaması yapın. HMAC için `crypto.timingSafeEqual` veya `jose` ile JWT doğrulaması kullanabilirsiniz. Daha sağlam bir yol, rastgele bir session ID'yi veritabanındaki bir session tablosuyla eşleştirmektir. Cookie'yi `httpOnly`, `secure` ve `sameSite=lax` olarak ayarlayın.
+
+**İsteğe bağlı:** Ek bir katman olarak `proxy.ts` (Next 16'da middleware'in adı) ile `/dashboard` için oturum kontrolü ekleyebilirsiniz. Projede şu an böyle bir dosya yok. Bu yalnızca ek bir katmandır, action içindeki kontrolün yerini tutmaz.
+
+## CI ve lint
+
+**Lint, `next build` kapsamında değil.**
+- Next.js 15'te `next build` lint'i çalıştırıyordu. Next 16'da bu kaldırıldı ve projeniz `next 16.4.3` kullanıyor. Build artık yalnızca derleme ve TypeScript tip kontrolü yapıyor.
+- `ci.yml` yalnızca `npm ci` ve `npm run build` çalıştırıyor. `lint` script'i `package.json` içinde tanımlı ama CI onu hiç çağırmıyor.
+- Projede `eslint.config.*` dosyası da görünmüyor. Aradığım uzantılar `.js`, `.mjs`, `.ts` ve `.json` idi. `.cjs` dosyalarına bakmadım. ESLint 9 bu dosya olmadan çalışmaz, yani `npm run lint` bugün büyük olasılıkla hata verir.
+
+Yapılacaklar:
+1. Kök dizine `eslint.config.mjs` ekleyin. Next 16 için `eslint-config-next`'in flat config'ini kullanın.
+2. `ci.yml` içine `- run: npm run lint` adımını `npm run build`'den önce ekleyin.
+
+Lint de bu açığı yakalamaz. Bu bir mantık hatası, kural ihlali değil. Yetki kontrolünü zorunlu kılmak için `deleteInvoice` gibi action'lara karşı bir entegrasyon testi yazıp CI'a eklemenizi öneririm. Test, oturumsuz çağrının ve başka kullanıcının ID'siyle yapılan çağrının reddedildiğini doğrulamalı.
+
+Hiçbir dosyayı değiştirmedim.

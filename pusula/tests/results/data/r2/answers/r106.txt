@@ -1,0 +1,69 @@
+[probe p1]
+Plan dosyasını kaydedemedim, çünkü bu oturumda `Write` kapalı. Planı aşağıya yazdım.
+
+Steam bilgileri `recipes/packs/sales.md` dosyasından geliyor. O dosya resmî Steamworks sayfalarından bugün okunmuş. İnternet yok, bu yüzden pakette olmayan her şeye UNVERIFIED yazdım.
+
+## Varsayımlar
+- **A1:** Bireysel geliştiricisin ve Steam'de henüz hiçbir şey başlatmadın.
+- **A2:** 100 dolarlık ücreti 26 Ekim Pazartesi günü ödüyorsun.
+- **A3:** Çıkış günü R = **12 Ocak 2027 Salı**. Bunu ben seçtim. Sebep tatil dönemindeki inceleme gecikmelerine pay bırakmak. Bu sebep UNVERIFIED.
+- **A4:** Çıkış indirimi 7 gün sürüyor. Azami süre ve yüzde UNVERIFIED.
+- **Çıkış tarihi sınırları:**
+  - En erken güvenli tarih 14 Aralık. Bu, en kötü senaryodur.
+  - En iyi ihtimalle 25 Kasım. Bunun için sayfanın 11 Kasım'a kadar yayında olması gerekir.
+- **Tarih kayarsa:** Tüm satırları aynı gün sayısı kadar kaydır.
+
+## Steam kuralları (resmî)
+- Ücretten sonra ilk çıkışa en az **30 gün** olmalı.
+- Banka, vergi ve kimlik kontrolü **15–30 gün** sürüyor.
+- Sayfa incelemesi 1–5 gün sürüyor.
+- "Coming soon" sayfası çıkıştan en az **2 hafta** önce herkese açık olmalı.
+- Çıkış sayfası incelemesi 3–5 iş günü sürüyor. En az 7 gün önce gönder.
+- Çıkış elle yapılır. "Release App" tuşu çıkış saatini o an olarak damgalar.
+- Fiyat incelemesi genelde 1–2 iş günü sürüyor.
+- **Çıkıştan ssonra 30 gün fiyat değişmez.**
+- **Fiyat artışı** herhangi bir para biriminde olsa bile 30 günlük indirim bekleme süresi başlatır.
+- Çıkış indirimine izin var. Sonraki indirimler çıkıştan veya çıkış indiriminin bitişinden sonra 30 gün beklemeli.
+
+## Tarihli adımlar
+| Tarih | Adım | Kontrol |
+|---|---|---|
+| 25 Eki Paz | Kimlik, kendi adına banka hesabı ve vergi bilgisini topla | Hesap adı kimlikle aynı |
+| 26 Eki Pzt | Steamworks sözleşmesini imzala, 100 doları **kendin** öde | Makbuz var, P tarihi yazılı |
+| 26 Eki – 25 Kas | Banka, vergi ve kimlik kontrolleri sürer | Steamworks "doğrulandı" diyor |
+| 27 Eki – 27 Kas | Mağaza sayfasını yap. Dış link ve Steam arayüzü taklidi olmasın. Gerekirse AI beyanını doldur | Store Beta Mode önizlemesi |
+| 30 Kas Pzt | Sayfayı incelemeye gönder | 5 Aralık'a kadar onay |
+| 8 Ara Sal | "Coming soon" sayfasını yayınla (en geç 29 Ara) | Sayfa herkese açık |
+| 15 Ara Sal (R−28) | 14,99 doları ve 37 para birimini gir | Boş hücre yok, tablo baştan okundu, 17 Ara'ya kadar onay |
+| 22 Ara Sal (R−21) | Son build'i incelemeye gönder | 30 Ara'ya kadar onay |
+| 29 Ara Sal (R−14) | Çıkış sayfasını incelemeye gönder | 5 Oca'ya kadar onay |
+| 5 Oca Sal (R−7) | %40 çıkış indirimini kur, 7 gün | Önizleme yaklaşık 8,99 dolar |
+| **12 Oca Sal (R)** | "Release App" tuşuna elle bas | Sayfa ve indirim canlı |
+| 19 Oca Sal (R+7) | İndirim biter | Fiyat 14,99 dolara döner |
+| 11 Şub Per (R+30) | Fiyat penceresi açılır. Dokunma | – |
+| **12 Şub Cum (R+31)** | 37 para biriminde fiyatı **19,99** yap | Hücrelerin hepsi dolu, 16–17 Şub civarı canlı |
+| 16–17 Şub | Yeni fiyat canlı. 30 günlük indirim beklemesi başlar | Fiyat 19,99 |
+| ~19 Mar Cum | En erken sonraki indirim | Tarihi Steamworks'ten doğrula |
+
+## Fiyat tablosu
+- **USD:** 14,99 → çıkış indirimi ≈8,99 (14,99 × 0,60 = 8,994) → 19,99.
+- **Diğer 36 para birimi:** Değerleri uydurmadım. Steam'in önerdiği değerleri girişte al ve tek tek kontrol et.
+- **Eksik para birimi:** Oyun o bölgede satılamaz.
+- **Raise tarihi:** Artışı R+30 yerine R+31'e koydum. Katı kuralda bir günlük pay bıraktım.
+
+## Riskler ve bilinmeyenler
+1. Tek bir para biriminde yazım hatası oyunu satışa kapatabilir veya çok ucuz yapabilir.
+2. Bir ay sonra %33 zam, istek listesindeki alıcıları kızdırabilir. Bu bir tahmin. Alternatif: 19,99 dolarla çık ve %25 çıkış indirimi yap. Bu yaklaşık 14,99 eder. Zam gerekmez, bekleme süresi de başlamaz. Karar senin.
+3. **%40 sınırı:** 14,99 dolarlık kademe için azami indirim yüzdesini okumadım. Pakette sadece düşük kademeler var. Girmeden önce Steamworks'te kontrol et.
+4. Tatil dönemi incelemeleri yavaşlayabilir.
+5. **Türkiye vergisi:** Vergi formu ve yerel vergi yükümlülüğü okunmadı. Bir mali müşavire danış. Bu resmî bilgi değil.
+6. **Gelir payı:** Steam'in yüzdesi pakette yok. Anlaşmayı okumadan rakam verme.
+7. **Diğer UNVERIFIED konular:**
+   - İndirimin kaç gün önceden kurulacağı.
+   - Winter Sale tarihleri.
+   - Banka kontrolü bitmeden sayfa açılıp açılamayacağı.
+   - 30 günün ödemeden mi onaydan mı başladığı.
+
+Hiçbir ödeme, yayın veya fiyat değişikliği yapmadım. Bunları sen elle yapacaksın.
+
+Dosya olarak istersen `Write` iznini açınca `.pusula/plans/steam-launch-pricing.md` olarak kaydederim.

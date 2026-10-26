@@ -1,0 +1,56 @@
+[probe p1]
+Dosya yazamadım, çünkü `Write` aracı bu oturumda kapalı. Planı burada veriyorum.
+
+**Uyarı:** İnternet yok. Aşağıdaki Steam kuralları hafızamdan geliyor. Bunlar resmi doğrulanmış bilgi değil (UNVERIFIED). Uygulamadan önce Steamworks dokümanından kontrol et: `partner.steamgames.com/doc/store/release` ve `.../store/pricing`.
+
+## Varsayımlar
+- Çıkış tarihi vermedin. Ben **Salı, 17 Kasım 2026** seçtim. Saat 10:00 PT, yani İstanbul'da 21:00.
+- Mağaza sayfası ve vergi/banka bilgileri bu hafta bitebilir.
+- İndirim 7 gün sürer.
+- Tarihi değiştirirsen aşağıdaki kuralları yeniden say.
+
+## Steam kuralları (hepsi UNVERIFIED)
+- "Coming soon" sayfası çıkıştan **en az 14 gün** önce herkese açık olmalı.
+- Mağaza sayfası incelemesi yaklaşık 1–5 iş günü sürer.
+- Build incelemesi yaklaşık 1–5 iş günü sürer. En az 7 gün önce gönder.
+- Çıkış için "Release" düğmesine sen basarsın.
+- Çıkış indirimi en çok %40 olur. Süresi en çok yaklaşık 14 gündür.
+- İndirim bitince bir sonraki indirim için **30 gün** beklersin.
+- İndirim sürerken taban fiyatı değiştiremezsin.
+- İndirimler 10:00 PT'de başlar ve biter.
+
+## Tarihli plan
+| Tarih | Adım | Kontrol |
+|---|---|---|
+| 25 Eki (Paz) | Steamworks'te ücret, vergi, banka. Fiyat 14,99 USD | Pricing ekranında 14,99 yazıyor |
+| 26–27 Eki | Mağaza görsel ve metinleri | Checklist yeşil |
+| 28 Eki (Çar) | Mağaza sayfasını incelemeye gönder | Durum "In review" |
+| 30 Eki (Cum) | "Coming soon" yayında (hedef) | Sayfa gizli pencerede açılıyor |
+| 2–5 Kas | Build'i incelemeye gönder (hedef 5 Kas) | Durum "In review" |
+| 3 Kas (Sal) | "Coming soon" için son gün | Çıkışa 14+ gün var |
+| 10 Kas (Sal) | Build onayı için kesin son gün | Build "approved" |
+| 10 Kas | Çıkış tarihi 17 Kas. %40 indirim 17–24 Kas | Önizleme 8,99 USD |
+| 12 Kas (Per) | Yedek gün (ret gelirse) | Açık ret yok |
+| 17 Kas (Sal) 21:00 | Release'e bas | Sayfada satın al düğmesi, 8,99 USD |
+| 24 Kas (Sal) 21:00 | İndirim biter | Fiyat 14,99 USD |
+| 24–25 Kas | Taban fiyatı 19,99 USD yap ve yayınla | Sayfada 19,99 USD |
+| 24 Ara | Bir sonraki indirim için en erken gün | Steamworks izin veriyor |
+
+## Fiyat adımları
+1. Çıkış günü: taban 14,99 USD, indirimli 8,99 USD (14,99 × 0,60).
+2. 24 Kasım: indirim biter, fiyat 14,99 USD olur.
+3. 24–25 Kasım: taban 19,99 USD olur.
+
+## Riskler
+- Ret gelirse tampon erir. Bu yüzden build'i erken gönder.
+- 30 günlük bekleme sonbahar indirimini (Kasım sonu) engeller. Kış indirimini de engelleyebilir.
+- Hemen fiyat artırmak istek listesindekileri kızdırabilir. Güncelleme yazısında açıkla.
+
+## Bilinmeyenler
+- Bugünkü gerçek inceleme süreleri.
+- Fiyat değişikliğinin hemen mi, gecikmeyle mi yürürlüğe girdiği.
+- Türkiye için bölgesel fiyat (USD mi, TRY mi).
+- 2026 Steam indirim dönemlerinin tarihleri.
+- Build 5 Kasım'da hazır mı.
+
+İstersen dosya iznini açarsan planı `.pusula/plans/` altına yazarım.

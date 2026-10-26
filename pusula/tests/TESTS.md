@@ -1,4 +1,4 @@
-# Pusula testleri (T1–T24)
+# Pusula testleri (T1–T28)
 
 Kabul kararını yıldız sayısı değil bu testler verir. Bir parça (skill, MCP, araç) testte fark yaratmıyorsa çıkarılır.
 
@@ -46,11 +46,13 @@ Kabul kararını yıldız sayısı değil bu testler verir. Bir parça (skill, M
 | **T25 Sızıntı kontrolü** | Yayın klasörüne `.map` (içinde `sourcesContent`), sonunda `sourceMappingURL` olan `.js`, `.pdb`, `.env` ve çıplak `global-metadata.dat` konur. Ayrıca: şifreli (başlığı farklı) metadata, kaynaksız harita, eksik ya da boş klasör, ayarsız proje, boş sınıf, bozuk ayar şeması. | Sızıntılar adıyla bulunur, çıkış 1. Şifreli metadata ve kaynaksız harita "gömülü kaynak" sayılmaz. Eksik klasör, ayarsız proje ve boş sınıf çıkış 2 ("kontrol edilmedi"), asla temiz değil. Sızıntı varsa boş sınıf onu gizlemez. Sadece dosyanın sonu aranır. | `python -m unittest tests.test_checks.ShieldCheck`; üç bozuk sürümle (mutasyon) testlerin yakaladığı elle denendi. |
 | **T26 Rapor** | Küçük uydurma REA çıktıları (düz ve korumalı): sınıflar, `exclude`, kısa değerler, sayı ve kelime eşleşmesi, bütçeler. Gerçek REA çıktılarıyla da koşuldu (`findings.md`). | Sınıf başına geri bulma doğru. Sayı metin içinden değil değerden eşleşir; kelime tek başına durmalı. Bütçe aşılırsa 1; ölçülmediyse ya da sınıf boşsa 2; farklı işlem türleri karşılaştırılmaz. | `python -m unittest tests.test_shield_report`; on kasıtlı bozma denendi, ikisi ilk denemede kaçtı, iki test eklendi, sonra hepsi yakalandı. |
 | **T27 Alan paketleri A/B** | 5 soru (Steam fiyat planı, AI lisansları, Next.js inceleme, three.js GLB, git rebase kontrolü), 2 hazır proje (p3, p4). A: yalnız dosya. B: dosya + Pusula. 3 tekrar, `claude -p`, web yok. Ön kayıt: `tests/ab/PREREG.md`. | R1–R4 (PREREG). Kontrol sorusunda paket açılmaz. | `tests/ab/run_ab.py`, `grade_ab.py`; cevaplar arm bilgisiz puanlandı. **Sonuç: kurallar tutmadı**; tur 2'de yönlendirme düzeldi (R3 11/12) ama kazanç sadece p1'de. `results/2026-10-25b.md`. |
+| **T28 Alan paketleri A/B, tur 3** | 3 soru: Electron→Tauri planı (p6, küçük Electron projesi), RTS ağ ve performans planı (p7), Unity ana menü (p8, uGUI iskeleti). A yalnız dosya, B dosya + Pusula (işaretçili). 3 tekrar, `claude -p`, web yok. Ön kayıt: `tests/ab/PREREG.md` Tur 3. | R5 B ≥ A her soruda; R6 en az 2 soruda B ≥ A+1; R7 beklenen paket 6/9 koşuda açılır; maliyet oranı bildirilir. | `run_ab.py`, `grade_ab.py`; elle puan. **Sonuç: R5–R7 geçti** (6,0→8,3; 4,0→8,7; 3,0→6,0), maliyet 2,4 kat (işaretli). Arm pratikte kör değildi; maddeler paketten türetildi. `results/2026-10-25c.md`. |
 
 ## Durum
 - T1–T21 başsız A/B koşuldu (T15–T18 NEXUS v5, T19–T20 find-skills ve hard-problems sonrası, T21 Next.js). Sonuçlar `results/2026-10-22.md` içinde. 21 satırdan 12'sinde A kaldı, B geçti; 8'inde ikisi de geçti (T21'de B daha sağlam); T7 sadece ölçüm.
 - Gerçek jeton farkı +2.521 (hedef +2.600), 18 skill dahil (`measure.py real`). Ayar şablonu da kuruluysa +385: şablon, yerleşik skill listesini kısaltarak yaklaşık 2.100 jeton geri veriyor (`measure.py real --with-settings`). Tahmin (`measure.py load`) 1.778, hedef 1.800.
 - T27 paket A/B: iki tur, ön kayıtlı kurallar iki turda da tutmadı (sebep ve düzeltme `results/2026-10-25b.md` içinde). Paketler ve `AGENTS.md` işaretçisi kaldı.
+- T28 paket A/B tur 3: ön kayıtlı kurallar (R5–R7) tuttu; maliyet 2,4 kat. Kanıt zayıf (maddeler paket metninden; arm kör değil). `results/2026-10-25c.md`.
 - T22 ve T23 mekanik testler (A/B değil); sonuçlar `results/2026-10-25.md` içinde. T24 henüz kanıtlanmadı.
 
 ## Hâlâ senin yapacakların

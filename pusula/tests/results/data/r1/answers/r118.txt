@@ -1,0 +1,29 @@
+[probe p2]
+**Kısa cevap: Hayır, ikisi de bu haliyle serbest değil.** Aşağıdakiler hafızamdan, internetsiz yazıldı. Lisans metinlerini kendiniz teyit edin; bunlar hukuki danışmanlık da değil.
+
+## 1. MusicGen: ticari kullanım yasak
+- Kod (audiocraft) MIT lisanslı, ama **model ağırlıkları CC-BY-NC 4.0** ile yayımlanmış. "NC" ticari olmayan kullanım demek.
+- Ağırlıkları ticari bir ürün için çalıştırıp çıktıyı Steam'de satmak, NC şartının ihlali sayılabilir. Çıktıların lisansa dahil olup olmadığı tartışmalı, ama bunu kanıtlamak sizin üzerinize kalır. Bu risk bir Steam oyunu için fazla büyük.
+- **Ne yapmalı:**
+  - Meta'dan yazılı ticari lisans isteyin. Pratikte alması zor.
+  - Ticari kullanıma izin veren bir modele geçin. Örnekler: ACE-Step ve YuE (Apache 2.0 olduklarını hatırlıyorum), Stable Audio Open (Stability Community Lisansı, belli bir gelir eşiğinin altında ücretsiz, ama kısa ses ve efekte daha uygun). Bunların güncel lisansını indirmeden önce kontrol edin.
+  - Telif hakkı temizlenmiş bir müzik kütüphanesi kullanın ya da bir besteciyle çalışın.
+
+## 2. Hunyuan3D 2.0: Almanya'dan kullanamazsınız
+- Tencent Hunyuan 3D 2.0 Community License'ın coğrafi kapsamı **Avrupa Birliği, Birleşik Krallık ve Güney Kore'yi dışarıda bırakıyor**. Lisans bu bölgelerde geçerli değil.
+- Almanya'daki bilgisayarınızda çalıştırmak lisans kapsamında olmaz. Oyunu dünya genelinde satmanız bunu düzeltmez, çünkü sorun kullanım yeriniz.
+- Lisansta başka kısıtlar da var: aylık 1 milyon kullanıcıyı aşarsanız ayrı lisans gerekir, çıktıları başka bir yapay zekâ modelini eğitmek veya iyileştirmek için kullanamazsınız, atıf ve bildirim şartları var.
+- **Ne yapmalı:**
+  - Tencent'ten AB için özel yazılı izin isteyin.
+  - Ya da lisansı uygun bir alternatife geçin. TRELLIS (Microsoft, MIT olarak hatırlıyorum) ve TripoSR (MIT) ticari kullanıma açık görünüyor. Stable Fast 3D de Stability Community Lisansı altında. Hunyuan3D'nin sonraki sürümlerinde de aynı bölge kısıtı olabilir, bunu da kontrol edin.
+
+## 3. Her iki durumda geçerli noktalar
+- **Telif hakkı:** Almanya'da (UrhG §2/2) telif hakkı, insanın kişisel yaratıcı katkısını gerektirir. Saf yapay zekâ çıktısı büyük olasılıkla korunmaz. Başkaları müziğinizi veya modellerinizi kopyalayabilir. Üzerinde ciddi elle çalışma (düzenleme, yeniden modelleme, bestelenmiş parçalar) yaparsanız korunan kısım artar.
+- **Steam:** Valve, yapay zekâ ile üretilmiş içeriği mağaza sayfası formunda beyan etmenizi istiyor. Bunu doğru doldurun.
+- **Kayıt tutun:** Kullandığınız her model için sürüm, lisans metni ve indirme tarihini arşivleyin. Yayıncı ya da platform sorarsa kanıtınız olur.
+- **AB Yapay Zekâ Yasası:** Bir oyun için ana yükümlülükler hafif, ama şeffaflık kuralları (Madde 50) gerçek kişileri taklit eden içerik gibi durumlarda devreye girer.
+
+## Öneri
+1. Hunyuan3D 2.0 ve MusicGen ağırlıklarını projeden çıkarın.
+2. Müzik ve 3D için lisansı ticarete açık alternatifleri seçin, lisans metinlerini okuyup saklayın.
+3. Bütçeniz varsa, yayından önce oyun hukuku bilen bir avukata kısa bir lisans kontrolü yaptırın.

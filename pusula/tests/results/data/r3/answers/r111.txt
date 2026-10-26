@@ -1,0 +1,112 @@
+[probe p6]
+Planı dosyaya yazamadım. `Write` aracı bu oturumda kapalı. Bu yüzden planı aşağıya koydum. Araç açılınca `.pusula/electron-to-tauri/plan.md` ve `findings.md` olarak kaydederim.
+
+Hiçbir dosyayı değiştirmedim. Web sayfası da açmadım. "Official" satırlar `tauri-rust.md` paketine dayanıyor (bugün okundu). Diğer satırlar UNVERIFIED.
+
+# Plan: Electron to Tauri (notes-desk 1.4.0)
+
+Status: draft
+
+## Goal
+The app runs on Tauri v2 with the same behavior. That means auto-saving notes, markdown preview, an "Open file" picker for txt and md, and signed auto-update. Electron code and dependencies are gone.
+
+## Out of scope
+- New features or a UI redesign.
+- A frontend bundler.
+- The Tauri 3 alpha.
+- Signing certificates and store publishing.
+
+## What I found in the code
+- `main.js` has 3 IPC handlers: `notes:read`, `notes:save`, `file:pick`. It also has a 900x600 window, `autoUpdater` and a quit rule.
+- `preload.js` exposes these as `window.api`.
+- `index.html` loads `marked@12.0.2` from a CDN. `renderer.js` puts the output into `innerHTML` without cleaning it.
+- `package.json` has no `build` key. So there is no appId, no update feed, no targets and no icons.
+- There are no tests and no lockfile.
+
+## File map
+| Old | New | Job |
+|---|---|---|
+| `main.js` | `src-tauri/src/lib.rs` | 3 commands, plugin setup, `invoke_handler` |
+| (new) | `src-tauri/src/notes.rs` | read/save/path logic and unit tests |
+| (new) | `src-tauri/src/main.rs` | entry point |
+| `preload.js` | `src-tauri/capabilities/default.json` and `src/api.js` | permission list; thin `window.api` shim |
+| `index.html` | `src/index.html` | local `marked`, error line |
+| `renderer.js` | `src/renderer.js` | unchanged, except error display |
+| CDN `marked` | `src/vendor/marked.min.js` | pinned 12.0.2 |
+| `package.json` | `package.json` | drop the electron deps, add `@tauri-apps/cli` |
+| electron-builder (no config) | `src-tauri/tauri.conf.json` | identifier, window, CSP, updater, bundle |
+| (new) | `src-tauri/Cargo.toml`, `build.rs`, `icons/` | Rust crate and icons |
+
+## Mapping table
+| Old | New | Source |
+|---|---|---|
+| `ipcMain.handle` | `#[tauri::command]` and `invoke_handler` | https://v2.tauri.app/develop/calling-rust/ [official] |
+| `ipcRenderer` and `contextBridge` | `invoke` plus a capability file | https://v2.tauri.app/security/capabilities/ [official] |
+| `contextIsolation` | trusted core, untrusted webview, CSP | https://v2.tauri.app/concept/inter-process-communication/ and /security/csp/ [official] |
+| `electron-updater` | `tauri-plugin-updater` | https://v2.tauri.app/plugin/updater/ [official] |
+| CDN script | local file, because of CSP | https://v2.tauri.app/security/csp/ [official] |
+| `dialog.showOpenDialog` | dialog plugin, called from Rust | UNVERIFIED |
+| `userData` and `fs` | Rust `std::fs` and app data dir | UNVERIFIED |
+| `BrowserWindow` | window in `tauri.conf.json` | UNVERIFIED |
+| electron-builder | `tauri build` | UNVERIFIED |
+| `window-all-closed` | default exit on last window | UNVERIFIED |
+
+## Decisions
+| Decision | Reason |
+|---|---|
+| Tauri v2 stable (core 2.12.x) | The alpha is not used unless you ask. |
+| Keep the old API names and a `window.api` shim | `renderer.js` stays unchanged. |
+| File picker runs in Rust | The webview gets no file-system permission. |
+| One capability for window `main`, strict CSP | The window label is the security boundary. |
+| Errors return `Result<_, String>` and are shown in the UI | No silent errors (AGENTS.md). |
+| Window size, file filter and file name go to config | No hardcoded values (AGENTS.md). |
+
+## Steps
+1. Read the official pages for every UNVERIFIED row. Check: none left, or each is reported.
+2. Read `architecture-standard`. This change touches more than 5 files. Check: `.pusula/architecture.md` exists.
+3. Install Rust and webkit2gtk-4.1. Check: `cargo --version` and a hello-world build.
+4. Scaffold `src-tauri/`. `git mv` html and js into `src/`. Check: `cargo check` passes.
+5. Write failing tests in `notes.rs`. They cover a missing file returning "", a save-then-read round trip, and the old-folder copy (if Q1 = A). Check: they fail for the right reason.
+6. Implement `notes.rs` and the 3 commands. Check: `cargo test` and `cargo clippy` with warnings denied are clean.
+7. Add the capability and CSP, and vendor `marked`. Check: no CSP errors and no network request for `marked`.
+8. Write `api.js` and the error line. Add a `mockIPC` test and call `clearMocks` after each test. Check: the test passes.
+9. Set up the updater with a new key pair. Keep the private key outside the repo and outside `.env`. Check: a signed test update is found. This needs Q2.
+10. Run the app and check the table below. Check: every row passes or is reported "not seen".
+11. Ask you for fresh approval naming the exact files. Then delete `main.js`, `preload.js` and the Electron dependencies. Check: `git status` shows only those deletions.
+12. Run `cargo audit` and `npm audit`, and read both outputs. Run `pusula_check.py` if it exists. It does not exist now.
+13. Write `handoff.md`.
+
+## Done evidence (UI criteria)
+| # | Criterion | Proof |
+|---|---|---|
+| A1 | Window opens at 900x600 with editor, button and preview | screenshot |
+| A2 | Typing renders markdown in the preview | screenshot |
+| A3 | Text is still there after a restart | 2 screenshots |
+| A4 | The picker shows only txt and md; picked text lands in the editor | screenshot |
+| A5 | Cancelling the picker changes nothing | screenshot |
+| A6 | An empty notes file gives an empty editor and preview | screenshot |
+| A7 | A forced save error shows a visible message | screenshot |
+| A8 | Closing the window ends the process | `pgrep` output |
+| A9 | A signed test update is found at start | log line |
+
+The Tauri pack also needs these to hold. Clippy and tests pass. The audits are read. Every window label has a capability file. A command call is seen working. Unverified rows are listed.
+
+## Risks
+1. Old notes are lost, because the data folder name changes. Prevention: Q1 and a migration test.
+2. Losing the updater private key ends all updates. Prevention: back it up before the first release.
+3. Installed Electron apps cannot update themselves into Tauri. Prevention: users reinstall once, and the last Electron release stays online.
+4. Capability mistakes show only at run time. Prevention: step 10 calls every command.
+5. CSP may block the app. Prevention: check the console in step 7.
+6. Unsanitized markdown can run page script that calls commands. Prevention: strict CSP, minimal capability, Q3.
+7. OS webviews differ. Prevention: test each shipped OS. This machine is Linux only.
+8. There is no packaging config today. Prevention: Q2, and I won't claim packaging is done for untested targets.
+9. Linux libraries may be missing. Prevention: step 3 comes first.
+10. The dialog plugin docs may differ from this plan. Prevention: step 1, and stop and report on conflict.
+
+## Questions for you
+- **Q1.** Should I copy old notes to the new folder on first start (A, recommended), or start fresh (B)?
+- **Q2.** Which operating systems will you ship? What is the app identifier? Where will the update feed be hosted?
+- **Q3.** Should I clean the markdown output? That adds a library (DOMPurify would be "not official"). Or should I leave it as it is?
+- **Open item.** The repo has no icons. I will generate them with the CLI in step 4 unless you have your own.
+
+Does this plan match what you want? I will start step 1 after your yes and your answers to Q1–Q3.

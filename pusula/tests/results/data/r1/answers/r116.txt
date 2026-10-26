@@ -1,0 +1,41 @@
+[probe p4]
+**Kısa sonuç:** Draco dosyanız büyük olasılıkla yüklenmiyor çünkü `src/main.js` içinde Draco çözücüsü (decoder) yok. `swapModel` içinde de bellek sızıntısı var. Bu cevap yalnızca kodu okumaya dayanıyor. Hiçbir şey çalıştırmadım ve dosyanız repoda yok.
+
+## 1. Neden yüklenmiyor
+
+- `src/main.js:10` satırında `new GLTFLoader()` var. Üzerinde `setDRACOLoader` çağrısı yok.
+- Draco ile sıkıştırılmış GLB, çözücü olmadan yüklenemez. `loadAsync` hata ile reddedilir.
+- `swapModel("models/unit.glb")` çağrısında (`src/main.js:21`) `.catch` yok. Hata sadece konsolda "unhandled rejection" olarak görünür. Ekranda boş sahne kalır.
+- Çözüm yönü (kodu ben değiştirmedim):
+  - `DRACOLoader` import edin.
+  - `setDecoderPath` ile çözücü dosyalarının yolunu verin.
+  - `loader.setDRACOLoader(...)` çağırın.
+  - Çözücü dosyaları `three/examples/jsm/libs/draco/gltf/` altında olmalı. Bunları Vite'ın `public/` klasörüne kopyalayın. Bu yol [unverified]: three kurulu değil, doğrulayamadım.
+- Başka nedenler de olabilir:
+  - `models/unit.glb` yolu yanlış olabilir. Repoda `public/` ve `models/` yok.
+  - `gltf-transform` ile `--texture-compress ktx2` kullandıysanız `setKTX2Loader` de gerekir.
+  - Sayfayı `file://` ile açmayın. HTTP ile açın (`npm run dev`).
+- Kesin nedeni görmek için tarayıcı konsolundaki hata metnine bakın. Onu görmeden tek neden demem.
+
+## 2. `swapModel` bellek sızıntısı
+
+Evet, var.
+
+- `scene.remove(current)` (`src/main.js:15`) nesneyi sadece sahneden çıkarır.
+- Geometri, materyal ve doku GPU belleğinde kalır. Çöp toplayıcı GPU belleğini boşaltmaz. Her model değişiminde bellek artar. [official]
+- Düzeltme: eski modelde `traverse` yapın. Her mesh için `geometry.dispose()` çağırın. Materyali ve içindeki dokuları (`map`, `normalMap` vb.) `dispose()` edin.
+- Dikkat: iki mesh aynı materyali paylaşıyorsa, bir kez dispose edin. Hâlâ kullanılan kaynağı dispose etmeyin.
+- İkinci sorun, yarış durumu: iki `swapModel` çağrısı üst üste gelirse, geç biten eskisi yenisinin üstüne yazar.
+- Üçüncü sorun: hata yakalama yok (yukarıda).
+- Sızıntıyı ölçmek için model değiştirdikten sonra `renderer.info.memory.geometries` ve `.textures` değerlerine bakın. Yüklemeden sonra bu sayılar sabit kalmalı.
+
+## 3. Dosyanın geçerli olduğunu doğrulama
+
+1. **Khronos doğrulayıcı:** `npm install --save-dev gltf-validator`. Bu paket kütüphanedir, komut satırı aracı değildir. `validateBytes(new Uint8Array(bytes))` ile çağrılır. [official]
+2. **Repo'daki sarmalayıcı yok:** Proje notları `.pusula/checks/validate_glb.mjs` dosyasından söz ediyor. O dosya bu repoda yok. Kendiniz küçük bir Node betiği yazabilirsiniz. Hata varsa çıkış kodu 1 versin.
+3. **gltf-transform ile inceleme:** `gltf-transform inspect unit.glb` boyutları ve sorunları gösterir. Çıktı dosyasında doğrulayıcıyı tekrar çalıştırın. [official]
+4. **Gerçek testi tarayıcıda yapın:** Sayfayı HTTP ile açın. Konsolun boş olduğunu kontrol edin. Modelin ekranda göründüğünü görün.
+
+Not: Doğrulayıcı dosyanın şemaya uygunluğunu söyler. Uygulamanızda Draco çözücüsünün kurulu olduğunu söylemez. Bu yüzden 1. ve 4. adımın ikisi de gerekli.
+
+İsterseniz bu düzeltmeleri sizin onayınızla uygulayabilirim.

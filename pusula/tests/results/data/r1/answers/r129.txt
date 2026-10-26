@@ -1,0 +1,28 @@
+[probe p2]
+**Kısa cevap: Hayır, bu haliyle serbest değil.** İkisi de sorunlu. İnternet yok, bu yüzden aşağıdakiler hafızamdan geliyor. Bunlar resmi kaynakta doğrulanmadı.
+
+## 1. MusicGen (Meta)
+- Kod MIT lisanslı. Model ağırlıkları CC-BY-NC 4.0 lisanslı. (Kesinliğe yakın, ama bu oturumda doğrulanmadı.)
+- NC "ticari olmayan" demek. Ağırlıkları ticari oyun için kullanamazsın.
+- Üretilen müziğin durumu tartışmalı. Güvenli yol, onu da yasak saymak.
+
+## 2. Hunyuan3D 2.0 (Tencent)
+- Lisansın bölge sınırı var. AB, Birleşik Krallık ve Güney Kore lisans kapsamı dışında. (Yüksek olasılık, doğrulanmadı.)
+- Sen Almanya'dasın, yani AB'desin. Oyunu dünyada satman bunu değiştirmez. Önemli olan senin bulunduğun yer.
+- Ayrıca aylık 1 milyondan fazla kullanıcıda ayrı lisans gerekir. Çıktıyla başka bir yapay zekâ modeli eğitmek de yasak.
+
+## 3. Ne yapmalısın?
+1. **Bu iki modeli ticari projede kullanma.** Riskli olan sensin: Steam hesabın ve gelirin.
+2. **Müzik için alternatif seç:**
+   - Ticari izni açık bir model. Örnek: Stable Audio Open. (Not official, lisansı kendin oku.)
+   - Lisanslı müzik kütüphanesi veya bir besteci.
+   - Meta'dan yazılı ticari lisans istemek.
+3. **3D için alternatif seç:**
+   - MIT veya Apache lisanslı bir model. Örnek: TRELLIS, TripoSR. (Not official, sürümü ve lisansı kontrol et.)
+   - Tencent'ten AB için yazılı izin istemek. Olası değil.
+4. **Her modelin lisansını resmi repoda oku.** Kullandığın sürümün `LICENSE` dosyasına bak. Tarih ve sürümü kaydet.
+5. **Telif riskini bil.** AB'de tamamen yapay zekâ çıktısı genelde telif korumasına girmeyebilir. Başkaları kopyalayabilir. İnsan katkısı (düzenleme, elle işleme) korumayı güçlendirir.
+6. **Steam'e yapay zekâ kullanımını bildir.** Steam bunu mağaza formunda soruyor. (Doğrulanmadı, güncel kuralı kontrol et.)
+7. **Yayından önce bir IT hukuku avukatına danış.** Özellikle gelir büyürse bu şart.
+
+İstersen alternatif modellerin lisans karşılaştırma tablosunu dosya olarak hazırlarım. Ama lisansları internetle doğrulamak sana kalır.

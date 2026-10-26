@@ -1,0 +1,74 @@
+[probe p3]
+**Kısa cevap: Güvenli değil.** Kodu değiştirmedim. Aşağıda önce sorunlar, sonra tam düzeltme var.
+
+## 1. Silme güvenli değil
+
+**Sorun:** `deleteInvoice` herkese açık bir POST uç noktasıdır (Server Action). Sayfadaki `redirect` onu korumaz. Next.js'in resmi veri güvenliği rehberi de bunu söyler (pack: `nextjs.md`, tuzak 1).
+
+`app/dashboard/actions.ts:6-10` iki kontrolü de yapmıyor:
+- **Giriş kontrolü yok.** Girişsiz biri action'ı çağırabilir.
+- **Sahiplik kontrolü yok.** SQL sadece `where id = $1`. Giriş yapan herkes, başkasının faturasını id ile silebilir.
+
+Ayrıca `returning *` ham veritabanı satırını istemciye döner. Bu gereksiz veri sızdırır.
+
+**Ek risk:** `lib/auth.ts:13` imza kontrolü yapmıyor. `verifyToken` çerezin ilk parçasını kullanıcı id'si sayar. `session=<herhangi-id>.x` çerezi ile herkes o kullanıcı gibi girer. Bu düzelmezse aşağıdaki sahiplik kontrolü de boşa gider. Önce bunu düzeltin: imzalı token (JWT/HMAC) doğrulayın. Bunu yapan kütüphaneyi seçmeniz gerekir. Şu an sahte token kabul ediliyor.
+
+## 2. Tam olarak ne değişmeli
+
+**`app/dashboard/actions.ts`** dosyasının tamamı şöyle olmalı:
+
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { getSessionUser } from "@/lib/auth";
+import { query } from "@/lib/db";
+
+export async function deleteInvoice(id: string) {
+  const user = await getSessionUser();
+  if (!user) throw new Error("Unauthorized");
+  if (typeof id !== "string" || id.length === 0) throw new Error("Invalid id");
+
+  const result = await query(
+    "delete from invoices where id = $1 and owner_id = $2",
+    [id, user.id],
+  );
+  if (result.rowCount === 0) throw new Error("Not found");
+
+  revalidatePath("/dashboard");
+}
+```
+
+Değişenler:
+- `getSessionUser()` ile giriş kontrolü eklendi.
+- SQL'e `and owner_id = $2` eklendi. `page.tsx:9` zaten aynı kolonu kullanıyor.
+- `returning *` kaldırıldı. Action artık veri dönmüyor.
+- Başkasının faturası için `rowCount === 0` olur ve "Not found" döner. Fatura var mı yok mu, bilgi sızmaz.
+
+Not: `Error` mesajlarını sabit metin yerine config/key'e almak proje kuralıdır. Şu an dosyada başka metin yok, stile siz karar verin.
+
+**İstemci tarafı (`invoice-list.tsx`):** Hata fırlayınca butonda geri bildirim yok. İsterseniz `useTransition` ile bekleme ve hata durumu ekleyin. Güvenlik için şart değil, ama kullanıcı deneyimi için gerekli. Boş liste durumu da yok. Proje kuralı bunu ister.
+
+**Admin rolü:** `role: "admin"` tipi var, ama hiçbir yerde kullanılmıyor. Admin başkasının faturasını silsin istiyorsanız bu bir iş kararıdır. Ben varsaymadım. Şimdilik sadece sahip siler.
+
+## 3. CI lint'i kapsıyor mu?
+
+**Hayır.** İki neden var:
+- `.github/workflows/ci.yml:11` sadece `npm run build` çalıştırıyor.
+- Next.js 16'dan beri `next build` linter'ı çalıştırmaz (pack tuzak 8). Pack'te bu "official" etiketli. İnternet yok, bu yüzden resmi sayfayı bu oturumda ben doğrulayamadım.
+
+Dahası, projede ESLint config dosyası da yok (`eslint.config.*` bulunamadı). `npm run lint` bugün çalışsa bile kural yüklemez. Eklemeniz gereken:
+
+1. `eslint.config.mjs` oluşturun. `eslint-config-next` paketi zaten kurulu. Biçimi sürümünüzün dokümanından kontrol edin: `node_modules/next/dist/docs/` (burada `node_modules` yok, bakamadım).
+2. `ci.yml`'a `npm run build` öncesine şu adımları ekleyin:
+   ```yaml
+   - run: npm run lint
+   - run: npx tsc --noEmit
+   ```
+   `tsc` de gerekli, çünkü build'e güvenmek yetmez.
+
+## 4. Kontrol edemediklerim
+- Hiçbir şeyi çalıştırmadım. Build, lint ve test çıktısı yok. Bu yüzden "çalışıyor" demiyorum.
+- `/login` sayfası ve çerezi yazan kod bu repoda yok. Token'ın nasıl üretildiğini göremedim.
+- `proxy.ts` ve `middleware` yok. `/dashboard`'u koruyan tek şey sayfadaki `redirect`. Action'lar için bu yetmez, düzeltme yukarıda.
+- `eslint@9.0.0` ve `eslint-config-next@16.4.3` birlikte uyumlu mu, doğrulamadım.

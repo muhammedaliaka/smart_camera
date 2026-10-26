@@ -1,0 +1,51 @@
+[probe p1]
+# Steam çıkış planı: 25 Ekim 2026 → 18 Mart 2027
+
+**Varsayımlar:**
+- Çıkış tarihini söylemediğin için **Perşembe, 4 Mart 2027** aldım. Steam Next Fest'in (Şubat 2027, tahminen 22 Şubat–1 Mart) hemen ardından geliyor ve Kasım–Aralık sezon indirimlerinin kalabalığını atlıyor.
+- Steamworks hesabının ve ödemenin henüz yapılmadığını varsaydım.
+- İnternetim yok. Aşağıdaki kurallar hafızamdan geliyor, tarih ve süreleri Steamworks dokümanından teyit et. Emin olmadığım yerleri "teyit et" diye işaretledim.
+
+## Sabit Steam kuralları
+| Kural | Değer |
+|---|---|
+| App ücreti | 100 $. Oyun 1.000 $ net gelire ulaşınca iade edilir. |
+| Bekleme süresi | Ödeme, vergi (W-8BEN) ve banka/kimlik belgeleri tamamlandıktan **30 gün sonra** yayın yapabilirsin. |
+| "Coming Soon" sayfası | Çıkıştan **en az 2 hafta önce** herkese açık olmalı. |
+| Mağaza sayfası incelemesi | Yaklaşık 3–5 iş günü. Yeniden gönderince tekrar bekletir. |
+| Build incelemesi | Yaklaşık 3–5 iş günü. Fiyatı ve çıkış tarihini bu aşamadan önce gir. |
+| Lansman indirimi | En fazla **%40**, en fazla **2 hafta**. |
+| İndirimler arası bekleme | Bir indirim bittikten sonra yeni indirim için yaklaşık **30 gün** gerekir (teyit et). Sezon indirimleri için ayrı kural var. |
+| Türkiye fiyatı | Türkiye'ye 2023'ten beri USD bazlı fiyat veriliyor (teyit et). Bölgesel fiyatlara Steam'in önerisini gözden geçir. |
+| Ödeme | Ay sonundan yaklaşık 30 gün sonra, banka havalesiyle. Vergi anketi ve W-8BEN için bir mali müşavire danış. |
+
+## Takvim
+| Tarih | Adım |
+|---|---|
+| **25–30 Eki** | Steamworks hesabını aç, 100 $ ödemeyi yap, vergi/banka/kimlik belgelerini tamamla. **30 günlük sayaç belgelerin onaylandığı gün başlar**, o yüzden bunu bu hafta bitir. |
+| **26 Eki–6 Kas** | Mağaza sayfasını hazırla: kapsül görselleri, 5+ ekran görüntüsü, fragman, açıklama, yaş/içerik anketi. **6 Kasım Cuma** günü incelemeye gönder. |
+| **~13 Kas** | "Coming Soon" sayfası yayında. Wishlist toplama burada başlıyor. Çıkış için **2 haftalık şart** çok önceden karşılanmış olur. |
+| **Kas–Ara** | Wishlist odaklı pazarlama. Steam Playtest ile kapalı test. Ara ayda Kış İndirimi'ne (tahminen ~17 Ara–4 Oca) çıkmıyoruz. |
+| **15 Oca 2027** | Demo build'ini gönder. Demo ayrı bir app olduğu için kendi mağaza sayfası incelemesi gerekir. |
+| **22 Şub–1 Mar** | Next Fest (tahmini, kayıt son tarihini Steamworks'ten teyit et). Demoyu burada göster. |
+| **12 Şub Cuma** | Final build'i incelemeye gönder. |
+| **15 Şub** | Fiyatı **14,99 $** olarak gir, çıkış tarihini **4 Mart** olarak ayarla. |
+| **~25 Şub** | Lansman indirimini planla: **%40 → 8,99 $**, 7 gün. 14 güne kadar uzatabilirsin. |
+| **4 Mar Perşembe, 10:00 PT (21:00 TSİ)** | **Çıkış.** Wishlist sahipleri bildirim alır. İlk gün ve ilk hafta yorum toplamak için kritik. |
+| **11 Mar Per, 10:00 PT (20:00 TSİ)** | İndirim biter. Fiyat 14,99 $'a döner. |
+| **11–12 Mar** | Taban fiyat değişikliğini **19,99 $** olarak gönder. Fiyat değişikliğini indirim bittikten sonra gönder, indirim sürerken kilitli olabilir (teyit et). |
+| **~18 Mar** | Yeni fiyatın yansıdığını mağaza sayfasında ve bölgesel fiyatlarda kontrol et. |
+| **10 Nis sonrası** | Lansman indiriminden sonra yeni bir indirim ancak bu tarihten sonra mümkün (30 gün kuralı, teyit et). |
+
+## Fiyat basamakları
+1. **4–11 Mar:** 14,99 $ taban fiyat, %40 indirimle **8,99 $**.
+2. **11 Mar–:** 14,99 $'a dönüş.
+3. **~12 Mar–:** taban fiyat **19,99 $**.
+
+## Riskler
+- **Fiyat artışı:** İlk haftada 14,99 $'ı gören wishlist sahipleri, bir hafta sonra 19,99 $'ı görünce satın almayabilir. İlk satışlar da düşebilir.
+- **Alternatif:** Doğrudan **19,99 $ ile çıkıp %40 indirimle 11,99 $** yapmak, fiyat artışı adımını ortadan kaldırır ve indirim sonrası sayfa fiyatı zaten hedefinde olur. Kararın sende, ama bu seçenek daha az riskli.
+- **Takvim kayması:** Mağaza veya build incelemesi reddedilirse 3–5 iş günü kaybedersin. 12 Şubat ile 4 Mart arasındaki ~3 haftalık tampon bunu karşılar.
+- **Daha erken çıkış:** En erken, belgelerin onayından 30 gün sonra, yani **Aralık 2026 başı** mümkün. Ama Sonbahar/Kış indirimlerinin ortasına denk gelir ve wishlist birikimin az olur.
+
+Gerçek çıkış tarihini söylersen tüm adımları ona göre kaydırırım.

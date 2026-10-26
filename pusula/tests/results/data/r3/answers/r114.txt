@@ -1,0 +1,42 @@
+[probe p8]
+Projeye baktım. Kod değiştirmedim. Plan dosyasını kaydedemedim, çünkü Write aracı bu oturumda kapalı. Plan aşağıda.
+
+## Gördüklerim
+- **Sürüm:** Unity 6000.0.23f1. Menü uGUI 2.0.0 ile yapılmış.
+- **Repoda yalnızca bir dosya var:** `Assets/Scripts/UI/MainMenu.cs`. Sahne, prefab ve tema dosyası yok. Menünün görünüşü git'te değil.
+- **`Start()` her açılışta görünüşü ezer.** Başlık metnini, rengini ve boyutunu (48) koddan yazar. Üç buton etiketini de koddan yazar. Editörde yaptığın düzeltme bu yüzden geri bozulabilir.
+- **Başka sorunlar:**
+  - AYARLAR butonuna bağlı bir işlem yok.
+  - Sahne adı "Game" koda gömülü.
+  - "CIKIS" yazısında "Ç" eksik.
+  - Metin, renk ve boyut koda gömülü. Bu, proje kurallarına aykırı.
+
+## Olası kök neden
+Bu bir **varsayım**, henüz kanıtlanmadı. Görünüş iki yerde tanımlı: sahne ve kod. Biri diğerini eziyor. Sahne de repoda yok. Kanıt için sahne dosyası ve ekran görüntüsü lazım.
+
+## Nasıl ilerleyeceğim
+1. **Referans iste.** Beğendiğin bir menünün görüntüsü ya da tarifi. Hedef çözünürlük listesi de lazım. Bunlar gelmeden hiçbir şey yapmam.
+2. **Kabul ölçütlerini yaz.** Yerleşim, durumlar, metin, renk ve boşluk, giriş. Her satır ekran görüntüsünden yargılanabilir olacak. Ölçütler koddan önce yazılır.
+3. **Sahneyi gör.** Canvas Scaler modunu, anchor'ları ve EventSystem'i okurum. Sahne repoda değilse senden isterim.
+4. **"Önce" görüntülerini al.** Her boyut için bir tane.
+5. **Tek kaynak kur.**
+   - Renk ve boyut bir tema dosyasına gider (ScriptableObject).
+   - Metinler anahtara gider.
+   - `MainMenu.cs` yalnızca butonları bağlar.
+   - Koddaki ezmeler kalkar.
+   - AYARLAR bağlanır.
+6. **Test ve kontrol.** Mantık varsa EditMode testi çalıştırırım. `pusula_check.py` varsa onu da çalıştırırım.
+7. **"Sonra" görüntülerini al.** Her boyut ve her durum için.
+
+uGUI'yi koruyorum. Unity belgeleri ekran menüleri için UI Toolkit'i öneriyor. Ama geçiş baştan yazmak demek, sen istemedin. İstersen ayrıca konuşuruz.
+
+## "Bitti" demek için göstereceklerim
+- **Ölçüt tablosu:** her satır "geçti" ya da "görülmedi" (nedeniyle).
+- **Ekran görüntüleri:** her boyut ve her durum için bir tane. Durumlar: normal, odak/üzerine gelme, basılı, devre dışı, çok uzun metin.
+- **Önce/sonra karşılaştırması.**
+- **Grep çıktısı:** `MainMenu.cs` içinde gömülü metin, renk ve boyut kalmadığını gösterir.
+- **Test sonuç XML'i** ve konsol/build günlüğü.
+- **Unity olmazsa:** evidence tablosuna "Unity'de çalıştırılmadı" yazarım. Çalışıyor demem. Ekran görüntülerini senin bilgisayarından istemem gerekir.
+
+## Sana tek soru
+Beğendiğin bir ana menünün ekran görüntüsü ya da oyun adı var mı? Yoksa iki seçenek önereyim: "koyu, sade, ortalanmış butonlar" veya "sol hizalı, büyük başlıklı".

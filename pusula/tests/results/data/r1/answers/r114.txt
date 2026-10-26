@@ -1,0 +1,35 @@
+[probe p2]
+**Kısa cevap:** Mevcut planın olduğu gibi serbest değil. İkisinde de lisans engeli var. Aşağıdakiler hafızamdan, internet olmadan yazıldı. Kullanmadan önce lisans metinlerini kendin doğrula. Hukuki tavsiye de değildir.
+
+## 1. MusicGen: ağırlıklar ticari kullanıma kapalı
+- Meta'nın Audiocraft **kodu** MIT lisanslı. **Model ağırlıkları** ise **CC-BY-NC 4.0**, yani ticari olmayan kullanım içindir.
+- Ağırlıkların ürettiği çıktıyı ticari bir üründe kullanmanın tam sınırı tartışmalı. Ama Steam'de satılan bir oyun ticari kullanımdır. Bu yüzden **riskli, güvenmemelisin.** Meta çıktı için bir izin ya da tazminat da vermiyor.
+- **Ne yapmalısın:**
+  - Ticari kullanıma açık bir model ya da servis kullan. Lisans şartlarını ve gelir sınırlarını kontrol et. Örnekler: Stable Audio Open (Stability Community License, belirli gelir eşiğinin altında ticari kullanıma izin veriyor ve eğitim verisi CC lisanslı) veya çıktı haklarını açıkça veren ücretli servisler.
+  - Bir bestecinin eseri ya da lisanslı royalty-free kütüphane de seçenek.
+  - Audiocraft kodunu kendi lisanslı verinle eğitmek de mümkün, ama pahalı.
+  - Hangisini seçersen seç, lisans ve fatura kayıtlarını sakla.
+
+## 2. Hunyuan3D 2.0: Almanya'dan kullanamazsın
+- Tencent Hunyuan 3D 2.0 Community License'ın coğrafi kapsamı **AB, Birleşik Krallık ve Güney Kore'yi hariç tutuyor.** Almanya'da yaşadığın için lisans sana **hiç verilmemiş** sayılır. Bunu kendi bilgisayarında çalıştırman ya da oyunun dünya genelinde satılması durumu değiştirmez.
+- Lisansta başka şartlar da var: 1 milyon aylık aktif kullanıcıyı geçersen Tencent'ten ayrı lisans gerekir. Çıktıları başka bir yapay zekâ modelini iyileştirmek için kullanamazsın. Ayrıca atıf bildirimi gerekir.
+- **Ne yapmalısın:**
+  - AB'de kullanımı açıkça izin veren bir lisansla yayımlanmış modellere bak. Örnekler: TRELLIS (MIT, ama sürümün ve bağımlılıklarının lisansını kontrol et) veya ticari kullanım hakkı veren 3D üretim servisleri.
+  - Alternatif olarak Tencent'e yazılı izin için başvurabilirsin.
+  - Asset'leri Blender'da elle modellemek ya da lisanslı asset paketleri kullanmak da güvenli yol.
+
+## 3. Telif hakkı: üretilen içeriği korumak zor
+- Alman telif hukuku (UrhG §2/2) "insanın kişisel zihinsel yaratımını" arar. Tamamen yapay zekâ ürünü müzik ve modeller büyük olasılıkla **telif koruması almaz.** Başkaları bunları kopyalarsa elinde dayanak az olur. Üzerine kendi insan emeğini (düzenleme, elle modelleme, miks) ne kadar katarsan koruma ihtimali o kadar artar.
+- Model, eğitim verisine benzeyen çıktı verirse üçüncü kişi hakları çıkabilir. Bunun sorumluluğu sende olur.
+- Müzikte GEMA ve benzeri kuruluşlar tamamen yapay zekâ ürünü eserleri kabul etmeyebilir. YouTube ya da Twitch'te yanlış Content ID eşleşmeleri de çıkabilir.
+
+## 4. Platform ve AB yükümlülükleri
+- **Steam:** Yayın sürecinde yapay zekâ ile üretilmiş içeriği Steamworks'teki AI disclosure formunda beyan etmelisin. Valve'in kuralları değişebiliyor, güncel halini oku.
+- **AB Yapay Zekâ Yasası:** Madde 50'deki şeffaflık yükümlülükleri (sentetik içeriği etiketleme) Ağustos 2026'dan beri uygulanıyor. Oyun için kapsamı muhtemelen sınırlı, ama gerçekçi insan sesi ya da yüz üretiyorsan kontrol et.
+
+## Önerilen adımlar
+1. Kullandığın her modelin LICENSE dosyasını ve model kartını kaydet (tarihli ekran görüntüsü ya da PDF).
+2. Yukarıdaki iki modeli ticari akıştan çıkar ve lisans açısından temiz alternatiflere geç.
+3. Üretilen içeriğe insan emeği kat ve süreci belgele.
+4. Steam'de yapay zekâ kullanımını beyan et.
+5. Yayından önce bilişim hukuku (IT-Recht) alanında bir avukata kısa bir danışma yap. Hem lisans metinlerinin güncel halini hem de sana özel durumu o netleştirir.

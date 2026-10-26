@@ -1,6 +1,6 @@
 # Pack: AI asset production (3D, image, music, SFX, voice, rig, texture, video)
 
-Read when the task makes game or media assets with AI tools, or picks a tool for them. Terms change often. Facts read 2026-10-25 on the pages named; re-read the tool's terms on the day you use it. Labels: [official] page text, [secondary], [reasoning], [unverified].
+Read when a task makes game or media assets with AI tools or picks one. Terms change often. Facts read 2026-10-25 on the pages named; re-read the tool's terms on the day you use it. Labels: [official] page text, [secondary], [reasoning], [unverified].
 
 ## Sources first
 - Steam AI disclosure: https://partner.steamgames.com/doc/gettingstarted/contentsurvey. US copyright: https://www.copyright.gov/ai/ (Part 2 report, January 2025).
@@ -9,12 +9,12 @@ Read when the task makes game or media assets with AI tools, or picks a tool for
 ## Traps (rules that never change)
 1. Every asset gets a ledger row in `assets/LEDGER.md`: file, tool and version, plan or model license, date, source URL of the terms, prompt, credit text, who reviewed it. No row, no ship. [reasoning]
 2. Pick the license before the tool. Free plan, paid plan and open weights usually differ. [official, below]
-3. Check what the license says about the **model** and about the **outputs** separately (FLUX.1 dev: model non-commercial, outputs described as usable commercially under its LICENSE.md). [official]
+3. Check what the license says about the **model** and about the **outputs** separately (FLUX.1 dev below). [official]
 4. Do not run unknown model code or checkpoints from random repos: scan first (`security-and-hardening`), prefer `safetensors`. [reasoning]
 
 ## Ownership and disclosure
 - US Copyright Office, Part 2 (Jan 2025): no copyright for purely AI-generated material; prompts alone do not give enough control; human selection, arrangement and creative edits can be protected. So your own edits and arrangement matter, and AI-only art may be copyable by anyone. Not legal advice. [official; I read the executive summary]
-- Steam Content Survey: disclose AI content that ships with the game (pre-generated) or is made while it runs (live-generated, which also needs a statement of guardrails). Tools used only to work faster are not the focus. Where credit lines go is not stated there: put them in the in-game credits and the store text. [official: partner.steamgames.com/doc/gettingstarted/contentsurvey; the credit placement is reasoning]
+- Steam Content Survey: disclose AI content that ships with the game (pre-generated) or is made while it runs (live-generated, which also needs a statement of guardrails). Tools used only to work faster are not the focus. Where credit lines go is not stated there: put them in the in-game credits and the store text. [official; the credit placement is reasoning]
 
 ## Lanes (license as read)
 **3D**
@@ -28,22 +28,24 @@ Read when the task makes game or media assets with AI tools, or picks a tool for
 - Stability AI Community License: free under $1M yearly revenue; above it, an enterprise license. [official]
 
 **Music**
-- ACE-Step: Apache-2.0; v1.5 released 2026-01-28; the README names no training data and asks you to disclose AI use. Its 8 GB VRAM note is for v1; v1.5 needs are [unverified]. [official]
-- Stable Audio Open 1.0: Stability Community License; up to 47 s clips; trained on 486,492 CC0, CC BY or CC Sampling+ recordings (Freesound, FMA). [official]
+- ACE-Step: Apache-2.0; v1.5 released 2026-01-28; the README names no training data and asks you to disclose AI use; its 8 GB VRAM note is for v1, v1.5 [unverified]. [official]
+- Stable Audio Open 1.0: Stability Community License; up to 47 s clips; trained on CC0, CC BY and CC Sampling+ recordings. [official]
 - MusicGen weights (AudioCraft): CC-BY-NC 4.0, so not for a sold game. Code is MIT. [official]
 - Suno: free plan, Suno owns the songs, non-commercial only; Pro or Premier, you own them. [official]
+- Google Flow Music / Lyria 3: Google's terms not found; reseller pages conflict; tracks carry a SynthID watermark. [unverified]
 
 **SFX** (AI SFX is weak; real libraries first)
+- ElevenLabs SFX: free plan needs credit to elevenlabs.io for commercial use; paid plans none; no use to build competing products. [official]
 - Kenney: CC0, credit optional. [official]
 - Freesound: each file is CC0, CC-BY (credit) or CC-BY-NC (no commercial use). Check every file. [official]
 - Sonniss GameAudioGDC: royalty-free, no credit, games allowed; no AI training; no resale as sound effects. [official]
 
 **Voice**
-- Kokoro TTS: Apache-2.0 code and weights, 82M parameters. [official]
+- Kokoro TTS: Apache-2.0 code and weights. [official]
 - ElevenLabs: a commercial license is listed from the Starter plan up, none on Free. Credit rules [unverified]. [official]
 
 **Rig, animation, texture, VFX**
-- Mixamo (Adobe): characters and animations royalty-free for commercial projects, games included; no credit; do not redistribute the raw files or train ML models on them; auto-rigger: bipedal humanoids only. [secondary: search summary of Adobe's FAQ and a 2022 community post; the FAQ page returned 403]
+- Mixamo (Adobe): characters and animations royalty-free for commercial projects, games included; no credit; do not redistribute the raw files or train ML models on them; auto-rigger: bipedal humanoids only. [secondary: search summary; Adobe's FAQ page returned 403]
 - Poly Haven: CC0, commercial use, no credit. ambientCG: CC0 1.0, no credit, suggests a credit line. [official]
 - AI rig, animation and texture tools, and particle assets: terms [unverified]; build VFX in the engine from CC0 textures. [reasoning]
 

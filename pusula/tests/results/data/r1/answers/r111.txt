@@ -1,0 +1,38 @@
+[probe p2]
+**Kısa cevap: Hayır, ikisi de bu haliyle serbest değil.** İnternetim yok. Aşağıdakiler hafızamdan geliyor ve doğrulanmadı (UNVERIFIED). Lisans metinlerini kendin aç ve oku.
+
+## 1. MusicGen (Meta)
+
+- Kod MIT lisanslı. Ağırlıklar (weights) ise CC-BY-NC 4.0 lisanslı. "NC" ticari kullanım yok demek.
+- Ticari Steam oyunu ticari kullanımdır. Bu yüzden ağırlıkları kullanamazsın.
+- Üretilen müziğin lisansı belirsiz. Riskli kabul et.
+- Kaynak: audiocraft deposundaki README ve model kartı. Bunu en güvenilir bilgi olarak görüyorum (yüksek güven).
+
+**Ne yapmalısın:**
+- Meta'ya yazıp ticari lisans sor. Cevap vermeyebilirler.
+- Ticari kullanıma izin veren başka bir model seç. Örneğin Stable Audio Open. Onun lisansında da gelir sınırı ve kurallar var, oku.
+- Ya da lisanslı hazır müzik kullan, ya da bir besteci tut.
+
+## 2. Hunyuan3D 2.0 (Tencent)
+
+- Lisansın adı "Tencent Hunyuan 3D 2.0 Community License". Bölge (territory) dünya geneli, ama AB, Birleşik Krallık ve Güney Kore hariç.
+- Almanya AB içinde. Bu yüzden bu lisans sana kullanım hakkı vermiyor. Kendi bilgisayarında çalıştırman da buna girer.
+- Oyunu AB'de satmak da sorun olur.
+- Başka şartlar da var: aylık 1 milyon kullanıcıdan sonra ayrı lisans gerekir. Çıktıyı başka bir yapay zekâ modelini eğitmek için kullanamazsın. Bu iki şart orta güvenle aklımda (UNVERIFIED).
+- Kaynak: Hugging Face ve GitHub'daki `LICENSE` dosyası. Sürüm 2.1 için de aynı dosyayı kontrol et.
+
+**Ne yapmalısın:**
+- Kullanma. Tencent'ten Almanya için yazılı izin iste, ya da lisansı AB'yi kapsayan bir model seç.
+- Seçeceğin modelin lisansını önce oku.
+- Ya da 3D modelleri elle yap veya lisanslı varlık (asset) paketi al.
+
+## 3. Genel konular
+
+- **Telif:** Almanya'da yalnızca insan emeği telif korumasına girer. Tamamen yapay zekâ üretimi içerik büyük ihtimalle korunmaz. Başkaları onu kopyalayabilir (orta güven).
+- **Steam:** Valve, yapay zekâ ile üretilmiş içeriği mağaza formunda bildirmeni ister. Ayrıca çıktıyı ticari kullanma hakkın olduğunu beyan edersin. Lisansın yoksa bu beyan yanlış olur.
+- **Kayıt:** Kullandığın her modelin sürümünü, lisans metnini ve tarihini kaydet. Kanıt olarak lazım olur.
+- **Avukat:** Satıştan önce fikri mülkiyet avukatına göster. Bu hukuki tavsiye değil.
+
+## Sonraki adım
+
+İstersen `.pusula/` altına bir lisans kontrol listesi dosyası yazarım. İçinde model, lisans, ticari izin, Almanya durumu ve belge bağlantısı olur.

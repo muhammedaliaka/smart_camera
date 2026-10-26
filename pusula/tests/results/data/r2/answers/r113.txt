@@ -1,0 +1,64 @@
+[probe p3]
+**Kısa cevap: Güvenli değil.** Silme işlemi giriş kontrolü yapmıyor. Kodu değiştirmedim.
+
+## Sorunlar
+
+1. **`app/dashboard/actions.ts:6` herkese açık.** `"use server"` fonksiyonu bir POST adresidir. Sayfadaki `redirect("/login")` kontrolü buna uygulanmaz. Fonksiyon oturuma bakmıyor. Giriş yapmamış biri de çağırabilir.
+2. **Sahiplik kontrolü yok.** SQL sadece `where id = $1` diyor. Giriş yapan herkes başkasının faturasını silebilir. `page.tsx:9` listeyi `owner_id` ile süzüyor, ama silme süzmüyor.
+3. **`lib/auth.ts:13` imza doğrulamıyor.** `session=123.x` çerezi yazan herkes, `123` numaralı kullanıcı olur. Yorum "signature check lives here" diyor, ama kod yok. Bu düzelmezse 1. ve 2. maddeyi düzeltmek de yetmez.
+4. **Küçük sorun:** `returning *` bütün satırı istemciye döner. Buna gerek yok.
+5. **Küçük sorun:** `/dashboard` için `middleware.ts` ya da `proxy.ts` yok. Koruma sadece sayfanın içinde. Bu tek başına açık değil, ama ikinci bir kat da yok.
+
+## Ne değiştirmeli
+
+**1. `app/dashboard/actions.ts`:** Fonksiyonun içinde oturumu oku. Sahibi de SQL'e koy.
+
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { getSessionUser } from "@/lib/auth";
+import { query } from "@/lib/db";
+
+export async function deleteInvoice(id: string) {
+  const user = await getSessionUser();
+  if (!user) throw new Error("Unauthorized");
+  await query("delete from invoices where id = $1 and owner_id = $2", [id, user.id]);
+  revalidatePath("/dashboard");
+}
+```
+
+Admin her faturayı silebilsin mi, bilmiyorum. Kodda `role` hiç kullanılmıyor. Varsayımım: sadece sahibi siler.
+
+**2. `lib/auth.ts` `verifyToken`:** Gerçek imza doğrulaması yaz. Örneğin `jose` ile JWT, ya da sunucuda saklanan oturum tablosu. Çerez `httpOnly`, `secure`, `sameSite` olmalı. Şu hâliyle sahte çerez her şeyi aşar.
+
+**3. Boş yer:** `invoice-list.tsx:11` hatayı yutuyor. İstersen hata gösterimi ekle. Güvenlik için şart değil.
+
+## CI: lint kapsanıyor mu?
+
+**Hayır, büyük olasılıkla kapsanmıyor.** İki neden var:
+
+- **`next build` lint çalıştırmıyor.** Next 15.5'ten beri bu kaldırılma yolundaydı. Next 16'da kalktı. Projede `16.4.3` var. *Hafızamdan söylüyorum, internet yok, doğrulamadım.* Resmî Next 16 sürüm notuna bak.
+- **Lint ayarı yok.** `ci.yml` sadece `npm run build` çalıştırıyor. Repoda `eslint.config.*` dosyası da yok. ESLint 9 ayar dosyası bulamazsa hata verir. Yani `npm run lint` şimdi çalışmaz.
+
+Yapılacaklar:
+
+```js
+// eslint.config.mjs  (UNVERIFIED: eslint-config-next 16 yolunu resmî dokümandan kontrol et)
+import nextVitals from "eslint-config-next/core-web-vitals";
+export default [...nextVitals];
+```
+
+```yaml
+# .github/workflows/ci.yml, "npm ci" satırından sonra
+      - run: npm run lint
+```
+
+Önce yerelde `npm run lint` çalıştır. Hata çıkarsa düzelt, sonra CI'ya ekle.
+
+## Doğrulama (ben çalıştırmadım)
+
+- İki kullanıcıyla dene. A, B'nin fatura `id`'sini silmeyi denesin. Hiçbir satır silinmemeli.
+- Çerezsiz `curl` ile action'ı çağır. `Unauthorized` dönmeli.
+- Sahte `session=1.x` çerezi reddedilmeli.
+- CI'da kasıtlı bir lint hatası ekle. Kırmızı olmalı.

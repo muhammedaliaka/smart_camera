@@ -1,0 +1,30 @@
+[probe p2]
+**Kısa cevap: Hayır, bu iki aracı bu haliyle kullanma.** Bilgileri `ai-production.md` paketinden aldım. Paket bugün (2026-10-25) resmi sayfalardan okunmuş. İnternetim yok, o yüzden sayfaları şimdi yeniden doğrulayamadım.
+
+## 1. MusicGen: ticari oyun için uygun değil
+- Ağırlıklar CC-BY-NC 4.0 lisanslı. "NC" ticari kullanım yok demek. [official]
+- Kod MIT, ama ağırlıklar ayrı bir lisansla geliyor. Sorun ağırlıklarda.
+- Çıkan müziğin durumu için lisansta açık bir cümle okumadım. Ağırlık lisansı ticari kullanımı yasakladığı için risk büyük. [reasoning]
+- Satılan bir oyunda bu riski almak doğru değil.
+
+## 2. Hunyuan3D 2.0: sen Almanya'dasın, lisans seni kapsamıyor
+- Tencent'in topluluk lisansı AB, Birleşik Krallık ve Güney Kore'de geçerli değil. [official]
+- Almanya AB'de. Yani orada kullanım için izin yok.
+- Oyunun dünya genelinde satılması bunu çözmez. Sorun senin bulunduğun yer.
+- Başka koşullar da var. Çıktılar başka bir yapay zekâyı geliştirmek için kullanılamaz. Dağıtırken Tencent'in bildirim dosyası gerekir. [official]
+
+## Ne yapmalısın?
+1. **Müzik için** şunlardan birini seç:
+   - ACE-Step: Apache-2.0, ticari kullanıma açık. [official]
+   - Stable Audio Open 1.0: Stability Community License, yıllık 1 milyon dolar gelire kadar ücretsiz, klipler en fazla 47 saniye. [official]
+   - Suno Pro veya Premier: şarkılar sende kalır. [official]
+2. **3D için** şunlardan birini seç:
+   - TRELLIS (Microsoft): MIT lisanslı, ama 16 GB'lık NVIDIA ekran kartı ister. Bulutta çalıştır. [official]
+   - Meshy ücretli plan: model sana ait olur. [official]
+   - Meshy ücretsiz plan: CC BY 4.0, Meshy'ye kredi vermen gerekir. [official]
+3. **Her varlık için** `assets/LEDGER.md` dosyasına bir satır yaz. Dosya, araç ve sürüm, lisans, tarih, şartların bağlantısı, prompt, kredi metni ve kontrol eden kişi olsun. Satırı olmayan varlık oyuna girmez. [reasoning]
+4. **Steam'e** yapay zekâ kullandığını bildir. Oyunla gelen önceden üretilmiş içerik bildirilir. Seçtiğin aracın lisansını o gün tekrar oku. Metni Steam sayfasından alıntılayarak hazırla. [official]
+5. **Telif:** Tamamen yapay zekâdan çıkan içeriğe ABD'de telif hakkı tanınmıyor. Kendi düzenlemen ve seçimin korunabilir. Müziği ve modelleri elle düzenle. [official]
+6. **Hukuki onay:** Bu hukuki tavsiye değil. Yayından önce Alman oyun hukuku bilen bir avukata göster.
+
+İstersen `assets/LEDGER.md` şablonunu ve Steam bildirim taslağını hazırlarım.

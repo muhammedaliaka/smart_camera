@@ -1,0 +1,74 @@
+[probe p6]
+# Notes Desk: Electron → Tauri geçiş planı
+
+Bu oturumda web erişimim ve kabuk (Bash) yok. Aşağıdaki Tauri API adlarını ve sürümlerini Tauri v2 bilgimden yazdım ve bu oturumda doğrulamadım. İlk adım olarak ilgili sayfaları açıp kontrol etmek gerekiyor (bkz. "Dayanacağım kaynaklar"). Planı yalnızca repodaki 5 dosyayı okuyarak çıkardım: `package.json`, `main.js`, `preload.js`, `index.html`, `renderer.js`.
+
+## 1. Dosya dönüşüm tablosu
+
+| Mevcut | Tauri karşılığı | Not |
+|---|---|---|
+| `main.js` (pencere 900x600) | `src-tauri/tauri.conf.json` içindeki `app.windows` + `src-tauri/src/lib.rs` | Pencere boyutu config'e gider. |
+| `main.js` → `notes:read`, `notes:save` | `lib.rs` içinde `#[tauri::command] read_notes / save_notes` | Yol `app.path().app_data_dir()` ile bulunur, `notes.txt` adı korunur. |
+| `main.js` → `file:pick` | Rust komutu `pick_file`, içinde `tauri-plugin-dialog` (filtre: txt, md) ve dosya okuma | Dosya yolu renderer'a hiç çıkmaz, bu da `fs` izin kapsamı ihtiyacını azaltır. İptal edilirse `null` döner. |
+| `main.js` → `autoUpdater.checkForUpdatesAndNotify()` | `tauri-plugin-updater` ve `tauri-plugin-process` (yeniden başlatma) | Başlangıçta kontrol eder. Bildirim davranışını elle yazmak gerekir (bkz. risk 2). |
+| `main.js` → `window-all-closed` | Tauri varsayılanı | Varsayılan davranışı doğrulamak gerekir. macOS'ta uygulamanın pencere kapanınca çıkması davranış farkı olabilir. |
+| `preload.js` | Silinir. Yerine `src/api.js` shim'i gelir | `window.api = { readNotes, saveNotes, pickFile }` imzasını `invoke(...)` ile korur. Böylece `renderer.js` neredeyse hiç değişmez. |
+| `index.html` | `src/index.html` | CDN `<script>` kaldırılır (bkz. risk 3). `api.js` eklenir. |
+| `renderer.js` | `src/renderer.js` | Büyük olasılıkla değişmez. |
+| `package.json` | Aynı dosya. `electron`, `electron-builder`, `electron-updater` çıkar. `@tauri-apps/cli`, `@tauri-apps/api` ve `marked` girer | Script'ler `tauri dev` ve `tauri build` olur. |
+| (yok) | `src-tauri/Cargo.toml`, `build.rs`, `capabilities/default.json`, `icons/` | Capability dosyasında yalnızca ihtiyaç duyulan izinler açılır. |
+| `electron-builder` ayarları (şu an repoda yok, varsayılanlar) | `tauri.conf.json` → `bundle`, `identifier`, `plugins.updater` | |
+
+## 2. Kritik riskler (planın asıl işi bunlar)
+
+1. **Kullanıcı notlarını kaybetme.**
+   - Electron'da `userData` klasörü uygulama adından gelir (`.../notes-desk/notes.txt`). Tauri'de `app_data_dir` ise `identifier` değerinden gelir.
+   - Yeni sürüm ilk açılışta eski yolda `notes.txt` arar ve yeni yolda dosya yoksa kopyalar. Eski dosyayı silmez.
+   - Üç platformun eski yolu elle hesaplanır, çünkü Tauri bu yolu bilmez.
+2. **Otomatik güncelleme zinciri kopar.**
+   - Mevcut kurulumlar `electron-updater` kullanıyor (`latest.yml` bekler). Tauri updater imzalı bir JSON manifesti ve ayrı bir anahtar çifti ister.
+   - Eski Electron kurulumları Tauri sürümüne kendiliğinden geçemez. Son bir Electron sürümü (1.4.x) gerekir. Bu sürüm Tauri paketini indirecek şekilde yönlendirir ya da kullanıcıya elle indirme linki gösterir. Hangisini seçeceğinize siz karar vermelisiniz.
+   - Updater özel anahtarı CI secret'ında tutulur, repoya girmez.
+3. **Güvenlik: sanitize edilmeyen markdown.**
+   - `preview.innerHTML = marked.parse(...)` bugün zaten XSS'e açık. Electron'da `contextIsolation` bunu kısmen hafifletiyor.
+   - Tauri'de enjekte edilen script `invoke` ile Rust komutlarını çağırabilir (notları yazmak, dosya okumak). Bu yüzden DOMPurify eklenir. Açık bir CSP de yazılır (`script-src 'self'`).
+   - CDN yerine `marked` paketi yerelden yüklenir. Bu hem CSP'yi mümkün kılar hem uygulamayı çevrimdışı çalıştırır.
+4. **WebView farkı.** Chromium yerine WebView2 (Windows), WKWebView (macOS) ve WebKitGTK (Linux) kullanılır. Render ve `<textarea>` davranışı üç platformda ayrı test edilir.
+5. **Her tuş vuruşunda disk yazımı.** `refresh()` her `input` olayında kaydediyor. Davranışı bilerek **aynen taşıyacağım**. Debounce ve atomik yazma ayrı bir iyileştirme olarak önerilir, geçişin kapsamına girmez.
+
+## 3. Aşamalar
+
+1. **İskelet:** `tauri init`, `identifier` seçimi (bunu sizinle netleştirmek gerek), boş pencere açılıyor.
+2. **Backend:** Üç komut ve capability dosyası. `main.js` ile satır satır karşılaştırma yapılır.
+3. **Frontend:** `api.js` shim'i, `marked` ve DOMPurify yerelden, CSP.
+4. **Veri göçü:** Eski `notes.txt` yolundan tek seferlik kopyalama.
+5. **Updater:** İmzalama anahtarları, manifest, 1.4.0 → 1.5.0 güncelleme denemesi.
+6. **Paketleme ve CI:** Üç platform için derleme. Sonra Electron bağımlılıkları ve `main.js` / `preload.js` silinir.
+
+## 4. Bittiğini nasıl göstereceğim
+
+Aşağıdakilerin her biri için çalıştırma çıktısı ya da ekran görüntüsü sunacağım. Çalıştırmadığım bir maddeyi "yapıldı" diye yazmayacağım.
+
+- [ ] `tauri build` hatasız bitiyor (üç platform; CI log'u).
+- [ ] **Davranış eşitliği:** yazı yaz → önizleme güncelleniyor → uygulamayı kapat/aç → metin geri geliyor.
+- [ ] **Dosya aç:** `.txt` ve `.md` seçilebiliyor, diğer uzantılar filtrede yok, iptal edince editör bozulmuyor.
+- [ ] **Veri göçü:** Eski Electron sürümüyle yazılmış bir `notes.txt` ile yeni sürüm açılıyor ve içerik görünüyor. Eski dosya hâlâ yerinde duruyor.
+- [ ] **Güncelleme:** İmzalı 1.4.0 kurulumu, test sunucusundaki 1.5.0'ı bulup kuruyor. İmzası bozuk bir paket reddediliyor.
+- [ ] **Güvenlik:** `<img src=x onerror=alert(1)>` içeren not, önizlemede script çalıştırmıyor. Ağ isteği gitmeden uygulama çevrimdışı açılıyor (CDN bağımlılığı yok).
+- [ ] `grep -ri electron .` yalnızca git geçmişi ve CHANGELOG dışında sonuç vermiyor.
+- [ ] Kurulum boyutu ve soğuk açılış süresi, Electron'la yan yana tablo hâlinde raporlanıyor (başarı ölçütü değil, bilgi).
+
+## 5. Dayanacağım kaynaklar
+
+- Tauri v2 resmi dokümanları (v2.tauri.app): *Calling Rust from the Frontend* (komutlar), *Capabilities / Permissions*, *Security → CSP*, *Distribute → Updater* ve *Configuration reference*.
+- Plugin sayfaları: `dialog`, `updater`, `process`. Sürümler tam olarak sabitlenir.
+- Mevcut kodun kendisi: Electron tarafındaki davranışın tek doğru kaynağı `main.js`, `preload.js` ve `renderer.js`.
+- Electron `app.getPath("userData")` dokümanı, eski veri yolunu üç platform için doğrulamak için.
+
+Ben ilk adımda bu sayfaları açıp bu plandaki API adlarını tek tek kontrol ederim. Bir şey farklı çıkarsa planı güncellerim.
+
+## Başlamadan önce sizden gereken kararlar
+
+1. Tauri `identifier` ne olsun (ör. `com.sizin-alan.notesdesk`)? Bu, yayından sonra değiştirilmesi zor bir seçim.
+2. Mevcut Electron kullanıcıları var mı? Varsa risk 2'deki köprü sürümü planın parçası olur. Yoksa atlanır.
+3. Hedef platformlar hangileri (Windows / macOS / Linux)?

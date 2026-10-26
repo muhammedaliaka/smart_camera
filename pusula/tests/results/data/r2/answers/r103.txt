@@ -1,0 +1,35 @@
+[probe p2]
+**Kısa cevap: ikisi de bu haliyle serbest değil.** Bunu projedeki `ai-production.md` notundan okudum. Not bugünün tarihli. İnternet olmadığı için lisansları yeniden doğrulayamadım. Hukuki tavsiye değildir.
+
+## 1. MusicGen: ticari oyunda kullanamazsın
+- Ağırlıklar CC-BY-NC 4.0 lisanslı. NC, "ticari olmayan" demek.
+- Steam'de satılan oyun ticari kullanımdır.
+- Sadece kod MIT lisanslı. Ağırlıklar ayrı bir lisansla gelir.
+- Çıktıyı sadece "sen ürettin" diye kullanmak bunu değiştirmez.
+
+**Ne yapmalı:**
+- **ACE-Step:** Apache-2.0. Ticari kullanıma açık. README, AI kullandığını belirtmeni ister.
+- **Stable Audio Open 1.0:** Yıllık geliri 1 milyon dolar altındaysa ücretsiz. Klipler en fazla 47 saniye.
+- **Suno:** Pro veya Premier plan gerekir. Bu planlarda şarkılar senin olur.
+
+## 2. Hunyuan3D 2.0: Almanya'da kullanamazsın
+- Tencent topluluk lisansı AB, İngiltere ve Güney Kore'de geçerli değil.
+- Sen Almanya'dasın, yani AB'desin. Lisans sana hak vermiyor.
+- Oyunu dünyada satman bunu düzeltmez. Sorun, modeli nerede kullandığın.
+- Üretimi başka bir ülkedeki sunucuda yapmak da güvenli bir çıkış değil. Önce Tencent'ten yazılı izin almadan buna güvenme.
+
+**Ne yapmalı:**
+- **TRELLIS (Microsoft):** Modeller MIT lisanslı. En az 16 GB VRAM'li NVIDIA GPU ister. Yoksa bulut GPU kirala. Alt modüllerin lisansını ayrıca kontrol et.
+- **Meshy ücretli plan:** Modeller sana ait olur. Ücretsiz planda CC BY 4.0 gerekir ve Meshy'ye atıf vermen lazım.
+- **Tencent'e yazmak:** Hunyuan3D'de ısrar edersen bu tek yol. Yazılı izin yoksa kullanma.
+
+## 3. Hangi plan için de gereken adımlar
+1. **Defter tut.** Her varlık için `assets/LEDGER.md` satırı aç. Dosya, araç ve sürüm, lisans, tarih, şartların URL'si, prompt ve kimin incelediği yazsın. Satırı olmayan varlık oyuna girmez.
+2. **Lisansı araçtan önce seç.** Ücretsiz plan, ücretli plan ve açık ağırlık genelde farklı şartlar taşır.
+3. **Steam'e bildir.** Oyunla gelen AI içeriğini Content Survey'de belirt. Mağaza metni için hazır bir taslak yaz.
+4. **Telif farkında ol.** ABD Telif Bürosu saf AI çıktısına telif vermiyor. Kendi düzenlemen ve seçimin korunabilir. Saf AI çıktısını başkaları kopyalayabilir.
+5. **Dinle ve bak.** Üretilen her müziği ve modeli kontrol et: döngü hatası, ölçek, doku sorunları.
+6. **Unknown model kodu çalıştırma.** Önce tara. Mümkünse `safetensors` formatını seç.
+7. **Son kontrol.** Satıştan önce oyun hukuku bilen bir avukata göster.
+
+Ledger veya Steam açıklama taslağını senin için hazırlamamı ister misin?

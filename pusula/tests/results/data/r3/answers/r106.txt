@@ -1,0 +1,109 @@
+[probe p7]
+Planı dosyaya yazamadım. Bu oturumda `Write` aracı kapalı. Bu yüzden `.pusula/rts-netcode-perf/plan.md` oluşmadı. Plan aşağıda, kısaltılmış hâliyle. Araç açılırsa aynen dosyaya yazarım.
+
+**Sonuç:** Ağ modeli olarak deterministic lockstep öneriyorum. Ağda sadece komutlar gider, birim durumu gitmez. 1600 birimde trafik küçük kalır.
+
+Hiçbir şey Unity'de çalıştırılmadı. Projede Unity sürüm dosyası yok. Ağ kaynaklarım resmi Unity dokümanı değil. Unity Transport ve Relay dokümanlarını okumadım.
+
+# Plan: Multiplayer RTS (Unity 6)
+
+Status: draft, waits for your yes
+
+## Assumptions (correct me)
+- A1. PC only. Unity 6, exact version unknown.
+- A2. Internet play, 2 to 8 humans. AI can fill slots.
+- A3. 200 is a hard cap on units per player.
+- A4. Replay, reconnect and spectators are wanted.
+- A5. Casual play, no ranked mode.
+- A6. Small team, no server fleet.
+
+## Network model
+| Decision | Reason |
+| --- | --- |
+| Deterministic lockstep | Commands are tiny. Age of Empires shipped it. [first-party account] |
+| Turn of about 200 ms, commands run 2 turns later | AoE: 250 ms latency went unnoticed, beyond 500 ms it showed. Start value, tune by playtest. |
+| Integers or fixed-point in the simulation | Float can differ between CPUs and builds. [secondary] |
+| One seeded RNG for the simulation, another for cosmetics | Same number of calls on every machine. |
+| Per-turn checksum, stop at the first mismatch | This is how AoE found desyncs. |
+| Simulation separate from rendering | Allows headless tests and replays. [reasoning] |
+| Relay for commands, not a full mesh | An 8-way mesh has NAT problems. [reasoning, unverified] |
+
+**Option B (server-authoritative state sync):**
+- It avoids the determinism burden. Late join is easy.
+- It costs more bandwidth for 1600 units and needs a hosted server.
+- I did not read its docs yet.
+- I choose A, because of unit count and team size. Revisit if determinism proves too hard.
+
+**Turn flow:**
+- Each client sends its commands for turn N+2.
+- All clients wait for all packets of turn N, then run the same step.
+- Selection and camera are never sent.
+
+**Slow or dropped player:**
+- The game waits up to a timeout.
+- Then it offers a drop vote.
+- A dropped slot becomes AI or is removed.
+
+**Late join and reconnect:** choose between snapshot and replay of past turns. Decide in step 3.
+
+**Security:**
+- Every client checks that a player orders only their own units.
+- Packet sizes are limited.
+- Map-hack is possible, because every client holds the full state. Accept it for casual play. Ranked play would need a re-plan.
+
+## Performance plan
+Rule: measure on a real build on target hardware, not in the editor.
+
+| Area | Plan |
+| --- | --- |
+| Simulation | Fixed tick budget. Spatial hash for range queries. Shared flow fields for pathfinding. Far units think less often. [common practice] |
+| Entities/Jobs/Burst | Decide after a profile. Unity gives no unit-count rule. |
+| Rendering | URP, SRP Batcher, GPU instancing, shared materials. No `MaterialPropertyBlock` in URP. [official] |
+| Animation | Likely the biggest cost for 1600 skinned units. Options: GPU animation, animate near units only, billboards far away. Choose from the profile. [reasoning] |
+| LOD | LOD groups by distance. [official] |
+| Pooling | `ObjectPool<T>` for projectiles, VFX, health bars, with `maxSize`. [official] |
+| Audio | Cap Max Real Voices. Use mixer groups, ducking, music snapshots. [official] |
+| UI | UI Toolkit for HUD and menus. [official] |
+| Memory | No allocations in the simulation tick. |
+| Network | Commands only, so bandwidth does not grow with unit count. Measure in step 3. |
+
+Budgets (frame ms, tick ms, triangles, textures, voices) go to project config, not into the plan.
+
+## Asset classes
+All are needed, except the last, which comes later. Budgets are TBD in config. Every asset gets a ledger row.
+1. **3D:** units, buildings (stages, ruins), resource nodes, props, projectiles, terrain, water, sky.
+2. **Surface:** albedo, normal, metallic-roughness, emission, team-colour mask (key for 8 players), tileable ground, splat maps, decals.
+3. **Rig and animation:** skeletons, base clips (idle, walk, attack, death, hit), role clips (gather, build, carry), animator, events.
+4. **VFX:** hit flash, selection rings, range markers, trails, ability effects, fog of war, minimap pings.
+5. **Audio:** SFX, voice barks, announcer, music states, ambience, mixer rules.
+6. **UI:** HUD, minimap, command panel, icons, portraits, cursors, health bars, selection box, menus, fonts.
+7. **Level data:** map size, 8 start points, resource spots, navigation, fog data, thumbnails, lighting.
+8. **Game data:** stats, tech tree, balance, localization keys, key bindings, replay format.
+9. **Net/sim data:** command schema, version stamp, test replays, checksum logs. This class is specific to lockstep.
+10. **Story and release (later):** concept art, logo, store capsules, trailer, EULA, privacy text.
+
+## Steps
+1. Read official Unity networking docs and the project version. Check: every network claim has a URL or "unverified".
+2. Headless simulation spike. Check: 10 000 ticks, two runs give equal checksums.
+3. Loopback test with simulated latency and loss. Check: 8 clients, 30 minutes, zero desyncs, bandwidth measured.
+4. Scale scene with 8 x 200 units on a target PC build. Check: sim, render and animation profiled separately.
+5. Decide Entities or GameObjects from step 4. Check: decision written with the measurement.
+6. Fill asset budgets in config. Check: no blank row.
+7. Vertical slice with 2 factions, 6 unit types and 1 map. Check: replay test passes on two builds.
+
+## Top risks
+1. Float or hash-order desync. Prevention: fixed-point, ordered containers, checksum, replay test.
+2. One slow player stalls all 8. Prevention: timeout, drop vote, AI takeover.
+3. Animation cost. Prevention: animation LOD chosen from the profile.
+4. Pathfinding spikes after mass orders. Prevention: shared fields, time-slicing.
+5. Different builds join one match. Prevention: version and content hash in the handshake.
+6. Scope too large. Cut order: spectators, reconnect, adaptive turn length, AI fill.
+
+## Unknowns
+- Unity version and render pipeline.
+- Is ranked play wanted?
+- Are reconnect, spectators and replays required?
+- Minimum PC spec.
+- Relay service and its cost.
+
+**Soru:** A1 ile A6 varsayımları doğru mu? Özellikle sıralı (ranked) mod ve reconnect istiyor musunuz? Onayınızdan sonra 1. adımla başlarım.

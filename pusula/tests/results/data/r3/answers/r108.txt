@@ -1,0 +1,49 @@
+[probe p8]
+# Ana menü planı
+
+## Projede gördüklerim
+
+Repoda tek bir commit (`x`) ve ana menüyle ilgili tek bir dosya var: `Assets/Scripts/UI/MainMenu.cs`. Unity 6000.0.23f1, URP 17.0.3, uGUI 2.0.0 ve Input System kullanılıyor.
+
+- **Sahne, prefab ve görsel dosya yok.** `.unity`, `.prefab`, `.meta`, font, sprite, `Canvas` ayarı ve URP asset'i repoda bulunmuyor. Menünün gerçek hâlini, yani yerleşimi, boyutları ve sprite'ları buradan göremiyorum. Sahne dosyalarını repoya eklemediyseniz görünüm sorununu dosyalardan teşhis edemem.
+- **Görünüm kodla ayarlanıyor** (`MainMenu.cs:14-19`). `Start()` içinde başlık metni, rengi ve font boyutu (48) ile buton yazıları ayarlanıyor. Sahnede ayarlanan bir şey de her çalıştırmada koddan ezilebilir. Bu, "düzeltince yine bozuk geliyor" şikâyetinin olası bir sebebi.
+- **Eski `UnityEngine.UI.Text` kullanılıyor.** Unity 6'da yeni projelerde TextMeshPro varsayılan. Eski `Text` bulanık çıkabilir ve ölçeklenmez.
+- **Sabit değerler var.** Font boyutu 48 ve renk koda gömülü. Canvas Scaler ve anchor ayarı da yoksa farklı çözünürlüklerde bozulması beklenir.
+- **`optionsButton` bağlanmamış** (`MainMenu.cs:18-21`). Yazısı atanıyor ama `onClick` dinleyicisi yok, yani "AYARLAR" tıklanınca bir şey olmuyor.
+- **Karakter sorunu olabilir.** Yazılar "CIKIS" diye ASCII yazılmış. Fontun Türkçe karakterleri (Ç, İ, Ş) desteklemediği için olabilir. Bu doğruysa "ÇIKIŞ" doğru yazılamıyor.
+- **Başlık yazı tipi ve renk sabit.** Tema ya da stil dosyası yok.
+
+## Neden her düzeltme yine bozuluyor (hipotezler)
+
+Henüz doğrulamadım, çünkü sahne yok. En olası üç sebep:
+
+1. Düzeltme sahnede yapılıyor ama `Start()` onu eziyor, ya da tersi.
+2. Düzeltme tek bir çözünürlükte (örneğin Game view'daki) kontrol ediliyor. Başka en-boy oranında bozuluyor.
+3. Elle sahne değişikliği yapılıp commit'lenmiyor, bu yüzden bir sonraki açılışta eski hâli geliyor.
+
+## Nasıl ilerleyeceğim
+
+1. **Önce sizden iki şey istiyorum.**
+   - Menünün şu anki ekran görüntüsü ve "kötü" dediğiniz şey (hizalama, boyut, renk, bulanıklık, taşma…).
+   - Sahne ve prefab dosyalarının repoda olması. Yoksa `Assets/Scenes/` ve menü prefab'ını ekleyin. Bu olmadan yaptığım her şey tahmin olur.
+2. **Sorunu somutlaştırıp bir kabul listesi çıkaracağım.** Her madde ölçülebilir olacak, "güzel görünüyor" gibi öznel bir madde olmayacak.
+3. **Görünümü koddan sahneye taşıyacağım.** Renk, boyut ve yerleşim sahne veya prefab'da duracak. `MainMenu.cs` yalnızca davranışı yönetecek (tıklama, sahne yükleme). Böylece kod ve sahne birbirini ezmeyecek.
+4. **Ölçeklenebilir yerleşim kuracağım.** Canvas Scaler (Scale With Screen Size, referans 1920×1080), anchor'lı Vertical Layout Group ve TextMeshPro kullanacağım. Türkçe karakterleri destekleyen bir font seçeceğim.
+5. **`optionsButton` için** bir ayarlar paneli açılışı bağlayacağım. İsterseniz önce yalnızca boş bir panel açılır.
+6. **Değişiklikleri küçük commit'lerle kaydedeceğim**, böylece "geri geldi" durumu git geçmişinden görülebilir.
+
+## "Bitti" demek için göstereceklerim
+
+Yalnızca "kodu yazdım" demeyeceğim. Aşağıdakileri kanıtlayacağım:
+
+- **Ekran görüntüleri:** Menü 16:9 (1920×1080), 16:10, 21:9 ve dikey/mobil (örneğin 1080×1920) çözünürlüklerinde. Hiçbirinde taşma, üst üste binme ya da kesilme olmayacak.
+- **Konsol temiz:** Play Mode'da menü açılıp kapanırken hata ve uyarı olmayacak (`NullReference`, eksik font/glyph uyarısı dahil).
+- **Davranış testi:** Play Mode testi (test-framework mevcut). OYNA `Game` sahnesini yükler, ÇIKIŞ `Application.Quit` çağırır, AYARLAR paneli açar.
+- **Kalıcılık kanıtı:** Düzeltmeler commit'lenmiş olacak. Projeyi temiz clone'layıp sahneyi açınca aynı görüntüyü alacağım ve bunu göstereceğim.
+- **Önce/sonra karşılaştırması:** Sizin verdiğiniz ekran görüntüsüyle aynı çözünürlükte yan yana.
+
+Bu ortamda Unity editörü çalıştırıp ekran görüntüsü alabildiğimi henüz doğrulamadım. Alamıyorsam, görsel kanıtı sizin makinenizde çalıştıracağınız bir ekran görüntüsü alma adımı olarak sunarım ve bunu açıkça söylerim. "Doğrulandı" demem.
+
+## Sizden gereken
+
+Devam etmemi istiyorsanız, ekran görüntüsünü ve sahne dosyalarını paylaşın. Dosyalar yoksa şunu söyleyin: menüyü sıfırdan, belirttiğiniz stile göre mi kurayım?

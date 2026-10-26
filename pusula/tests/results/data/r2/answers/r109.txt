@@ -1,0 +1,33 @@
+[probe p2]
+**Kısa cevap: İkisi de bu haliyle serbest değil.**
+
+Kaynak: projedeki `ai-production.md` notu. Not bugün tarihli ve resmi sayfalardan okunmuş. İnternetim yok, ben doğrulayamadım.
+
+**1. MusicGen**
+- Ağırlıklar CC-BY-NC 4.0 lisanslı. NC, ticari kullanım yok demek.
+- Satılan bir oyunda kullanamazsın.
+- Kod MIT lisanslı, ama ağırlıklar olmadan işe yaramaz.
+
+**2. Hunyuan3D 2.0**
+- Tencent lisansı AB, İngiltere ve Güney Kore'de geçerli değil.
+- Almanya AB'de. Senin için lisans hakkı yok.
+- Oyunun dünyada satılması bunu değiştirmez. Önemli olan senin üretim yerin.
+- Başka kurallar da var:
+  - Aylık 1 milyondan fazla kullanıcıda Tencent'ten ayrı lisans gerekir.
+  - Çıktılarla başka bir yapay zekâ modeli geliştirilemez.
+  - Dağıtımda bildirim dosyası gerekir.
+
+**Ne yapmalısın**
+1. MusicGen yerine **ACE-Step** (Apache-2.0) kullan. İkinci seçenek Stable Audio Open: yıllık 1 milyon doların altında ücretsiz, klipler 47 saniyeye kadar.
+2. Ses efektleri için önce **Kenney** (CC0) veya Sonniss'e bak.
+3. Hunyuan3D yerine **TRELLIS** (MIT) kullan. En az 16 GB NVIDIA ekran kartı ister. Kartın yetmezse bulutta çalıştır.
+4. Meshy'nin ücretli planı da olur. Model sana ait olur.
+5. Her varlık için `assets/LEDGER.md` içinde bir satır tut: dosya, araç, lisans, tarih, şartların bağlantısı, prompt, kredi metni.
+6. Steam'in yapay zekâ bildirimini doldur. Oyunla gelen yapay zekâ içeriği bildirilmeli.
+7. Telif hakkını düşün. ABD Telif Bürosu'na göre sadece yapay zekâ ürünü içerik korunmuyor. Kendi düzenlemen ve edit'in korunabilir. Başkaları saf yapay zekâ çıktısını kopyalayabilir.
+
+**Belirsiz noktalar**
+- Hunyuan3D lisansının tam metnini kendin oku. Bölge maddesinin yazımı sonucu belirler.
+- Bu hukuki tavsiye değil. Gelir büyükse bir lisans avukatına danış.
+
+İstersen `assets/LEDGER.md` şablonunu ve Steam bildirim taslağını hazırlarım.

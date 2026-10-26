@@ -1,0 +1,133 @@
+[probe p6]
+Planı dosyaya yazamadım. Bu oturumda `Write` aracı kapalı. Planı aşağıya koydum. Onay verirsen `.pusula/electron-to-tauri/plan.md` olarak kaydederim. Hiçbir dosyayı değiştirmedim.
+
+Bu oturumda Tauri sayfası okumadım. Kaynakların çoğu `tauri-rust.md` paketinden geliyor. Bu paket 2026-10-25 tarihli. Aşağıda "paket" etiketi bunu gösterir. "UNVERIFIED" etiketi hiç okunmamış demektir.
+
+# Plan: Electron → Tauri (notes-desk 1.4.0)
+
+## Hedef
+Uygulama Tauri v2 üzerinde aynı davranışla çalışır. Yazı düzenleme, Markdown önizleme, otomatik kayıt, dosya açma ve otomatik güncelleme aynen kalır. Electron kodu ve bağımlılığı kalmaz.
+
+## Kapsam dışı
+- Yeni özellik, yeni görünüm, kayıt iyileştirmesi.
+- Tauri 3.0 alpha.
+- Yayın çıkarma, imza anahtarı üretip dosyaya yazma.
+- Electron dosyalarını sizden yeni onay almadan silme.
+
+## Mevcut durum (bu oturumda okudum)
+- Electron `^33.2.0`, electron-builder `^25.1.8`, electron-updater `^6.3.0`.
+- Beş dosya var: `main.js`, `preload.js`, `renderer.js`, `index.html`, `package.json`.
+- Test yok. Lint yok. `pusula_check.py` yok.
+- Güncelleme kaynağı (`publish` ayarı) tanımlı değil.
+- Tauri sürümleri henüz yok. Paket şunu gösteriyor: core 2.12.5, CLI 2.12.4. Adım 2'de resmi sürüm sayfasından sabitlenecek.
+
+## Dosya haritası
+| Eski | Yeni | Değişiklik |
+|---|---|---|
+| `main.js` pencere (900x600) | `src-tauri/tauri.conf.json` | Boyut ve başlık config olur. |
+| `notes:read`, `notes:save` | `src-tauri/src/notes.rs`: `read_notes() -> Result<String,String>`, `save_notes(text) -> Result<(),String>` | Aynı `notes.txt`. Dosya yoksa boş döner. |
+| `file:pick` | `src-tauri/src/pick.rs`: `pick_file() -> Result<Option<String>,String>` | Dialog eklentisi Rust'tan çağrılır. Sayfa yol göndermez. |
+| `app.whenReady`, `window-all-closed` | `src-tauri/src/lib.rs` ve `main.rs` | macOS kapanma kuralı kontrol edilecek. |
+| `autoUpdater` | `tauri-plugin-updater` | İmza anahtarı ve adres gerekir. |
+| `preload.js` | Silinir. Yerine `src-tauri/capabilities/default.json` (pencere `main`) | `window.api` yerine `invoke`. |
+| `renderer.js` | `src/renderer.js` | `invoke` çağrıları, hata satırı. |
+| `index.html` | `src/index.html` | CDN `marked` kalkar. |
+| CDN `marked@12.0.2` | `src/vendor/marked.min.js` | CSP bunu gerektirir. |
+| `package.json` | aynı dosya | Electron paketleri çıkar. `@tauri-apps/cli` girer. |
+| yok | `Cargo.toml`, `build.rs`, `constants.rs`, `findings.md` | Dosya adı ve filtre listesi `constants.rs`'e gider (sabit değer kuralı). |
+
+## Eşleme tablosu
+Electron tarafı proje kodundan çıkarıldı. Resmi sayfa okumadım. Resmi dokümanda Electron→Tauri rehberi yok. Bu yüzden tablo her satır doğrulanana kadar [reasoning].
+
+| Eski | Yeni | Kaynak | Boşluk |
+|---|---|---|---|
+| `ipcMain.handle` / `invoke` | `#[tauri::command]` + `invoke` | v2.tauri.app/develop/calling-rust/ (paket) | Ad `notes:read` → `read_notes`. JS anahtarları camelCase. Hatalar serileşmeli. |
+| `contextBridge` | `invoke` (`window.__TAURI__` veya `@tauri-apps/api`) | v2.tauri.app/concept/inter-process-communication/ (paket) | Bundler yok. A/B seçimi aşağıda. |
+| `contextIsolation` | Güvenilir Rust çekirdeği, güvensiz webview, capabilities | v2.tauri.app/security/capabilities/ (paket) | Dosya `main` etiketini adlandırmalı. |
+| `BrowserWindow` | `app.windows` | v2.tauri.app/reference/config/ UNVERIFIED | Anahtar adları adım 2'de okunur. |
+| `dialog.showOpenDialog` | dialog eklentisi | v2.tauri.app/plugin/dialog/ UNVERIFIED | Filtre ve iptal sonucu kontrol edilir. |
+| `fs` + `userData` | `std::fs` + `app_data_dir` | UNVERIFIED | Klasör Electron'dan farklı. Not kaybı riski. |
+| `electron-updater` | `tauri-plugin-updater` | v2.tauri.app/plugin/updater/ (paket) | İmza kapatılamaz. Anahtar kaybolursa güncelleme biter. |
+| `electron-builder` | `tauri build` | v2.tauri.app/distribute/ UNVERIFIED | Hedef işletim sistemleri bilinmiyor. |
+| CDN script | yerel dosya + CSP | v2.tauri.app/security/csp/ (paket) | CSP yalnızca `csp` anahtarı varsa çalışır. |
+| `npm start` | `npm run tauri dev` | v2.tauri.app/start/prerequisites/ (paket) | Linux'ta webkit2gtk-4.1 gerekir. |
+
+## Kararlar
+| Karar | Neden |
+|---|---|
+| Dosya erişimi Rust komutlarında kalır | Bugünkü güven modeli korunur. Sayfa yol isteyemez. |
+| Üç çağrı, üç komut | `preload.js` ile aynı yüzey. Karşılaştırması kolay. |
+| **Seçenek A (önerilen):** bundler yok, `withGlobalTauri`, yerel `marked` | En küçük değişiklik. Bedeli: global nesne sayfaya açılır. |
+| **Seçenek B:** Vite + `@tauri-apps/api` ekle | Tipli import ve `mockIPC` testi. Bedeli: yeni bağımlılık ve build adımı. |
+| Önizleme HTML'i temizlenir (DOMPurify, sabit sürüm) | Bugün `innerHTML = marked.parse(dosya)` her dosyadaki işaretlemeyi çalıştırıyor. Tauri'de o sayfa komut çağırabilir. Bu davranış değişikliği, **onayınız gerekir**. |
+| Arayüze bir hata satırı eklenir | `Result` döner. AGENTS.md sessiz hatayı yasaklar. |
+
+## Adımlar (her birinin kontrolü var)
+1. **Taban çizgisi.** Electron uygulamasını çalıştır. Üç ekran görüntüsü al (boş, yazılı, dosya açılmış). `ui-acceptance` ile 5 ölçüt yaz. | kontrol: ekran görüntüleri ve ölçütler `.pusula/electron-to-tauri/baseline/` içinde.
+2. **Bulgular.** Paketteki her sayfayı ve her UNVERIFIED satırı yeniden oku. `findings.md`'e URL, tarih, sürüm yaz. | kontrol: tabloda UNVERIFIED kalmadı, ya da Risklerde listelendi.
+3. **İskele.** `src-tauri/` ekle. `index.html` ve `renderer.js` dosyalarını `git mv` ile `src/`'ye taşı. `marked@12.0.2` yerel kopyası ekle. Önce `architecture-standard` oku (5'ten fazla dosya, yeni modül). | kontrol: `cargo check` geçer. `npm run tauri dev` 900x600 "Notes Desk" penceresini açar.
+4. **Not komutları (TDD).** Önce test: dosya yoksa "" döner. Kaydet sonra oku aynı metni verir. Yazılamayan yol `Err` döner. Sonra kod. | kontrol: testler önce doğru nedenle kırmızı, sonra `cargo test` yeşil.
+5. **Dosya seçici.** İptal `None` verir. Okuma hatası `Err` verir. Filtre `constants.rs`'ten gelir. | kontrol: elle çalıştır, bir `.md` aç, bir kez iptal et. Log satırı komut sonucunu gösterir.
+6. **Renderer.** `window.api.*` yerine `invoke`. Hata satırı. Onaylanırsa temizleyici. | kontrol: ekran görüntüleri 5 ölçüte uyar. İçinde `<img src=x onerror=alert(1)>` olan dosya uyarı göstermez.
+7. **Güvenlik ayarı.** `csp` ayarla (CDN yok, satır içi script yok). Yalnızca `main` için capability. `remote.urls` yok. | kontrol: devtools'ta CSP ihlali yok.
+8. **Güncelleyici.** Eklentiyi ve `pubkey` değerini ekle (metin, yol değil). Özel anahtar yalnızca kabuk ortamında `TAURI_SIGNING_PRIVATE_KEY` olur. Dosyaya yazılmaz. | kontrol: test sürümü, test adresinden güncelleme bulur. Yoksa "görülmedi" diye nedeniyle raporlanır.
+9. **Paketleme.** Gönderdiğiniz her işletim sistemi için `npm run tauri build`. | kontrol: kurucu açılır. Yeniden başlatınca notlar durur.
+10. **Electron'u kaldır.** Yeni onayınızla, dosya adlarını sayarak: `main.js`, `preload.js` silinir. Üç Electron paketi `package.json`'dan çıkar. | kontrol: `grep -ri electron .` yalnızca plan ve bulgularda bulur.
+11. **Kanıt.** Aşağıdaki listeyi çalıştır. Sonuçları `progress.md`'e yaz. | kontrol: komut, çıktı, geçti/kaldı tablosu.
+
+## Bittiğini nasıl göstereceğim
+- `cargo clippy` (uyarılar hata sayılır) ve `cargo test` geçer.
+- `cargo audit` ve `npm audit` çıktıları okunur.
+- Kullanılan her pencere etiketi için capability dosyası var.
+- Uygulama her hedef işletim sisteminde açıldı. Bir komut çağrısının çalıştığı görüldü (ekran görüntüsü veya log).
+- Ekran görüntüleri yazılı ölçütlere göre yargılandı. Her satır "geçti" veya "görülmedi".
+- `pusula_check.py` varsa commit öncesi çalıştırılır. Bugün yok.
+- Doğrulanmamış satırların listesi verildi.
+
+Elle "bitti" demem. Kanıt tablosu olmadan hiçbir şeyi geçti saymam.
+
+## Kapsam başlıkları
+- **Kullanıcı deneyimi:** Aynı ekranlar. Bir yeni hata satırı.
+- **Doğruluk:** Her tuşta kayıt ve atomik olmayan yazma aynen kalır. Dosya açınca `notes.txt` üzerine yazılması da kalır.
+- **Güvenlik:** Önizleme temizliği, CSP, tek capability, komut argümanı doğrulama. Dev sunucusu şifresizdir; yalnızca güvenilir ağda.
+- **Maliyet:** Tek model, alt ajan yok.
+- **Kaynak kalitesi:** Paket 2026-10-25 tarihli ama bu oturumda Tauri sayfası okunmadı. Adım 2 kapatır.
+- **Testler:** Rust birim testi, elle çalıştırma, ekran görüntüsü. `mockIPC` yalnızca B seçeneğinde. WebDriver yalnızca Windows ve Linux'ta.
+- **Lisans:** `marked` ve DOMPurify lisansları `findings.md`'ye yazılır. Tauri lisansı [unverified].
+- **Kapsam ve süre:** 11 adım. Repoda Rust ilk kez geçiyor. Adım 3 ve 4 uzun sürer.
+- **Bakım:** İki araç zinciri (Rust + npm).
+- **Araç uyumu:** Webview her işletim sisteminde farklıdır. Linux'ta webkit2gtk-4.1, Windows'ta WebView2 ve C++ araçları gerekir.
+- **Teslimat:** Her OS için kurucu. Güncelleme anahtarının saklanması. Eski Electron kullanıcıları elle geçer.
+- **Çakışma:** AGENTS.md ile çakışma yok.
+
+## Riskler
+1. Eski notlar kaybolur: Tauri veri klasörü Electron `userData`'dan farklı. | önlem: ilk açılışta eski `notes.txt` varsa kopyala. Gerçek eski dosyayla test et.
+2. Elle yeniden kuran kullanıcı eski klasörde kalır. | önlem: 1 ile aynı. Taşıma kararını sizden al.
+3. Kurulu Electron sürümleri Tauri'ye kendiliğinden güncellenemez. | önlem: bugün güncellemenin nereden geldiğini öğren. Son Electron sürümünde indirme sayfasına yönlendir.
+4. Güncelleme anahtarı kaybolur veya sızar. | önlem: yalnızca ortam değişkeni veya parola kasası. Yedek al.
+5. `innerHTML` üzerinden gelen script komut çağırır. | önlem: temizleyici, CSP, dar capability, adım 6 test dizesi.
+6. CSP, `marked`'ı veya satır içi kodu engeller. | önlem: yerel dosya, satır içi script yok. Adım 7'de devtools kontrolü.
+7. Komut kuralları sessizce bozulur (`lib.rs`'te `pub`, ikinci `invoke_handler`, snake/camel uyumsuzluğu). | önlem: tek handler listesi. Adım 4–5 testleri.
+8. Capability hatasını `cargo` görmez. | önlem: uygulamayı çalıştır, her komutu çağır.
+9. Webview her OS'te farklı çizer. | önlem: her hedef OS'te ekran görüntüsü, yoksa "görülmedi".
+10. Kapsam şişer (debounce, atomik yazma, yeni tasarım). | önlem: her satır bu plana bağlanır. Fazlası "sonra" listesine gider.
+
+## Bilinmeyenler
+| Soru | Kim cevaplar |
+|---|---|
+| Hangi işletim sistemlerini gönderiyorsunuz? | Siz |
+| `electron-updater` güncellemeyi bugün nereden alıyor? | Siz |
+| Uygulama kimliği (identifier) ne olacak? Veri klasörünü etkiler. | Siz |
+| Eski Electron notları taşınsın mı? | Siz |
+| Önizleme temizlensin mi (davranış değişikliği)? | Siz |
+| Seçenek A mı B mi? (A önerilir) | Siz, adım 2'den sonra |
+| macOS'ta pencere kapanınca uygulama açık kalsın mı (bugünkü gibi)? | Tauri run-event sayfası + siz |
+| Config anahtarları, dialog API, veri klasörü API, paket hedefleri | Adım 2'deki resmi sayfalar |
+| Bu makinede ekran görüntüsü için GUI (display/xvfb) var mı? | Adım 1 |
+
+## Sıradaki adım
+Aşağıdaki varsayımları kabul edin ya da düzeltin. Sonra planı dosyaya kaydedip adım 1'e geçerim.
+
+**Varsayımlarım:** Seçenek A. Önizleme temizlenir. Eski notlar taşınır. Tüm masaüstü sistemleri hedeflenir.
+
+Bu plan sizin istediğiniz geçişi yakalıyor mu? İlk soru: önizlemeyi temizlemeyi (davranış değişikliği) onaylıyor musunuz?

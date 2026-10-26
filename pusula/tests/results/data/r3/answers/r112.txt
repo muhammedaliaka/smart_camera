@@ -1,0 +1,98 @@
+[probe p6]
+# Notes Desk: Electron'dan Tauri v2'ye geçiş planı
+
+Planı repodaki 5 dosyayı okuyarak yazdım: `package.json`, `main.js`, `preload.js`, `renderer.js`, `index.html`. Hiçbir şeyi değiştirmedim. Ağ ve shell erişimim yok, bu yüzden Tauri sürüm ve API ayrıntılarını henüz resmi dokümandan doğrulamadım. Bunlar "Kaynaklar" bölümünde ve uygulamaya başlamadan önceki 0. adımda var.
+
+## 1. Mevcut durum
+
+Uygulama küçük: IPC kanalı 3 tane (`notes:read`, `notes:save`, `file:pick`), pencere 1 tane. Üç şey migrasyonu zorlaştırıyor:
+
+- **Veri yolu değişir.** Notlar `app.getPath("userData")/notes.txt` içinde. Electron bunu uygulama adından (`notes-desk`) türetir, Tauri ise `identifier` değerinden. Ayarlamazsam mevcut kullanıcıların notları "kaybolmuş" görünür.
+- **Auto-update farklı bir sistem.** `package.json` içinde `build`/`publish` ayarı yok. Yani `checkForUpdatesAndNotify()` şu an gerçekten bir güncelleme sunucusuna bağlı olmayabilir. Bunu sizden teyit etmem gerekiyor.
+- **`index.html` `marked`'ı CDN'den yüklüyor** ve çıktıyı sanitize etmeden `innerHTML`'e yazıyor. Tauri'de sıkı bir CSP ile CDN script'i çalışmaz. XSS'in etkisi de daha büyük olur, çünkü sayfa `invoke` ile native komutlara erişir.
+
+## 2. Dosya eşlemesi
+
+| Mevcut | Sonrası | Not |
+|---|---|---|
+| `main.js` (pencere, `app.whenReady`) | `src-tauri/src/lib.rs` + `main.rs` | Pencere 900×600 `tauri.conf.json`'a taşınır. Tüm pencereler kapanınca çıkış varsayılan davranıştır, `window-all-closed` karşılığı yazmaya gerek yok. |
+| `main.js` → `notes:read` | `#[tauri::command] read_notes` | Dosya yoksa `""` döner (şimdiki davranış). |
+| `main.js` → `notes:save` | `#[tauri::command] save_notes(text)` | Aynı dosya adı: `notes.txt`. |
+| `main.js` → `file:pick` | `#[tauri::command] pick_file` (`tauri-plugin-dialog`) | Filtre `txt`/`md`. İptalde `None`, yoksa dosya içeriği. Dosyayı Rust tarafı okur. |
+| `main.js` → `electron-updater` | `tauri-plugin-updater` | Aşağıda ayrı bölüm var. |
+| `preload.js` | Silinir, yerine `src/api.js` gelir | `window.api = { readNotes, saveNotes, pickFile }` aynı imzayla, içeride `invoke(...)` çağırır. `renderer.js` neredeyse değişmeden kalır. |
+| `index.html` | `src/index.html` | CDN `<script>` kalkar, yerel `marked` gelir. CSP eklenir. |
+| `renderer.js` | `src/renderer.js` | Mantık aynı. Eklemek istediğim tek şey `marked` çıktısını DOMPurify'dan geçirmek. |
+| `package.json` | Aynı dosya, küçülür | `electron`, `electron-builder`, `electron-updater` çıkar. `@tauri-apps/cli`, `marked` ve `dompurify` girer. Script'ler `tauri dev` / `tauri build` olur. |
+| (yok) | `src-tauri/Cargo.toml`, `tauri.conf.json`, `capabilities/default.json`, `icons/` | Yeni. |
+
+Frontend için bundler eklemem. `app.withGlobalTauri: true` ile `window.__TAURI__.core.invoke` kullanırım. `marked` ve DOMPurify'ı `node_modules`'tan `src/vendor/` altına kopyalarım. Bu, uygulamayı küçük ve sade tutar.
+
+**Güvenlik tasarımı:** `fs` plugin'ini frontend'e açmam. Dosya erişimi yalnızca bu 3 komut üzerinden olur. `capabilities` içinde sadece gerekli izinler (`core:default`, dialog, updater) bulunur. Electron'daki `contextIsolation` + dar `preload` yaklaşımının Tauri karşılığı bu.
+
+## 3. Veri göçü
+
+- `tauri.conf.json` `identifier`'ını sabitler ve `notes.txt` yolunu `app_data_dir` ile çözerim.
+- İlk açılışta yeni konumda `notes.txt` yoksa, eski Electron konumlarına bakıp (Linux `~/.config/notes-desk/`, Windows `%APPDATA%\notes-desk\`, macOS `~/Library/Application Support/notes-desk/`) dosyayı bir kez **kopyalarım**. Silmem.
+- Bunu bir birim testle kanıtlarım: eski konuma sahte dosya koy, göçü çalıştır, içerik birebir aynı olmalı.
+
+## 4. Auto-update
+
+- Tauri updater imza anahtarı ister (`tauri signer generate`). Özel anahtar repoya girmez, CI secret olarak tutulur.
+- Bir güncelleme endpoint'i gerekir (`latest.json` + imzalı artefaktlar, ör. GitHub Releases).
+- **Mevcut Electron kurulumları kendiliğinden Tauri'ye güncellenemez.** İki seçenek var:
+  - **a)** Son bir Electron sürümü yayınlayıp kullanıcıyı Tauri kurulumuna yönlendirmek.
+  - **b)** Kullanıcıların elle yeniden kurmasını istemek.
+- Bu karar sizde. Şu an bir update sunucusu yoksa en sade çözüm b'dir.
+
+## 5. Kaynaklar
+
+Resmi dokümana dayanırım, blog yazılarına değil:
+
+- Tauri v2 dokümanı (v2.tauri.app): kurulum, `tauri.conf.json` şeması, command'lar (`invoke`), capabilities/permissions, CSP ve migrasyon rehberi
+- `tauri-plugin-dialog` ve `tauri-plugin-updater` sayfaları (updater imzalama ve `latest.json` biçimi)
+- Tauri'nin WebDriver sayfası (`tauri-driver`) e2e için
+- `marked` ve DOMPurify README'leri
+
+**0. adım:** Uygulamaya başlamadan önce güncel Tauri v2 sürümünü ve plugin sürümlerini bu kaynaklardan doğrulayıp sürümleri sabitlerim. Ayrıca Rust toolchain ve platform bağımlılıklarının (Linux'ta WebKitGTK) kurulu olup olmadığına bakarım.
+
+## 6. Aşamalar
+
+1. **Dal ve iskelet:** `migrate/tauri` dalı, `tauri init`, boş pencere açılıyor.
+2. **Komutlar:** `read_notes`, `save_notes`, `pick_file` + `src/api.js` shim'i. Frontend taşınır.
+3. **Bağımlılıklar ve CSP:** `marked` yerel, DOMPurify, sıkı CSP, CDN kaldırıldı.
+4. **Veri göçü:** bölüm 3.
+5. **Updater:** karar bölüm 4'e göre. Yapılırsa imza anahtarı ve endpoint.
+6. **Paketleme ve temizlik:** her hedef platform için `tauri build`, Electron dosyaları ve bağımlılıkları silinir, README güncellenir.
+
+Her aşama ayrı commit olur. Böylece geri almak kolay.
+
+## 7. "Bitti" nasıl gösterilecek
+
+Aşağıdakilerin hepsinin gerçek çıktısını size gösteririm. Çalıştıramadığım bir şey olursa "doğrulanmadı" diye açıkça yazarım.
+
+**Otomatik:**
+- `cargo test`: `read_notes` (dosya yok → `""`, dosya var → içerik), `save_notes` → `read_notes` gidiş-dönüşü (Türkçe karakterler ve emoji dahil UTF-8), veri göçü testi.
+- `cargo clippy -- -D warnings` temiz.
+- `npm run tauri build` hatasız bitiyor ve yüklenebilir paket üretiyor.
+- `grep -ri electron` (lock dosyaları ve git geçmişi hariç) sonuç vermiyor.
+
+**e2e (`tauri-driver`, Linux/Windows):** uygulamayı aç → editöre yaz → önizlemenin render ettiğini kontrol et → uygulamayı kapat/aç → metin geri geliyor. macOS'ta `tauri-driver` yok, orası elle test olur.
+
+**Elle kontrol listesi** (dialog'u otomatikleştirmek zor):
+- "Open file" `.txt` ve `.md` seçtiriyor, iptalde editör bozulmuyor.
+- `<script>alert(1)</script>` ve `<img src=x onerror=alert(1)>` içeren bir `.md` dosyası açıldığında script çalışmıyor.
+- Uygulama internet olmadan da açılıyor ve markdown render ediyor (CDN bağımlılığı bitti).
+
+**Karşılaştırma:** eski ve yeni paket boyutunu, ilk açılış süresini ve boşta RAM kullanımını yan yana veririm. Ölçemediğim hedef platform olursa belirtirim.
+
+**Güncelleme:** yerel bir test endpoint'ine karşı v1.4.0 → daha yüksek sürüm güncellemesi çalışıyor. Bu yalnızca updater'ı yapmaya karar verirsek geçerli.
+
+## 8. Başlamadan önce cevabınız gereken sorular
+
+1. Hedef platformlar hangileri: Windows, macOS, Linux?
+2. Bugün çalışan bir update sunucusu var mı? Yoksa updater'ı ilk Tauri sürümüne dahil etmeyip sonraya bırakmayı öneririm.
+3. Mevcut kullanıcılar var mı? Varsa veri göçü zorunlu olur. Yoksa bölüm 3'ü atlayabiliriz.
+4. Bundle identifier ne olsun (ör. `com.sizin-alan.notesdesk`)? Yayından sonra değiştirmek veri yolunu da değiştirir.
+
+Onaylarsanız 0. adımla başlarım.
