@@ -1,6 +1,6 @@
 # A/B raw data (anonymized)
 
-One folder per round (`r1` = results 2026-10-25b round 1, `r2` = round 2, `r3` = results 2026-10-25c).
+One folder per round (`r1` = results 2026-10-25b round 1, `r2` = round 2, `r3` = results 2026-10-25c, `r4` = results 2026-10-26, `r4b` = its p12 follow-up with 9 answers: 3 A, 3 old B, 3 new B; answer ids restart at r100 in each folder).
 - `answers/rNNN.txt`: model answers, shuffled; the header names the probe only.
 - `scores.json`: hand scores per answer id and item (0 or 1). Item text: `tests/ab/PREREG.md`.
 - `key.json`: answer id to `probe-arm-run`. Opened only after scoring.

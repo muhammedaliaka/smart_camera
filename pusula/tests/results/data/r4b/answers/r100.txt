@@ -1,0 +1,85 @@
+[probe p12]
+# Güvenlik denetimi: sonuç
+
+**Karar: Bu hâliyle yayına alma.** 4 kritik, 2 yüksek bulgu var. Kodu değiştirmedim.
+
+**Kapsam:** `app.py`, `requirements.txt`, `.github/workflows/ci.yml`. Tehdit: internetten gelen saldırgan.
+
+**Bakılmadı:** `.pusula/checks/pusula_check.py` yok, bu yüzden Semgrep, gitleaks ve osv-scanner çalışmadı. Bunlar "kontrol edilmedi" sayılır. Git geçmişinde sır taraması yapılmadı. İnternet olmadığı için bağımlılık zafiyetlerine bakılmadı. Veritabanı şeması ve testler repoda yok.
+
+## Kritik
+
+1. **Yetkisiz kullanıcı dışa aktarımı** (`app.py:32-36`, OWASP A01)
+   - `/admin/export` kimlik doğrulaması istemiyor.
+   - Saldırgan, tüm kullanıcıları ve parola özetlerini tek istekle alır.
+   - Düzeltme: giriş ve yönetici rolü kontrolü ekle. Bu uç nokta gerekmiyorsa kaldır.
+   - Test: girişsiz istek 401/403 dönmeli.
+
+2. **SQL enjeksiyonu** (`app.py:28`, A05)
+   - `customer` değeri sorguya f-string ile giriyor.
+   - `' OR '1'='1` ile tüm siparişler çıkar. UNION ile `users` tablosu da okunabilir.
+   - Düzeltme: `?` parametresi kullan.
+   - Test: `' OR '1'='1` boş liste dönmeli.
+
+3. **Debug modu açık, tüm ağlara dinliyor** (`app.py:40`, A02)
+   - `debug=True` ile Werkzeug hata ayıklayıcısı açılır. Ağdan koda erişim (RCE) riski taşır.
+   - `host="0.0.0.0"` bunu dışarıya açar.
+   - Düzeltme: debug kapat. Üretimde `app.run` yerine gunicorn gibi bir sunucu kullan.
+
+4. **CI: `pull_request_target` ile PR kodu çalışıyor** (`ci.yml:3-14`, A03/A08)
+   - Workflow, PR'ın kodunu (`head.sha`) çıkarıp `pip install` ve `pytest` çalıştırıyor.
+   - `pull_request_target` depo sırlarına ve yazma yetkisine erişir. Dışarıdan gelen bir PR, kendi testiyle bunları çalabilir.
+   - Ayrıca PR başlığı `run` içine doğrudan giriyor (satır 13). Bu komut enjeksiyonudur.
+   - Düzeltme: `pull_request` kullan. Başlığı ortam değişkeniyle ver. `permissions: contents: read` ekle.
+
+## Yüksek
+
+5. **Parola MD5 ile saklanıyor** (`app.py:18`, A04)
+   - MD5 hızlı ve tuzsuz kullanılıyor. Sızan özetler saniyeler içinde kırılır.
+   - Bulgu 1 ile birleşince tüm parolalar ele geçer.
+   - Düzeltme: argon2, scrypt veya bcrypt (12+) kullan. Mevcut kullanıcıları ilk girişte yeniden özetle.
+
+6. **Sabit SECRET_KEY** (`app.py:7`, A02/A04)
+   - Anahtar kodda ve git'te yazılı: `change-me-secret-key`. Oturum çerezleri taklit edilebilir.
+   - Düzeltme: ortam değişkeninden oku. Bu anahtar ele geçmiş sayılır, yenisini üret.
+
+## Orta
+
+7. **Kimlik doğrulama yok** (A01/A07)
+   - Giriş yolu ve oturum yönetimi yok. `/orders` herkese açık.
+   - `customer` değerini kim isterse yazabilir. Başkasının siparişini görmek mümkün.
+   - Düzeltme: kullanıcıyı oturumdan al, parametreyi dinleme.
+
+8. **Girdi doğrulama ve hız sınırı yok** (`app.py:17,19-20`, A06)
+   - `request.form["name"]` eksikse 400 döner. Ama uzunluk ve biçim kontrolü yok.
+   - Kayıt uç noktasında hız sınırı yok. Aynı isimle çift kayıt kontrolü de görünmüyor.
+   - Düzeltme: şema ile doğrula. Giriş ve kayıt için hız sınırı ekle.
+
+9. **Hata ve günlük yönetimi yok** (A09/A10)
+   - Hata işleyicisi yok. Debug kapansa bile iç hata ayrıntıları sızabilir.
+   - Güvenlik olayları (başarısız giriş, yönetici erişimi) kaydedilmiyor.
+
+10. **Güvenlik başlıkları ve HTTPS yok** (A02)
+    - HSTS, CSP, `X-Content-Type-Options` yok. Çerez bayrakları (`Secure`, `HttpOnly`, `SameSite`) ayarlanmamış.
+    - CSRF koruması yok. `/register` form kabul ediyor.
+
+## Düşük
+
+11. **Bağımlılıklar sabit değil** (A03)
+    - `Flask>=3.1.3` aralığı açık. Kilit dosyası yok. Test aracı (`pytest`) `requirements.txt` içinde yok, CI bunu kendisi kuruyor.
+    - Düzeltme: sürümleri sabitle ve `pip-audit` çalıştır. İnternet olmadığı için ben çalıştıramadım.
+
+12. **Action sürümü etiketle sabitlenmiş** (`ci.yml:10`)
+    - `actions/checkout@v4` bir etiket. Tam commit SHA'sına sabitlemek daha güvenli.
+
+13. **`GITHUB_TOKEN` izni belirtilmemiş**
+    - Varsayılanı salt okunur yap, işe göre genişlet.
+
+## Önerilen sıra
+1. Bulgu 4'ü düzelt, çünkü CI üzerinden sır çalınabilir. Eğer sırlar varsa yenile.
+2. 1, 2 ve 3'ü düzelt.
+3. 5 ve 6'yı düzelt. Anahtarı ve parolaları yenile.
+4. 7-10'u yayından önce tamamla.
+5. Düzeltmelerden sonra mekanik kontrolleri çalıştır ve çıktıyı göster.
+
+İstersen düzeltmeler için test öncelikli bir plan yazarım.

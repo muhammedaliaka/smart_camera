@@ -25,7 +25,7 @@ Plan belgesi: [Pusula — Tek Parça Yapay Zekâ Sistemi Planı](https://claude.
 | `checks/` | Mekanik kontroller: `pusula_check.py` (dosya boyutu, etiketli plan kodu ve dolu Coverage satırları, sabit değer, sır, güvenlik açığı kuralları, fonksiyon karmaşıklığı, mimari dosyasındaki yolların varlığı, bağımlılık açığı) ve ayar dosyası. Jeton harcamaz. | 0 |
 | `settings/` | `claude.settings.json` (okuma kilidi, erken sıkıştırma, paket skill listesini kısaltma, iki hook) ve `codex.config.toml` (aynı kilit listesi). Projeye birleştirilir, üzerine yazılmaz. | 0 |
 | `checks/validate_glb.mjs` | Bir `.glb` dosyasını resmi Khronos doğrulayıcısıyla (kütüphane; komut satırı aracı yok) denetler. Node ve `gltf-validator` paketi gerekir. | 0 |
-| `tests/` | T1–T28 test tablosu (`TESTS.md`); birim testleri: kontrol betiği (`test_checks.py`), kilit ve ayar (`test_settings.py`), paket yapısı (`test_packs.py`), shield raporu (`test_shield_report.py`), GLB (`test_glb.py`), A/B araçları (`test_ab.py`); T6 ve T7 ölçüm betiği (`measure.py`), hedefler (`targets.json`). Projeye kopyalanmaz. | 0 |
+| `tests/` | T1–T29 test tablosu (`TESTS.md`); birim testleri: kontrol betiği (`test_checks.py`), kilit ve ayar (`test_settings.py`), paket yapısı (`test_packs.py`), shield raporu (`test_shield_report.py`), GLB (`test_glb.py`), A/B araçları (`test_ab.py`); T6 ve T7 ölçüm betiği (`measure.py`), hedefler (`targets.json`). Projeye kopyalanmaz. | 0 |
 | `tests/ab/`, `tests/results/` | Başsız A/B deney düzeneği (`run_ab.py`, `grade_ab.py`, ön kayıt `PREREG.md`, sorular ve hazır projeler `probes/`); sonuç raporları ve anonim ham veri (`results/data/`). Projeye kopyalanmaz. | 0 |
 | `THIRD_PARTY.md` | Kaynak, lisans, sabitlenen commit, yaptığımız değişiklik, tarama sonucu. | okunmaz |
 
@@ -111,21 +111,21 @@ Pusula bunların hiçbirini kendiliğinden kurmaz. Plan **taslak**: JS örneğin
 
 ## Testler
 
-`python -m unittest discover -s tests` kontrol betiğini, kilit ve ayarları, paket yapısını, shield raporunu, GLB doğrulamasını ve A/B araçlarını sınar. Bağımlılık ve `sast` testleri için `PUSULA_TEST_NET=1`; GLB testi için `PUSULA_TEST_NODE_MODULES=<klasör>` (içinde `gltf-validator` olan `node_modules`). `python tests/measure.py load` başlangıç yükünü tahmin eder (karakter ÷ 4; üçüncü taraf skill'ler gövde hedefinden muaf, `targets.json`); gerçek rakam için host'ta `/context` bak. T1–T28 tablosu `tests/TESTS.md` içinde; sonuçlar `tests/results/` altında (`2026-10-22.md` ilk A/B; `2026-10-25b.md` ve `2026-10-25c.md` alan paketleri).
+`python -m unittest discover -s tests` kontrol betiğini, kilit ve ayarları, paket yapısını, shield raporunu, GLB doğrulamasını ve A/B araçlarını sınar. Bağımlılık ve `sast` testleri için `PUSULA_TEST_NET=1`; GLB testi için `PUSULA_TEST_NODE_MODULES=<klasör>` (içinde `gltf-validator` olan `node_modules`). `python tests/measure.py load` başlangıç yükünü tahmin eder (karakter ÷ 4; üçüncü taraf skill'ler gövde hedefinden muaf, `targets.json`); gerçek rakam için host'ta `/context` bak. T1–T29 tablosu `tests/TESTS.md` içinde; sonuçlar `tests/results/` altında (`2026-10-22.md` ilk A/B; `2026-10-25b.md`, `2026-10-25c.md` ve `2026-10-26.md` alan paketleri).
 
 ## Alan paketleri ve ölçülen etkisi
 
-Paket, modelin ezberinin yanlış ya da eksik olduğu yerde işe yarar; modelin zaten iyi bildiği yerde yaramaz. Başsız `claude -p`, web yok, her soru 3 kez, ön kayıtlı kurallarla ölçtüm (ayrıntı ve sınırlar `tests/results/2026-10-25b.md` ve `2026-10-25c.md`):
+Paket, modelin ezberinin yanlış ya da eksik olduğu yerde işe yarar; modelin zaten iyi bildiği yerde yaramaz. Başsız `claude -p`, web yok, her soru 3 kez, ön kayıtlı kurallarla ölçtüm (ayrıntı ve sınırlar `tests/results/2026-10-25b.md`, `2026-10-25c.md` ve `2026-10-26.md`):
 
 - **Yönlendirme:** İşaretçi olmadan model `Skill` aracını hiç çağırmadı (0/15); paket 12 koşunun 4'ünde açıldı. `AGENTS.md`'ye tek cümle eklenince beklenen paket 11/12 açıldı. Tur 3'te 9/9.
-- **Fark çıkan yerler (A yalnız dosya → B Pusula):** Steam fiyat planı 6,3 → 9,0; Electron→Tauri planı 6,0 → 8,3; RTS ağ planı 4,0 → 8,7; Unity menü planı 3,0 → 6,0. **Fark çıkmayan:** AI lisansları 9,0 → 8,7; Next.js incelemesi 7,0 → 7,0; three.js 6,3 → 7,0 (gürültü payı içinde).
-- **Bedel:** B, A'nın ortalama 1,6 katı (tur 2) ile 2,4 katı (tur 3, planlama soruları) maliyetli. Soru başına B 0,05–0,29 $.
-- **Dürüst sınırlar:** n=3. Maddeleri paket metninden ben türettim; tur 3'te arm tam kör değildi. "Pakete bakıldı" demek "paketin hepsi uygulandı" demek değil (Next.js "istemciye giden veriyi daralt" 0/9; Unity "komut bayrakları" 0/3). Tur 1 ve tur 2 için ön kayıtlı kurallar tutmadı; tur 3'ünki tuttu, ama kanıtı daha zayıf.
+- **Fark çıkan yerler (A yalnız dosya → B Pusula):** Steam fiyat planı 6,3 → 9,0; Electron→Tauri planı 6,0 → 8,3; RTS ağ planı 4,0 → 8,7; Unity menü planı 3,0 → 6,0; Flutter yayın 6,3 → 7,7; Unreal paketleme 3,3 → 6,0; pazarlama 5,7 → 9,0; Steam fragmanı 5,7 → 9,0; video izleme 6,7 → 8,0. **Fark çıkmayan:** Flask güvenlik denetimi 7,0 → 7,0 (B paketi okumadı; beceriye yönlendirme satırı eklendi, puan yine değişmedi);  AI lisansları 9,0 → 8,7; Next.js incelemesi 7,0 → 7,0; three.js 6,3 → 7,0 (gürültü payı içinde).
+- **Bedel:** B, A'nın ortalama 1,6 katı (tur 2), 2,4 katı (tur 3, planlama soruları) ve 1,9 katı (tur 4) maliyetli. Soru başına B 0,05–0,29 $.
+- **Dürüst sınırlar:** n=3. Maddeleri paket metninden ben türettim; tur 3'te arm tam kör değildi. "Pakete bakıldı" demek "paketin hepsi uygulandı" demek değil (Next.js "istemciye giden veriyi daralt" 0/9; Unity "komut bayrakları" 0/3). Tur 1 ve tur 2 için ön kayıtlı kurallar tutmadı; tur 3 ve 4'ünki tuttu, ama kanıtı daha zayıf. Tur 4'te Unreal (ikili asset kuralı, gerçek pakette ölçüm) ve güvenlik (her bulguya test, sürümlü standart) paket metninde olduğu halde B cevaplarında çıkmadı.
 - Bir paketi kapatmak istersen `INDEX.md` satırını sil; bu çalıştırma ucuz.
 
 ## Sıradaki
 
-**Yazılı ama kurulmamış:** dalga 2 (codebase-memory-mcp, rtk) sadece belgelerden değerlendirildi; kurulmadı, T7 jeton testi yapılmadı. Unity'nin resmi eklentisi (`unity-agent-plugin`): belgeleri okundu, lisansı (Unity Companion License) okunmadı, taranmadı, kurulmadı; senin onayını bekliyor. Tauri, Flutter ve diğer alan paketleri yazıldı (resmi sayfalardan, 2026-10-25) ve A/B'de Tauri ile Unity denendi.
+**Yazılı ama kurulmamış:** dalga 2 (codebase-memory-mcp, rtk) sadece belgelerden değerlendirildi; kurulmadı, T7 jeton testi yapılmadı. Unity'nin resmi eklentisi (`unity-agent-plugin`): belgeleri okundu, lisansı (Unity Companion License) okunmadı, taranmadı, kurulmadı; senin onayını bekliyor. Alan paketleri resmi sayfalardan yazıldı (2026-10-25; açık maddeler 2026-10-26'da yeniden okundu); 13 paketin 13'ü de A/B'de denendi (tur 1–4).
 
 **Karar bekleyenler (sen):** Pusula'nın kendi özel deposu (şimdi ilgisiz `smart_camera` içinde duruyor); Unity eklentisi ve bellek araçları (kurmadan önce taramalı); ticari oyunda lisans denetimi (`license_allow`) açık mı olsun; 403 veren şart sayfalarının (Tripo, Mixamo SSS, Google Flow Music) okunmasına izin; Unity derleme kopyasında içerik okuyucu (UABEA/AssetRipper) denemesi.
 

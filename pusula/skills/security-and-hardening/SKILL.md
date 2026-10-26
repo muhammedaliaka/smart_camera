@@ -6,11 +6,11 @@ license: MIT
 
 # Security and hardening (condensed)
 
-Condensed from addyosmani/agent-skills `security-and-hardening`, MIT. Reference files left out; open them upstream if needed. See THIRD_PARTY.md.
+Condensed from addyosmani/agent-skills `security-and-hardening`, MIT; reference files left out. See THIRD_PARTY.md.
 
 Treat every external input as hostile, every secret as sacred, every authorization check as mandatory.
 
-Auditing, reviewing or gating an existing project (code or CI): read `../recipes/packs/security.md` first. It holds the audit order and the report format.
+Auditing an existing project or CI: read `../recipes/packs/security.md` first.
 
 ## Threat model first (5 minutes)
 1. **Trust boundaries.** Where does untrusted data enter? Requests, forms, uploads, webhooks, third-party APIs, queues, LLM output, and local values written by someone else (another process's arguments, shared filenames, job payloads). Trust follows who wrote the value, not the channel.
@@ -25,14 +25,14 @@ Validate input at the boundary with a schema. Parameterize queries. Encode outpu
 New auth flows or auth changes, new kinds of sensitive data, new external integrations, CORS changes, file uploads, rate-limit changes, elevated permissions.
 
 ## Never
-Commit secrets. Log secrets or personal data. Trust client-side validation. Use `eval` or `innerHTML` on user data. Keep tokens in localStorage. Show stack traces to users. Omit security headers. Give an app broader OS, plugin or capability permissions than it needs (least privilege for desktop and mobile shells too).
+Commit secrets. Log secrets or personal data. Trust client-side validation. Use `eval` or `innerHTML` on user data. Keep tokens in localStorage. Show stack traces to users. Give an app broader OS, plugin or capability permissions than it needs (least privilege for desktop and mobile shells too).
 
 ## Specifics
 - **Injection and XSS:** never build SQL or shell strings from input; use the framework's escaping or an allowlist sanitizer.
 - **SSRF:** allowlist scheme and host, resolve DNS and reject private and loopback addresses, forbid redirects.
 - **Destructive operations on derived paths:** before a delete, move or overwrite, resolve symlinks, require an allowlisted root, at least one level below it, and ownership evidence. On refusal, log and stop; never fall back to a broader path.
 - **Uploads:** allowlist types, cap size, check content, not the extension.
-- **Rate limits:** strict on auth endpoints; shared store when more than one instance.
+- **Rate limits:** strict on auth endpoints; shared store across instances.
 - **Secrets:** from the environment; `.env.example` holds placeholders; real keys are gitignored; scan the staged diff. A leaked secret is compromised: rotate first, then clean history.
 - **Dependencies:** one lockfile and a pinned manager; block install scripts until reviewed; triage audit findings by reachability; never auto-apply forced fixes; audits miss new malicious or typosquatted packages, so review new dependencies, release age and ownership.
 - **Copying:** shipped code can be read. Keep value and secrets on the server; see `anti-copy.md`.

