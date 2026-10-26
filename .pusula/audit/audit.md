@@ -6,7 +6,7 @@ Scope: everything the user asked for in 51 messages, what exists now, what is mi
 
 **Ne istedin?** Claude Code ve Codex için küçük, ucuz, her projeye uyan bir sistem: kurallar, skill'ler, alan paketleri ve makine kontrolleri. Yapay zekâ kaynağı önce resmi yerden okusun, eksik düşünmesin, kod yazmakta tembel olsun ama kontrolde tembel olmasın, izinlerini unutmasın, sade Türkçe konuşsun. Oyun için de (RTS) asset listesi, optimizasyon ve kopyalamaya karşı koruma istedin.
 
-**Ne var?** 18 skill, 13 alan paketi, 8 makine kontrolü, 2 hook, ayar şablonları, 28 satırlık test tablosu, 106 birim test (7'si ağ, node ya da araç ister, atlanır). Başlangıç yükü 1.792 jeton (hedef 1.800). Çekirdek kural 920 jeton. Hepsi `pusula/` klasöründe.
+**Ne var?** 18 skill, 13 alan paketi, 8 makine kontrolü, 2 hook, ayar şablonları, 29 satırlık test tablosu, 106 birim test (7'si ağ, node ya da araç ister, atlanır). Başlangıç yükü 1.792 jeton (hedef 1.800). Çekirdek kural 920 jeton. Hepsi `pusula/` klasöründe.
 
 **Bu turda bulduğum ve düzelttiğim şeyler**
 1. Yönlendirici hiç çalışmıyordu: model `Skill` aracını hiç çağırmadı (15 koşunun 0'ı). Paketler yazılmıştı ama kimse okumuyordu. `AGENTS.md`'ye tek cümlelik işaretçi koydum; sonra beklenen paket 12 koşunun 11'inde okundu (Doğrulandı).
@@ -15,6 +15,8 @@ Scope: everything the user asked for in 51 messages, what exists now, what is mi
 4. Kendi kontrol betiğim kendi test kodumda hata verdi (karmaşıklık). Düzelttim.
 5. Windows yolları (`type apps\web\yarn.lock`, PowerShell) için kilit testi yoktu. Eklendi; bilerek bozunca test kırmızı oldu (Doğrulandı).
 6. AI üretim paketine animasyon (Mixamo), doku (Poly Haven, ambientCG), video (Wan, HunyuanVideo), Google Flow Music ve ElevenLabs SFX satırları eklendi. Google ve Mixamo'nun resmi sayfasına ulaşamadım; o satırlar etiketli.
+7. Açık kalan `[unverified]` paket maddelerini resmi sayfalardan kapattım (Steam fragman biçimi, Flutter/Dart sürümü, Unity `.meta` ve sahne dosyaları, Türkiye 6563 sayılı kanun, itch.io/Apple/Google komisyonları). **Kendi paketimde hata buldum:** ACE-Step 1.5 lisansı MIT, ben Apache-2.0 yazmıştım; ham LICENSE dosyasından düzelttim (Doğrulandı). Epic'in sayfaları 403 veriyor: Unreal telif oranı ikincil kaynaktan, etiketli.
+8. Tur 4 (Flutter, Unreal, pazarlama, güvenlik, Steam fragmanı, video izleme): ön kayıtlı üç kural tuttu, B her soruda A'ya eşit ya da yüksek (5 soruda en az 1 puan), maliyet 1,88 kat. Fark en çok ezberin zayıf olduğu yerde: Steam fragmanında A "en az 1080p, 1440p olur" dedi, resmi sayfa en çok 1920x1080 diyor. Güvenlikte B paketi hiç okumadı (beceri pakete işaret etmiyordu); işaret ekledim, paket okundu ama puan değişmedi. Unreal ve güvenlikte paket metninde olup uygulanmayan maddeler var (`tests/results/2026-10-26.md`).
 
 **Hâlâ eksik (PC gerekmeyen ama yapamadığım)**
 - Gerçek bir etkileşimli oturumda hiçbir skill denenmedi. Başsız denemeler var, canlı oturum yok.
