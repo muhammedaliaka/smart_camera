@@ -125,8 +125,8 @@ Paket, modelin ezberinin yanlış ya da eksik olduğu yerde işe yarar; modelin 
 
 ## Sıradaki
 
-**Yazılı ama kurulmamış:** dalga 2 (codebase-memory-mcp, rtk) sadece belgelerden değerlendirildi; kurulmadı, T7 jeton testi yapılmadı. Unity'nin resmi eklentisi (`unity-agent-plugin`): belgeleri okundu, lisansı (Unity Companion License) okunmadı, taranmadı, kurulmadı; senin onayını bekliyor. Alan paketleri resmi sayfalardan yazıldı (2026-10-25; açık maddeler 2026-10-26'da yeniden okundu); 13 paketin 13'ü de A/B'de denendi (tur 1–4).
+**Yazılı ama kurulmamış:** dalga 2 (codebase-memory-mcp, rtk) sadece belgelerden değerlendirildi; kurulmadı, T7 jeton testi yapılmadı. Üç aracın kodu 26 Ekim'de indirilip okundu ve tarandı, hiçbiri çalıştırılmadı (`.pusula/audit/wave2-tools.md`). Unity'nin resmi eklentisi (`unity-agent-plugin`): lisansı okundu (Unity Companion License: sadece Unity motor lisansıyla, değiştirmeden), SkillSpector 2 KRİTİK ve 3 YÜKSEK verdi (çoğu belge metni, temiz sayılmaz); kurulmadı, senin onayını bekliyor. Alan paketleri resmi sayfalardan yazıldı (2026-10-25; açık maddeler 2026-10-26'da yeniden okundu); 13 paketin 13'ü de A/B'de denendi (tur 1–4).
 
-**Karar bekleyenler (sen):** Pusula'nın kendi özel deposu (şimdi ilgisiz `smart_camera` içinde duruyor); Unity eklentisi ve bellek araçları (kurmadan önce taramalı); Unity derleme kopyasında içerik okuyucu (UABEA/AssetRipper) denemesi.
+**Karar bekleyenler (sen):** Pusula'nın kendi özel deposu: taşıma onaylandı ve hazır, ama GitHub bağlantım depo açamıyor; boş özel `pusula` deposunu senin açman gerekiyor (`.pusula/repo-move/`); Unity eklentisi ve bellek araçları (kurmadan önce taramalı); Unity derleme kopyasında içerik okuyucu (UABEA/AssetRipper) denemesi.
 
 **PC gelince:** Unity release build üstünde REA ölçümü (`.pusula/build-shield/pc-runbook.md`); T3 gerçek Unity menü koşusu; T1 gerçek Electron→Tauri geçişi; `/context` rakamı; T24 ("yapma" kalıcılığı); hook'ların Windows'ta çalışması; skill'in gerçek oturumda kendiliğinden tetiklenmesi; Codex eşdeğerliği.

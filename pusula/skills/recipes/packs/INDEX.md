@@ -5,7 +5,7 @@ A pack is a short reference file for one stack or field: where the official sour
 | Task is about | Pack | Facts read |
 |---|---|---|
 | Tauri, Rust apps, Electron-to-Tauri | `tauri-rust.md` | 2026-10-25 |
-| Unity project, UI, builds, tests | `unity.md` | 2026-10-25 |
+| Unity project, UI, builds, tests | `unity.md` | 2026-10-26 |
 | Unreal Engine | `unreal.md` | 2026-10-26 |
 | Flutter, Dart | `flutter.md` | 2026-10-25 |
 | Next.js, React server code | `nextjs.md` | 2026-10-25 |

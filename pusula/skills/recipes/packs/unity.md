@@ -1,12 +1,12 @@
 # Pack: Unity
 
-Read when the task touches a Unity project. Facts read 2026-10-25 on the pages named. Labels: [official], [reasoning], [unverified].
+Read when the task touches a Unity project. Facts read 2026-10-26 on the pages named. Labels: [official], [reasoning], [unverified].
 
 ## Sources first
 - Manual: https://docs.unity3d.com/6000.0/Documentation/Manual/ (use the folder that matches the project's `ProjectSettings/ProjectVersion.txt`). Pages used: UIElements.html, UI-system-compare.html, EditorCommandLineArguments.html, scripting-backends-il2cpp.html, managed-code-stripping.html (6000.0 folder); trap 7 pages: see there.
 - Test Framework: https://docs.unity3d.com/Packages/com.unity.test-framework@1.4/manual/reference-command-line.html.
 - Versions: https://unity.com/releases/unity-6. As read: 6.3 LTS is supported to December 2027; 6.0 LTS to October 2026; 6.2 is a non-LTS update. [official]
-- Official plugin: `Unity-Technologies/unity-agent-plugin` (Unity 6+, skills, `/unity:ui-uitk`, uses the Unity CLI, no MCP, "Unity Companion License"). Not installed. Needs a license read, a SkillSpector scan and the user's yes (`THIRD_PARTY.md`). [official]
+- Official plugin: `Unity-Technologies/unity-agent-plugin` (Unity 6+, skills, `/unity:ui-uitk`, uses the Unity CLI, no MCP, "Unity Companion License"). Not installed. License read 2026-10-26: use only with a Unity Engine License, install unmodified (changes to it are assigned to Unity), keep it out of the game's own license. Static scan: no hooks or shell scripts, but 32 skills (about 2,000 start tokens: project scope only), 4 skills pre-approve Bash/Write/Edit/WebFetch, one tells you to run `curl | bash`; SkillSpector gave 2 CRITICAL, 3 HIGH (not cleared). Needs the user's yes. Details: `.pusula/audit/wave2-tools.md`. [official]
 
 ## Before any code
 1. Read `ProjectSettings/ProjectVersion.txt`, `Packages/manifest.json`, and whether the project uses uGUI, UI Toolkit or the Input System. Match them.
