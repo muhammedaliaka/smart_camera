@@ -4,7 +4,7 @@ Read when the task touches a Flutter or Dart project. Facts read 2026-10-25 on t
 
 ## Sources first
 - Docs: https://docs.flutter.dev. Pages used: /testing/overview, /app-architecture/guide, /deployment/obfuscate, /security, /perf/best-practices. Dart: https://dart.dev/tools/analysis, https://dart.dev/tools/dart-analyze.
-- As read: newest stable tag 3.47.8 (23 Oct 2026); the release table page did not load, so Dart version [unverified]. Read the project's `pubspec.yaml` and `.fvmrc` or `flutter --version` before using this. [official]
+- As read: newest stable 3.47.8 (23 Oct 2026) ships Dart 3.13.7 (3.47.7: Dart 3.13.5; 3.47.4 and 3.47.3: Dart 3.13.3), from Google's release feed https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json (read 2026-10-26; the docs archive table only loads by script). The archive page lists Flutter 3.50 for November 2026. Read the project's `pubspec.yaml` and `.fvmrc` or `flutter --version` before using this. [official]
 - A 3.47.8 security note says it blocks compromised eMudhra CA keys: stay on the newest patch. [official]
 
 ## Structure to match (official recommendation, not a strict rule)

@@ -1,10 +1,10 @@
 # Pack: Sales (pricing, launch, listing a product)
 
-Read when the task prices a product, plans a discount, prepares a release on a store, or writes a sales or outreach plan. Facts read 2026-10-25 on the pages named. Labels: [official], [reasoning], [unverified]. Money, prices, contracts and messages to customers are the user's decisions: propose, never apply (AGENTS.md: spending money and sending are irreversible).
+Read when the task prices a product, plans a discount, prepares a release on a store, or writes a sales or outreach plan. Facts read 2026-10-25 on the pages named. Labels: [official], [secondary], [reasoning], [unverified]. Money, prices, contracts and messages to customers are the user's decisions: propose, never apply (AGENTS.md: spending money and sending are irreversible).
 
 ## Sources first
 - Steam pricing: https://partner.steamgames.com/doc/store/pricing. Steam Direct: https://partner.steamgames.com/steamdirect. Release process: https://partner.steamgames.com/doc/store/releasing. [official]
-- Other stores (Google Play, App Store, itch.io, Epic): look up the vendor's own fee and release pages first; none were read here. [unverified]
+- Other stores, read 2026-10-26 through a page summarizer; re-read the page before a money decision. itch.io, https://itch.io/docs/creators/payments: default share 10%, the seller may set 0% to 100%; PayPal and Stripe take about $0.30 + 2.9% per payment; in Payouts mode funds arrive 7 days after purchase, minimum payout $5.00. [official] Apple, https://developer.apple.com/app-store/small-business-program/: 15% on paid apps and in-app purchases when proceeds were up to $1M last year and this year; the standard rate is not on that page. [official] Google Play, https://support.google.com/googleplay/android-developer/answer/112622: most markets 15% on the first $1M a year, 30% above, 15% for auto-renewing subscriptions; Australia, EEA, Japan, UK and US have a different split (10% + 5% billing fee on the first $1M); the summary was unclear, read the table. [official] Epic Games Store: the vendor page returned 403; a search summary says 100% of the first $1M per title each calendar year, then 88/12, applied automatically. [secondary]
 
 ## Steam facts (as read)
 - Fee: $100 per product, non-refundable but recouped from payments once the product reaches $1,000 adjusted gross revenue. Revenue share is **not** stated on that page: do not quote a percentage without reading the current agreement. [official]

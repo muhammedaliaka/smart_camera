@@ -1,10 +1,10 @@
 # Pack: AI asset production (3D, image, music, SFX, voice, rig, texture, video)
 
-Read when a task makes game or media assets with AI tools or picks one. Terms change often. Facts read 2026-10-25 on the pages named; re-read the tool's terms on the day you use it. Labels: [official] page text, [secondary], [reasoning], [unverified].
+Read when a task makes game or media assets with AI tools or picks one. Facts read 2026-10-25 on the pages named; re-read the tool's terms on the day you use it. Labels: [official] page text, [secondary], [reasoning], [unverified].
 
 ## Sources first
-- Steam AI disclosure: https://partner.steamgames.com/doc/gettingstarted/contentsurvey. US copyright: https://www.copyright.gov/ai/ (Part 2 report, January 2025).
-- Licenses: https://github.com/microsoft/TRELLIS, https://raw.githubusercontent.com/Tencent-Hunyuan/Hunyuan3D-2/main/LICENSE, https://www.meshy.ai/pricing, https://stability.ai/license, https://huggingface.co/black-forest-labs/FLUX.1-schnell and `FLUX.1-dev`, https://github.com/ace-step/ACE-Step, https://huggingface.co/stabilityai/stable-audio-open-1.0, https://github.com/facebookresearch/audiocraft, https://help.suno.com/en/articles/2746945, https://kenney.nl/support, https://freesound.org/help/faq/, https://sonniss.com/gameaudiogdc/, https://github.com/hexgrad/kokoro, https://elevenlabs.io/pricing.
+- Steam AI disclosure: https://partner.steamgames.com/doc/gettingstarted/contentsurvey. US copyright: https://www.copyright.gov/ai/.
+- Licenses: https://github.com/microsoft/TRELLIS, https://raw.githubusercontent.com/Tencent-Hunyuan/Hunyuan3D-2/main/LICENSE, https://www.meshy.ai/pricing, https://stability.ai/license, https://huggingface.co/black-forest-labs/FLUX.1-schnell and `FLUX.1-dev`, https://github.com/ace-step/ACE-Step-1.5, https://huggingface.co/stabilityai/stable-audio-open-1.0, https://github.com/facebookresearch/audiocraft, https://help.suno.com/en/articles/2746945, https://kenney.nl/support, https://freesound.org/help/faq/, https://sonniss.com/gameaudiogdc/, https://github.com/hexgrad/kokoro, https://elevenlabs.io/pricing.
 
 ## Traps (rules that never change)
 1. Every asset gets a ledger row in `assets/LEDGER.md`: file, tool and version, plan or model license, date, source URL of the terms, prompt, credit text, who reviewed it. No row, no ship. [reasoning]
@@ -28,7 +28,7 @@ Read when a task makes game or media assets with AI tools or picks one. Terms ch
 - Stability AI Community License: free under $1M yearly revenue; above it, an enterprise license. [official]
 
 **Music**
-- ACE-Step: Apache-2.0; v1.5 released 2026-01-28; the README names no training data and asks you to disclose AI use; its 8 GB VRAM note is for v1, v1.5 [unverified]. [official]
+- ACE-Step 1.5: MIT in README, LICENSE and model card (v1 repo: Apache-2.0); no training data named; asks you to disclose AI use; under 4 GB VRAM, 6-8 GB with the small LM, XL needs 12 GB+ with offload (read 2026-10-26). [official]
 - Stable Audio Open 1.0: Stability Community License; up to 47 s clips; trained on CC0, CC BY and CC Sampling+ recordings. [official]
 - MusicGen weights (AudioCraft): CC-BY-NC 4.0, so not for a sold game. Code is MIT. [official]
 - Suno: free plan, Suno owns the songs, non-commercial only; Pro or Premier, you own them. [official]
@@ -45,7 +45,7 @@ Read when a task makes game or media assets with AI tools or picks one. Terms ch
 - ElevenLabs: a commercial license is listed from the Starter plan up, none on Free. Credit rules [unverified]. [official]
 
 **Rig, animation, texture, VFX**
-- Mixamo (Adobe): characters and animations royalty-free for commercial projects, games included; no credit; do not redistribute the raw files or train ML models on them; auto-rigger: bipedal humanoids only. [secondary: search summary; Adobe's FAQ page returned 403]
+- Mixamo (Adobe): characters and animations royalty-free for commercial projects, games included; no credit; do not redistribute the raw files or train ML models on them; auto-rigger: bipedal humanoids only. [secondary: search summary; Adobe FAQ 403]
 - Poly Haven: CC0, commercial use, no credit. ambientCG: CC0 1.0, no credit, suggests a credit line. [official]
 - AI rig, animation and texture tools, and particle assets: terms [unverified]; build VFX in the engine from CC0 textures. [reasoning]
 

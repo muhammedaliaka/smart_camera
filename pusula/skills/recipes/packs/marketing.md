@@ -15,7 +15,9 @@ Read when the task writes or reviews marketing material: a store page, a launch 
 
 ## Disclosure and consent
 - Endorsement or influencer posts: disclose every material connection, including free products; plain words like "ad" or "sponsored", not "sp", "collab" or a lone "thanks"; put it with the endorsement, inside the video itself (spoken or on screen), repeated in live streams. [official]
-- Marketing email: accurate sender and subject, say it is an ad, give a postal address, a clear opt-out honored within 10 business days, and you stay responsible when an agency sends it. Penalty up to $53,088 per email as the page says. This is US law; EU and Turkish rules differ and were not read: [unverified], ask a lawyer. [official]
+- Marketing email: accurate sender and subject, say it is an ad, give a postal address, a clear opt-out honored within 10 business days, and you stay responsible when an agency sends it. Penalty up to $53,088 per email as the page says. This is US law. [official]
+- Turkey, Law 6563, https://www.mevzuat.gov.tr/MevzuatMetin/1.5.6563.pdf (read 2026-10-26): commercial electronic messages (email, SMS, calls) need the recipient's prior consent, written or by any electronic means (Art. 6/1); messages to tradespeople and merchants need none (6/2); the message must match the consent and give the sender's identity and contact details (Art. 7); the recipient may refuse at any time without reason, refusal must be easy and free, and sending stops within three business days (Art. 8); consents not uploaded to the ministry's system (İYS) in the set time are invalid (Art. 11/5); the fine for sending without consent is 1,000-5,000 TL in the text and 2,859-14,309 TL for 2026 by the ministry's table, up to ten times as much when sent to many people at once (Art. 12). [official]
+- EU rules (ePrivacy Directive Art. 13, GDPR) were not read: EUR-Lex returned an empty page. [unverified] Ask a lawyer for any market you sell in.
 - Search: write for people, use the words the audience searches in titles, headings, alt text and link text, keep links crawlable. Meeting the page does not guarantee indexing. [official]
 
 ## Traps

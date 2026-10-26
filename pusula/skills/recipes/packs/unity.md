@@ -3,7 +3,7 @@
 Read when the task touches a Unity project. Facts read 2026-10-25 on the pages named. Labels: [official], [reasoning], [unverified].
 
 ## Sources first
-- Manual: https://docs.unity3d.com/6000.0/Documentation/Manual/ (use the folder that matches the project's `ProjectSettings/ProjectVersion.txt`). Pages used: UIElements.html, UI-system-compare.html, EditorCommandLineArguments.html, scripting-backends-il2cpp.html, managed-code-stripping.html.
+- Manual: https://docs.unity3d.com/6000.0/Documentation/Manual/ (use the folder that matches the project's `ProjectSettings/ProjectVersion.txt`). Pages used: UIElements.html, UI-system-compare.html, EditorCommandLineArguments.html, scripting-backends-il2cpp.html, managed-code-stripping.html (6000.0 folder); trap 7 pages: see there.
 - Test Framework: https://docs.unity3d.com/Packages/com.unity.test-framework@1.4/manual/reference-command-line.html.
 - Versions: https://unity.com/releases/unity-6. As read: 6.3 LTS is supported to December 2027; 6.0 LTS to October 2026; 6.2 is a non-LTS update. [official]
 - Official plugin: `Unity-Technologies/unity-agent-plugin` (Unity 6+, skills, `/unity:ui-uitk`, uses the Unity CLI, no MCP, "Unity Companion License"). Not installed. Needs a license read, a SkillSpector scan and the user's yes (`THIRD_PARTY.md`). [official]
@@ -23,7 +23,7 @@ Read when the task touches a Unity project. Facts read 2026-10-25 on the pages n
 4. Without `-accept-apiupdate` the API updater does not run in batch mode and compile errors can follow. [official]
 5. Code stripping removes code the linker cannot see; reflection targets need `link.xml` or `[Preserve]`. [official]
 6. IL2CPP converts scripts to C++ at build time and supports more platforms than Mono. It does not make a build copy-proof (`security-and-hardening/anti-copy.md`). [official]
-7. A scene or prefab edited as text can break GUIDs. Edit through the editor or the official CLI. [unverified]
+7. A `.meta` file holds the asset's unique ID and import settings. If it is lost, every reference to the asset breaks and Unity makes a new one; move or rename an asset outside Unity only together with its `.meta`. Scenes and prefabs are text YAML, one document per object, with a `fileID` unique inside the file; `UnityYAMLMerge` ships with the editor for `.unity`, `.prefab` and `.meta` (other YAML assets need `--force`). Read 2026-10-26 on AssetMetadata.html, SmartMerge.html, FormatDescription.html. [official] The pages do not cover hand-editing, so edit through the editor or the official CLI. [reasoning]
 
 ## Checks
 - Headless tests: `Unity -runTests -batchmode -projectPath <path> -testPlatform EditMode|PlayMode -testResults <file.xml> -logFile <log>`; filter with `-testFilter` or `-assemblyNames`. Result file is NUnit XML. [official]

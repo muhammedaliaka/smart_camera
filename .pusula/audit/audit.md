@@ -81,7 +81,8 @@ Status: **Done** (built and checked), **Partial**, **Chat only** (answered in ch
 | P7 | Windows backslash and PowerShell paths untested in the lock guard | Medium (user's PC is Windows) | Tests added; guard already handled them |
 | P8 | Pack read does not mean every trap is used: nextjs p3 item 6 (narrow client props) was in the pack and absent in all 6 answers | Low | Noted; not tuned to the test |
 | P9 | Rubric item p4-6 (`three/addons`) conflicts with "match existing style" | Low | Rewrite item next time |
-| P10 | `ai-production.md` is at 6,144 bytes: the size limit is full | Low | Next addition must remove text first |
+| P10 | `ai-production.md` is at 6,137 of 6,144 bytes: the size limit is full | Low | Next addition must remove text first |
+| P14 | My own pack text was wrong: `ai-production.md` said ACE-Step is Apache-2.0; the 1.5 README, LICENSE file and Hugging Face model card say MIT (v1 was Apache-2.0). Round-2 answers in both arms repeated "Apache-2.0"; no rubric item depended on it | Medium (a license fact) | Fixed 2026-10-26 from the raw LICENSE file; both licenses allow commercial use, so no decision changed |
 | P11 | The skills live in `smart_camera`, an unrelated Python project | Medium | Decision 1 |
 
 ## 3. Risks (ranked)
@@ -113,7 +114,7 @@ The user said unanswered questions use my recommendation.
 4. Keep `license_allow` empty (off) or set it for a commercial game.
 5. Allow reading terms pages that need an account or return 403 (Tripo, Adobe Mixamo FAQ, Google Flow Music).
 6. Allow a Unity content-format reader (UABEA, AssetRipper) on a copy of the build: new permission.
-7. Unreal royalty and pages: not read.
+7. Unreal royalty: Epic's licence, EULA, FAQ and Epic Games Store revenue pages all return 403 here. The pack holds search-summary facts only (labeled secondary). Read the FAQ yourself before any money decision.
 
 ## 6. Needs the PC
 
@@ -127,3 +128,4 @@ Unity release build and REA measurement (`pc-runbook.md`); Unity extractor entry
 - SkillSpector on all `skills`: score 13/100, SAFE; one finding, the known false alarm ("don't apologize" in `frontend-design`, line 69).
 - A/B: rounds 1-2 in `tests/results/2026-10-25b.md`; round 3 in `tests/results/2026-10-25c.md`.
 - `osv-scanner` on the camera project's `requirements.txt`: no issues (fixed earlier in commit 36b00ab).
+- Pack facts closed from official pages on 2026-10-26 (earlier `[unverified]`): Steam trailer specs (Steamworks Trailers page), Flutter 3.47.8 with Dart 3.13.7 (Google's release feed), Unity `.meta` and YAML scene facts (three Manual pages), Turkish Law 6563 on commercial email (mevzuat.gov.tr PDF, read in full articles 6-8, 11, 12), itch.io, Apple and Google Play fees (through a page summarizer), ACE-Step 1.5 license and VRAM (raw LICENSE and README). Still `[unverified]` or secondary: Unreal royalty, Epic Games Store revenue, EU email law (EUR-Lex returns an empty page), Tripo, Mixamo, ElevenLabs credit rules, Google Flow Music, loudness targets, Unreal C++ sast, hosted video tools.
