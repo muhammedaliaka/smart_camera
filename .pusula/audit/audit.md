@@ -6,7 +6,7 @@ Scope: everything the user asked for in 51 messages, what exists now, what is mi
 
 **Ne istedin?** Claude Code ve Codex için küçük, ucuz, her projeye uyan bir sistem: kurallar, skill'ler, alan paketleri ve makine kontrolleri. Yapay zekâ kaynağı önce resmi yerden okusun, eksik düşünmesin, kod yazmakta tembel olsun ama kontrolde tembel olmasın, izinlerini unutmasın, sade Türkçe konuşsun. Oyun için de (RTS) asset listesi, optimizasyon ve kopyalamaya karşı koruma istedin.
 
-**Ne var?** 18 skill, 13 alan paketi, 8 makine kontrolü, 2 hook, ayar şablonları, 29 satırlık test tablosu, 106 birim test (7'si ağ, node ya da araç ister, atlanır). Başlangıç yükü 1.792 jeton (hedef 1.800). Çekirdek kural 920 jeton. Hepsi `pusula/` klasöründe.
+**Ne var?** 18 skill, 13 alan paketi, 8 makine kontrolü, 2 hook, ayar şablonları, 29 satırlık test tablosu, 111 birim test (8'i ağ, node ya da araç ister, atlanır). Başlangıç yükü 1.792 jeton (hedef 1.800). Çekirdek kural 920 jeton. Hepsi `pusula/` klasöründe.
 
 **Bu turda bulduğum ve düzelttiğim şeyler**
 1. Yönlendirici hiç çalışmıyordu: model `Skill` aracını hiç çağırmadı (15 koşunun 0'ı). Paketler yazılmıştı ama kimse okumuyordu. `AGENTS.md`'ye tek cümlelik işaretçi koydum; sonra beklenen paket 12 koşunun 11'inde okundu (Doğrulandı).
@@ -126,7 +126,7 @@ Unity release build and REA measurement (`pc-runbook.md`); Unity extractor entry
 
 ## 7. Verification log (this pass)
 
-- `python -m unittest discover -s tests`: 106 tests, OK (7 skipped: need network, node modules or tools not set up). Run 2026-10-26.
+- `python -m unittest discover -s tests`: 111 tests, OK (8 skipped: need network, node modules or tools not set up). Run 2026-10-26, after the licenses check came back.
 - `pusula_check.py --root pusula --all`: CLEAN, 167 files (size, plan, hardcode, secrets, sast, complexity, architecture, deps).
 - `measure.py load`: core 920/920, start 1,792/1,800, largest skill body 1,096/1,100, no file over 30 KB.
 - SkillSpector on all `skills` (static, `--recursive --no-llm`, re-run 2026-10-26 after the pack and skill edits): every skill LOW; two findings, both false alarms: "don't apologize" in `frontend-design` (13/100) and `recipes` `packs/marketing.md:19` (7/100, MEDIUM EA2 "autonomous decision making"; it is the Turkish email-law paragraph I added, a description of what the law forbids, not an instruction to send). The LLM analyzers need an API key and did not run; a scan of one skill folder alone flags the pack pointer as "referenced artifact not inspected", so scan the whole tree.
