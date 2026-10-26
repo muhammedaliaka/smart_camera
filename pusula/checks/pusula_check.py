@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Pusula mechanical checks. Standard library only; thresholds live in config.json.
 
-Usage: python pusula_check.py [--root DIR] [--staged | --all] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps,shield] [--config FILE]
+Usage: python pusula_check.py [--root DIR] [--staged | --all] [--only size,plan,hardcode,secrets,sast,complexity,architecture,deps,licenses,shield] [--config FILE]
 Exit codes: 0 clean, 1 findings, 2 clean but some check did not run.
 Default: size, plan, hardcode and complexity look only at files changed since the last commit (new files included), so old code stays quiet;
 secrets, sast, architecture and deps always look at the whole project, because a hole in old code is still a hole.
 --staged limits size, plan, hardcode, secrets, sast and complexity to staged changes. --all makes every check look at the whole project.
-sast and deps need network (rule download, advisory database); offline they report [NOT CHECKED].
+sast, deps and licenses need network (rule download, advisory database); offline they report [NOT CHECKED].
+licenses is off until config.json lists license_allow; "@name" inside it expands to license_presets[name].
 shield is opt-in (name it in --only): it scans release_dir from .pusula/shield.config.json for files that hand over the source for free.
 """
 import argparse
@@ -21,10 +22,10 @@ import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "sast", "complexity", "architecture", "deps"]
+ALL_CHECKS = ["size", "plan", "hardcode", "secrets", "sast", "complexity", "architecture", "deps", "licenses"]
 OPT_IN = ["shield"]
 FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
-TOOL_FOR = {"hardcode": "semgrep", "secrets": "gitleaks", "sast": "semgrep", "complexity": "lizard", "deps": "osv"}
+TOOL_FOR = {"hardcode": "semgrep", "secrets": "gitleaks", "sast": "semgrep", "complexity": "lizard", "deps": "osv", "licenses": "osv"}
 
 
 def matches(path, patterns):
@@ -235,11 +236,11 @@ def check_architecture(root, cfg):
     return [f"{name}: module path '{cell}' {why}" for cell, why in problems if why]
 
 
-def osv_packages(root, cfg):
+def osv_packages(root, cfg, *flags):
     exe = tool_path(cfg, "osv")
     if not exe:
         return None
-    proc = run([exe, "scan", "source", "-r", "--format", "json", "."], root)
+    proc = run([exe, "scan", "source", *flags, "-r", "--format", "json", "."], root)
     if proc.returncode == 128:
         return []
     if proc.returncode not in (0, 1) or not proc.stdout.strip().startswith("{"):
@@ -254,6 +255,30 @@ def check_deps(root, cfg):
         return None
     return [f"{src}: {pkg['package']['name']} {pkg['package']['version']}: {', '.join(v['id'] for v in pkg['vulnerabilities'])}"
             for src, pkg in packages if pkg.get("vulnerabilities")]
+
+
+def license_list(cfg):
+    """license_allow with every "@name" replaced by the license_presets[name] list."""
+    out = []
+    for item in cfg["license_allow"]:
+        if not item.startswith("@"):
+            out.append(item)
+        elif item[1:] in cfg.get("license_presets", {}):
+            out.extend(cfg["license_presets"][item[1:]])
+        else:
+            raise Unavailable(f"license_allow names an unknown preset: {item}")
+    return out
+
+
+def check_licenses(root, cfg):
+    allow = license_list(cfg)
+    if not allow:
+        return []
+    packages = osv_packages(root, cfg, "--licenses=" + ",".join(allow))
+    if packages is None:
+        return None
+    return [f"{src}: {pkg['package']['name']} {pkg['package']['version']}: license {', '.join(pkg['license_violations'])} is not in license_allow"
+            for src, pkg in packages if pkg.get("license_violations")]
 
 
 def sub_dict(project, key):
@@ -383,6 +408,7 @@ def main():
         "complexity": lambda: check_complexity(files, root, cfg, scoped),
         "architecture": lambda: check_architecture(root, cfg),
         "deps": lambda: check_deps(root, cfg),
+        "licenses": lambda: check_licenses(root, cfg),
         "shield": lambda: check_shield(root, cfg),
     }
     print(f"PUSULA CHECKS root={root} scope={args.mode} files={len(files)}")

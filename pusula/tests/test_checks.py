@@ -245,6 +245,45 @@ class DepsCheck(CheckCase):
         self.assertIn("lodash", out.stdout)
 
 
+class LicensesCheck(CheckCase):
+    LOCK = json.dumps({"name": "demo", "lockfileVersion": 3, "packages": {
+        "": {"name": "demo", "dependencies": {"left-pad": "1.3.0"}},
+        "node_modules/left-pad": {"version": "1.3.0",
+                                  "resolved": "https://registry.npmjs.org/left-pad/-/left-pad-1.3.0.tgz"}}})
+
+    def test_preset_expands_and_plain_ids_pass_through(self):
+        cfg = {"license_allow": ["@permissive", "WTFPL"], "license_presets": {"permissive": ["MIT", "ISC"]}}
+        self.assertEqual(pusula_check.license_list(cfg), ["MIT", "ISC", "WTFPL"])
+
+    def test_default_config_ships_a_permissive_preset_and_stays_off(self):
+        self.assertEqual(CFG["license_allow"], [])
+        self.assertTrue({"MIT", "Apache-2.0"} <= set(CFG["license_presets"]["permissive"]))
+        copyleft = {"GPL-2.0", "GPL-3.0", "AGPL-3.0", "LGPL-3.0", "MPL-2.0"}
+        self.assertFalse(copyleft & set(CFG["license_presets"]["permissive"]))
+
+    def test_unknown_preset_is_reported_not_silently_passed(self):
+        self.write("package-lock.json", self.LOCK)
+        out = self.run_check("licenses", extra=self.config_with(license_allow=["@nope"]))
+        self.assertEqual(out.returncode, 2, out.stdout)
+        self.assertIn("@nope", out.stdout)
+
+    @unittest.skipUnless(shutil.which(CFG["tools"]["osv"]["exe"]), "osv-scanner not installed")
+    def test_off_until_an_allowlist_is_configured(self):
+        self.write("package-lock.json", self.LOCK)
+        out = self.run_check("licenses")
+        self.assertEqual(out.returncode, 0, out.stdout)
+
+    @unittest.skipUnless(shutil.which(CFG["tools"]["osv"]["exe"]), "osv-scanner not installed")
+    @unittest.skipUnless(os.environ.get("PUSULA_TEST_NET") == "1", "set PUSULA_TEST_NET=1 (licenses come from the network)")
+    def test_flags_a_license_outside_the_allowlist(self):
+        self.write("package-lock.json", self.LOCK)
+        out = self.run_check("licenses", extra=self.config_with(license_allow=["Apache-2.0"]))
+        self.assertEqual(out.returncode, 1, out.stdout)
+        self.assertIn("left-pad", out.stdout)
+        ok = self.run_check("licenses", extra=self.config_with(license_allow=["@permissive", "WTFPL"]))
+        self.assertEqual(ok.returncode, 0, ok.stdout)
+
+
 @unittest.skipUnless(shutil.which(CFG["tools"]["lizard"]["exe"]), "lizard not installed")
 class ComplexityCheck(CheckCase):
     BRANCHY = "def f(a):\n    r = 0\n" + "".join(f"    if a == {n}:\n        r += {n}\n" for n in range(12)) + "    return r\n"

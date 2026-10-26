@@ -75,6 +75,22 @@
     "*/.pusula/*"
   ],
   "architecture_file": ".pusula/architecture.md",
+  "license_allow": [],
+  "license_presets": {
+    "permissive": [
+      "MIT",
+      "MIT-0",
+      "Apache-2.0",
+      "BSD-2-Clause",
+      "BSD-3-Clause",
+      "ISC",
+      "0BSD",
+      "Zlib",
+      "BSL-1.0",
+      "Unlicense",
+      "CC0-1.0"
+    ]
+  },
   "after_compact_max_bytes": 3000,
   "shield": {
     "project_config": ".pusula/shield.config.json",

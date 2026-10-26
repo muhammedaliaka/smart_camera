@@ -28,7 +28,7 @@ Scope: everything the user asked for in 51 messages, what exists now, what is mi
 1. Pusula ayrı, özel bir GitHub deposuna taşınsın mı? Şu an `smart_camera` içinde duruyor; o depo başka bir proje.
 2. Unity'nin resmi eklentisi (`unity-agent-plugin`) kurulsun mu? Lisansı ("Unity Companion License") okunmadı; kurmak için senin evetin ve PC lazım.
 3. `codebase-memory-mcp` ve `rtk` bir deneme klasöründe denensin mi? Sadece belgelerini okudum (`wave2-tools.md`).
-4. Ticari oyun için lisans filtresi (`license_allow`) açık kalsın mı? Şimdi kapalı.
+4. Lisans denetimi (`license_allow`): 25 Ekim'de silinmişti, 26 Ekim'de geri eklendi (varsayılan kapalı, `@permissive` ön ayarı hazır). Oyun deposunda açmak sana kalıyor.
 5. Tripo, Google Flow Music, ElevenLabs ses/atıf kuralları ve Unreal telif/sayfaları için bir hukuk ya da hesap sayfası açmam gerekirse onay ver.
 
 **PC gelince** (`.pusula/build-shield/pc-runbook.md` içinde sırayla): Unity release build ile REA ölçümü, Unity çıkarıcı satırı, `/context` rakamı, "yapma"nın cazip anda tutulması (T24), gerçek oturumda skill tetiklenmesi.
@@ -115,7 +115,7 @@ The user said unanswered questions use my recommendation.
 1. Create a dedicated private `pusula` repository and move `pusula/` and `.pusula/` there.
 2. Install Unity's official plugin: needs a license read, a SkillSpector scan, the PC and a yes.
 3. Try `codebase-memory-mcp` and `rtk` in a throwaway clone (docs-only so far).
-4. Keep `license_allow` empty (off) or set it for a commercial game.
+4. Set `license_allow` to `["@permissive"]` in the game repo's `.pusula/checks/config.json` (the check was removed on 2026-10-25 and restored 2026-10-26; default stays off).
 5. Allow reading terms pages that need an account or return 403 (Tripo, Adobe Mixamo FAQ, Google Flow Music).
 6. Allow a Unity content-format reader (UABEA, AssetRipper) on a copy of the build: new permission.
 7. Unreal royalty: Epic's licence, EULA, FAQ and Epic Games Store revenue pages all return 403 here. The pack holds search-summary facts only (labeled secondary). Read the FAQ yourself before any money decision.
