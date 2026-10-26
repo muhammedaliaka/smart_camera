@@ -1,0 +1,157 @@
+[probe p11]
+Dosya yazamadım, çünkü bu oturumda `Write` aracı kapalı. Her şeyi aşağıya yazdım. Hiçbir şey gönderilmedi ya da yayınlanmadı. `.pusula/` altına kayıt da düşemedim. "Hiçbir şeyi gönderme" kuralını bu yüzden dosyaya yazamadım.
+
+## Varsayımlar
+- Depoda oyunla ilgili hiçbir bilgi yok. Oyun adı, türü ve özellikleri `[KÖŞELİ]` boşluk olarak duruyor. Hiçbir şey uydurmadım.
+- Oyun Steam'de satılacak. Çıkış tarihi `[R]`.
+- Gönderen Türkiye'de bir kişi ya da küçük stüdyo. Oyuncular Türkiye'de.
+- Henüz bülten listesi yok. Liste kayıt formuyla kurulacak.
+- YouTuber'lar seçilmedi. Adlar `[YOUTUBER 1..3]`.
+- Oyunda yapay zekâ içeriği olup olmadığını bilmiyorum. Aşağıda "kontrol et" olarak işaretledim.
+
+## 1. Steam mağaza açıklaması (taslak)
+
+**Kısa açıklama (EN):** `[OYUN ADI]` is a `[TÜR]` where `[TEK CÜMLE: oyuncu ne yapar]`.
+**Kısa açıklama (TR):** `[OYUN ADI]`, `[TÜR]` türünde bir oyun. `[Oyuncu ne yapar, tek cümle.]`
+
+**Uzun açıklama (TR):**
+```
+[BAŞLIK: oyunun ana vaadi, bir satır]
+
+[1-2 cümle: dünya ve durum.]
+
+ÖNE ÇIKANLAR
+- [Özellik 1]: [oyuncuya ne kazandırır]
+- [Özellik 2]: [oyuncuya ne kazandırır]
+- [Özellik 3]: [oyuncuya ne kazandırır]
+
+NASIL OYNANIR
+[2-3 kısa cümle: temel döngü.]
+
+[Dil desteği, kontrol, tahmini süre: yalnızca doğruysa.]
+```
+Uzun açıklamanın İngilizcesi aynı iskeletle yazılır.
+
+**İddia tablosu.** Her cümlenin kaynağı olmalı. Kaynağı olmayan cümle metinden çıkar.
+
+| İddia | Kaynak (build, ekran görüntüsü) |
+|---|---|
+| `[Özellik 1]` | `[doldur]` |
+| `[Özellik 2]` | `[doldur]` |
+| `[Özellik 3]` | `[doldur]` |
+
+**Steam kuralları:**
+- Açıklamada başka siteye bağlantı olmaz. Bağlantılar için site ve sosyal medya alanlarını kullan.
+- Steam arayüzünü taklit eden görsel olmaz (istek listesi düğmesi, kapsül, fiyat).
+- Başka Steam oyununu öne çıkaran görsel ya da bağlantı olmaz.
+- Görsel ve fragman ölçülerini tahmin etme. Steamworks sayfasından oku.
+- Yayınlamadan önce Store Beta Mode ile önizle. Yayınlamak her şeyi Steam'in herkese açık sunucularına gönderir.
+- Oyun adı, ön inceleme sonrası değişmez.
+- "Yakında" sayfası çıkıştan en az 2 hafta önce herkese açık olmalı.
+- Ücret ödemeden sonra ilk çıkış için 30 gün beklenir.
+- İnceleme 3-5 iş günü sürer. En az 7 gün önce gönder.
+- İçerik anketinde yapay zekâ içeriğini bildir. Bu, oyunla gelen ya da oyun çalışırken üretilen içerik içindir.
+
+## 2. Üç YouTuber'a mesaj (taslak)
+
+Aynı iskelet üç kişiye gider. Her mesajın ikinci satırını kişiye göre değiştir.
+
+**Konu:** `[OYUN ADI]` için ücretsiz Steam anahtarı, `[KANAL ADI]` için
+
+```
+Merhaba [İSİM],
+
+[Kanalındaki şu videoyu izledim: BAŞLIK. Bu yüzden yazıyorum: bir cümle, gerçek ve kişiye özel.]
+
+Ben [AD], [STÜDYO/KİŞİ]. [OYUN ADI] adlı [TÜR] oyunu yapıyorum. Çıkış tarihi [R].
+Oyunu tek cümlede anlatayım: [TEK CÜMLE].
+
+Sana ücretsiz bir Steam anahtarı göndermek isterim. İstersen önce kısa bir oyun videosu yollarım: [dosya/erişim yolu, Steam bağlantısı değil].
+
+İki ricam var:
+1. Oyunu beğenmek zorunda değilsin. Dürüst fikrin benim için yeter.
+2. Anahtarı ücretsiz aldığını videonda söyle. Videonun içinde, sözlü ya da ekranda. Örnek: "Bu oyunun anahtarını geliştirici ücretsiz verdi."
+
+Ilgilenmezsen sorun yok. Yanıt yazman gerekmez.
+
+[AD]
+[İletişim bilgisi]
+```
+
+**Mesaj için kurallar:**
+- Anahtar ücretsiz bir ürün olduğu için, YouTuber'ın bunu bildirmesi gerekir. FTC kılavuzu bunu ister (ABD kuralı).
+- Video içinde bildirim şart. "sp" ya da "collab" yeterli sayılmaz.
+- Olumlu yorum şartı koşma. Metin yazıp söyletme.
+- Anahtarı herkese açık yerde paylaşma.
+- Önce kanalın yayımladığı iş e-postasını ya da iletişim formunu kullan.
+- İlk mesaj toplu ya da tanıtım mesajı sayılabilir. 6563 sayılı Kanun'da tacirlere izin şartı yok. YouTuber'ın tacir sayılıp sayılmadığını okumadım. Avukata sor.
+
+## 3. Türkiye e-posta bülteni planı
+
+**Amaç:** İzin vermiş oyunculara çıkış öncesi ve sonrası haber vermek.
+
+**Liste nasıl kurulur:**
+1. Kayıt formu `[SİTE]` sayfasında olur. İzin kutusu boş gelir, kendiliğinden işaretli olmaz.
+2. Form şunu açıkça yazar: "Oyun haberleri ve kampanyalar için ticari e-posta almayı kabul ediyorum."
+3. Önce onay e-postası gider (çift onay). Bu zorunlu değil, iyi uygulamadır.
+4. İzin kaydı tutulur: kim, ne zaman, nereden.
+5. İzinler İYS'ye yüklenir. Süresinde yüklenmeyen izinler geçersiz sayılır.
+6. Satın alınmış liste, tanıdık listesi ya da Steam yorumcularının adresleri kullanılmaz. Bunlar için izin yok.
+
+**Her e-postada olması gerekenler:**
+- Gönderenin adı ve iletişim bilgisi.
+- Mesajın reklam olduğunu söyleyen açık ifade.
+- Doğru konu satırı.
+- Postane adresi (ABD tarafından CAN-SPAM için).
+- Tek tıkla ücretsiz çıkış bağlantısı.
+- Çıkış isteği en geç 3 iş günü içinde uygulanır. (6563 sayılı Kanun Madde 8; ABD'de 10 iş günü.)
+- İzin verilen konuya uygun içerik.
+
+**Takvim önerisi.** Bu bir öneridir, kaynağı yok. `[R]` çıkış günüdür.
+
+| Zaman | Konu | Not |
+|---|---|---|
+| Kayıt açılışı | Hoş geldin ve ne gönderileceği | Sıklığı söyle |
+| R-4 hafta | Oyunun tanıtımı, ekran görüntüleri | Mağaza sayfası canlı olsun |
+| R-2 hafta | Fragman ya da demo haberi | `[varsa]` |
+| R-1 hafta | Geri sayım, fiyat ve çıkış saati | Fiyat önceden kesinleşmiş olsun |
+| R günü | "Çıktı" | Mağaza bağlantısı |
+| R+2 hafta | Teşekkür, güncelleme notu | İndirim 30 günden önce yapılamaz |
+
+**Ölçüler.** Açılma oranı ve tıklama hedefi yazmadım, çünkü kaynak yok. İlk gönderimden sonra kendi sayını yaz.
+
+**Araç:** E-posta aracı `[ARAÇ]`. Şunları desteklemeli: çıkış bağlantısı, izin kaydı dışa aktarma. İYS bağlantısını okumadım. Araç seçmeden önce kontrol et.
+
+## Uyulacak kurallar ve yasalar
+
+Kaynaklar proje paketlerinden geldi. İnternet kapalıydı. Göndermeden önce sayfaları yeniden oku.
+
+| Alan | Kural | Kaynak |
+|---|---|---|
+| Türkiye e-posta | 6563 sayılı Kanun: önceden izin (Md. 6/1), gönderen kimliği (Md. 7), ücretsiz ret ve 3 iş günü (Md. 8), İYS (Md. 11/5), para cezası (Md. 12) | mevzuat.gov.tr [resmî] |
+| ABD e-posta | CAN-SPAM: reklam ifadesi, adres, 10 iş günü | ftc.gov [resmî] |
+| Fenomen | Ücretsiz ürün dahil her bağ bildirilir; videonun içinde | ftc.gov [resmî, ABD] |
+| Steam | Sayfa, bağlantı, görsel ve yayın kuralları | partner.steamgames.com [resmî] |
+| Steam yapay zekâ | İçerik anketi bildirimi | partner.steamgames.com [resmî] |
+| Arama | İnsanlar için yaz, bağlantılar taranabilir olsun | developers.google.com [resmî] |
+
+**Okumadım, avukata sor [doğrulanmadı]:**
+- KVKK (6698): aydınlatma metni, kayıt listesinin saklanması ve silinmesi.
+- Türkiye reklam ve fenomen kuralları (Reklam Kurulu).
+- AB'den oyuncu kayıt olursa: ePrivacy ve GDPR.
+- Steam anahtar isteği ve dağıtımı kuralları.
+- İYS kayıt adımları.
+
+**Genel yasaklar:**
+- Sayı uydurma: istek listesi hedefi, açılma oranı, "en iyi saat".
+- Oyunda olmayan özelliği vaat etme.
+- Anahtar ya da liste dosyasını depoya yazma.
+
+## Göndermeden önce
+1. Tüm `[KÖŞELİ]` yerleri doldur.
+2. İddia tablosunu tamamla.
+3. Yapay zekâ içeriği var mı, söyle.
+4. Avukat kontrolünü yap.
+5. Her gönderi için bana adıyla açık bir "evet" yaz.
+
+`Write` açılırsa bunları `.pusula/launch-marketing/` altına dosya olarak kaydedebilirim.

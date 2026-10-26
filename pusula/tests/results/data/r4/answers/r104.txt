@@ -1,0 +1,133 @@
+[probe p11]
+Dosya yazma aracı bu oturumda kapalı. `.pusula/` altına dosya yazamadım. Taslakları aşağıya yazıyorum. Hiçbir şey gönderilmedi veya yayınlanmadı.
+
+## Varsayımlar
+- Depoda oyun bilgisi yok. README sadece `# scratch`.
+- Bu yüzden oyunla ilgili her şey `[YER TUTUCU]`. Hiçbir özellik uydurmadım.
+- Oyun Steam'de çıkacak. Hedef kitle Türkiye.
+- Bülten listesi henüz yok.
+- YouTuber adlarını bilmiyorum. Kanalları sen seç.
+
+## 1. Steam mağaza sayfası taslağı
+
+**Kısa açıklama**
+[OYUN ADI], [TÜR] oyunudur. [Oyuncu ne yapar] ve [en güçlü fark] seni bekliyor.
+
+**Hakkında**
+**[Tek cümlelik vaat.]**
+[OYUN ADI] oyununda [rol] olursun. [Ana döngü: 2-3 kısa cümle.]
+
+**Öne çıkanlar**
+- [Özellik 1] (kaynak: ekran görüntüsü veya build sürümü)
+- [Özellik 2] (kaynak: …)
+- [Özellik 3] (kaynak: …)
+
+**Dil desteği:** Arayüz [TR/EN]. Seslendirme [var/yok].
+**Geliştirici notu:** [2 cümle: kim yapıyor, oyun hangi aşamada.]
+
+**Yapay zekâ bildirimi:** Oyunda yapay zekâ içeriği [var/yok]. Varsa Steam anketinin sorusuna göre doldur. Her varlık için `assets/LEDGER.md` satırı gerekir.
+
+**Kontrol**
+- Metinde dış bağlantı yok.
+- Steam arayüzünü taklit eden görsel yok.
+- Kanıtı olmayan satırı sil.
+- Yayınlamadan önce Store Beta Mode ile önizle.
+
+## 2. Üç YouTuber mesajı
+
+Üçünde de geçerli kurallar:
+- Ücretsiz anahtar, görüş şartı olmadan verilir.
+- Olumlu yorum isteme.
+- Anahtarla video yaparsan, videoda ücretsiz aldığını söylemeli.
+- Anahtarı dosyaya veya mesaja önceden yazma.
+
+**A: Kısa ve düz**
+> Konu: [OYUN ADI] için ücretsiz anahtar
+> Merhaba [İSİM], ben [ADIN], [OYUN ADI] oyununun geliştiricisiyim. [Oyun ne: 1 cümle.]
+> [Videoyu] izledim. [Gerçek bir cümle.]
+> İstersen ücretsiz Steam anahtarı göndereyim. Görüşün sana ait. Olumlu yorum beklemiyorum.
+> Video yaparsan anahtarı ücretsiz aldığını belirtmen gerekir.
+> Sayfa: [ADRES]. [ADIN], [İLETİŞİM]
+
+**B: Önce soran**
+> Konu: [OYUN ADI] hakkında bir soru
+> Merhaba [İSİM], [belirli video] videonu beğendim. [Neden.]
+> [TÜR] oyunu yapıyorum: [1 cümle]. Sana anahtar göndermeme izin verir misin?
+> Şart yok. Video yaparsan "ücretsiz anahtar" demen yeterli.
+> [ADIN], [İLETİŞİM]
+
+**C: Demo odaklı**
+> Konu: [OYUN ADI] demosu
+> Merhaba [İSİM], [OYUN ADI] için [X dakikalık] demo hazır. Seni seçme sebebim: [gerçek bir gözlem].
+> Demo anahtarı göndereyim mi? Görüşün olumlu ya da olumsuz olabilir.
+> Ücretli iş birliği istersen ayrı konuşuruz. O durumda videoda "reklam" yazmalı.
+> [ADIN], [İLETİŞİM]
+
+Her mesajı göndermeden önce adıyla "gönder" demelisin.
+
+## 3. E-posta bülteni planı
+
+**Liste kurma (önce izin)**
+- Kayıt formunda işaretsiz onay kutusu olsun.
+- Onay metninde gönderen adı, iletişim ve sıklık yazsın.
+- Çift onay maili kullan.
+- Onay kaydı tut: tarih, kaynak, metin sürümü.
+- Onayları İYS'ye yükle.
+- Satın alınmış liste veya toplu mail yok.
+
+**Takvim** (Steam kuralları: "coming soon" sayfası en az 2 hafta açık, fiyat sonra)
+
+| Zaman | Bülten |
+|---|---|
+| Sayfa açılınca | Forma sayfa bağlantısı koy |
+| Yayın −30 gün | Hoş geldin, oyun nedir |
+| Yayın −14 gün | Geliştirme günlüğü, bir ekran görüntüsü |
+| Yayın −7 gün | Tarih ve fiyat (Steam onayından sonra) |
+| Yayın günü | "Yayında" + Steam bağlantısı |
+| Yayın +7 gün | Teşekkür, yama notları |
+| Sonra | Ayda en çok 1 (varsayım) |
+
+**Her mailde:** gerçek gönderen, doğru konu, gönderen kimliği ve iletişimi, kolay ücretsiz çıkış, çıkışın 3 iş günü içinde işlenmesi.
+
+**Ölçüm:** Hedef sayı koymadım. Kaynak yok.
+
+**Riskler:** izinsiz gönderim, kayıtsız onay, geciken çıkış, yanlış fiyat, KVKK boşluğu, yanlışlıkla gönderim.
+
+## 4. Uyulacak kurallar ve yasalar
+
+Bu hukuki tavsiye değildir. Etiketler: **[resmi]**, **[okunmadı]**. Bu oturumda internet yoktu. Resmi etiketli bilgiler proje paketlerinde (`marketing.md`, `sales.md`) 2026-10-25/26 tarihinde okunmuş notlardır. Göndermeden önce yeniden oku.
+
+**Steam**
+- Açıklamada dış bağlantı olmaz. [resmi]
+- Steam arayüzünü taklit eden görsel olmaz. [resmi]
+- Yapay zekâ içeriği Content Survey'de bildirilir. [resmi]
+- Ücret ürün başına $100. Geri ödenmez. $1.000 brüt gelirde ödemelerden düşülür. [resmi]
+- Ödemeden 30 gün sonra ilk yayın. "Coming soon" en az 2 hafta. [resmi]
+- Yayın sayfası incelemesi 3-5 iş günü. En az 7 gün önce gönder. [resmi]
+- Yayından sonra 30 gün fiyat değişmez ve indirim olmaz. [resmi]
+- Steam'in gelir payı yüzdesi okunmadı. [okunmadı]
+
+**Türkiye: 6563 sayılı Kanun (ticari elektronik ileti)** [resmi]
+- Önceden onay gerekir (m.6/1).
+- Esnaf ve tacire onay gerekmez (m.6/2). Bir YouTuber'ın bu gruba girip girmediği [okunmadı].
+- Mesaj onaya uymalı. Gönderen kimliği ve iletişimi yazılmalı (m.7).
+- Alıcı istediği an reddeder. Gönderim 3 iş günü içinde durur (m.8).
+- Süresinde İYS'ye yüklenmeyen onay geçersiz (m.11/5).
+- Ceza 1.000-5.000 TL. Bakanlık tablosuna göre 2026'da 2.859-14.309 TL. Çok kişiye gidince on katına kadar (m.12). Rakamları yeniden oku.
+
+**Diğer**
+- KVKK (6698): e-posta adresi kişisel veridir. Aydınlatma metni gerekir. [okunmadı]
+- ABD CAN-SPAM: açık reklam notu, posta adresi, çıkış bağlantısı. E-posta başına $53.088'e kadar ceza. [resmi]
+- AB (GDPR, ePrivacy): [okunmadı]. AB'li abone gelirse avukata sor.
+- Influencer bildirimi: FTC (ABD) ücretsiz ürün dahil her bağlantının videoda açıkça söylenmesini ister. [resmi] Türkiye'deki Reklam Kurulu kuralları [okunmadı]. Aynı ilkeyi uygula.
+- Yapay zekâ ürünü varlıkların telif koruması zayıf olabilir. Ticari lisansını kontrol et. [resmi, ABD]
+
+**Avukata sorulacaklar**
+1. KVKK aydınlatma ve saklama.
+2. Türkiye'de influencer reklam bildirimi.
+3. YouTuber'lar esnaf/tacir sayılır mı (m.6/2)?
+4. AB abonesi için GDPR.
+
+## Sonraki adım
+- Yer tutucuları doldur: oyun adı, tür, özellikler, tarih, kanallar.
+- İstersen `Write` aracını açarsan bu taslakları `.pusula/launch-drafts/` altına dosya olarak yazarım.

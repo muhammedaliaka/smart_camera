@@ -1,0 +1,57 @@
+[probe p10]
+Plan dosyası yazamadım, çünkü `Write` aracı bu oturumda kapalı. Planı aşağıya koydum. Önce Unreal paketini (`recipes/packs/unreal.md`) okudum.
+
+## Varsayımlar
+- Windows, Win64 hedefi, motor Epic launcher'dan kurulu.
+- Motor sürümü `.uproject` içindeki `EngineAssociation` alanında yazar. Projen bu repoda yok, okuyamadım.
+- Projede en az bir otomasyon testi var.
+
+## Plan
+Her adımın bir kontrolü var.
+1. Motor yolunu ve sürümü bul. Kontrol: `RunUAT.bat` dosyası var mı.
+2. Editörde bir Custom Launch Profile (Project Launcher'daki özel profil) oluştur. Bir kez çalıştır. Output Log'dan `BuildCookRun` satırını kopyala. Kontrol: paketlenen `.exe` açılıyor mu.
+3. Editörde test listesine bak (Tools > Session Frontend > Automation). Bir grup seç.
+4. Testleri komut satırından çalıştır. Kontrol: `index.json` oluştu mu, kaç test kaldı.
+5. Adım 2 ve 4'ü tek bir `daily.bat` dosyasında birleştir.
+6. Günlük görevi kaydet. Bir kez elle tetikle. Kontrol: yeni rapor klasörü çıktı mı.
+
+## Komutlar
+Aşağıdaki paketleme bayraklarını Epic'in Project Launcher çıktısıyla karşılaştırmadan kullanma. Epic bu yolu öneriyor.
+
+```bat
+rem Paketleme
+"%UE_ROOT%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun ^
+  -project="%PROJ%\MyGame.uproject" -clientconfig=Development ^
+  -platform=Win64 -build -cook -stage -pak -archive -archivedirectory="%OUT%\pkg"
+
+rem Testler
+"%UE_ROOT%\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "%PROJ%\MyGame.uproject" ^
+  -ExecCmds="Automation RunTest Group:MyGroup;Quit" ^
+  -ReportExportPath="%OUT%\reports" -unattended -nullrhi -nosplash -log
+
+rem Her gün 03:00
+schtasks /create /sc daily /st 03:00 /tn UE_Daily /tr "C:\ci\daily.bat"
+```
+
+Linux veya Mac'te `.bat` yerine `.sh` kullan. Cron ile günlük çalıştır.
+
+## Kaynaklar ve güven düzeyi
+- **Resmi (Epic dokümanı, repodaki paket notuna göre):**
+  - Komutu Project Launcher'dan üretme yöntemi.
+  - `RunUAT`, `BuildCookRun`, `-project=` ve `-clientconfig=`.
+  - `-ExecCmds="Automation RunTest ...;Quit"`, `Group:` ve `-ReportExportPath=`.
+  - Kaynak: https://dev.epicgames.com/documentation/en-us/unreal-engine
+  - Notu 2026-10-25'te, internet yokken okudum. Epic sayfalarını bu oturumda kendim açamadım.
+- **Doğrulanmadı:**
+  - `-platform`, `-build`, `-cook`, `-stage`, `-pak`, `-archive`, `-archivedirectory`.
+  - `-unattended`, `-nullrhi`, `-nosplash`. Kendi sürümünde `-help` ile kontrol et.
+  - `UnrealEditor-Cmd.exe` yolu.
+- **Resmi değil:** `schtasks` söz dizimi. Kontrol için `schtasks /create /?` çalıştır.
+
+## Riskler
+- Çıkış kodu 0 olsa bile test kalmış olabilir. JSON raporu oku.
+- İlk cook çok uzun sürebilir.
+- Makine açık olmalı. Görev, oturum açık olmadan da çalışacak şekilde ayarlanmalı.
+- C++ değişikliği yeniden derleme ister. Sadece Blueprint değişikliği istemez. Bu bilgi 5.8 için doğrulanmadı.
+
+Hiçbir komutu çalıştırmadım. Unreal bu makinede yok, bu yüzden hiçbir şey test edilmedi.

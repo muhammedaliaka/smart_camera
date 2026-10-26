@@ -1,0 +1,76 @@
+[probe p12]
+# Güvenlik Denetimi Raporu
+
+Projede üç dosya var: `app.py`, `requirements.txt` ve `.github/workflows/ci.yml`. Kodu değiştirmedim. Bulguları öncelik sırasına göre yazdım.
+
+**Sonuç: Bu haliyle yayına alınmamalı.** İlk dört bulgu yayını engelleyecek düzeyde.
+
+## Kritik
+
+**1. Debug modu açık ve uygulama tüm ağa açık (`app.py:40`)**
+- `debug=True` ile `host="0.0.0.0"` birlikte kullanılıyor. Werkzeug etkileşimli hata ayıklayıcısı internetten erişilebilir hale geliyor.
+- Hata sayfasından uzaktan kod çalıştırma (RCE) mümkün olabilir. Debugger PIN'i bazı koşullarda tahmin edilebilir.
+- Yapılacak: `debug=True` kaldırılmalı. Üretimde gunicorn veya uwsgi gibi bir WSGI sunucusu arkasında çalıştırılmalı.
+
+**2. SQL injection (`app.py:28`)**
+- `customer` parametresi f-string ile sorguya ekleniyor. Örnek: `/orders?customer=' OR '1'='1` tüm siparişleri döker.
+- `UNION SELECT` ile `users` tablosu (parola özetleri dahil) de okunabilir.
+- Yapılacak: Parametreli sorgu kullanılmalı: `WHERE customer = ?`, `(customer,)`.
+
+**3. Kimlik doğrulaması olmayan admin uç noktası (`app.py:32-36`)**
+- `/admin/export`, `users` tablosunun tamamını (adlar ve parola özetleri) herkese açık döndürüyor. Yetkilendirme kontrolü yok.
+- `/orders` da kimlik doğrulaması istemiyor. Herkes herhangi bir müşterinin siparişlerini sorgulayabilir (IDOR).
+- Yapılacak: Kimlik doğrulama ve rol kontrolü eklenmeli. Parola özetleri hiçbir zaman dışarı verilmemeli.
+
+**4. CI iş akışında `pull_request_target` ile güvenilmeyen kod çalıştırılıyor (`ci.yml:3-14`)**
+- `pull_request_target`, depo sırlarına ve yazma yetkili `GITHUB_TOKEN`'a erişimle çalışır. Aynı iş akışı PR'daki (fork dahil) `head.sha` kodunu checkout edip `pip install` ve `pytest` çalıştırıyor.
+- Saldırgan, PR'a `conftest.py` veya kötü amaçlı bir `requirements.txt` ekleyerek sırları çalabilir ya da depoya yazabilir.
+- Satır 13'te `${{ github.event.pull_request.title }}` doğrudan `run` içine enjekte ediliyor. PR başlığına `"; curl ... #` yazılarak komut enjeksiyonu yapılabilir.
+- Yapılacak: `pull_request` tetikleyicisine geçilmeli. Gerekirse `permissions: contents: read` kısıtlanmalı. Başlık gibi girdiler `env:` üzerinden aktarılmalı. Action'lar commit SHA'sına sabitlenmeli.
+
+## Yüksek
+
+**5. Zayıf parola özeti: MD5, tuzsuz (`app.py:18`)**
+- MD5 hızlıdır ve tuz yoktur. Bulgu 2 veya 3 ile özetler sızarsa, çoğu parola gökkuşağı tablolarıyla anında kırılır.
+- Yapılacak: `werkzeug.security.generate_password_hash` (scrypt/pbkdf2) veya argon2/bcrypt kullanılmalı.
+
+**6. Gizli anahtar koda gömülü (`app.py:7`)**
+- `SECRET_KEY = "change-me-secret-key"` repoda duruyor ve tahmin edilebilir. Oturum veya çerez imzalama eklenirse sahte oturum üretilebilir.
+- Yapılacak: Ortam değişkeninden veya bir sır yöneticisinden okunmalı. Git geçmişinde göründüğü için mevcut değer değiştirilmeli.
+
+## Orta
+
+**7. Kayıt uç noktasında doğrulama ve hata yönetimi eksik (`app.py:15-21`)**
+- `request.form["name"]` alanı eksikse 400 hatası döner, ama bu debug modunda ayrıntılı iz sunar.
+- Parola uzunluğu veya karmaşıklık kuralı yok. Ad için benzersizlik veya hata yakalama yok; yinelenen kayıt işlenmeyen istisnaya yol açabilir.
+- Hız sınırı (rate limit) ve CSRF/bot koruması yok, toplu hesap oluşturmaya açık.
+
+**8. Güvenlik başlıkları, TLS ve CORS yapılandırması yok**
+- HSTS, `X-Content-Type-Options`, CSP gibi başlıklar yok. HTTPS uygulama düzeyinde zorunlu kılınmıyor. Parolalar düz HTTP üzerinden gidebilir.
+- Yapılacak: Ters vekil (reverse proxy) ile TLS sonlandırması ve `flask-talisman` benzeri bir çözüm.
+
+**9. Bağımlılık sabitlenmemiş (`requirements.txt`)**
+- `Flask>=3.1.3` üst sınırsız ve kilit dosyası yok. Derlemeler tekrarlanabilir değil, beklenmedik sürüm yükseltmeleri riski var.
+- Yapılacak: Sürümleri `==` ile sabitlemek veya hash'li bir kilit dosyası kullanmak, `pip-audit` ile taramak.
+
+## Düşük / Bilgilendirme
+
+**10. Veritabanı yolu göreli ve şema yönetimi yok (`app.py:8`)**
+- `shop.db` çalışma dizinine göre açılıyor. Dosya izinleri ve yedekleme tanımlı değil. Tablo oluşturma kodu yok.
+- Her istekte yeni bağlantı açılıp `with` ile yalnızca commit/rollback yapılıyor. Bağlantı kapatılmıyor, kaynak sızıntısı olabilir.
+
+**11. Günlükleme ve denetim izi yok**
+- Giriş, kayıt ve admin erişimi için güvenlik günlüğü bulunmuyor.
+
+## Notlar
+- Yalnızca bu üç dosyayı inceledim. Depoda test dosyası görmedim, bu yüzden CI'daki `pytest` adımı muhtemelen başarısız olur.
+- Bash aracı devre dışı olduğundan git geçmişinde gömülü sır taraması yapamadım. Yayın öncesi `gitleaks` gibi bir araçla geçmişin taranmasını öneririm.
+- İnternet erişimim olmadığı için Flask sürümü için bilinen CVE sorgusu yapamadım.
+
+## Önerilen düzeltme sırası
+1. Debug'ı kapatın.
+2. SQL sorgusunu parametreli hale getirin.
+3. `/admin/export` ve `/orders` için kimlik doğrulama ekleyin.
+4. CI iş akışını `pull_request` tetikleyicisine taşıyın.
+5. Parola özetleme yöntemini değiştirin.
+6. Gizli anahtarı koddan çıkarın.

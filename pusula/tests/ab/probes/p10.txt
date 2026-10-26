@@ -1,0 +1,1 @@
+Unreal Engine 5 projemi komut satırından paketlemek ve otomasyon testlerini her gün otomatik çalıştırmak istiyorum. Daha önce hiç Unreal kullanmadım. Kısa bir plan ve komutları yaz; hangi kaynaklara dayandığını belirt. Okuma araçların var, internet yok. Soru sorma.

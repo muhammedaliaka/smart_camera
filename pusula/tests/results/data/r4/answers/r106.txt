@@ -1,0 +1,105 @@
+[probe p9]
+Planı dosyaya yazamadım. Bu oturumda `Write` aracı kapalı. Bu yüzden planı aşağıya koydum. Şuraya kaydedin: `.pusula/release-prep/plan.md`.
+
+## Bulgular
+- **Ana risk:** `lib/main.dart:4` içinde `paymentApiKey` var. Satır 19'da istemciden `Bearer` olarak gidiyor. Karartma bunu korumaz.
+- `android/`, `ios/`, `test/` ve `pubspec.lock` yok. `.pusula/` ve `pusula_check.py` da yok.
+- Bu oturumda internet yok. Android ve iOS yayın sayfalarını okuyamadım. Onları UNVERIFIED diye işaretledim.
+
+# Plan: Release prep (Android + iOS) for demo_shop
+
+Status: draft. Updated: 2026-10-26.
+
+## Goal
+The Android AAB and iOS IPA are obfuscated and contain no payment secret. Analysis and tests pass. Every claim has evidence from a command run in the session.
+
+## Out of scope
+- Store listing, review submission and publishing. These need fresh approval that names the exact action.
+- Building the backend. The plan only defines the contract.
+- Web and desktop builds.
+- New features or UI changes.
+
+## Sources
+| Topic | Source | Status |
+|---|---|---|
+| Obfuscation flags, limits | https://docs.flutter.dev/deployment/obfuscate | official, via repo Flutter pack. Re-read before step 9 |
+| Secrets in client | https://docs.flutter.dev/security, OWASP MASVS | pack calls it "common practice". UNVERIFIED on the page |
+| Android signing, AAB | https://docs.flutter.dev/deployment/android | not read. UNVERIFIED |
+| iOS build, IPA | https://docs.flutter.dev/deployment/ios | not read. UNVERIFIED |
+| Analyzer, testing | https://dart.dev/tools/analysis, https://docs.flutter.dev/testing/overview | official, via pack |
+| Anti-copy limits | `.claude/skills/security-and-hardening/anti-copy.md` | project rule |
+
+Run `flutter --version` first. The pack lists stable 3.47.8. Stay on the newest patch.
+
+## Decisions
+| Decision | Reason |
+|---|---|
+| Remove `paymentApiKey` from the app. The app calls our own backend. The backend holds the key. | `--dart-define` and encryption still ship the key. Obfuscation only renames symbols. |
+| Remove the secret before obfuscating. | anti-copy.md: obfuscation first protects the least valuable part. |
+| Treat the key as leaked and rotate it if it is real. | It is in git history (commit `971fe23`). |
+| Build with `--obfuscate --split-debug-info=<dir>` on both targets. | The official Flutter way. |
+| Keep symbol files outside git, one folder per build number. | Crash traces are unreadable without them. |
+| Claim only "symbols renamed". Never "protected" or "unbreakable". | Obfuscation does not encrypt resources. |
+| Add secure storage only if the app stores a user token. | Not needed today. |
+
+## Steps
+Each step has one check. If `pusula_check.py` exists, run it before every commit. Today it does not exist, so say so in the result.
+
+1. **Scaffold platform folders.** Run `flutter create --platforms=android,ios .` after the user approves. Read `architecture-standard` first. Check: `android/` and `ios/` exist, `lib/` is untouched, `flutter analyze` runs.
+2. **Set identity.** Choose application id, bundle id, app name, version and build number. Check: ids match in Gradle and Xcode, and the user confirmed them.
+3. **Remove the secret (TDD).**
+   - Write failing tests for `pay()` first. They must cover: no key sent, success, non-2xx error, network error.
+   - Move the base URL to config.
+   - Add loading and error UI states, with written criteria first (`ui-acceptance`).
+   - Check: tests go red, then green. `grep -rn "paymentApiKey\|Bearer" lib` returns nothing.
+4. **Backend contract (written only).** `POST /v1/charge` with user auth, per-user scoping, rate limit and minimal response. Check: the user reviewed it.
+5. **Rotate the old key** if it was ever real. Never write the key into files. Check: the user confirms.
+6. **Static checks.** Pin `flutter_lints`, run `flutter pub get`, commit `pubspec.lock`. Check: `flutter analyze --fatal-infos` prints no issues.
+7. **Dependency and secret scan.** Run `pusula_check.py --only secrets,deps` once it exists. Otherwise run `osv-scanner` on `pubspec.lock`, or state "not run". Check: no unexplained advisory on `http`.
+8. **Tests.** Run `flutter test`. Add `integration_test` only for platform parts, after reading its docs. Check: all pass, output shown.
+9. **Android release.**
+   - The user creates the upload keystore.
+   - Reference it through a git-ignored `key.properties`.
+   - Run `flutter build appbundle --release --obfuscate --split-debug-info=<private>/<build>/android`.
+   - Check: AAB built. `.gitignore` covers the keystore, `key.properties` and the symbols folder.
+10. **iOS release (macOS only).** Run `flutter build ipa --release --obfuscate --split-debug-info=<private>/<build>/ios`. Check: IPA built, or "not run: no macOS here".
+11. **Leak check on the output.** Look for source maps, `.env` and plain keys. Run `strings` on the app library for the old key and host. Check: nothing found.
+12. **Prove obfuscation.** Run `flutter symbolize -i <trace> -d <symbols>`. Compare class names in the plain and obfuscated builds. Check: the trace is readable only with the symbols. Report the enum names that stay visible.
+13. **Run the release build on a device or emulator.** Try success, error and no-network. Check: one screenshot per state, judged against the step 3 criteria. A debug run does not count.
+14. **Final report** (`verification-before-completion`). Table of claim, command and output. Name every skipped step.
+
+## Code in this plan
+None. Tests and commands are named, so no `Why code:` blocks are needed. The implementer re-reads the obfuscate page before step 9. On conflict, stop and report.
+
+## Review Focus
+1. `pay()` on timeout and non-2xx. Tested in step 3.
+2. Code that compares `runtimeType.toString()` breaks under obfuscation. Grep it, then run the release build.
+3. Missing symbols folder for a shipped build. Checked in step 9.
+4. Old key still in git history. Rotate it. A history rewrite or force-push needs fresh approval.
+5. iOS signing differs from Android. Step 10 states what ran.
+
+## Risks
+1. The backend is late and the key stays in the app. Prevention: block release until the step 3 grep is clean.
+2. The old key was real and leaked. Prevention: step 5.
+3. Symbol files are lost. Prevention: a private folder per build number.
+4. Obfuscation breaks runtime behavior. Prevention: step 13 on a release build.
+5. The keystore is lost or committed. Prevention: user backup and a `.gitignore` check.
+6. iOS cannot be built on Linux. Prevention: use macOS or state "not run".
+7. New lints break old code. Prevention: pin in step 6.
+8. The deployment pages differ from my steps. Prevention: re-read them first and stop on conflict.
+9. The team thinks the app is "protected". Prevention: use the wording rule in Decisions.
+10. The scaffold touches many files unseen. Prevention: approval and `architecture-standard` in step 1.
+
+## Unknowns
+| Question | Who answers |
+|---|---|
+| Is the payment key real? Which provider? | User |
+| Does a backend exist? | User |
+| Final application id, bundle id and app name | User |
+| Are the developer accounts and signing ready? | User |
+| Is macOS with Xcode available? | User |
+| Which attacker matters: casual cloner, studio or cheater? | User |
+| Exact current Android and iOS steps | Official pages, when internet is back |
+
+## Next step
+Bu plan sizin onayınızı bekliyor. "Evet" derseniz veya Unknowns tablosunu yanıtlarsanız, adım 1'e geçerim. Önce iskelet için ayrıca onay isteyeceğim.

@@ -1,0 +1,1 @@
+Bu Flutter uygulamasını Android ve iOS için yayın sürümüne hazırlayacağız. Kodu karartmayı (obfuscation), API anahtarını korumayı ve analiz ile test adımlarını içeren bir plan yaz. Hangi kaynaklara dayanacağını ve bittiğini nasıl kanıtlayacağını da yaz. Sadece plan yaz, kod değiştirme. Okuma araçların var, internet yok. Soru sorma.

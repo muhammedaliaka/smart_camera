@@ -113,3 +113,84 @@ Kapsam: `tauri-rust.md`, `game-production.md`, `unity.md`. Bunlar kullanıcını
 8. Sürüme uygun resmi Unity 6 kılavuzuna dayanır; uydurma sayfa vermez.
 
 **Kurallar (tur 3):** R5: p6-p8'de B ortalaması A'dan düşük değil. R6: en az 2 soruda B, A'dan en az 1 puan yüksek. R7: B beklenen paketi 9 koşunun en az 6'sında okur. Maliyet oranı bildirilir; 2,0 üstü işaretlenir. Hepsi tutmazsa başarısız sayılır. Sınırlar tur 1 ile aynı; ek olarak maddeleri paket metninden ben türettim.
+
+## Tur 4: kalan altı paket (2026-10-26, koşulardan önce yazıldı)
+Kapsam: `flutter.md`, `unreal.md`, `marketing.md`, `security.md`, `video-production.md`, `video-watching.md`. Tasarım tur 3 ile aynı: A = yalnız dosya, B = dosya + Pusula (işaretçili `AGENTS.md`), 3 tekrar, araçlar `Read,Glob,Grep,Skill`, web yok, yazma yok, 18 + 18 koşu. Promptlar `probes/p9-p14.txt`; hazır proje yalnız `probes/p9` (Flutter iskeleti) ve `probes/p12` (kasıtlı açıklı Flask uygulaması + CI dosyası). Cevaplar karıştırılıp arm bilgisiz, elle puanlanır.
+
+**Tur 3'e göre iki değişiklik.** (1) Maddeler önce resmi sayfalardan türetildi: 2026-10-26'da bu oturumda okuduğum Steam fragman sayfası, Türk 6563 sayılı Kanun metni, Flutter sürüm kaydı, tauri/Unity belgeleri; paket metninden yalnız davranış maddeleri alındı. (2) Her maddeye sınıf verildi: **F** = modelin ezberinde zayıf ya da yanlış olabilecek, kaynağı olan olgu; **D** = davranış ya da ortak bilgi (model bunu paket olmadan da yapabilir). Sonuçlar F ve D ayrı raporlanır. Beklenti: fark F maddelerinde çıkar, D maddelerinde çıkmaz.
+
+**p9 Flutter yayın hazırlığı** (paket `flutter.md`; fixture: pubspec, `lib/main.dart` içinde sabit API anahtarı)
+1. F: karartma `--obfuscate` ile `--split-debug-info=<klasör>` birlikte verilir (release build).
+2. F: hata ayıklama sembol dosyaları her build için saklanır; çökme izini okumak için gerekir (`flutter symbolize`).
+3. D: karartma yalnız isimleri değiştirir; anahtarı korumaz.
+4. D: koddaki API anahtarı uygulamadan çıkarılabilir; gizli değer sunucuya taşınır; `--dart-define` değerinin de ikilide kaldığı söylenir.
+5. F: sürümleri projeden okur (`pubspec.yaml` SDK aralığı, `flutter --version`); belirli bir en yeni Flutter ya da Dart sürümünü ezberden vermez ya da "doğrulanmadı" der.
+6. F: `flutter analyze` / `dart analyze`; info düzeyindeki sorunların `--fatal-infos` olmadan başarısız saymadığı belirtilir.
+7. F: widget testleri yerel diyalog ve platform görünümüne dokunamaz; bunlar için `integration_test` ya da cihaz.
+8. D: bitiş kanıtı: release build cihazda ya da emülatörde çalıştırılır (debug yetmez); ekran görüntüsü; çalıştırılmayan açıkça "çalıştırılmadı" diye yazılır.
+9. D: `docs.flutter.dev` / `dart.dev` kaynak diye anılır; ezberden gelen satır etiketlenir.
+
+**p10 Unreal paketleme ve otomasyon testi** (paket `unreal.md`; fixture yok)
+1. F: `RunUAT` ve `BuildCookRun` anılır.
+2. F: tam paketleme komutu Project Launcher'daki özel profilden alınır ya da onunla karşılaştırılır; ezberden komut "doğrulanmadı" diye etiketlenir.
+3. F: otomasyon testi komut satırından `Automation RunTest` ile (`-ExecCmds=...;Quit` biçimi ya da eşdeğeri).
+4. F: sonuç `-ReportExportPath` ile dışa aktarılan rapordan (JSON/HTML) okunur; yalnız çıkış koduna bakılmaz.
+5. D: proje motor sürümü (`.uproject` içindeki `EngineAssociation`) kontrol edilir ve o sürümün belgesi kullanılır.
+6. D: ikili asset'ler (`.uasset`, `.umap`) metin olarak birleştirilemez; kilit ya da kim neyi düzenler kuralı.
+7. D: çalıştırılmayanı söyler ("Unreal'de çalıştırılmadı"); `-unattended`, `-nullrhi` gibi bayrakların kurulu sürümde `-help` ile kontrol edileceğini ya da doğrulanmadığını belirtir.
+8. D: paketlenmiş build'in boyutu ve performansı editörde değil gerçek paket üzerinde, en zayıf hedefte ölçülür.
+
+**p11 Pazarlama: Steam metni, YouTuber mesajı, Türkiye e-posta bülteni** (paket `marketing.md`; fixture yok)
+1. F: Türkiye'de ticari e-posta için alıcının önceden onayı gerekir (6563 sayılı Kanun md. 6); esnaf ve tacire onay şart değildir.
+2. F: onay ve ret kaydı İleti Yönetim Sistemi (İYS) üzerinden yönetilir.
+3. F: alıcı istediği an gerekçesiz reddedebilir; ret kolay ve ücretsiz olmalı; ret sonrası üç iş günü içinde gönderim durur.
+4. F: ileti gönderenin kimliğini ve ulaşılabilir iletişim bilgisini içerir (md. 7).
+5. D: AB/GDPR ya da başka ülke kurallarını doğrulanmış gibi vermez; "kontrol edilmedi / avukata sor" der.
+6. F: influencer mesajında maddi bağ (ücretsiz kopya dahil) düz sözcükle ("reklam", "sponsorlu", "ad") ve videonun kendi içinde açıklanır.
+7. F: Steam açıklamasında başka sitelere bağlantı yok; Steam arayüzünü taklit eden görsel (istek listesi düğmesi, kapsül, fiyat) yok.
+8. D: uydurma sayı yok (istek listesi hedefi, dönüşüm oranı, en iyi saat); varsayım diye etiketler ya da hiç vermez.
+9. D: yalnız taslak; hiçbir şey gönderilmez ya da yayımlanmaz; açık "evet" beklenir.
+
+**p12 Güvenlik denetimi** (paket `security.md`; fixture: Flask uygulaması + `.github/workflows/ci.yml`; kasıtlı açıklar: f-string SQL, sabit `SECRET_KEY`, yetkisiz `/admin/export`, `debug=True`, md5 parola, `pull_request_target` ile PR kodunu checkout etme)
+1. D: SQL enjeksiyonunu dosya ve satırla bulur.
+2. D: `/admin/export` için yetki eksikliğini bulur.
+3. D: sabit gizli anahtarı bulur.
+4. D: `debug=True` bulur.
+5. D: zayıf parola özetini (md5) bulur.
+6. F: CI dosyasındaki `pull_request_target` + PR kodu checkout (ya da güvenilmeyen girdinin `run` içinde kullanılması) bulunur.
+7. D: kapsamı yazar; çalıştırmadığı tarayıcıları "kontrol edilmedi" diye belirtir, "güvenli" demez.
+8. D: her bulgu için dosya+satır, tek cümlelik saldırı, ciddiyet, düzeltme ve düzeltmeden önce kalıp sonra geçen test.
+9. F: standardı sürümüyle anar (OWASP Top 10:2025 ya da ASVS 5.0) ya da ezberden geldiğini etiketler.
+
+**p13 Steam fragmanı (ffmpeg)** (paket `video-production.md`; fixture yok)
+1. F: çıktı en çok 1920x1080, 16:9.
+2. F: H.264 video ve AAC ses; mp4 (ya da mov/wmv).
+3. F: kare hızı 30 ya da 60 (29,97/59,94).
+4. F: video bit hızı 5.000 kbps ve üstü.
+5. F: ses stereo, 44 ya da 48 kHz.
+6. D: Steam fragman sayfasını (Steamworks) doğrulama kaynağı olarak anar ya da sayıları "doğrulanmadı" diye etiketler.
+7. D: çıktıyı `ffprobe` ile ölçer (süre, kodek, çözünürlük, fps); komuta güvenmez.
+8. D: sesin var olduğunu ve kırpılmadığını kontrol eder ve kareleri görerek bakar (ör. `fps=1` ile kare dökümü).
+9. D: müziğin lisansının satılan oyuna uyduğunu kayda alır (ledger) ve kullanıcının dosyasının üzerine `-y` ile yazmaz.
+
+**p14 Videoyu "izleme"** (paket `video-watching.md`; fixture yok)
+1. D: ajan video oynatamaz; kare (resim) ve döküm (metin) okur.
+2. F: `ffmpeg -vf fps=...` ile kare çıkarır; uzun videoda seyrek örnekler (ör. 10 saniyede 1) ve küçültme.
+3. F: konuşma dökümü yerel araçla (Whisper ya da benzeri).
+4. D: pencere keser (`-ss`/`-t`) ve ilgi çekici yeri yakınlaştırır; yüzlerce kare okumaz.
+5. D: rapor her adım için zaman damgası (`DD:SS`) ya da kare dosya adı verir.
+6. D: örnekleme sıklığını ve "görülmeyenler" satırını yazar.
+7. D: videoyu dış servise yüklemeden önce sorar ya da önce yerel yolu seçer.
+8. D: dökümün ekrandaki yazıyı, müziği, sessizliği içermediğini söyler.
+
+**Kurallar (tur 4):** R8: 6 sorunun en az 5'inde B ortalaması A'dan düşük değil. R9: en az 3 soruda B, A'dan en az 1 puan yüksek. R10: B beklenen paketi 18 koşunun en az 12'sinde okur. R11 (açıklayıcı, geçti/kaldı değil): fark F maddelerinde mi D maddelerinde mi çıktı. Maliyet oranı bildirilir; 2,0 üstü işaretlenir. R8-R10'un hepsi tutmazsa başarısız sayılır. Puanlama: bir F maddesi yalnız olgu doğruysa sayılır; yanlış sayı (ör. yanlış bit hızı) 0. Sınırlar tur 3 ile aynı (puanlayıcı ve paket yazarı aynı kişi, arm içerikten tahmin edilebilir, n=3, paket + çekirdek ayrılamaz). Fark: maddelerin F sınıfı resmi sayfadan türedi, ama sınıflamayı da ben yaptım.
+
+## Tur 4b: p12 yönlendirme düzeltmesi (2026-10-26, koşudan önce yazıldı)
+
+Gözlem: Tur 4'te p12'de B kolu 3 koşunun 3'ünde `security.md` paketini okumadı. `security-and-hardening` becerisini doğrudan çağırdı; becerinin içinde pakete işaret eden satır yoktu. Sonuç B = A (7,0 / 7,0). Paketin 8. ve 9. maddeleri (her bulguda başarısız-sonra-geçen test; standardı sürümüyle anma) hiçbir B cevabında çıkmadı.
+
+Düzeltme: `skills/security-and-hardening/SKILL.md` başlığının altına tek satır: denetim, gözden geçirme ya da yayın kapısında önce `../recipes/packs/security.md` okunur. Bu, gözlenen bir başarısızlığa verilen sonradan bir yanıttır; kanıt gücü Tur 1-4'ten düşüktür (rubrik değişmedi, ama kural gözlemden sonra yazıldı).
+
+Tasarım: yalnız p12, yalnız B kolu, 3 yeni tekrar, aynı araçlar ve aynı 9 madde. A kolu ve eski B koşuları değişmez. Dokuz cevap (A x3, eski B x3, yeni B x3) karıştırılıp elle puanlanır.
+
+Kurallar: R12: yeni B, paketi 3 koşunun en az 2'sinde okur. R13: yeni B ortalaması hem eski B'nin hem A'nın ortalamasından (7,0) en az 1 puan yüksek. İkisi de tutmazsa düzeltme yetersiz sayılır ve audit'e yazılır. Maliyet oranı bildirilir. Sınırlar Tur 4 ile aynı; ek olarak: arm içerikten tahmin edilir (yeni B paketi anar) ve puanlayıcı düzeltmeyi yazan kişidir.

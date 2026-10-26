@@ -1,0 +1,41 @@
+[probe p12]
+# Güvenlik denetimi: yayına almadan önce
+
+**Sonuç: Bu hâliyle yayına almayın.** 5 kritik, 3 yüksek bulgu var. Denetim `app.py`, `requirements.txt` ve `.github/workflows/ci.yml` dosyalarını elle okuyarak yapıldı. `.pusula/checks/pusula_check.py` yok. Semgrep, gitleaks ve osv-scanner çalışmadı, bu yüzden "kontrol edilmedi". Kodu değiştirmedim.
+
+## Kritik
+
+1. **Debug modu açık** (`app.py:40`). `debug=True` Werkzeug konsolunu açar. Saldırgan sunucuda komut çalıştırabilir. Hata sayfaları kaynak kodu da gösterir.
+2. **SQL injection** (`app.py:28`). `customer` değeri doğrudan SQL metnine yazılıyor. `' OR '1'='1` tüm siparişleri döker. `UNION` ile `users` tablosu da okunur. Parametreli sorgu kullanılmalı, `register` içinde zaten böyle.
+3. **`/admin/export` korumasız** (`app.py:32-36`). Kimlik doğrulama ve yetki kontrolü yok. Herkes tüm kullanıcıları ve parola özetlerini indirir.
+4. **Zayıf parola özeti** (`app.py:18`). MD5 tuzsuz ve çok hızlıdır. Özetler (3. bulgu ile) sızarsa parolalar dakikalar içinde kırılır. argon2, scrypt veya bcrypt (12+) kullanılmalı.
+5. **CI zinciri açığı** (`ci.yml:3-13`). `pull_request_target` depo gizli anahtarlarıyla çalışır. Aynı iş fork'taki PR kodunu çalıştırıyor (`head.sha` checkout ve `pytest`). Yabancı biri PR açıp sırları çalabilir. PR başlığı da `run` içine yazılıyor, bu komut enjeksiyonudur. `pull_request` tetikleyicisine geçin ve başlığı `env` ile verin.
+
+## Yüksek
+
+6. **Sabit gizli anahtar** (`app.py:7`). `"change-me-secret-key"` kodda ve git geçmişinde duruyor. Oturum çerezleri taklit edilebilir. Ortam değişkeninden okunmalı, bu anahtar sızmış sayılıp değiştirilmeli.
+7. **Tüm ağa açık dinleme** (`app.py:40`). `host="0.0.0.0"` ile birlikte 1. bulgu uzaktan erişimi mümkün kılar. Üretimde Flask'ın geliştirme sunucusu yerine gunicorn gibi bir WSGI sunucusu ve arkasında HTTPS kullanın.
+8. **Kayıt ve girdi doğrulaması yok** (`app.py:17-18`). Alan eksikse `request.form[...]` 400 hatası verir, boş ya da çok uzun değer kabul edilir. Aynı ad iki kez kaydedilebilir. Hız sınırı da yok, bu yüzden kaba kuvvet ve spam mümkün.
+
+## Orta
+
+9. **Güvenlik başlıkları ve çerez ayarları yok.** CSP, HSTS, `X-Content-Type-Options` ve çerez bayrakları (`Secure`, `HttpOnly`, `SameSite`) tanımlı değil.
+10. **`/orders` yetkisiz.** Kimlik doğrulama yok, `customer` istemciden geliyor. Bu, başkasının siparişlerini okumak demek (IDOR). SQL injection düzelse bile kalır.
+11. **Bağımlılıklar.**
+    - `Flask>=3.1.3` sürüm kilitli değil, kilit dosyası da yok. Her kurulumda farklı sürüm gelebilir.
+    - `pytest` listede yok, CI bu yüzden büyük olasılıkla çalışmaz.
+    - İnternet olmadığı için `pip-audit` çalıştıramadım.
+12. **Depo hijyeni.** `.gitignore` yok. `shop.db` ve `.env` yanlışlıkla commit edilebilir. `.env.example` da yok.
+
+## Notlar
+- `register` içindeki INSERT parametreli, bu doğru.
+- Hata ayıklama kapanınca bile ayrıntılı hata mesajı kullanıcıya gitmemeli.
+- Veritabanı şeması ve test dosyası projede yok, bu yüzden tablo tanımlarını denetleyemedim.
+
+## Önerilen sıra
+1. 1, 2, 3 ve 5. bulguları kapatın.
+2. Sonra 4 ve 6'yı düzeltin. Parola özetleri için mevcut kullanıcılara parola sıfırlatın.
+3. Sonra 7–12.
+4. Düzeltmelerden sonra `pusula_check.py` ve Bandit ile yeniden tarama yapın.
+
+İsterseniz bu düzeltmeler için bir plan dosyası hazırlarım.

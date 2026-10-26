@@ -1,0 +1,152 @@
+[probe p11]
+README.md boş ve repoda başka dosya yok, bu yüzden oyunun adını, türünü ve çıkış tarihini bilmiyorum. Soru sormamam istendiği için `[KÖŞELİ PARANTEZ]` yer tutucularla yazdım. Bunları doldurunca metinler kullanıma hazır olur. İnternetim olmadığı için yasa ve kural bilgilerim hafızamdan geliyor. Yayından önce güncel metinlerden doğrulayın. Bu bilgiler hukuki danışmanlık yerine geçmez. Hiçbir şey göndermedim ve yayımlamadım.
+
+---
+
+## 1) Steam mağaza sayfası taslağı
+
+**Kısa açıklama (en fazla 300 karakter):**
+> [OYUN ADI], [TÜR] tarzında bir oyun. [Ana mekanik: tek cümle]. [Oyuncunun yaptığı şey ve neden farklı olduğu]. [Platform/mod: tek kişilik, co-op vb.]
+
+**Uzun açıklama:**
+
+```
+[ETKİLEYİCİ BİR CÜMLE: oyunun vaadi]
+
+[OYUN ADI] nedir?
+[2–3 cümle: dünya, oyuncunun rolü, temel çatışma.]
+
+ÖZELLİKLER
+• [Özellik 1]: [oyuncuya faydası]
+• [Özellik 2]: [oyuncuya faydası]
+• [Özellik 3]: [oyuncuya faydası]
+• [Özellik 4, varsa]: [oyuncuya faydası]
+
+OYUN NASIL OYNANIR?
+[Bir oyun döngüsü örneği: "Önce ... sonra ... ve sonunda ..."]
+
+KİMLER İÇİN?
+[Benzer oyunları sevenler: "X ve Y hayranları için" (yalnızca gerçekten benzerse)]
+
+HAKKINDA
+[Stüdyo/geliştirici: kısa ve samimi.] Türkiye'den bağımsız geliştirici olarak [yıl]'dır bu oyun üzerinde çalışıyoruz.
+
+DİL DESTEĞİ
+Arayüz: Türkçe, İngilizce [+...] | Seslendirme: [...] 
+
+Wishlist'e ekleyerek çıkışta haberdar olun. Discord: [link]
+```
+
+**Sayfa yönergeleri:**
+- İlk 2–3 ekran görüntüsü oyunun gerçek içinden olmalı. İlk 5 saniyesinde mekaniği gösteren bir fragman kullanın.
+- Steam, tanıtım görsellerinde oyundan olmayan içeriği ve yanıltıcı ifadeleri kabul etmez. "Yılın oyunu", "%100 onaylı" gibi sahte ödül veya yorum alıntılarından kaçının.
+- Türkçe yerelleştirme varsa mutlaka belirtin. Türkiye'deki oyuncular için büyük bir satış etkenidir.
+- Yazılımın önceden üretilmiş yapay zekâ içeriği varsa (görsel, ses, metin), Steamworks'teki YZ açıklama bölümünü doldurmanız gerekir. Bu, güncel Steam politikasıdır.
+- Steam "Yakında" sayfasını çıkıştan en az 2 hafta önce yayında tutmanızı şart koşar. Wishlist biriktirmek için çok daha erken açın.
+- İçerik anketini ve yaş derecelendirme sorularını dürüst doldurun. Fiyatlandırmada Steam'in bölgesel (TL) önerilerine bakın.
+
+---
+
+## 2) Üç YouTuber mesajı
+
+Gerçek kanal adı uydurmak istemedim. Kanalları sizin seçmeniz gerekiyor. Her mesaj farklı bir kanal tipine göre yazıldı.
+
+**Mesaj A: Orta/büyük kanal, ilk temas (kısa, e-posta)**
+> **Konu:** [OYUN ADI] – [KANAL ADI] izleyicileri için erken erişim anahtarı
+>
+> Merhaba [İSİM],
+>
+> [KANAL ADI]'ndaki [SON VİDEO ADI] videosunu çok sevdim, özellikle [somut bir detay]. Ben [AD], [STÜDYO]'dan [OYUN ADI]'nın geliştiricisiyim: [TEK CÜMLE VAAT]. Bu tarz oyunları sevdiğinizi gördüm.
+>
+> Fragman: [link]. İlgilenirseniz size ücretsiz bir Steam anahtarı gönderebilirim. Hiçbir zorunluluğu yok. Ne videoda ne yorumda olumlu bir şey söylemeniz gerekmiyor, düşünceleriniz sizin. İş birliği ya da ücretli bir anlaşma düşünürseniz konuşuruz, o durumda içeriğin reklam/iş birliği olarak etiketlenmesi gerekir.
+>
+> Zaman ayırdığınız için teşekkürler.
+> [AD] – [İLETİŞİM]
+
+**Mesaj B: Küçük/orta bağımsız oyun kanalı (samimi, DM)**
+> Selam [İSİM]! [KANAL]'ı takip ediyorum, [VİDEO]'daki [detay] çok iyiydi. Ben Türkiye'den tek kişilik/küçük ekiple [OYUN ADI]'nı yapıyorum, [TÜR]. İlk 20 dakikasını sana göndermek isterim, beğenmezsen dürüstçe söylemen benim için daha değerli. Anahtar ister misin? Bir de izleyicilerin için ayrı bir demo/anahtar paylaşımı yapabiliriz. Hiçbir koşul yok. 🙂
+
+**Mesaj C: Ücretli iş birliği teklifi (resmî)**
+> **Konu:** [OYUN ADI] – iş birliği teklifi
+>
+> Merhaba [İSİM],
+>
+> [OYUN ADI] için [TARİH] civarında [TÜR: ör. 1 adet adanmış video / canlı yayın] içeriği düşünüyoruz. Bütçemiz [TUTAR], ödeme [YÖNTEM, FATURA]. Beklentiler: 
+> - İçerik açık biçimde "Ücretli Tanıtım/Reklam" olarak etiketlenir (YouTube'un ücretli tanıtım kutusu + açıklama + videoda sözlü ve yazılı uyarı).
+> - Görüşleriniz tamamen size aittir. Olumsuz eleştirileri de yayımlamakta özgürsünüz.
+> - Doğru bilgi: yalnızca oyunun gerçek hâlini gösterin.
+>
+> Taslak sözleşmeyi ekledim. Uygunsanız, medya kitimizi ve erişim bilgilerinizi görmek isterim. 
+
+**Gönderme önerileri:** Aynı gün hepsine değil, 2–3 gün arayla ve kişiselleştirerek gönderin. Her mesajda tek bir bağlantı ve tek bir istek olsun. Yanıt gelmezse bir kez hatırlatın, sonra bırakın.
+
+---
+
+## 3) E-posta bülteni planı (Türkiye)
+
+**Hedef:** Çıkıştan önce wishlist ve Discord'a yönlendirmek, çıkışta ilk haftada satışı tetiklemek.
+
+**Liste kurma (yalnızca izinli):**
+- Kayıt formu: web sitesi, Steam sayfası bağlantısı, Discord, sosyal medya. Form onay kutusu **işaretsiz** gelir ve ticari ileti izni ile aydınlatma metnini ayrı ayrı sunar.
+- Çift onay (e-postaya doğrulama bağlantısı) önerilir.
+- Satın alınmış veya toplanmış listelere yazmayın. Bir YouTuber'ın izleyici listesini de kullanmayın.
+
+**Takvim (çıkış tarihi = T):**
+
+| Zaman | E-posta | Amaç |
+|---|---|---|
+| Kayıt anı | Hoş geldin + onay | Güven, Discord/wishlist bağlantısı |
+| T−8 hafta | "Oyunu tanıyın" (fragman, GIF) | Wishlist |
+| T−6 hafta | Geliştirici günlüğü #1 | Bağ kurma |
+| T−4 hafta | Demo/Steam Fest bildirimi | Etkileşim |
+| T−2 hafta | Çıkış tarihi + Steam sayfası | Wishlist hatırlatması |
+| T−1 gün | "Yarın çıkıyor" | Hazırlık |
+| T (çıkış günü) | "Şimdi Steam'de" + çıkış indirimi bilgisi | Satış |
+| T+7 gün | Teşekkür + ilk yama notları + değerlendirme isteği (olumlu olması şart değil) | Retention |
+
+**Format:** Tek sütun, mobil uyumlu, tek ana buton, Türkçe konu satırı 45 karakter altı. Haftada en fazla 1, ayda ortalama 2 e-posta. Her e-postada gönderen kimliği, adres/iletişim ve tek tıkla çıkış bağlantısı olsun.
+
+**Ölçüm:** Açılma oranı, tıklama oranı, abonelikten çıkma (<%0,5 hedef), Steam wishlist artışı (UTM bağlantıları), bülten kaynaklı satış.
+
+**Araç notu:** Bülten servisi yurt dışında barındırılıyorsa veri aktarımı KVKK'da ayrıca ele alınmalıdır (aşağıya bakın).
+
+---
+
+## Uyulması gereken kural ve yasalar
+
+### Türkiye
+1. **6563 sayılı Elektronik Ticaretin Düzenlenmesi Hakkında Kanun ve Ticari İletişim ve Ticari Elektronik İletiler Hakkında Yönetmelik**
+   - Bireylere ticari e-posta için **önceden onay** gerekir. Onay yazılı veya elektronik ortamda alınır ve kanıtlanabilir olmalıdır.
+   - İletilerde gönderenin kimliği ve **ret hakkı** (ücretsiz, kolay) bulunmalıdır. Ret talepleri en geç 3 iş günü içinde uygulanır.
+   - Onay ve ret kayıtları **İleti Yönetim Sistemi (İYS)** üzerinden yönetilir. Hizmet sağlayıcılar (tacir/esnaf) İYS'ye kayıt yaptırmakla yükümlüdür. Kayıt ve eşik koşullarını İYS'den doğrulayın.
+   - İzinsiz gönderim idari para cezası doğurur.
+2. **6698 sayılı KVKK**
+   - Aydınlatma metni verin, e-posta adresi için işleme amacını ve saklama süresini belirtin.
+   - Pazarlama için açık rıza, diğer rızalardan ayrı ve bağlanmamış olmalıdır.
+   - Yurt dışındaki bülten servislerine (ör. Mailchimp tipi servisler) aktarım için KVKK md. 9 ve 2024 değişikliği kapsamındaki mekanizmalar (yeterlilik kararı, standart sözleşme vb.) uygulanır.
+   - VERBİS kayıt yükümlülüğü, çalışan sayısı ve bilanço eşiklerine bağlıdır. Güncel eşikleri doğrulayın.
+3. **6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Ticari Reklam ve Haksız Ticari Uygulamalar Yönetmeliği**
+   - Reklamlar yanıltıcı olamaz, reklam olduğu anlaşılmalıdır.
+   - **Influencer iş birliği:** Ticaret Bakanlığı Reklam Kurulu'nun düzenlemelerine göre ücret, ücretsiz ürün ya da başka bir menfaat verdiğiniz içeriklerde iş birliği açıkça belirtilmelidir. Ücretsiz Steam anahtarı verilen içerikte de "iş birliği/ücretsiz anahtar" ifadesi yer almalıdır. Bu yükümlülük influencer'a olduğu kadar size de aittir.
+   - Sahte yorum ve karşılığında olumlu görüş şartı yasaktır.
+4. **5651 sayılı Kanun ve ilgili mevzuat** kapsamında oyun içeriği (şiddet, küfür, kumar benzeri mekanikler) için yaş uyarıları ve yasa dışı içerik konusunda dikkatli olun.
+5. **Vergi ve fatura:** Steam gelirleri, YouTuber ödemeleri ve yurt dışı hizmet alımları için KDV/stopaj/fatura yükümlülükleri vardır. Bir mali müşavire danışın.
+6. **Fikrî haklar (5846 sayılı Kanun):** Müzik, font, görsel, motor ve eklenti lisanslarınızı kontrol edin. YouTuber'lara verdiğiniz içerik izni net olsun.
+
+### Steam / Valve
+- **Steamworks Dağıtım Sözleşmesi** ve mağaza sayfası kuralları: yanıltıcı içerik yasak, gerçek oyun görüntüleri şart.
+- **Yorum manipülasyonu yasak:** Olumlu yorum karşılığında anahtar, indirim veya ödül vermeyin. Steam bunu ihlal sayar ve oyunu kaldırabilir.
+- **Steam anahtarları** yalnızca Steam'de aktivasyon içindir. Anahtarı yeniden satmayın, topluca üçüncü taraf sitelere vermeyin. Anahtar isteklerini Steamworks üzerinden üretin.
+- **Yapay zekâ içerik açıklaması** ve **içerik anketi** zorunludur.
+- Steam'in "Yakında" sayfası ve çıkış tarihi kuralları (en az 2 hafta) geçerlidir.
+
+### YouTube / diğer platformlar
+- YouTube'un **ücretli tanıtım** kutusunu işaretleme yükümlülüğü YouTuber'a aittir, ancak sözleşmenizde bunu şart koşun.
+- Kullanım koşulları gereği sahte etkileşim satın almayın.
+
+### AB / yurt dışı oyuncular
+Bülten AB/İngiltere'den birine ulaşabiliyorsa **GDPR** (onay, silme hakkı, veri işleme kaydı) da devreye girer. Yalnızca Türkiye hedefliyorsanız bile form başka ülkelerden doldurulabilir.
+
+---
+
+**Sıradaki adım:** Oyunun adını, türünü, çıkış tarihini ve hedef kanalları yazarsanız yer tutucuları doldurup metinleri son hâline getiririm. İsterseniz bunu paylaşılabilir bir sayfa olarak da yayımlayabilirim. Şimdilik yayımlamadım.

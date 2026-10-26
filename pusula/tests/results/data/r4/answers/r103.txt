@@ -1,0 +1,114 @@
+[probe p9]
+# Demo Shop: Android ve iOS yayın hazırlık planı
+
+Bu plan yalnızca depoyu okuyarak hazırlandı. Kod değiştirmedim, Flutter komutlarını da çalıştıramadım (Bash kapalı, internet yok).
+
+## 1. Dayanaklar
+
+**Depodan okuduklarım**
+- `lib/main.dart:4`: `paymentApiKey` kaynak koda sabit olarak yazılmış.
+- `lib/main.dart:19`: Bu anahtar, istemciden `/charge` çağrısına `Authorization: Bearer` başlığıyla gidiyor.
+- `lib/main.dart:18-20`: `pay()` yanıtı kontrol etmiyor, hata yakalamıyor. `http` doğrudan çağrıldığı için test sırasında sahte istemci verilemiyor.
+- `pubspec.yaml`: sürüm `1.0.0+1`, bağımlılıklar `http` ve `flutter_lints`.
+- `analysis_options.yaml`: yalnızca `flutter_lints` var, ek kural yok.
+- Depoda `android/`, `ios/`, `test/` ve `.gitignore` yok. Yalnızca `lib/main.dart` var.
+- `git log`: tek commit var (`5835093`). Anahtar git geçmişinde duruyor.
+
+**Dış kaynaklar** (internete erişemediğim için bilgi birikimimden yazıyorum, uygulamadan önce güncel sürümlerini kontrol edin)
+- Flutter dokümantasyonu: "Obfuscate Dart code", "Build and release an Android app", "Build and release an iOS app".
+- Android: R8/ProGuard ve Play App Signing dokümanları.
+- Apple: App Store Connect ve TestFlight dokümanları.
+- OWASP MASVS (özellikle MASVS-STORAGE ve MASVS-CRYPTO) ve Mobile Security Testing Guide.
+
+## 2. Ön koşul: platform iskeleti
+
+1. `flutter create --platforms=android,ios --org <com.firma> .` ile eksik klasörleri üretin. Mevcut `lib/` ve `pubspec.yaml` bozulmamalı, ilk adımda `git diff` ile doğrulayın.
+2. Flutter'ın standart `.gitignore` dosyasını ekleyin. Keystore, `key.properties` ve `*.p12` dosyalarını da bu dosyaya yazın.
+3. Karar verilecekler:
+   - Uygulama kimliği: `applicationId` ve bundle id.
+   - Görünen ad ve ikon.
+   - Sürüm şeması (`1.0.0+1` yeterli mi, her yüklemede build numarası nasıl artacak).
+   - Android `minSdk` ve iOS minimum sürümü.
+
+## 3. API anahtarının korunması (en yüksek öncelik)
+
+Önemli nokta: **Obfuscation string'leri gizlemez.** Sabit bir anahtar derlenmiş ikilide düz metin olarak kalır. `--dart-define` ile geçirmek de anahtarı ikiliden çıkarmaz, yalnızca depodan çıkarır.
+
+1. **Anahtarın türünü belirleyin.**
+   - Ödeme sağlayıcısının gizli (secret) anahtarıysa istemcide hiç bulunmamalı.
+   - Yalnızca yayınlanabilir (publishable) bir anahtarsa istemcide durabilir.
+2. **Gizli anahtar için mimariyi değiştirin.** Uygulama kendi backend'ine çağrı yapsın (örn. `POST /v1/charge`). Sağlayıcı anahtarı yalnızca sunucuda dursun. Kullanıcı kimlik doğrulaması (oturum token'ı) backend tarafında yapılsın. Uygulama tarafında `pay()` şu hale gelmeli:
+   - Anahtar kullanılmaz.
+   - Durum kodu kontrol edilir.
+   - Hata ve zaman aşımı yönetilir.
+3. **Anahtarı rotasyona alın.** Mevcut değer git geçmişinde (`5835093`) duruyor. Gerçek bir anahtarsa iptal edip yenisini üretin. Geçmişi yeniden yazmak yetmez, kopyalar olabilir. Şu an değerin `demo-payment-key-not-real` olduğu görünüyor, bunu yayından önce teyit edin.
+4. **İstemcide kalması gereken değerler** (publishable anahtar, ortam adresi) için `--dart-define-from-file=env/prod.json` kullanın. Dosya `.gitignore`'da olsun, CI'da secret olarak enjekte edilsin. Bu yöntemin güvenlik değil, yalnızca depo hijyeni sağladığı belgelenmeli.
+5. `apiBase` sabitini de ortama göre ayırın (dev, staging, prod).
+
+## 4. Kod karartma (obfuscation) ve sembol yönetimi
+
+**Android**
+```
+flutter build appbundle --release --obfuscate --split-debug-info=build/symbols/android/<sürüm>
+```
+- `build.gradle` içinde `minifyEnabled true` ve `shrinkResources true` ayarlarını açın.
+- Release için `proguard-rules.pro` kontrol edin. Şu an yansıma (reflection) kullanan eklenti yok, ama eklenti eklenirse kurallar gerekebilir.
+- `INTERNET` iznini `android/app/src/main/AndroidManifest.xml` içine ekleyin. Flutter şablonunda yalnızca debug/profile manifestinde bulunur, release'de `http` çağrıları sessizce çalışmaz. Bu sık yapılan bir hatadır.
+
+**iOS**
+```
+flutter build ipa --release --obfuscate --split-debug-info=build/symbols/ios/<sürüm>
+```
+
+**Sembol dosyaları**
+- Her sürümün `build/symbols/...` klasörünü depo dışında, sürümle etiketli arşivleyin (CI artifact veya gizli depolama). Bunlar olmadan üretim hata raporları okunamaz.
+- Crash raporlama aracı seçilirse (Crashlytics, Sentry vb.) semboller oraya yüklenir.
+- Okunabilir stack trace için: `flutter symbolize -i trace.txt -d build/symbols/...`
+
+## 5. Statik analiz
+
+1. `analysis_options.yaml` dosyasına ek kurallar ekleyin: `avoid_print`, `prefer_const_constructors`, `unawaited_futures`, `use_build_context_synchronously`. Mümkünse `strict-casts`, `strict-inference` ve `strict-raw-types` açılsın.
+2. `dart format --set-exit-if-changed .`
+3. `flutter analyze --fatal-infos`: sıfır uyarı hedefi.
+4. `flutter pub outdated` ve `dart pub deps`: bağımlılık sürümleri ve bilinen güvenlik açığı taraması. `pubspec.lock` sürüm kontrolüne alınsın.
+5. Gizli bilgi taraması: `gitleaks` veya benzeri bir araçla çalışma ağacı ve git geçmişi taransın.
+
+## 6. Test
+
+Depoda şu an hiç test yok. Gerekenler:
+1. **Birim testi:** `pay()` çağrısını test edilebilir yapmak için `http.Client` dışarıdan verilsin (`package:http/testing.dart` içindeki `MockClient` ile). Başarılı ödeme, 4xx/5xx yanıt ve ağ hatası için üç senaryo yazılsın. Ayrıca isteğin `Authorization` başlığında istemci tarafı sağlayıcı anahtarı **bulunmadığı** doğrulansın.
+2. **Widget testi:** "Pay" butonu görünür, dokununca çağrı tetikleniyor.
+3. `flutter test --coverage`: asgari kapsam eşiği belirleyin (örn. %70) ve CI'da zorunlu tutun.
+4. **Entegrasyon testi** (`integration_test`): staging backend'e karşı bir Android emülatörde ve bir iOS simülatöründe bir ödeme akışı.
+5. **Gerçek cihaz smoke testi:** release modunda (`flutter run --release`) ağ çağrısının çalıştığı, özellikle `INTERNET` izni açısından teyit edilir.
+
+## 7. Mağaza ve imzalama
+
+- **Android:** Upload keystore üretin, `key.properties` depoya girmesin, Play App Signing etkin olsun. Çıktı AAB olsun. İç test kanalına yükleyin.
+- **iOS:** Apple Developer hesabı, sertifika ve provisioning profile hazırlayın. Info.plist açıklamalarını kontrol edin. App Transport Security varsayılanı korunsun (HTTPS zaten kullanılıyor). TestFlight'a yükleyin.
+- Gizlilik politikası, mağaza listeleri, Data Safety formu ve App Privacy anketi (ödeme verisi işlendiği için dikkatli doldurulmalı).
+- Ödeme sağlayıcısı kullanılıyorsa mağazaların dijital ürün/uygulama içi satın alma kuralları kontrol edilmeli.
+
+## 8. CI/CD
+
+Tek bir iş akışı (GitHub Actions, Codemagic veya benzeri) şu sırayla çalışsın: format, analyze, test, Android AAB build, iOS IPA build (macOS runner). Gizli değerler CI secret deposundan gelsin. Semboller artifact olarak saklansın.
+
+## 9. Bitti sayılması için kanıtlar
+
+| Kriter | Nasıl kanıtlanır |
+|---|---|
+| Analiz temiz | `flutter analyze --fatal-infos` ve `dart format --set-exit-if-changed .` çıkış kodu 0, CI günlüğü ekte |
+| Testler geçiyor | `flutter test --coverage` yeşil, kapsam raporu eşiği aşıyor |
+| Anahtar kaynakta yok | `git grep -n "paymentApiKey\|Bearer"` sonucunda sağlayıcı anahtarı yok. Gitleaks raporu temiz |
+| Anahtar ikilide yok | Release `app-release.aab` içinden çıkarılan `libapp.so` ve IPA içindeki `App.framework/App` üzerinde `strings … \| grep <eski anahtar>` boş döner |
+| Eski anahtar iptal | Sağlayıcı panelinde iptal/rotasyon kaydı (ekran görüntüsü veya log) |
+| Karartma çalışıyor | Aynı komut `--obfuscate` olmadan ve olarak iki kez derlenir. `strings` ile `ShopApp` gibi sınıf adları karartılmış sürümde bulunmaz |
+| Semboller saklandı | `build/symbols/<platform>/<sürüm>` dosyaları arşivde mevcut. Örnek bir stack trace `flutter symbolize` ile çözülüyor |
+| Release gerçekten çalışıyor | Fiziksel Android ve iOS cihazda release derlemesiyle ödeme çağrısı staging'de başarılı (log + ekran kaydı) |
+| Mağaza hazır | Play iç test ve TestFlight'a yükleme işlemleri başarılı, işleme (processing) hatasız tamamlandı |
+
+## 10. Riskler ve açık noktalar
+
+- Backend yoksa 3. bölümün 2. adımı bu planın dışında bir iş kalemi olur. Yayın bu olmadan güvenli sayılmaz.
+- Obfuscation tersine mühendisliği yalnızca zorlaştırır, güvenlik sınırı değildir.
+- Bu ortamda `flutter` çalıştırılamadığı için komutların çıktıları ve `android/`/`ios/` şablon ayrıntıları henüz doğrulanmadı. Uygulama sırasında ilk iş bu doğrulamalar olmalı.

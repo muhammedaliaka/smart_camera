@@ -1,0 +1,52 @@
+[probe p10]
+Bu yanıt, Epic'in dokümantasyonuna dair hafızamdaki bilgiye dayanıyor. İnternet erişimim yok, bu yüzden dokümanları şu an açıp doğrulamadım. Projenizdeki dosyalara da bakmadım. Komutları ilk çalıştırmadan önce kendi motor sürümünüzde `-help` çıktısıyla karşılaştırın.
+
+## Kaynaklar (hafızadan, doğrulanmadı)
+- **Paketleme:** Epic'in "Using Command Line Arguments to Package" ve "Unreal Automation Tool" (UAT) / `BuildCookRun` dokümanları.
+- **Testler:** Epic'in "Automation System Overview" ve "Automation Test Framework" dokümanları. Komut satırı bayrakları `UnrealEditor-Cmd` ve `Automation RunTests` konsol komutundan geliyor.
+- **Zamanlama:** Standart cron veya GitHub Actions `schedule` kullanımı. Bunlar Unreal'a özgü değil.
+
+## Plan
+1. Kaynaktan derlenmiş ya da kurulu bir UE5 gerekir. Yolu `UE_ROOT` olarak tanımlayın.
+2. `RunUAT` ile `BuildCookRun` çalıştırıp paketleyin.
+3. `UnrealEditor-Cmd` ile testleri başsız (headless) çalıştırıp rapor üretin.
+4. İkisini bir betiğe koyup cron ya da CI ile günlük tetikleyin.
+
+## Komutlar
+
+Platform Linux olduğu için `.sh` kullandım. Windows'ta `RunUAT.bat` ve `UnrealEditor-Cmd.exe` kullanılır.
+
+**Paketleme**
+```bash
+export UE_ROOT=/opt/UnrealEngine
+"$UE_ROOT/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun \
+  -project="$PWD/MyGame.uproject" \
+  -platform=Linux -clientconfig=Development \
+  -build -cook -stage -pak -archive -archivedirectory="$PWD/Build" \
+  -noP4 -utf8output -unattended
+```
+
+**Otomasyon testleri**
+```bash
+"$UE_ROOT/Engine/Binaries/Linux/UnrealEditor-Cmd" "$PWD/MyGame.uproject" \
+  -ExecCmds="Automation RunTests Project; Quit" \
+  -unattended -nullrhi -nosplash -NoSound \
+  -ReportExportPath="$PWD/TestReports" -log
+```
+`Project` filtresi, projenizin kendi testlerini seçer. Belirli bir testi çalıştırmak için `Project.Adiniz` gibi bir önek verin.
+
+**Günlük çalıştırma (`nightly.sh` içinde ikisini art arda koyun)**
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+# 1) paketle  2) test et  (yukarıdaki iki komut)
+```
+```cron
+0 3 * * *  /path/to/nightly.sh >> /path/to/nightly.log 2>&1
+```
+
+## Dikkat edilecekler
+- Unreal'a yeni olduğunuz için: testler önce projede yazılmış olmalı (C++ `IMPLEMENT_SIMPLE_AUTOMATION_TEST` ya da Blueprint Functional Test). Hiç test yoksa komut "0 test" ile biter.
+- `set -e`, `RunUAT`'ın çıkış kodunu yakalar. Test çıkış kodu motor sürümüne göre değişebilir. Güvenmeden önce bilerek başarısız bir test yazıp deneyin.
+- İlk paketleme ve cook uzun sürer. Sonraki çalıştırmalar önbellekle hızlanır.
+- Bayrak adları sürümler arasında değişebilir. `RunUAT.sh BuildCookRun -help` çıktısı, hafızamdaki bilgiden daha güvenilirdir.

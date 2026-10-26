@@ -1,0 +1,56 @@
+[probe p10]
+Plan dosyasını kaydedemedim, çünkü Write aracı bu oturumda kapalı. Planı aşağıya yazıyorum.
+
+## Dayanak
+- Kaynak: projedeki `unreal.md` paketi. Epic'in otomasyon testi ve build sayfalarından 2026-10-25'te okunmuş. [official, paket üzerinden]
+- Bugün internete çıkamadım. Hiçbir şeyi yeniden doğrulamadım.
+- "UNVERIFIED" yazanları kurulu motorda kontrol et.
+- Repoda `.uproject` yok. Motor sürümü bilinmiyor. `.uproject` içindeki `EngineAssociation` alanına bak.
+
+## Varsayımlar
+- Windows kullanıyorsun ve motor `%UE_ROOT%` altında kurulu.
+- Zamanlayıcı olarak Task Scheduler kullanacaksın. Linux'ta cron kullan.
+- Test grubunun adı `Smoke`. Bunu kendi grubunla değiştir.
+
+## Plan
+1. Projeyi editörde bir kez aç. Sürümü not et.
+2. Paket komutunu elle yazma. Editörde Platforms > Project Launcher > Custom Launch Profile oluştur. Komutu Output Log'dan kopyala. Epic böyle öneriyor. [official]
+3. Komutu `package.bat` dosyasına koy. Elle çalıştır ve build klasörünün oluştuğunu kontrol et.
+4. Testleri elle çalıştır. Rapor klasöründe JSON çıktısı olmalı.
+5. İki adımı `nightly.bat` içinde birleştir. Herhangi bir test kalırsa script hata kodu döndürsün. Bunun için JSON'u oku. Sadece çıkış koduna güvenme.
+6. Günlük göreve bağla. Önce göreve elle bir kez çalıştır.
+
+## Komutlar
+
+Paket komutunun iskeleti. Sadece `-project=` ve `-clientconfig=` resmi sayfada geçiyor. Gerisi UNVERIFIED. Project Launcher çıktısıyla değiştir.
+```bat
+"%UE_ROOT%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun ^
+  -project="%PROJECT%\MyGame.uproject" ^
+  -platform=Win64 -clientconfig=Development ^
+  -build -cook -stage -pak -archive -archivedirectory="%OUT%\Build"
+```
+
+Test komutu. `Automation RunTest`, `Group:` ve `-ReportExportPath` resmi. `-unattended -nullrhi -nosplash` UNVERIFIED. Kurulu sürümde `-help` ile kontrol et.
+```bat
+"%UE_ROOT%\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "%PROJECT%\MyGame.uproject" ^
+  -ExecCmds="Automation RunTest Group:Smoke;Quit" ^
+  -ReportExportPath="%OUT%\Reports\%DATE_TAG%" ^
+  -unattended -nullrhi -nosplash -log
+```
+
+Günlük zamanlama. Bu yöntem Epic'ten değil, genel uygulama. [not official]
+```bat
+schtasks /Create /SC DAILY /ST 03:00 /TN "UE nightly" /TR "C:\ci\scripts\nightly.bat"
+```
+Linux'ta cron satırı: `0 3 * * * /opt/ci/nightly.sh >> /opt/ci/nightly.log 2>&1`
+
+## Riskler
+- `-nullrhi` render isteyen testleri bozabilir. O testlerde bayrağı kaldır.
+- Editör çökerse rapor oluşmaz. Script rapor yoksa hata versin.
+- İlk cook çok yavaş. Zamanlamadan önce elle çalıştır.
+- Bilgisayar 03:00'te uykudaysa görev çalışmaz.
+
+## Bilinmeyenler
+- Motor sürümü, hedef platform, test grubu adları, makinenin açık kalıp kalmayacağı.
+
+Plan dosyası istersen yazma iznini açarsan `.pusula/plans/` altına kaydederim.

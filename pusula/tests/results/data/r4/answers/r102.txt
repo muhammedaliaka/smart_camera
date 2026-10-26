@@ -1,0 +1,60 @@
+[probe p10]
+**Durum:** Projede `.uproject` yok, bu yüzden hiçbir şeyi çalıştıramadım. İnternetim de yok. Aşağıdaki komutlar test edilmedi.
+
+## Dayanak
+- `.claude/skills/recipes/packs/unreal.md`. Bu dosya 2026-10-25'te Epic'in resmi sayfalarından okunmuş (build-operations, automation-tests). Ben bu sayfaları yeniden okuyamadım.
+- Resmi bilgi: Paketleme komutunu Project Launcher üretir. Argümanlar `RunUAT` aracına gider. Testler `Automation RunTest` ile koşar. Rapor `-ReportExportPath` klasörüne JSON ve HTML olarak yazılır.
+- "Resmi değil" ve doğrulanmamış: Aşağıdaki `-unattended`, `-nullrhi`, `-nosplash` bayrakları ve cron/Task Scheduler satırları genel pratik. Epic sayfası bunları anlatmıyor.
+
+## Plan
+**Hedef:** Her gün paketle, test et, raporu oku.
+**Kapsam dışı:** CI sunucusu kurmak, motor kaynağını derlemek.
+
+1. **Motor sürümünü bul.** `.uproject` içindeki `EngineAssociation` alanına bak. Dokümanı o sürüm için oku.
+   - Kontrol: Sürüm numarasını yazabiliyorsun.
+2. **Paket komutunu Unreal'dan üret.** Editor'da *Platforms → Project Launcher* aç. Özel bir Launch Profile yap, bir kez çalıştır. Output Log'daki `BuildCookRun` satırını kopyala.
+   - Kontrol: Paket çıktısı klasörde var ve oyun açılıyor.
+3. **Testleri elle çalıştır.** Önce tek grup dene (aşağıda). Sonra JSON raporunu aç.
+   - Kontrol: Rapor dosyası oluştu, test sayısı beklediğin kadar.
+4. **Betiğe sar.** Adım 2 ve 3'ü tek betikte birleştir. Çıkış kodunu ve raporu kontrol etsin.
+   - Kontrol: Betik elle çalışınca yeşil. Bir testi bilerek bozunca kırmızı.
+5. **Zamanla.** Betiği günde bir kez çalıştır (aşağıda).
+   - Kontrol: Ertesi gün yeni rapor klasörü var.
+
+**Riskler:**
+- Binary asset dosyaları (`.uasset`, `.umap`) metin gibi birleştirilemez.
+- İlk paketleme çok uzun sürer.
+- Test bayrakları sürüme göre değişebilir.
+
+**Bilinmeyenler:** Motor sürümü, hedef platform, test grupları.
+
+## Komutlar (UNVERIFIED, adım 2'deki gerçek komutla karşılaştır)
+
+Paketleme (Windows):
+```bat
+"%UE_ROOT%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun ^
+  -project="C:\Proj\MyGame.uproject" -noP4 -platform=Win64 ^
+  -clientconfig=Development -build -cook -stage -pak -archive ^
+  -archivedirectory="C:\Builds\%DATE%"
+```
+
+Test (Windows). `Smoke` grubu örnek bir isimdir:
+```bat
+"%UE_ROOT%\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "C:\Proj\MyGame.uproject" ^
+  -ExecCmds="Automation RunTest Group:Smoke;Quit" ^
+  -ReportExportPath="C:\Reports\%DATE%" -unattended -nullrhi -nosplash -log
+```
+Mac/Linux'ta `RunUAT.sh` kullan.
+
+Günlük zamanlama, Windows:
+```bat
+schtasks /create /tn "UE Nightly" /tr "C:\Proj\nightly.bat" /sc daily /st 03:00
+```
+Linux/Mac için `crontab` satırı: `0 3 * * * /home/me/nightly.sh`
+
+## Bitti sayılması için
+- Test raporunun JSON'unu oku. Sadece çıkış koduna güvenme.
+- Paketlenen oyunu aç.
+- Üstteki doğrulanmamış bayrakları `UnrealEditor-Cmd.exe -help` çıktısıyla kontrol et.
+
+İstersen bu planı `.pusula/` altına dosya olarak yazarım.

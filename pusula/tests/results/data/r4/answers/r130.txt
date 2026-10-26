@@ -1,0 +1,74 @@
+[probe p13]
+Bu komutları burada çalıştırmadım. Dosyalarınıza ve internete erişimim yok, dosya adları yer tutucudur. Steam gereksinimleri de ezberimden yazılmıştır, yüklemeden önce Steamworks "Trailers" belgesinden bir kez doğrulayın. Ben bittiğini iddia etmiyorum. Aşağıdaki doğrulama betiğinin çıktısı bunu sizin makinenizde kanıtlayacak.
+
+## Steam'in istediği biçim (ezberden)
+- Kapsayıcı MP4, video H.264 (High profile), `yuv420p`.
+- Oran 16:9, en az 1920x1080. 1440p ve 4K de kabul edilir.
+- Kare hızı 24–60 fps.
+- Ses AAC, stereo, 48 kHz, yüksek bitrate (320k).
+- Süre 60 sn, Steam'in önerdiği aralığın içinde. İlk 10 saniyeyi en güçlü sahneyle açın.
+- Steam yüklenen videoyu kendisi yeniden kodlar, bu yüzden kaynağı yüksek kalitede verin (CRF 16–18).
+
+## 1. Kaynakları incele
+```bash
+for f in clip*.mp4; do ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,pix_fmt,duration -of default=nw=1 "$f"; done
+ffprobe -v error -show_entries format=duration -of csv=p=0 music.wav
+```
+
+## 2. Birleştir ve dışa aktar (1080p, 60 fps, tam 60 sn)
+Üç klipten 21 + 21 + 20 sn alınır, aralarında 1 sn çapraz geçiş olur. 62 − 2 = 60 sn eder. `start=` değerlerini kendi sahnelerinize göre değiştirin.
+
+```bash
+ffmpeg -y -i clip1.mp4 -i clip2.mp4 -i clip3.mp4 -i music.wav \
+-filter_complex "
+[0:v]trim=start=10:duration=21,setpts=PTS-STARTPTS,scale=1920:1080:flags=lanczos,fps=60,setsar=1,format=yuv420p[v0];
+[1:v]trim=start=5:duration=21,setpts=PTS-STARTPTS,scale=1920:1080:flags=lanczos,fps=60,setsar=1,format=yuv420p[v1];
+[2:v]trim=start=30:duration=20,setpts=PTS-STARTPTS,scale=1920:1080:flags=lanczos,fps=60,setsar=1,format=yuv420p[v2];
+[v0][v1]xfade=transition=fade:duration=1:offset=20[x1];
+[x1][v2]xfade=transition=fade:duration=1:offset=40[vout];
+[3:a]atrim=0:60,asetpts=PTS-STARTPTS,afade=t=in:d=0.5,afade=t=out:st=57:d=3,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[aout]
+" \
+-map "[vout]" -map "[aout]" -t 60 \
+-c:v libx264 -preset slow -profile:v high -crf 17 -maxrate 20M -bufsize 40M -pix_fmt yuv420p -r 60 \
+-colorspace bt709 -color_primaries bt709 -color_trc bt709 \
+-c:a aac -b:a 320k -ac 2 -ar 48000 \
+-movflags +faststart trailer_1080p.mp4
+```
+
+Notlar:
+- Oyun kayıtlarının kendi sesi dışarıda kalır, `-map` sadece müziği alır.
+- 1440p istiyorsanız `scale=1920:1080` yerine `scale=2560:1440` yazın ve `-maxrate 35M -bufsize 70M` kullanın.
+- Müzik 60 saniyeden kısaysa `[3:a]` başına `aloop=loop=-1:size=2e9,` ekleyin.
+
+## 3. Bittiğini kanıtlama
+`verify.sh` dosyasına kaydedip `bash verify.sh trailer_1080p.mp4` ile çalıştırın:
+
+```bash
+#!/usr/bin/env bash
+f="$1"; fail=0
+chk(){ if [ "$2" = "$3" ]; then echo "OK   $1 = $2"; else echo "FAIL $1: beklenen $3, gelen $2"; fail=1; fi; }
+v(){ ffprobe -v error -select_streams v:0 -show_entries stream=$1 -of csv=p=0 "$f"; }
+a(){ ffprobe -v error -select_streams a:0 -show_entries stream=$1 -of csv=p=0 "$f"; }
+chk vcodec   "$(v codec_name)" h264
+chk profile  "$(v profile)" High
+chk pix_fmt  "$(v pix_fmt)" yuv420p
+chk size     "$(v width),$(v height)" 1920,1080
+chk fps      "$(v r_frame_rate)" 60/1
+chk acodec   "$(a codec_name)" aac
+chk rate     "$(a sample_rate)" 48000
+chk channels "$(a channels)" 2
+d=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
+awk -v d="$d" 'BEGIN{exit !(d>=59.9 && d<=60.1)}' && echo "OK   süre = $d" || { echo "FAIL süre = $d"; fail=1; }
+ffmpeg -v error -i "$f" -f null - 2>&1 | head -5   # bozuk kare/akış varsa burada yazar
+ffmpeg -hide_banner -nostats -i "$f" -af ebur128=peak=true -f null - 2>&1 | grep -A3 "Integrated loudness"
+ffmpeg -y -v error -i "$f" -vf "fps=1/6,scale=480:-1,tile=5x2" -frames:v 1 contact_sheet.jpg && echo "contact_sheet.jpg üretildi (gözle kontrol edin)"
+sha256sum "$f"
+[ $fail = 0 ] && echo "TÜM KONTROLLER GEÇTİ" || { echo "BAŞARISIZ"; exit 1; }
+```
+
+Betik şunları sağlar:
+- Biçim kontrolü, süre (60 ± 0.1 sn) ve decode hatası taraması yapar.
+- Ses seviyesini ölçer. Integrated değeri yaklaşık −14 LUFS, true peak −1.5 dBTP'yi geçmemeli.
+- `contact_sheet.jpg` ile 6 saniyede bir kare çıkarır. Geçişlerde siyah kare, esneme ya da yanlış sahne olup olmadığını bu görselden anlarsınız.
+
+**Bitti sayılma ölçütü:** Betik `TÜM KONTROLLER GEÇTİ` yazar, LUFS ve peak değerleri aralıktadır, contact sheet'te sorun yoktur. Bu çıktıyı bana yapıştırırsanız ben de gözden geçirebilirim. Son adım olarak Steamworks'e yükleyip önizlemenin oynadığını kendiniz görmeniz gerekir, bunu buradan kanıtlayamam.

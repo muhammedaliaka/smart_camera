@@ -1,0 +1,165 @@
+[probe p11]
+Depoda yalnızca boş bir `README.md` var (içinde "# scratch" yazıyor). Oyunun türü, adı ve özellikleri hakkında hiçbir bilgi bulamadım. Bu yüzden üç taslağı köşeli parantezli yer tutucularla yazdım. Hiçbir şey göndermedim, yayınlamadım ve dosya da oluşturmadım. Her şey bu yanıtın içinde.
+
+---
+
+## 1) Steam mağaza sayfası taslağı
+
+**Kısa açıklama (yaklaşık 300 karakter sınırı, arama sonuçlarında görünür):**
+> [OYUN ADI], [tür] oyunudur. [Ana mekanik] ile [oyuncunun yaptığı şey]. [Tek cümlelik fark yaratan özellik]. Türkçe dil desteğiyle.
+
+**Uzun açıklama:**
+
+> **[OYUN ADI] ile [vaat edilen deneyim].**
+>
+> [2–3 cümlelik atmosfer ve hikâye girişi. Oyuncuyu ilk paragrafta yakalayın.]
+>
+> **Öne çıkanlar**
+> - **[Özellik 1]:** [oyuncuya ne kazandırdığı]
+> - **[Özellik 2]:** [oyuncuya ne kazandırdığı]
+> - **[Özellik 3]:** [oyuncuya ne kazandırdığı]
+> - **Tam Türkçe arayüz ve altyazı** (varsa)
+>
+> **Nasıl oynanır?**
+> [3–4 cümleyle çekirdek döngü: oyuncu ne yapar, neyi geliştirir, nasıl ilerler.]
+>
+> **Oyun süresi ve içerik**
+> [Tahmini süre, bölüm sayısı, yeniden oynanabilirlik.]
+>
+> **Geliştirici notu**
+> [Kim olduğunuz, neden yaptığınız. Küçük ekip için 2–3 samimi cümle yeterli.]
+>
+> Wishlist'e ekleyin, çıkışta haber alın.
+
+**Ek öneriler**
+- İlk 2 saniyede oyunu anlatan bir fragman koyun. Altyazılı olsun.
+- İlk 4 ekran görüntüsü oyun içinden gelmeli ve oyunun ne olduğunu anlatmalı.
+- Etiketleri (tag) gerçek türe göre seçin.
+- Türkçe dil desteğini mutlaka işaretleyin. Türkiye'de görünürlüğü artırır.
+- Mağaza sayfası çıkıştan önce en az 2 hafta herkese açık olmalı (Steam kuralı).
+
+---
+
+## 2) Üç oyun YouTuber'ına mesaj
+
+Hepsinde [İSİM], [OYUN ADI], [ANAHTAR/BASIN KİTİ LİNKİ] ve [İSİMİNİZ] alanlarını doldurun.
+
+**Mesaj A: Büyük ve orta ölçekli kanal (kısa, profesyonel)**
+> **Konu:** [OYUN ADI] için erken erişim anahtarı, [KANAL ADI]
+>
+> Merhaba [İSİM],
+>
+> [KANAL ADI] kanalında [belirli bir videonun adı] videosunu izledim. [Videoda sizi gerçekten etkileyen şey, tek cümle]. [OYUN ADI] bu tarzı sevenlere göre olabilir diye yazıyorum.
+>
+> [OYUN ADI], [tek cümlelik tanım]. Çıkış tarihi [TARİH].
+>
+> İsterseniz size ücretsiz bir Steam anahtarı ve basın kitini ([LİNK]) göndereyim. Oynama, görüş bildirme ve yayınlama kararı tamamen sizin. Olumlu yorum beklentim yok. Yalnızca anlaşmalı bir tanıtım yapılacaksa ya da oyun anahtarı bir menfaat sayılıyorsa, videonuzda "işbirliği/reklam" ibaresinin bulunması gerekir.
+>
+> İlginizi çekerse yanıtlamanız yeter.
+>
+> Sevgiler,
+> [İSİMİNİZ], [OYUN ADI] geliştiricisi
+
+**Mesaj B: Orta ölçekli, indie odaklı kanal (daha samimi)**
+> **Konu:** Küçük bir ekibin oyunu: [OYUN ADI]
+>
+> Selam [İSİM],
+>
+> [Belirli bir indie oyun videosu] videonuzu çok sevdim. Ben [İSİMİNİZ], [OYUN ADI] oyununu [ekip büyüklüğü] olarak geliştiriyorum. [Oyunu bir cümlede anlat].
+>
+> Sizin izleyiciniz bu tarzı sevdiği için aklıma geldiniz. Dilerseniz ücretsiz bir anahtar göndereyim. Hiçbir zorunluluk yok, istediğiniz gibi deneyin ya da hiç oynamayın. Geri bildirimlerinizi memnuniyetle okurum.
+>
+> [Fragman linki]
+>
+> Teşekkürler,
+> [İSİMİNİZ]
+
+**Mesaj C: Küçük kanal (ücretli iş birliği teklifi ile)**
+> **Konu:** [OYUN ADI] için iş birliği teklifi
+>
+> Merhaba [İSİM],
+>
+> [OYUN ADI] için Türkiye'de oyun kanallarıyla çalışıyorum. Sizin kanalınız [somut sebep] nedeniyle listemizde. Önerim şu: [ücretsiz anahtar + isteğe bağlı ücretli video/yayın, bütçe ve içerik şartları net].
+>
+> Anlaşma olursa video açıklaması ve videonun başında "ücretli iş birliği / reklam" etiketi şart. Bunu birlikte netleştiririz. Yorumun içeriği tamamen size ait olur, olumlu görüş şartı koymuyorum.
+>
+> Uygunsa takvimi ve koşulları konuşalım.
+>
+> [İSİMİNİZ]
+
+**Gönderirken:** Her mesajı tek tek kişiselleştirin. Aynı metni toplu göndermeyin. Anahtarı Steamworks'teki anahtar isteme araçlarından üretin, kanal başına tek bir anahtar verin.
+
+---
+
+## 3) Türkiye için e-posta bülteni planı
+
+**Amaç:** Wishlist sayısını artırmak ve çıkış günü ilk satışları yönlendirmek.
+
+**Liste büyütme (yalnızca izinli yollar)**
+- Steam sayfasında, web sitesinde ve Discord'da açık bir abonelik formu. Kutucuk önceden işaretli gelmemeli.
+- "Çift onay" (double opt-in): kişi forma girince onay e-postası gider, tıklayınca abone olur. Onay kaydını (zaman, IP, metin) saklayın.
+- Bülten kaydı karşılığında küçük bir teşvik (duvar kâğıdı, erken demo) sunabilirsiniz. Olumlu yorum şartı koşmayın.
+- Satın alınmış e-posta listesi kullanmayın.
+
+**Takvim önerisi (çıkıştan geriye)**
+
+| Zaman | Bülten | İçerik | Ana çağrı |
+|---|---|---|---|
+| Çıkıştan −8 hafta | Hoş geldin + duyuru | Oyunun hikâyesi, fragman | Steam wishlist |
+| −6 hafta | Geliştirici günlüğü | Mekanik tanıtımı, GIF | Wishlist |
+| −4 hafta | Demo / Next Fest | Demo linki | Demoyu dene |
+| −2 hafta | Çıkış tarihi + fiyat | Tarih, platform, Türkçe destek | Wishlist, Discord |
+| −3 gün | Hatırlatma | Kısa; geri sayım | Wishlist |
+| Çıkış günü | "Yayında" | Link, çıkış indirimi (varsa) | Satın al |
+| +1 hafta | Teşekkür + geri bildirim | İlk yorumlar, yama notu | Yorum yaz (serbest) |
+
+**Ölçüm:** açılma oranı, tıklama oranı, abonelikten çıkma oranı, Steam wishlist artışı (UTM'li bağlantılarla).
+
+**Konu satırı örnekleri**
+- "[OYUN ADI] çıkış tarihi belli oldu"
+- "Demoyu denediniz mi? [OYUN ADI]"
+
+**Şablon yapısı:** kısa başlık, tek görsel/GIF, 3–4 cümle, tek net buton, altta gönderici bilgisi ve abonelikten çıkma bağlantısı.
+
+---
+
+## Uyulması gereken kurallar ve yasalar
+
+Aşağıdakiler genel bilgidir, hukuki danışmanlık değildir. Eşikleri, cezaları ve tarihleri yayından önce güncel mevzuattan ya da bir avukattan doğrulayın.
+
+**Steam kuralları**
+- Ekran görüntüleri ve fragman gerçek oyundan olmalı. Yanıltıcı görsel kullanılamaz.
+- Steamworks'te yapay zekâ içeriği beyanı yapılmalı: önceden üretilmiş ve çalışma anında üretilen yapay zekâ içeriği bildirilir.
+- Yaş derecelendirme ve içerik anketi doğru doldurulmalı.
+- Başkasının marka, görsel, müzik ve yazı tipi hakkını ihlal edemezsiniz. Lisansları saklayın.
+- Yorum karşılığı ödül ya da anahtar teklif etmek yasak. Anahtar gönderirken olumlu görüş şartı koymayın.
+- Steam mağaza sayfası dışında başka mağazanın satış linkini ve fiyat karşılaştırmasını açıklamaya koymayın.
+
+**Türkiye: ticari elektronik ileti (6563 sayılı Kanun ve ilgili yönetmelik)**
+- Bireylere gönderilen pazarlama e-postaları için önceden onay (opt-in) gerekir.
+- İleti Yönetim Sistemi (İYS) kaydı ve onayların İYS üzerinden yönetilmesi gerekir.
+- Her e-postada ücretsiz ve kolay bir abonelikten çıkma yolu olmalı. Ret talebi en geç 3 iş günü içinde uygulanmalı.
+- Gönderici kimliği net olmalı. Aldatıcı konu satırı kullanılamaz.
+- Esnaf/tacirlere (ör. basın, B2B) gönderim için ayrı istisnalar var ama çıkış hakkı yine tanınmalı.
+- İhlallerde idari para cezaları var.
+
+**Türkiye: kişisel veriler (6698 sayılı KVKK)**
+- Abonelik formunda aydınlatma metni ve pazarlama için açık rıza olmalı.
+- Veriyi yurt dışındaki bir e-posta servisinde (Mailchimp vb.) tutuyorsanız yurt dışına aktarım kuralları ve 2024 değişikliği geçerli. Güncel prosedürü kontrol edin.
+- VERBİS kayıt yükümlülüğü, çalışan sayısı ve bilanço eşiğine göre belirlenir. Eşikleri güncel listeden doğrulayın.
+- Abonelerin silme/erişim taleplerini yanıtlayacak bir süreç hazırlayın.
+- AB'den abone alırsanız GDPR da devreye girer.
+
+**Reklam ve influencer (6502 sayılı Tüketici Kanunu, Ticari Reklam ve Haksız Ticari Uygulamalar Yönetmeliği, Reklam Kurulu)**
+- Ücretli iş birliği ve hediye (ücretsiz anahtar dahil) video içinde ve açıklamada açıkça belirtilmeli ("reklam" ya da "iş birliği").
+- Oyunun özellikleri ve fiyatı hakkında yanıltıcı beyan yapılamaz.
+- Yurt dışındaki YouTuber'lar için kendi ülkelerinin kuralları (ör. ABD'de FTC) ve YouTube'un ücretli tanıtım politikası geçerli.
+
+**Genel**
+- Dijital satışlarda Mesafeli Sözleşmeler Yönetmeliği kapsamında cayma ve bilgilendirme kuralları Steam üzerinden işler. Kendi sitenizden satış yaparsanız size ait olur.
+- Çocuklara yönelik pazarlama yapacaksanız ek hassasiyet gerekir.
+- Oyunun yaş sınıflandırması ve yerel yaş uyarıları için güncel mevzuatı kontrol edin.
+
+---
+
+**Sonraki adım:** Oyunun adını, türünü, 3 temel özelliğini, çıkış tarihini ve hedef kitlesini yazarsanız yer tutucuları doldurup metinleri son haline getirebilirim. İsterseniz bunları paylaşılabilir bir sayfa olarak da hazırlayabilirim.

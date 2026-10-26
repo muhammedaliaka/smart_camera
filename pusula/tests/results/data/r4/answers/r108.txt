@@ -1,0 +1,94 @@
+[probe p9]
+# Yayın Hazırlık Planı: `demo_shop` (Android + iOS)
+
+## 0. Mevcut durum (okuduklarıma göre)
+
+- Repoda yalnızca `pubspec.yaml`, `analysis_options.yaml` ve `lib/main.dart` var. **`android/`, `ios/` ve `test/` klasörleri yok.** Platform iskeleti oluşturulmadan yayın derlemesi alınamaz.
+- `lib/main.dart:4` içinde `paymentApiKey` sabit olarak gömülü ve `lib/main.dart:19` bunu `Authorization: Bearer` başlığıyla gönderiyor. Değer "demo/not-real" yazıyor, ama kalıp gerçek bir anahtar için de aynı olur.
+- `version: 1.0.0+1`, `publish_to: none` ve lint olarak yalnızca `flutter_lints` var. Uygulama kimliği, imzalama ve test henüz yok.
+
+**Ana bulgu:** Obfuscation API anahtarını korumaz. Dart `--obfuscate` yalnızca sembol adlarını karartır. String sabitleri derlenmiş ikilide olduğu gibi kalır ve `strings` komutuyla okunur. İstemciye gömülen her gizli değer sızmış sayılmalıdır. Bu yüzden anahtar koruması, karartmadan ayrı ve önce gelen bir adım olarak planlandı.
+
+## 1. Kaynaklar
+
+Bu oturumda internet yok, bu yüzden aşağıdakileri kendi bilgimden yazdım ve **bu oturumda doğrulamadım**. Uygulama aşamasında güncel sürümlerine karşı kontrol edilmeli:
+
+- Flutter dokümanları: "Obfuscate Dart code" (`--obfuscate --split-debug-info`), "Build and release an Android app", "Build and release an iOS app", "Flavors", "Testing overview".
+- Android: R8/ProGuard shrinking dokümanı, Play App Signing, Play Console `.aab` zorunluluğu ve target API gereksinimleri.
+- Apple: App Store Connect / TestFlight yönergeleri, Privacy Manifest ve App Privacy gereksinimleri.
+- OWASP MASVS ve MASTG. Özellikle MASVS-STORAGE, MASVS-CRYPTO ve MASVS-RESILIENCE bölümleri "istemcide gizli tutulmaz" ilkesini destekler.
+- Repodaki gerçek dosyalar: `pubspec.yaml`, `analysis_options.yaml`, `lib/main.dart`.
+
+## 2. Aşamalar
+
+### Aşama A: Platform iskeleti ve kimlik
+1. `flutter create --platforms=android,ios .` ile iskeleti oluştur. Mevcut `lib/` korunur.
+2. Paket kimliğini belirle (örn. `com.<firma>.demoshop`). Android `applicationId` ve iOS `PRODUCT_BUNDLE_IDENTIFIER` aynı olmalı.
+3. Uygulama adı, ikon ve açılış ekranını ayarla.
+4. Sürüm politikası: `version: 1.0.0+1`, build numarası her mağaza yüklemesinde artar.
+5. `.gitignore` içinde `key.properties`, `*.jks`, `*.keystore`, `*.p12`, `*.mobileprovision`, `dart_defines*.json` ve `build/symbols/` bulunduğunu doğrula.
+
+### Aşama B: API anahtarı koruması (karartmadan önce)
+1. **Gerçek çözüm: sunucu tarafı.** Ödeme sağlayıcının gizli anahtarı yalnızca bir backend'de durur. Uygulama `apiBase/charge` yerine kendi backend'inize konuşur. Backend anahtarı ekler ve kullanıcı oturumunu (token) doğrular. İstemcideki `paymentApiKey` sabiti silinir.
+2. Sağlayıcı istemci tarafı için **publishable/public** anahtar türü sunuyorsa, istemciye yalnızca o girer. Bu zaten gizli değildir. Gizli (secret) tür asla girmez.
+3. Mevcut anahtar gerçek bir değerse **iptal et ve yenile** (rotate). Git geçmişinde (`5835093`) zaten duruyor.
+4. Public değerler için `--dart-define-from-file` kullan ve kodda `String.fromEnvironment` ile oku. Bu bir koruma değil, ortam ayrımıdır (dev/staging/prod). Bunu gizleme olarak sunma.
+5. Backend çağrılarında ek önlemler: TLS zorunlu (HTTP yok), kullanıcı başına yetkilendirme ve hız sınırı. Gerekirse App Attest (iOS) / Play Integrity (Android) ile istemci doğrulaması.
+6. Sızıntı taraması: depoda ve geçmişte gizli değer taraması (gitleaks veya benzeri) çalıştır.
+
+### Aşama C: Karartma (obfuscation) ve küçültme
+1. Dart: `flutter build appbundle --release --obfuscate --split-debug-info=build/symbols/android` ve iOS için `flutter build ipa --release --obfuscate --split-debug-info=build/symbols/ios`.
+2. Android: `minifyEnabled true` ve `shrinkResources true` (R8). Eklentiler çıktıkça gerekli `proguard-rules.pro` kuralları eklenir. Release'te çökme olursa önce kurallara bakılır.
+3. `build/symbols/` dizinini **her sürüm için arşivle** (CI artifact veya güvenli depo). Bunlar olmadan çökme izleri okunamaz. Repoya girmez.
+4. Çökme raporlama (Crashlytics/Sentry) kullanılacaksa sembol yükleme adımını ekle.
+5. Beklenti yönetimi: karartma tersine mühendisliği yalnızca zorlaştırır. Gizlilik güvencesi değildir.
+
+### Aşama D: İmzalama ve mağaza ayarları
+- **Android:** upload keystore oluştur, `android/key.properties` (repo dışı) ve `build.gradle` içinde release `signingConfig` tanımla. Play App Signing'i etkinleştir. Debug anahtarıyla release imzalanmaz.
+- **iOS:** Apple Developer hesabı, dağıtım sertifikası ve provisioning profile (ya da Xcode automatic signing). Gerekli `Info.plist` izin açıklamaları ve Privacy Manifest.
+- Her iki platform: gizlilik politikası URL'si, veri güvenliği / App Privacy formları, ödeme akışına uygun mağaza kuralları.
+
+### Aşama E: Analiz ve test
+1. `flutter pub get`, ardından `flutter pub outdated` ve güvenlik açısından bağımlılık incelemesi (`http` dahil).
+2. `dart format --set-exit-if-changed .`
+3. `flutter analyze` ve sıfır uyarı hedefi. `analysis_options.yaml` şu an yalnızca varsayılan lint'leri içeriyor. İstenirse `avoid_print`, `prefer_const_constructors` gibi kurallar sıkılaştırılır.
+4. Testler (şu an hiç yok):
+   - Birim: `pay()` için `http.MockClient` ile istek URL'si, başlıklar ve hata durumu testi. Bunun için `http.Client` enjekte edilebilir hale getirilmesi gerekecek (ayrı, küçük bir refactor).
+   - Widget: "Pay" düğmesi render edilir ve dokunuşta `pay` tetiklenir.
+   - Entegrasyon: `integration_test` ile cihaz/emülatörde temel akış.
+5. `flutter test --coverage` ve makul bir eşik (örn. çekirdek mantıkta %70+; eşik takımla kararlaştırılır).
+6. Gerçek cihazda release modu denemesi: `flutter run --release` ve karartılmış derleme ile aynı akışın çalıştığı doğrulanır.
+
+### Aşama F: CI/CD ve dağıtım
+1. CI hattı: format → analyze → test → (Android build, iOS build) → artifact + semboller.
+2. İç test kanalları: Play Internal Testing ve TestFlight. Üretime geçmeden önce kademeli yayın (staged rollout).
+3. Yayın öncesi kontrol listesi imzalanır (aşağıdaki kanıtlar).
+
+## 3. "Bitti"yi nasıl kanıtlayacağız
+
+Her madde somut bir çıktıyla doğrulanır. Çıktılar PR/sürüm notuna eklenir.
+
+| # | Kanıt | Geçme koşulu |
+|---|---|---|
+| 1 | `flutter analyze` | 0 sorun |
+| 2 | `dart format --set-exit-if-changed .` | çıkış kodu 0 |
+| 3 | `flutter test --coverage` | tüm testler geçer, eşik sağlanır |
+| 4 | `grep -rn "paymentApiKey\|Bearer" lib/` | gizli anahtar yok |
+| 5 | Gitleaks/benzeri tarama | bulgu yok, eski anahtar iptal edildiği yazılı |
+| 6 | Android: `.aab` içindeki `libapp.so` üzerinde `strings` ile eski anahtar/sınıf adları aranır | gizli değer yok, okunur Dart sembolleri yok |
+| 7 | iOS: `.ipa` içindeki `App.framework/App` için aynı kontrol | aynı |
+| 8 | `build/symbols/` arşivi mevcut ve sürümle eşleşmiş | örnek bir çökme izi `flutter symbolize` ile çözülür |
+| 9 | Release imzası: `apksigner verify` / `jarsigner -verify` (Android), `codesign -dv` (iOS) | release anahtarıyla imzalı, debug değil |
+| 10 | Gerçek cihazda release derlemesiyle "Pay" akışı (backend üzerinden) | başarılı yanıt, istekte istemci tarafı gizli anahtar yok (proxy ile trafik incelemesi) |
+| 11 | Play Internal Testing ve TestFlight yüklemeleri | mağaza ön kontrolleri geçti, uyarı yok |
+
+**Dürüst sınır:** Bu oturumda komut çalıştıramıyorum (Bash kapalı) ve internet yok. Yukarıdaki hiçbir doğrulama şu an yapılmadı. Plan, uygulama aşamasında bu kanıtların toplanmasıyla tamamlanır.
+
+## 4. Riskler ve karar noktaları
+
+- **Backend yoksa:** Aşama B tamamlanamaz. Bu durumda yayını bloklayan bir madde olarak ele alınmalı. İstemciye gizli anahtar koymak kabul edilebilir bir geçici çözüm değildir.
+- Karartma bazı eklentilerde yansıma/serileştirme kaynaklı sorunlar çıkarabilir. Çözüm: ilgili sınıfları ayrı tut ve karartılmış release derlemesi üzerinde testleri çalıştır.
+- `publish_to: none` pub.dev yayınını engeller, mağaza yayınını etkilemez. Dokunmaya gerek yok.
+- Ödeme içeren uygulamalarda mağaza politikaları (dijital mal için uygulama içi satın alma zorunluluğu vb.) ayrıca incelenmeli. Bu konuda güncel kuralları doğrulamadım.
+
+Sonraki adım olarak Aşama A ve B'yi (iskelet ve anahtarın backend'e taşınması) uygulamaya başlayabilirim.

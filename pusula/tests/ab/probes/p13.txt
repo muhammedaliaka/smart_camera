@@ -1,0 +1,1 @@
+Steam mağaza sayfası için 60 saniyelik bir fragman hazırlayacağım. Elimde oyun kayıtları (mp4, 2560x1440, 60 fps) ve bir müzik dosyası var. ffmpeg ile birleştirmek ve dışa aktarmak için komutları, Steam'in istediği biçimi ve bittiğini nasıl kanıtlayacağını yaz. Okuma araçların var, internet yok. Soru sorma.

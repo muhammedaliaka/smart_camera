@@ -1,0 +1,148 @@
+[probe p9]
+Planı dosyaya yazamadım, çünkü bu oturumda `Write` aracı kapalı. Planı aşağıya koydum. İstersen `.pusula/release-hardening/plan.md` olarak kaydederim.
+
+Hiçbir kodu değiştirmedim. İnternet kapalıydı, bu yüzden resmi sayfaları yeniden okuyamadım. Kaynaklar `recipes/packs/flutter.md` içinden geliyor (ikinci el, resmi sayfalara dayanıyor). Doğrulanmamış yerleri `UNVERIFIED` diye işaretledim.
+
+---
+
+# Plan: Release hardening (Android + iOS)
+
+Status: draft, Updated: 2026-10-26
+
+## Repoda gördüklerim
+- Dosyalar: `pubspec.yaml`, `analysis_options.yaml` (yalnızca `flutter_lints`), `lib/main.dart`.
+- `android/`, `ios/`, `test/`, `pubspec.lock` yok. `.pusula/checks/pusula_check.py` de yok.
+- `lib/main.dart:4`: `paymentApiKey` koda gömülü. `lib/main.dart:19`: anahtar `Authorization: Bearer` olarak gidiyor.
+- `lib/main.dart:5`: `apiBase` da gömülü.
+- Git geçmişi (`971fe23`) anahtar metnini tutuyor. Değer "not real" diyor.
+
+## Goal
+`demo_shop` için Android (`.aab`) ve iOS (`.ipa`) release sürümleri, obfuscation açık olarak derlenir. İkilide ödeme anahtarı olmaz. Analiz ve testler geçer. Her iddianın bu oturumdan çıktısı olur.
+
+## Out of scope
+Mağaza yayını (ayrı onay ister), backend'in yazılması, web/desktop, yeni özellik.
+
+## Decisions
+| Karar | Neden | Kaynak |
+| --- | --- | --- |
+| Ödeme anahtarı uygulamadan çıkar. Anahtarı sunucu tutar, uygulama kullanıcının oturumuyla sunucuyu çağırır. | Gönderilen her şey çıkarılabilir. `--dart-define` değerleri de ikilide kalır. Obfuscation yalnızca sembol adlarını değiştirir, string'leri saklamaz. | docs.flutter.dev/deployment/obfuscate, /security; `anti-copy.md` |
+| Her iki platformda `--obfuscate --split-debug-info=build/symbols`. | Belgelenmiş akış. Yalnızca release'te çalışır. | docs.flutter.dev/deployment/obfuscate |
+| `apiBase` build zamanında `--dart-define=API_BASE=...` ile gelir. | URL gizli değil. Gömülü değer kuralını giderir. | UNVERIFIED (flavors sayfası) |
+| `pay()` dışarıdan `http.Client` alır. | Ağsız test için gerekli. | `MockClient`, UNVERIFIED |
+| Kapı: `flutter analyze --fatal-infos`. `pubspec.lock` commit edilir. | Info seviyesi uyarılar varsayılanda analizi düşürmez. | dart.dev/tools/analysis |
+
+## Sources
+1. Resmi: docs.flutter.dev (`/deployment/obfuscate`, `/deployment/android`, `/deployment/ios`, `/security`, `/testing/overview`), dart.dev/tools/analysis, Google ve Apple imzalama belgeleri.
+2. İkinci el: `recipes/packs/flutter.md` (2026-10-25'te okunmuş).
+3. Başka her şey "not official" diye etiketlenir.
+4. Önce `flutter --version` okunur. Pack'e göre en yeni stable 3.47.8 (Dart 3.13.7). Projeye göre SDK `>=3.5.0`.
+
+## File map
+| Dosya | İş |
+| --- | --- |
+| `android/`, `ios/` (yeni) | `flutter create` ile üretilen platform projeleri |
+| `lib/config/app_config.dart` (yeni) | `API_BASE` değerini okur |
+| `lib/payment/payment_service.dart` (yeni) | `PaymentService(http.Client)`, anahtarsız çağrı |
+| `lib/main.dart` (değişir) | Yalnızca UI. İki sabit silinir |
+| `test/payment_service_test.dart`, `test/shop_app_test.dart` (yeni) | İki test dosyası |
+| `.gitignore` | `*.jks`, `key.properties`, `build/symbols`, `*.p12`, `*.mobileprovision` |
+| `.pusula/release-hardening/evidence.md` | Komut çıktıları |
+
+## Tasks
+
+**Task 1. Taban ve platform klasörleri**
+1. `flutter --version` ve `flutter doctor -v` çalıştır. Check: çıktı kaydedildi, eksikler (Android SDK, Xcode) listelendi.
+2. `flutter pub get`. Check: `pubspec.lock` var, commit edildi.
+3. Dokunulmamış kodda `flutter analyze`. Check: taban sonucu kaydedildi.
+4. `flutter create --platforms=android,ios --project-name demo_shop .`. Check: `git diff` `lib/main.dart` ve `pubspec.yaml` için boş.
+5. Gerçek application id / bundle id'yi yaz (kullanıcıdan gelir). Check: `grep` `com.example` bulmaz.
+
+**Task 2. Anahtarı istemciden çıkar**
+- Üretir: `AppConfig.apiBase` (`String`), `PaymentService(http.Client)` ile `Future<void> charge()`. 2xx dışında `PaymentException` fırlatır.
+1. Önce Task 3 testlerini yaz, kırmızı gör.
+2. İki yeni dosyayı yaz. İstek, güvenli depodaki kullanıcı oturum token'ını taşır. Check: `grep -rn "paymentApiKey\|demo-payment-key" lib/` boş döner.
+3. `main.dart` servisi çağırır. Yükleniyor, başarı ve hata durumları eklenir. Metinler sabit dosyasına gider. Check: `flutter analyze --fatal-infos` temiz.
+4. Anahtar bir gün gerçekse sağlayıcıda iptal et (rotate). Check: kullanıcı iptali onaylar.
+
+Why code: ön ek bayrağının adı düzyazıyla sabitlenemez. Checked: UNVERIFIED.
+```dart
+static const apiBase = String.fromEnvironment('API_BASE');
+```
+`API_BASE` boşsa uygulama başlarken açıkça hata vermeli, sessiz kalmamalı.
+
+**Task 3. Testler**
+1. `payment_service_test.dart`: `charge posts to {apiBase}/charge`, `charge sends no static Authorization key`, `charge throws PaymentException on 500` (`MockClient`). Check: önce fail, Task 2'den sonra pass.
+2. `shop_app_test.dart`: `Pay button shows loading then success`, `shows error text when service throws`. Check: `flutter test` yeşil.
+3. `flutter test --coverage`. Check: gerçek oran raporlanır, hedef sözü verilmez.
+
+**Task 4. Android release**
+1. Upload keystore'u repo dışında üret. `android/key.properties` yerelde kalır. Check: `git check-ignore -v android/key.properties` eşleşir.
+2. `flutter build appbundle --release --obfuscate --split-debug-info=build/symbols --dart-define=API_BASE=<url>`. Check: çıkış kodu 0, `.aab` var.
+3. `build/symbols/` build numarasıyla repo dışında arşivlenir. Check: `flutter symbolize -i <trace> -d <symbols>` örnek izi okunur hale getirir.
+4. Aynı bayraklarla release APK'yı cihaza kur. Check: Pay'in boş, yükleniyor, başarı, hata ekran görüntüleri, yazılı ölçütlere göre (`ui-acceptance`).
+
+**Task 5. iOS release (yalnızca macOS)**
+1. Xcode'da takım ve bundle id. Sertifikalar Keychain'de kalır. Check: `flutter build ios --release --no-codesign` geçer.
+2. `flutter build ipa --release --obfuscate --split-debug-info=build/symbols --dart-define=API_BASE=<url>`. Check: `.ipa` var.
+3. iOS sembollerini aynı şekilde arşivle ve `symbolize` ile dene.
+4. Cihaz veya simülatörde dört durumun ekran görüntüsü.
+
+**Task 6. Kanıt: üretilen dosyayı oku**
+
+Why code: kontrolün kendisi bu komutlar. Checked: UNVERIFIED, çalıştırılmadı; dosya yolları sürüme göre değişir, önce `unzip -l` ile bul.
+```bash
+unzip -o app-release.aab -d build/aab_x
+strings build/aab_x/base/lib/arm64-v8a/libapp.so | grep -c "ShopApp"          # obfuscate ile 0 beklenir
+strings build/aab_x/base/lib/arm64-v8a/libapp.so | grep -c "demo-payment-key" # Task 2'den sonra 0 beklenir
+```
+1. Kontrol grubu: `--obfuscate` olmadan bir build al. İlk grep `ShopApp` bulmalı. Bulmazsa sıfır sonucun anlamı yok.
+2. iOS'ta `App.framework/App` için tekrarla.
+3. `pusula_check.py --only secrets,deps` varsa çalıştır. Yoksa `pubspec.lock` üzerinde `osv-scanner`. O da yoksa "not run" yaz.
+4. Her çıktıyı `evidence.md`'ye yaz. Obfuscation'ın neyi saklamadığını da yaz: string'ler, enum adları, API URL'si, ağ trafiği.
+
+## Coverage
+- User experience: Pay'de yükleniyor/hata durumu yok. Task 2'de eklenir.
+- Correctness: `pay()` yanıtı yok sayıyor, hata yolu yok. Task 2 çözer.
+- Security: anahtar sunucuya; gerçekse iptal; yalnızca HTTPS; `badCertificateCallback` yok; imza dosyaları git dışında.
+- Cost: tek model, alt ajan yok, MCP kapalı.
+- Source quality: Sources bölümü.
+- Tests: Task 3, Task 6.
+- License: `http` ve `flutter_lints` lisansları `pubspec.lock` ile kontrol edilir.
+- Scope/time: Task 1–3 her yerde yapılır. Task 4–5 Android SDK ve Mac ister.
+- Maintenance: her build numarası için sembol dosyası saklanır.
+- Tool compatibility: `flutter build ipa` yalnızca macOS'ta çalışır.
+- Delivery: imzalı `.aab`/`.ipa`, sembol arşivi, `evidence.md`. Yükleme kapsam dışı.
+- Conflicts: yok.
+
+## Done when
+- `flutter analyze --fatal-infos` temiz, `flutter test` geçer.
+- Her iki release de cihazda/emülatörde çalıştı. Çalışmadıysa "not run" ve neden yazılır.
+- Kontrol grubu ve grep kanıtı geçti, semboller arşivde, `evidence.md` dolu.
+- UI durumlarının ekran görüntüleri var.
+
+## Risks
+1. Backend yok, anahtar taşınamaz. Önlem: Task 2'de dur, raporla. Anahtarı "şifreli" gömme.
+2. Anahtar gerçekse git geçmişinde kalır. Önlem: sağlayıcıda iptal. Geçmişi yeniden yazmak ayrı onay ister.
+3. Obfuscation `runtimeType.toString()` kullanan kodu bozar. Önlem: `lib/` içinde ara, release build'i çalıştır.
+4. Semboller kaybolur, izler okunmaz. Önlem: build numarasıyla arşivle, `symbolize` dene.
+5. Keystore veya sertifika kaybolur ya da sızar. Önlem: repo dışı yedek, `.gitignore`, hiçbir dosyaya yazma.
+6. Bu Linux makinede iOS derlenemez. Önlem: Task 5'i "not run" yaz, iOS bitti deme.
+7. Yanlış bundle id ilk yüklemede kilitlenir. Önlem: Task 1 adım 5'ten önce kullanıcı onaylar.
+8. Testler yalnızca mock'a karşı geçer. Önlem: varsa staging sunucuda bir kez dene.
+9. Flutter sürümü kayması bayrakları değiştirir. Önlem: sürümü `evidence.md`'ye yaz, fvm kullanılıyorsa sabitle.
+10. Yeni lint sürümü eski kodu düşürür. Önlem: `pubspec.lock` commit'te, güncelleme bilinçli.
+
+## Unknowns
+Bunları şimdi sormadım. Varsayımım: backend henüz yok, id belli değil, iOS burada derlenemeyebilir.
+
+| Soru | Kim yanıtlar |
+| --- | --- |
+| Anahtarı tutan bir ödeme backend'i var mı? Kullanıcı nasıl giriş yapıyor? | Kullanıcı |
+| Gerçek application id / bundle id nedir? | Kullanıcı |
+| `lib/main.dart` içindeki anahtar hiç gerçek oldu mu? | Kullanıcı |
+| Mac, Xcode ve Apple Developer hesabı var mı? | Kullanıcı |
+| Android SDK ve emülatör/cihaz var mı? | `flutter doctor -v` (Task 1) |
+| Android release varsayılan olarak kodu küçültüyor mu? | Android deployment belgesi (UNVERIFIED) |
+
+## Next step
+Sen planı onaylarsın ve hazır olunca Unknowns'ı yanıtlarsın. Sonra Task 1'i başlatırım.

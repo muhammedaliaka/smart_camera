@@ -1,0 +1,63 @@
+[probe p10]
+Depo boş: yalnızca `# scratch` yazan bir README var, `.uproject` yok. Aşağıdaki komutlar bu yüzden yer tutucu yollar kullanıyor.
+
+## Kaynaklar hakkında not
+İnternetim yok. Bu yüzden hiçbir şeyi canlı doğrulayamadım. Aşağıdakiler Unreal Engine 5'in kendi belgeleri ve araçları hakkında eğitim verimden gelen bilgiler:
+- Unreal Engine belgeleri: "Build Operations: Cooking, Packaging, Deploying, and Running Projects" ve "Automation System / Automation Test Framework".
+- `RunUAT` ve `BuildCookRun` komutları, Epic'in `Engine/Build/BatchFiles` altındaki betikleri.
+- Komut satırı bayrakları: `-ExecCmds="Automation RunTests ..."`, `-unattended`, `-nullrhi`, `-ReportExportPath`.
+
+Bayrak adları sürümler arasında değişebilir. Her komutu kendi UE sürümünüzde `-help` ile ya da belgelerle doğrulayın.
+
+## Plan
+1. **Editörü kurun.** Epic Games Launcher veya kaynak derleme ile UE5'i kurun. Linux'ta paketlemek için gerekli SDK ve toolchain'i de kurun.
+2. **Projeyi bir kez editörde açın.** Derlendiğinden ve haritanın yüklendiğinden emin olun.
+3. **Paketleme için `RunUAT BuildCookRun` kullanın.**
+4. **Testleri çalıştırmak için editörü headless başlatıp `Automation RunTests` komutunu verin.**
+5. **Her ikisini tek bir betiğe koyun.** Betik başarısızlıkta sıfır olmayan çıkış kodu döndürsün.
+6. **Betiği her gün çalıştırın.** Self-hosted runner üzerinde cron veya GitHub Actions `schedule` kullanın. Unreal derlemeleri ağırdır ve GPU gerektirmeyen testler için `-nullrhi` yeterlidir.
+
+## Komutlar
+
+Önce değişkenler (Linux örneği):
+```bash
+UE=/opt/UnrealEngine            # engine kök dizini
+PROJ=$PWD/MyGame/MyGame.uproject
+```
+
+**Paketleme:**
+```bash
+$UE/Engine/Build/BatchFiles/RunUAT.sh BuildCookRun \
+  -project="$PROJ" -noP4 -platform=Linux \
+  -clientconfig=Development -build -cook -stage -pak -archive \
+  -archivedirectory="$PWD/Packaged" -unattended -utf8output
+```
+Windows'ta `RunUAT.bat` ve `-platform=Win64` kullanın.
+
+**Otomasyon testleri:**
+```bash
+$UE/Engine/Binaries/Linux/UnrealEditor-Cmd "$PROJ" \
+  -ExecCmds="Automation RunTests Project; Quit" \
+  -unattended -nopause -nullrhi -nosplash \
+  -ReportExportPath="$PWD/TestReports" -log
+```
+- `Project` yerine `Group:Smoke` ya da belirli bir test öneki yazabilirsiniz.
+- Testlerin kendisini C++ (`IMPLEMENT_SIMPLE_AUTOMATION_TEST`) veya Blueprint Functional Test olarak yazarsınız.
+
+**Günlük çalıştırma (cron):**
+```cron
+0 3 * * * cd /srv/MyGame && ./ci/nightly.sh >> /var/log/nightly.log 2>&1
+```
+
+`nightly.sh` içeriği:
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+./ci/package.sh
+./ci/test.sh
+```
+
+## Dikkat edin
+- Test sonucunu çıkış koduna güvenmeden `TestReports/index.json` dosyasından da kontrol edin. Bazı sürümlerde başarısız testlerde bile editör 0 döndürebilir.
+- İlk derleme ve shader derlemesi saatler sürebilir. `DerivedDataCache` dizinini önbellekleyin.
+- Unreal'ı hiç kullanmadığınız için `.uproject` dosyanızı ve sürümünüzü paylaşırsanız betikleri gerçek yollarla yazabilirim.

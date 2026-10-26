@@ -10,6 +10,8 @@ Condensed from addyosmani/agent-skills `security-and-hardening`, MIT. Reference 
 
 Treat every external input as hostile, every secret as sacred, every authorization check as mandatory.
 
+Auditing, reviewing or gating an existing project (code or CI): read `../recipes/packs/security.md` first. It holds the audit order and the report format.
+
 ## Threat model first (5 minutes)
 1. **Trust boundaries.** Where does untrusted data enter? Requests, forms, uploads, webhooks, third-party APIs, queues, LLM output, and local values written by someone else (another process's arguments, shared filenames, job payloads). Trust follows who wrote the value, not the channel.
 2. **Assets.** Credentials, personal data, payment data, admin actions, money movement.

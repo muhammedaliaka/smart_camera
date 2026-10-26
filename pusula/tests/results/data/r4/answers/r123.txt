@@ -1,0 +1,121 @@
+[probe p9]
+Planı dosyaya yazamadım. `Write` aracı bu oturumda kapalı. Planı aşağıya koydum. `.pusula/release-prep/plan.md` olarak kaydedebilirsiniz. Kod değiştirmedim.
+
+## Bulgular (repo okundu)
+- Projede yalnızca `lib/main.dart`, `pubspec.yaml` ve `analysis_options.yaml` var.
+- `android/`, `ios/`, `test/`, `pubspec.lock` ve `.gitignore` yok.
+- `lib/main.dart:4` ödeme anahtarını koda gömüyor. `:19` onu `Bearer` olarak gönderiyor.
+- `pay()` cevabı yok sayıyor. Yükleme ve hata durumu yok. Test edilemiyor.
+- Bu makine Linux. iOS burada derlenemez.
+
+## Kaynaklar
+İnternet yok. Aşağıdakilerin hiçbirini bugün yeniden okumadım.
+- **Flutter docs** (`/deployment/obfuscate`, `/security`, `/testing/overview`) ve **dart.dev** `dart-analyze`: resmi kaynak. İçeriği `.claude/skills/recipes/packs/flutter.md` dosyasından aldım (sayfalar 2025-10-25'te okunmuş).
+- **`anti-copy.md`**: proje notu, resmi değil.
+- **Flutter Android/iOS deploy sayfaları, Android R8, `http` paketinin `MockClient`'ı**: okunmadı. Bunlar UNVERIFIED. Uygulayıcı önce `flutter --version` çalıştırıp o sürümün dokümanını okur. Komutlar uyuşmazsa durur ve bildirir.
+
+## Kararlar
+- Ödeme anahtarı istemciden silinir. Anahtarı bir sunucu tutar. Uygulama `POST {API_BASE}/charge` çağırır ve kullanıcı oturum belirteciyle yetkilenir. Gerekçe: gönderilen her şey çıkarılabilir. `--dart-define` değerleri de pakette kalır.
+- Karartma (obfuscation) son katmandır. Sadece sembol adlarını değiştirir, metinleri gizlemez.
+- `API_BASE` değeri `--dart-define` ile gelir. Gizli değil ama koda gömülmez.
+- İmza bilgisi, git'e girmeyen `android/key.properties` içinde durur.
+- `pubspec.lock` commit edilir.
+- Kapı komutları: `flutter analyze --fatal-infos` ve `dart format --set-exit-if-changed .`.
+- `pay()` bir `http.Client` alır ve hatayı yutmaz. Test için gereken en küçük değişiklik bu.
+
+## Adımlar (her görevin sonunda kanıt toplanır)
+**Görev 0: Temel.**
+1. `flutter --version` sonucunu kaydet.
+2. `flutter pub get` çalıştır, `pubspec.lock` commit et.
+3. `flutter create --platforms=android,ios --org <ters-alan-adı> --project-name demo_shop .` komutuyla platform klasörlerini üret. Bu komut UNVERIFIED.
+4. `.gitignore` içine `key.properties`, `*.jks`, `*.keystore`, `build/`, `symbols/` ekle.
+5. Değişiklikten önce `flutter analyze` ve `flutter test` çalıştır.
+- Kontrol: `git check-ignore -v android/key.properties` bir kural yazdırır.
+
+**Görev 1: Anahtarı ve sabit URL'yi kaldır.** Önce test yazılır, kırmızı görülür. Sonra kod yazılır.
+- Testler: `pay posts to API_BASE/charge`, `pay sends no payment key`, `pay sends the session token as Bearer`, `pay throws on 500`, `empty API_BASE is rejected`, `button disabled while loading`.
+- Release derlemesinde `API_BASE` boşsa uygulama hemen hata verir.
+- Pay düğmesine yükleme, başarı ve hata durumu eklenir. Metinler dosyada durur, kodda gömülü olmaz.
+- Önce `.pusula/release-prep/ui-criteria.md` yazılır. Ekran görüntüleri ona göre yargılanır.
+- Kontrol: `grep -rn "demo-payment-key" lib` boş döner.
+
+**Görev 2: Analiz.**
+- `dart format --set-exit-if-changed .` çıkış kodu 0 olmalı.
+- `flutter analyze --fatal-infos` "No issues found!" demeli.
+- `pusula_check.py --only secrets,deps` çalıştırılır. Dosya şu an yok. Yoksa "çalışmadı" yazılır.
+- `flutter pub outdated` çalıştırılır. İnternet gelene kadar "çalışmadı" yazılır.
+
+**Görev 3: Android.**
+1. Yükleme keystore'unu sahibinin makinesinde oluştur.
+2. `key.properties` yoksa release derlemesi hata verir. Sessizce debug anahtarına dönmez.
+3. R8 küçültmeyi aç. Keep kuralını sadece bir şey bozulursa ekle.
+4. Derle. Kod UNVERIFIED, `flutter build appbundle --help` ile doğrula.
+```
+flutter build appbundle --release --obfuscate --split-debug-info=symbols/<version> --dart-define=API_BASE=<https-url>
+```
+5. Emülatörde başarı ve hata durumlarını dene. Ekran görüntüsü al. Emülatör yoksa "çalışmadı" yaz.
+6. AAB'yi yeni, boş bir klasöre aç ve `libapp.so` üzerinde `strings -a` çalıştır.
+   - `demo-payment-key` bulunmamalı.
+   - `ShopApp` bulunmamalı. Bulunursa karartma uygulanmamıştır, dur.
+   - `*.map`, `.env`, `*.pdb` olmamalı.
+   - Bu kontroller benim önerim, resmi bir yöntem değil.
+
+**Görev 4: iOS (Mac gerekir).**
+1. `flutter doctor -v` temiz olmalı.
+2. Bundle ID ve takımı Xcode'da ayarla.
+3. Aynı bayraklarla `flutter build ipa` çalıştır. `.ipa` oluşmalı.
+4. `App.framework/App` üzerinde aynı `strings` kontrolü yapılır.
+5. Cihazda çalıştırıp ekran görüntüsü al.
+- Bu Linux makinede iOS için "çalışmadı" yazılır. iOS "bitti" denmez.
+
+**Görev 5: Çökme sembolleri.**
+- `symbols/<sürüm>` klasörü git dışında, özel bir yerde saklanır.
+- Geçici bir test çökmesiyle `flutter symbolize -i <trace> -d <symbols>` denenir. Okunur adlar görünmeli. Sonra çökme kodu silinir.
+
+**Görev 6: Kanıt tablosu** (`.pusula/release-prep/evidence.md`). Her satırda komut, çıkış kodu, ana çıktı satırı ve tarih bulunur.
+- Satırlar: analyze, format, test, secrets, deps, Android build, Android strings, Android ekran görüntüleri, iOS build, iOS strings, iOS ekran görüntüleri, symbolize.
+- Koşulmayan satıra "çalışmadı" ve nedeni yazılır.
+
+## Bitti sayılır, ancak
+- Android satırlarının hepsinde çalıştırma kanıtı vardır.
+- iOS satırlarında Mac'ten kanıt vardır ya da "çalışmadı" yazılıdır.
+- Koruma hakkında tek iddia şudur: "Dart sembol adları değiştirildi. İstemcide ödeme anahtarı yok." "Kırılamaz" denmez.
+
+## Testle kapanmamış girdiler
+1. `/charge` non-2xx ve zaman aşımı. Görev 1'de test var.
+2. Release'te boş `API_BASE`. Görev 1'de test var.
+3. Pay'e çift dokunma, yani çift ödeme. Widget testi.
+4. `key.properties` yokken debug imzasına düşme. Görev 3 adım 2.
+5. Karartmanın sessizce uygulanmaması. Görev 3 adım 6, `ShopApp` kontrolü.
+
+## Riskler
+1. `/charge` sunucu sözleşmesi henüz yok. Görev 1 buna bağlı.
+2. Eski anahtar git geçmişinde (`971fe23`). Gerçekse sağlayıcıda yenilenmeli. Geçmişi yeniden yazmak için ayrı, adı konmuş onay gerekir.
+3. Yanlışlıkla debug anahtarıyla release çıkması.
+4. Keystore kaybı. Sahibi ilk yüklemeden önce iki yere yedekler.
+5. R8 veya karartma çalışma anında bir şeyi bozar. Cihazda release çalıştırılır.
+6. Çökme izleri okunmaz. Görev 5 bunu önler.
+7. Platform dokümanları okunmadı. Komutlar uyuşmazsa durulur.
+8. iOS imza ve Apple hesabı sorunları. İlk iki iOS adımı erken yapılır.
+9. Cleartext ya da `NSAllowsArbitraryLoads` açık kalması. Manifest ve plist gözden geçirilir.
+10. Korumayı olduğundan büyük gösterme. "Bitti" cümlesi sınırlıdır.
+
+## Bilinmeyenler
+| # | Soru | Kim cevaplar |
+|---|---|---|
+| 1 | Gerçek application ID / bundle ID. `com.example.*` büyük olasılıkla reddedilir, UNVERIFIED. | Sahip |
+| 2 | `/charge` sözleşmesi: URL, kimlik doğrulama, hata biçimi | Sahip / backend |
+| 3 | Anahtar gerçek mi, hiç canlı oldu mu? | Sahip |
+| 4 | Android SDK burada kurulu mu? Mac, Xcode ve Apple hesabı var mı? | `flutter doctor -v`, sahip |
+| 5 | `flutter_lints` dışında daha sıkı kural isteniyor mu? | Sahip (varsayılan: değişiklik yok) |
+| 6 | Hangi çökme raporlayıcı kullanılacak, semboller nerede saklanacak? | Sahip |
+| 7 | Release için hangi Flutter sürümü sabitlenecek? | `flutter --version`, sahip |
+
+Soru sormamı istemediniz, bu yüzden şu varsayımları kullandım:
+- Ödeme bir sunucudan geçer.
+- Kimlik doğrulama oturum belirteciyle yapılır.
+- Analitik veya çökme SDK'sı eklenmez.
+- Mağaza yüklemelerini sahip yapar.
+
+## Sonraki adım
+Planı onaylayın ve Bilinmeyenler 1-3'ü cevaplayın. Sonra Görev 0'dan başlarım.

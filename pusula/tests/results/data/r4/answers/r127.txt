@@ -1,0 +1,56 @@
+[probe p10]
+Çalışma dizininde `.uproject`, `Target.cs` veya CI dosyası yok. Aşağıdaki plan projene bakılarak hazırlanmadı, genel bir şablondur. İnternetim olmadığı için belgelere bakamadım. Her şey benim UE5 bilgime dayanıyor ve sürümler arasında değişmiş olabilir. Çalıştırmadan önce `RunUAT BuildCookRun -help` çıktısıyla ve Epic'in "Automation System" ile "Command Line Arguments" sayfalarıyla karşılaştır.
+
+## Plan
+
+1. **Ön koşullar.** Unreal Engine'i kur (Epic Launcher ya da kaynaktan derleme). Derleyici olarak Windows'ta Visual Studio'nun "Game development with C++" iş yükü gerekir. Linux'ta motorun kendi toolchain'i gerekir. Her gün otomatik çalışacak makinede bunları bir kez elle doğrula.
+2. **Paketleme.** `RunUAT` içindeki `BuildCookRun` komutunu kullan (Build + Cook + Stage + Package + Archive).
+3. **Testler.** Editörü başsız (`-nullrhi`) açıp `Automation RunTests` konsol komutunu çalıştır. Sonuçlar `-ReportExportPath` ile JSON olarak yazılır.
+4. **Zamanlama.** Windows Task Scheduler, Linux cron veya CI (Jenkins, GitHub Actions self-hosted runner) kullan. Bunu kendi makinende çalışan bir runner üzerinde yap, çünkü UE kurulumu büyüktür.
+5. **Betik.** Aşağıdaki betik testi önce çalıştırır, test geçerse paketler. Hata olursa sıfır olmayan çıkış kodu döner.
+
+## Komutlar (Windows, PowerShell)
+
+```powershell
+$UE      = "C:\Program Files\Epic Games\UE_5.4"          # sürümünü yaz
+$Project = "D:\Projects\MyGame\MyGame.uproject"
+$Out     = "D:\Builds\MyGame\$(Get-Date -Format yyyyMMdd)"
+
+# 1) Otomasyon testleri (başsız)
+& "$UE\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" $Project `
+  -ExecCmds="Automation RunTests Project.; Quit" `
+  -unattended -nopause -nosplash -NullRHI -NoSound `
+  -ReportExportPath="$Out\TestReport" -log
+if ($LASTEXITCODE -ne 0) { throw "Testler başarısız" }
+
+# 2) Paketleme
+& "$UE\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun `
+  -project="$Project" -noP4 -platform=Win64 -clientconfig=Shipping `
+  -build -cook -stage -pak -package -archive -archivedirectory="$Out" `
+  -unattended -utf8output
+if ($LASTEXITCODE -ne 0) { throw "Paketleme başarısız" }
+```
+
+Linux'ta aynı komutlar `Engine/Build/BatchFiles/RunUAT.sh` ve `Engine/Binaries/Linux/UnrealEditor-Cmd` ile çalışır. Platform `-platform=Linux` olur.
+
+Günlük çalıştırma için Windows'ta:
+```powershell
+schtasks /Create /SC DAILY /ST 03:00 /TN "UE_Nightly" /TR "powershell -File D:\ci\nightly.ps1"
+```
+Linux'ta cron satırı: `0 3 * * * /opt/ci/nightly.sh >> /var/log/ue_nightly.log 2>&1`
+
+## Bilmen gerekenler
+
+- **Test filtresi:** `Project.` yalnızca adı bu önekle başlayan testleri çalıştırır. Kendi test adlarına göre değiştir, ya da `Automation RunAll` kullan. Kullanılabilir testleri editörde Window → Test Automation panelinde görebilirsin.
+- **Doğrulanması gereken parametreler:** `-ReportExportPath`, `-NullRHI` ve `-clientconfig` yazımı sürüme göre değişebilir. Yukarıdaki yardım çıktısıyla kontrol et.
+- **Süre ve disk:** İlk cook ve shader derlemesi saatler sürebilir, çıktı onlarca GB olabilir. Eski build'leri silen bir adım ekle.
+- **Sürüm kontrolü:** Projen git'te ise `Binaries/`, `Intermediate/`, `Saved/` ve `DerivedDataCache/` klasörlerini `.gitignore`'a ekle.
+- **Hata ayıklama:** Hata olursa `<Proje>/Saved/Logs/` ve `%APPDATA%\Unreal Engine\AutomationTool\Logs` altındaki günlüklere bak.
+
+## Dayandığım kaynaklar
+
+- Epic'in "Build Operations: Cook, Package, Deploy and Run Projects" ve "Automation System" belgeleri.
+- Motorun `Engine/Source/Programs/AutomationTool` dizinindeki `BuildCookRun` kaynak kodu.
+- `RunUAT BuildCookRun -help` çıktısı.
+
+Kesin parametreleri yukarıdaki belgelerle ve `-help` çıktısıyla doğrulamanı öneririm.

@@ -1,0 +1,126 @@
+[probe p11]
+Dosya yazamadım, çünkü bu oturumda `Write` aracı kapalı. Taslakları aşağıya yazıyorum. Hiçbir şey gönderilmedi, yayımlanmadı.
+
+## Varsayımlar
+- Depoda oyun bilgisi yok. README boş. Soru sormamam gerektiği için oyun bilgilerini `{{...}}` ile boş bıraktım.
+- Dil Türkçe. Steam için İngilizce metin de gerekir.
+- Çıkış tarihi bilinmiyor. Plan "T eksi gün" ile yazıldı.
+- Hiçbir sayı uydurmadım. Hedef sayıları sen verirsin.
+
+## 1. Steam mağaza sayfası açıklaması
+
+**Kısa açıklama:** `{{OYUN ADI}}`, `{{tür}}` oyunudur. `{{Ana fikir, tek cümle}}`.
+
+**Giriş:** `{{Oyuncunun yaptığı en önemli şey}}`. `{{Neden farklı, bir cümle}}`.
+
+**Hakkında:** Bu oyunda `{{rol}}` olursun. `{{Çekirdek döngü, 2-3 kısa cümle}}`.
+
+**Özellikler:**
+- `{{özellik 1}}`
+- `{{özellik 2}}`
+- `{{özellik 3}}`
+
+**Dil ve platform:** `{{Windows}}`. Arayüz dili: `{{Türkçe, İngilizce}}`.
+
+**Yapay zekâ bildirimi:** Yalnızca oyunda yapay zekâ içeriği varsa yaz.
+
+**Kurallar** (resmî Steamworks sayfası):
+- Açıklamada dış bağlantı olmaz. Web sitesi ve sosyal medya için ayrı alanlar var.
+- Steam arayüzünü taklit eden görsel kullanma. Örnekler: istek listesi düğmesi, fiyat.
+- Başka Steam oyunlarını tanıtma.
+- Yapıda olmayan özelliği yazma. Her iddianın kaynağı bir ekran görüntüsü ya da yapı olmalı.
+- Yayımlamak, bilgileri Steam'in herkese açık sunucularına gönderir. Önce Store Beta Mode ile önizle.
+- Oyun adı, ön inceleme sonrası değişmez.
+- "Yakında" sayfası çıkıştan en az 2 hafta önce herkese açık olmalı.
+- İncelemeye en az 7 gün önce gönder.
+- Yapay zekâ bildirimi Steam'in Content Survey sayfasına bağlı. Ürettiğin ve oyunla gelen içerik için doldur.
+
+Yayımlamak dışarıya açılan bir işlemdir. Bunun için açık onayını beklerim.
+
+## 2. Üç oyun YouTuber'ına mesaj
+
+> **Konu:** `{{OYUN ADI}}` hakkında kısa bir not
+>
+> Merhaba `{{YT adı}}`,
+>
+> Ben `{{ad}}`. `{{Stüdyo}}` olarak `{{OYUN ADI}}` oyununu yapıyoruz. `{{Tür}}` oyunu. Sana yazıyorum, çünkü `{{izlediğin gerçek bir videosu ve neden uyduğu}}`.
+>
+> Oyun `{{tarih}}` tarihinde Steam'de çıkacak. İstersen sana ücretsiz bir deneme anahtarı gönderebilirim.
+>
+> Bu ücretsiz ürün vermek demek, yani ticari bir bağlantı. Videoda bunu açıkça "reklam" ya da "ücretsiz anahtar verildi" diye söylemen gerekir. Yorum tamamen senin. Olumlu olmak zorunda değil.
+>
+> İstemezsen cevap vermen yeterli. Bir daha yazmam.
+>
+> `{{ad}}`, `{{stüdyo}}`, `{{e-posta}}`
+
+Üç kanal için `{{YT1}}`, `{{YT2}}`, `{{YT3}}` alanlarını doldur. Her biri için gerçek bir video seç.
+
+**Uyman gereken kurallar:**
+- **Açıklama (ABD kuralı, FTC, resmî):**
+  - Ücretsiz ürün de bir ticari bağlantıdır.
+  - Düz sözcük kullan: "reklam" ya da "sponsorlu". Tek başına "iş birliği" yetmez.
+  - Açıklama videonun içinde olmalı. Canlı yayında tekrarlanmalı.
+- **Türkiye'deki influencer reklam kuralları:** Okumadım. **Doğrulanmadı.** Avukata sor.
+- **Soğuk e-posta (Kanun 6563):**
+  - Ticari e-iletiye önceden izin gerekir (madde 6/1). Tacir ve esnafa izin gerekmez (6/2).
+  - YouTuber'ın tacir sayılıp sayılmadığı **doğrulanmadı**.
+  - Güvenli yol: yalnızca kanalın iş teklifleri için yayımladığı adresi kullan.
+  - Herkese tek mesaj gönder. Liste kullanma. Ret gelirse hemen dur.
+  - En fazla bir hatırlatma yaz.
+- **Steam anahtarı verme kuralları:** Okumadım. **Doğrulanmadı.** Anahtar göndermeden önce Steamworks belgesini oku.
+- Olumlu yorum isteme. Söyleyeceği şeye koşul koyma.
+
+## 3. Türkiye'deki oyunculara e-posta bülteni planı
+
+**Amaç:** İzin vermiş oyuncular istek listesini, demoyu ve çıkışı öğrensin.
+**Kapsam dışı:** Liste satın almak, adres toplamak.
+
+**Yasal kapı** (ilk gönderimden önce):
+- **Önceki izin:** Her adres için izin gerekir (Kanun 6563, madde 6/1).
+- **İleti içeriği:** İletide gönderen kimliği ve iletişim bilgisi olmalı. İleti, verilen izne uymalı (madde 7).
+- **Ret:** Kolay ve ücretsiz olmalı. Gönderim 3 iş günü içinde durmalı (madde 8).
+- **İYS:** İzinler süresinde İYS'ye yüklenmezse geçersiz olur (madde 11/5).
+- **Para cezası:** İzinsiz gönderimde ağır ceza var. Toplu gönderimde 10 kata kadar çıkabilir (madde 12).
+- **KVKK (Kanun 6698):** Aydınlatma metni, saklama ve silme. Okumadım. **Doğrulanmadı.**
+- **ABD ve AB okurları:** ABD CAN-SPAM kuralları, e-postada posta adresi, "reklam" ibaresi ve 10 iş günü içinde çıkış ister. AB kurallarını okuyamadım. **Doğrulanmadı.**
+
+**Kayıt formu:**
+- Boş bir kutu kullan. Önceden işaretli olmasın.
+- Metin: "`{{OYUN ADI}}` haberleri e-posta ile gelsin."
+- Gizlilik metni bağlantısı, gönderen adı ve adresi ekle.
+- Önce onay e-postası gönder. Bu yaygın uygulamadır. Okuduğum maddeler bunu şart koşmuyor.
+- Her adres için izin zamanını ve kaynağını sakla.
+
+**Gönderim sırası:**
+
+| Zaman | İçerik | Kontrol |
+|---|---|---|
+| Kayıttan hemen sonra | Hoş geldin, sıklık, çıkış bağlantısı | İzin kaydedildi |
+| T-60 ile T-30 | Sayfa yayında, fragman, istek listesi | Her iddianın kaynağı var |
+| T-14 | `{{Demo ya da Next Fest}}` | Tarih kesin |
+| T-1 | Yarın çıkıyor, tarih ve fiyat | Fiyat Steam tablosuyla aynı |
+| T | Çıktı, bağlantı, varsa çıkış indirimi | İndirim kuralına uygun |
+| T+7 | Teşekkür, ilk yama notları | Yalnızca gerçek veri |
+
+Steam kuralı: çıkıştan sonraki ilk 30 gün içinde indirim yapılamaz. Çıkış indirimi bunun istisnasıdır.
+
+Her e-postada şunlar olsun:
+- Gönderen adı.
+- İletişim satırı.
+- Çıkış bağlantısı.
+- "Ticari elektronik ileti" notu.
+- Yanıltıcı olmayan konu satırı.
+
+Kayıtta söylediğin sıklığı aşma.
+
+**Gönderimden önce çözülecekler:**
+1. Gerçek çıkış tarihi ve Next Fest planı.
+2. Gönderim aracı ve verinin saklanacağı yer.
+3. Şahıs mı şirket mi olduğun (İYS ve vergiyi etkiler). **Doğrulanmadı.**
+4. Avukat kontrolü: KVKK, influencer kuralları, AB okurları.
+
+## Durum
+- Kural paketlerini okudum: `marketing.md` ve `sales.md`. Kaynakları 25-26 Ekim 2026'da okunmuş.
+- Metinlerde dış bağlantı yok. Sayı uydurmadım.
+- Yapılmadı: ana dili Türkçe olan birinin yazım denetimi, oyun gerçeklerinin doldurulması, avukat kontrolü.
+- Oyun bilgilerini verirsen taslakları doldururum. Dosyaya yazmam için `Write` aracını açman gerekir.

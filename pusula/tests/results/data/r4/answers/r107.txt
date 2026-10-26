@@ -1,0 +1,96 @@
+[probe p13]
+Sonuç: aşağıda tek bir ffmpeg komutu ve 5 kontrol var. Hiçbirini çalıştıramadım, çünkü bu oturumda kabuk (shell) aracı yok. Hepsi **UNVERIFIED**. Önce kendi makinende çalıştır, sonra kontrolleri yap.
+
+Steam kuralları `video-production.md` paketinden geldi. Paket bu kuralları bugün resmi sayfadan okumuş: https://partner.steamgames.com/doc/store/trailer. Bu oturumda internetim yok, sayfayı ben tekrar okumadım.
+
+## Varsayımlar
+- Üç klip var: `clip1.mp4`, `clip2.mp4`, `clip3.mp4`. Her klipten 20 sn alınıyor, toplam 60 sn.
+- Müzik `music.mp3` ve en az 60 sn uzunlukta.
+- Klip sesi kullanılmıyor, yalnızca müzik var.
+- Çıktı `trailer_steam.mp4` olacak.
+
+## Steam biçimi
+| Alan | Değer |
+|---|---|
+| Çözünürlük | 1920x1080 (kaynak 2560x1440, küçültülür) |
+| Kare hızı | 60 fps (Steam 30 veya 60 kabul eder) |
+| Video bitrate | 5.000 Kbps üstü (aşağıda 10 Mbps) |
+| Kap ve kodek | `.mp4`, H.264 video, AAC ses |
+| Ses | Stereo, 48 kHz |
+| En-boy oranı | 16:9 |
+
+Steam sayfası dosya boyutu, süre veya ses seviyesi sınırı vermiyor. Bunları yazmadım.
+
+Yedek: Steam 1280x720'nin işleme sorunlarını önlediğini söylüyor. Yükleme takılırsa `scale=1280:720` dene.
+
+## Komut
+`render_trailer.sh` adıyla kaydet. Dosyayı ben yazamadım, yazma aracım yok.
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Ayarlar (değerleri burada değiştir)
+CLIPS=(clip1.mp4 clip2.mp4 clip3.mp4)
+STARTS=(10 5 30)        # her klipte başlangıç saniyesi
+SEG=20                  # her parça süresi (sn)
+MUSIC=music.mp3
+OUT=trailer_steam.mp4
+TOTAL=60
+FADE=3                  # müzik kapanış süresi (sn)
+W=1920; H=1080; FPS=60
+VBR=10M; VMAX=12M; VBUF=24M
+ABR=192k; AR=48000
+
+# -n: var olan dosyanın üstüne yazmaz
+ffmpeg -n \
+  -ss "${STARTS[0]}" -t "$SEG" -i "${CLIPS[0]}" \
+  -ss "${STARTS[1]}" -t "$SEG" -i "${CLIPS[1]}" \
+  -ss "${STARTS[2]}" -t "$SEG" -i "${CLIPS[2]}" \
+  -i "$MUSIC" \
+  -filter_complex "
+    [0:v]scale=${W}:${H}:flags=lanczos,fps=${FPS},setsar=1,format=yuv420p[v0];
+    [1:v]scale=${W}:${H}:flags=lanczos,fps=${FPS},setsar=1,format=yuv420p[v1];
+    [2:v]scale=${W}:${H}:flags=lanczos,fps=${FPS},setsar=1,format=yuv420p[v2];
+    [v0][v1][v2]concat=n=3:v=1:a=0[v];
+    [3:a]atrim=0:${TOTAL},asetpts=PTS-STARTPTS,afade=t=out:st=$((TOTAL-FADE)):d=${FADE},aresample=${AR}[a]" \
+  -map "[v]" -map "[a]" \
+  -c:v libx264 -preset slow -profile:v high -b:v "$VBR" -maxrate "$VMAX" -bufsize "$VBUF" \
+  -c:a aac -b:a "$ABR" -ar "$AR" -ac 2 \
+  -movflags +faststart -t "$TOTAL" \
+  "$OUT"
+```
+
+Why code: filtre ve bitrate ayarlarını düz yazıyla kesin anlatamam.
+Checked: UNVERIFIED. Çalıştırılmadı. `-ss` ve `-t` giriş öncesi kullanımı, `-n` ve "filtre varsa yeniden kodlama" kuralları paketin ffmpeg notlarıyla uyumlu.
+
+Önce şunu çalıştır: `ffmpeg -h filter=concat`. Bir seçenek kabul edilmezse dur ve bana yaz. Makinenin ffmpeg sürümü 6.1.1 olmalı.
+
+## Bittiğini kanıtlama
+Aşağıdaki 5 kontrolün hepsi geçmeden "bitti" deme.
+
+1. **Biçim ve süre:**
+   ```bash
+   ffprobe -v error -show_entries format=duration,bit_rate:stream=codec_name,profile,width,height,r_frame_rate,sample_rate,channels -of json trailer_steam.mp4
+   ```
+   Beklenen değerler:
+   - `duration` yaklaşık 60.
+   - `bit_rate` 5.000.000 üstü.
+   - Video `h264`, `1920x1080`, `60/1`.
+   - Ses `aac`, `48000`, `channels` 2.
+2. **Görüntü:** `ffmpeg -i trailer_steam.mp4 -vf fps=1/5 kare_%02d.png` komutu 12 kare çıkarır. Karelere bak: bozuk, siyah veya yanlış kesilmiş yer olmasın.
+3. **Ses var mı, patlıyor mu:**
+   ```bash
+   ffmpeg -i trailer_steam.mp4 -vn -af volumedetect -f null - 2>&1 | grep -E "mean_volume|max_volume"
+   ```
+   `max_volume` 0 dB'nin altında olmalı. Sessiz dosya sık görülen bir hatadır.
+4. **Son saniyeler:** Müzik son 3 saniyede kapanmalı. Bunu dinleyerek doğrula.
+5. **Lisans:** Müzik için bir kayıt satırı (ledger) yaz. Müzik yapay zekâ ürünüyse Steam'in yapay zekâ bildirimi gerekir (`ai-production.md`).
+
+Son adım: Steamworks'e yükle. İlk iki geçerli fragman, ekran görüntülerinden önce görünür. Steam'in işlemesi sürerken sayfa düzgün görünmeli. Bunu burada kanıtlayamam, yükledikten sonra sen kontrol et.
+
+## Riskler ve bilinmeyenler
+- Bir klip 20 sn'den kısaysa toplam 60 sn'den az çıkar. Kontrol 1 bunu yakalar.
+- Müzik 60 sn'den kısaysa sonda sessizlik kalır. Kontrol 3 ve 4 bunu yakalar.
+- Klip başlangıç saniyeleri (`STARTS`) benim tahminim. Kendi en iyi anlarına göre değiştir.
+- Sahneler arası geçiş yok, düz kesme var. Geçiş istersen söyle.

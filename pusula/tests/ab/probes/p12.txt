@@ -1,0 +1,1 @@
+Bu projeyi yayına almadan önce güvenlik denetimi yap. Bulgularını öncelik sırasıyla yaz. Kodu değiştirme. Okuma araçların var, internet yok. Soru sorma.

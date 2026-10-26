@@ -1,0 +1,59 @@
+[probe p14]
+# Unity videosundan adım çıkarma planı
+
+Videoyu doğrudan izleyemem. Elimde yalnızca dosya okuma ve shell var. Videoyu görüntü (kare) ve metin (ses/altyazı) olarak parçalayıp okuyacağım. İnternet olmadığı için her şey yerel araçlarla yapılmalı. Önce hangi araçların kurulu olduğuna bakarım, sonuç ona göre değişir.
+
+## 1. Ortam yoklaması
+
+```bash
+which ffmpeg ffprobe whisper whisper-cli vosk-transcriber tesseract python3
+python3 -I -c "import whisper" ; python3 -I -c "import faster_whisper"; python3 -I -c "import cv2"
+ffprobe -v error -show_entries format=duration:stream=codec_type,codec_name,width,height -of json video.mp4
+```
+
+`ffprobe` ayrıca videoda gömülü altyazı akışı (`codec_type=subtitle`) veya ses olup olmadığını gösterir. Yanında `.srt` ya da `.vtt` dosyası varsa en güvenilir kaynak odur.
+
+## 2. Metin kanalı (anlatım)
+
+Kaynakları öncelik sırasına göre denerim:
+
+1. Gömülü altyazıyı çıkarırım: `ffmpeg -i video.mp4 -map 0:s:0 sub.srt`
+2. Yoksa sesi çıkarıp yerel Whisper ile yazıya dökerim (model dosyası yerelde yoksa bu adım yapılamaz):
+   ```bash
+   ffmpeg -i video.mp4 -vn -ac 1 -ar 16000 audio.wav
+   whisper-cli -m <model> -f audio.wav -osrt -l auto
+   ```
+3. Hiçbiri yoksa metin kanalı olmaz. Bunu raporda açıkça yazarım.
+
+## 3. Görüntü kanalı (ekranda ne yapıldı)
+
+20 dakikalık videoyu her karede okumak israf olur. Önce sahne değişimlerini yakalarım:
+
+```bash
+ffmpeg -i video.mp4 -vf "select='gt(scene,0.1)',scale=1280:-1" -vsync vfr frames/s_%04d.jpg
+# yedek: her 10 saniyede bir kare
+ffmpeg -i video.mp4 -vf "fps=1/10,scale=1280:-1" frames/t_%04d.jpg
+```
+
+Unity eğitimlerinde ekran çoğu zaman az değişir (Inspector'da bir değer girmek gibi), bu yüzden hem sahne değişimi hem sabit aralık gerekir. Kare adlarına zaman damgasını da yazarım, böylece her kareyi altyazıdaki satırla eşleştirebilirim.
+
+Kareleri `Read` ile görsel olarak okurum. Menü yolları, Inspector alanları, Hierarchy yapısı ve kod editöründeki satırlar görünür. Tesseract kuruluysa küçük yazılar ve kod için OCR de çalıştırırım. Kod karelerini mutlaka görsel olarak da doğrularım, çünkü OCR kod yazımında hata yapar.
+
+## 4. Birleştirme
+
+Her zaman aralığı için üç bilgiyi yan yana koyarım: anlatım metni, kare(ler) ve görünen eylem. Sonra bunları numaralı adımlara dönüştürürüm. Bütçe sınırlı ($0.8) olduğu için kare sayısını yaklaşık 60–100 ile sınırlarım. Gerekirse sahne eşiğini ayarlarım, yalnızca belirsiz anlar için ek kare çekerim.
+
+## 5. Raporda göstereceklerim
+
+- **Yöntem özeti:** hangi araçlar kullanıldı, kaç kare incelendi, altyazı ya da transkript var mıydı.
+- **Numaralı adımlar:** her biri `[mm:ss]` zaman damgasıyla (ör. "03:42 – Hierarchy'de sağ tık → 3D Object → Cube").
+- **Kod parçaları:** videoda görünen scriptler, kareden doğrulanmış hâlleriyle.
+- **Güven işaretleri:** her adım için "anlatım + ekran ile doğrulandı", "yalnızca anlatımdan" ya da "kare belirsiz" gibi bir not.
+- **Boşluklar:** görmediğim veya anlamadığım bölümler, örneğin kare aralığında kalan hızlı geçişler. Bunları tahminle doldurmam, "bu aralık doğrulanamadı" diye işaretlerim.
+- **İsteğe bağlı kanıt:** önemli adımlar için ilgili kare dosyasının yolu.
+
+## Sınırlar
+
+- ffmpeg yoksa ve kurulum da yapamıyorsam videoyu hiç işleyemem. Bu durumda yalnızca bunu bildiririm.
+- Ses var ama yerelde transkripsiyon aracı yoksa yalnızca kareler üzerinden çalışırım. Anlatımdaki "neden"ler eksik kalır ve raporda belirtirim.
+- Kareler arasında olan şeyi (ör. 3 saniyede biten bir tıklama) kaçırabilirim. Bu yüzden her adıma güven notu eklerim.

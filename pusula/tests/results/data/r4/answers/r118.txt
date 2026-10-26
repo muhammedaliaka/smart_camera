@@ -1,0 +1,73 @@
+[probe p14]
+# Videoyu "izleme" yöntemi
+
+Videoyu doğrudan izleyemem. Onu, okuyabildiğim iki kanala çeviririm: **ses → zaman damgalı metin** ve **ekran → seçilmiş kare görüntüleri**. Sonra ikisini zaman damgasına göre eşleştirip adımları çıkarırım. Çalışma dosyalarını scratchpad'e yazarım, proje dizinine yazmam.
+
+## 1. Ortam ve üstveri kontrolü
+
+```bash
+which ffmpeg ffprobe whisper whisper-cli tesseract python3
+ffprobe -v error -show_format -show_streams -show_chapters -of json video.mp4
+```
+
+Bu kontrolle şunları öğrenirim:
+- Süre, çözünürlük ve ses akışı var mı?
+- **Gömülü altyazı veya bölüm (chapter) var mı?** Varsa en ucuz ve en doğru kaynak odur.
+
+```bash
+ffmpeg -i video.mp4 -map 0:s:0 subs.srt     # gömülü altyazı varsa
+```
+
+## 2. Ses kanalı (anlatım)
+
+```bash
+ffmpeg -i video.mp4 -vn -ac 1 -ar 16000 audio.wav
+whisper-cli -m <yerel-model> -f audio.wav -osrt -l auto   # veya: whisper audio.wav --model small --output_format srt
+```
+
+İnternet olmadığı için yalnızca makinede **önceden kurulu** bir ASR aracı ve model dosyası işe yarar. Yoksa indiremem. Bu durumda bunu raporda açıkça belirtirim ve ekran kanalına ağırlık veririm.
+
+## 3. Görüntü kanalı (ekran)
+
+Unity eğitimlerinde bilgi çoğunlukla ekrandadır: menü yolları, Inspector değerleri, kod. Bu yüzden her saniyeyi değil, **değişen anları** alırım:
+
+```bash
+# sahne/UI değişimi olan kareler
+ffmpeg -i video.mp4 -vf "select='gt(scene,0.08)',scale=1280:-1" -vsync vfr frames/f_%04d.jpg -loglevel error
+# yedek: değişim az olsa bile her 20 sn'de bir kare
+ffmpeg -i video.mp4 -vf "fps=1/20,scale=1280:-1" frames_t/t_%04d.jpg
+```
+
+Kare sayısı çok çıkarsa eşiği yükseltir veya birbirine çok benzeyen kareleri (perceptual hash ile) eleyip yaklaşık 60–120 kareye indiririm. Her kare Read ile görüntü olarak okunur ve token harcar. Bütçe sınırlı olduğu için kare sayısını bilerek kısıtlarım.
+
+Kod veya menü metni okunacaksa kareye OCR uygularım. Tesseract varsa:
+
+```bash
+tesseract frames/f_0042.jpg - --psm 6
+```
+
+Kare dosya adlarını zaman damgasıyla eşleştirmek için `showinfo` filtresinden `pts_time` değerlerini kaydederim.
+
+## 4. Birleştirme ve adım çıkarma
+
+1. Altyazıyı konu geçişlerine göre bölümlere ayırırım ("şimdi bir Player ekleyelim", "Inspector'dan…" gibi ifadeler).
+2. Her bölüme en yakın kareleri bağlarım ve ekrandaki gerçek durumu doğrularım: hangi pencere açık, hangi değer girilmiş, hangi script yazılmış.
+3. Anlatımla ekran çelişirse (örneğin konuşmacı bir değeri yanlış söylerse), ekrandakini esas alır ve bunu not düşerim.
+4. Her adımı eylem biçiminde yazarım: *"GameObject → 3D Object → Cube; Transform Position = (0,1,0)"*.
+
+## 5. Raporda göstereceklerim
+
+- **Kapsam ve güven durumu:** Hangi kaynaklar kullanıldı (altyazı / ASR / kare / OCR), kaç kare incelendi, hangi araç yoktu. Örneğin "ses çözümlenemedi, adımlar yalnızca ekrandan çıkarıldı."
+- **Madde madde adımlar:** Her biri için zaman aralığı `[mm:ss–mm:ss]`, yapılan eylem, kullanılan menü yolu ve değerler.
+- **Kod parçaları:** Ekrandan veya OCR'dan okunanlar. Okunamayan veya emin olmadığım yerler `[?]` ile işaretlenir, tahminle doldurulmaz.
+- **Kanıt kareleri:** Önemli adımlar için kare dosyalarının tam yolları.
+- **Boşluklar:** Örneğin 07:40–09:10 arasında ekran değişmedi, sadece konuşma var gibi.
+- **Doğrulanamayanlar:** Sürüm farkları (Unity sürümü, yeni/eski Input System) ve videoda söylenip ekranda görülmeyen ayarlar.
+
+## Sınırlar
+
+- Ses aracı yoksa konuşulan ama gösterilmeyen bilgiyi kaçırırım.
+- Seyrek örneklemede kısa bir tıklama veya kısayol atlanabilir. Bu yüzden sahne değişimi eşiği ile sabit aralıklı örneklemeyi birlikte kullanırım.
+- Video'yu "gördüğümü" değil, **hangi kareleri ve hangi metni incelediğimi** raporlarım. Bu sayede sonucu sizin de kontrol etmeniz mümkün olur.
+
+Dosyanın yolunu verirseniz önce bölüm 1'deki kontrolle başlarım. Çıkan araç envanterine göre planı uygularım.

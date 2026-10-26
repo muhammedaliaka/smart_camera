@@ -1,0 +1,94 @@
+[probe p13]
+Aşağıdaki komutları bu oturumda **çalıştıramadım**. Bende sadece okuma araçları var. Önce 20 saniyelik bir denemeyle test et.
+
+Steam kuralları `video-production.md` paketinden. Steam'in trailer sayfasından bugün okunmuş. Sayfada boyut, süre ve ses seviyesi sınırı yok.
+
+## Varsayımlar
+- Klipler `clips/` klasöründe, müzik `music.mp3`. Adları kendine göre değiştir.
+- Kaynak 16:9 olduğu için görüntü bozulmaz.
+- Oyun sesi kullanılmaz, sadece müzik girer.
+- Geçişler sert kesmedir.
+- Müzik lisansı fragman için uygundur. Bunu sen doğrulamalısın.
+
+## Steam biçimi
+| Alan | Değer |
+|---|---|
+| Kap | `.mp4` |
+| Görüntü | H.264, 1920x1080, 60 fps |
+| Bit hızı | 5.000 Kbps üstü (aşağıda 12 Mbps) |
+| Ses | AAC, stereo, 48 kHz |
+| Oran | 16:9 |
+
+1920x1080 sınırdır. 2560x1440 kaynak küçülür. Steam işleme sorunu yaşarsa 1280x720 dene.
+
+## Birleştirme komutu
+Dosya: `render_trailer.sh`
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+OUT=trailer_steam.mp4
+MUSIC=music.mp3
+LEN=60; FADE=2; W=1920; H=1080; FPS=60; VBR=12M
+# "dosya başlangıç_sn süre_sn" — süreler toplamı LEN olmalı
+CLIPS=(
+  "clips/a.mp4 5 10"
+  "clips/b.mp4 0 10"
+  "clips/c.mp4 20 10"
+  "clips/d.mp4 3 10"
+  "clips/e.mp4 8 10"
+  "clips/f.mp4 12 10"
+)
+
+args=(); fc=""; cat=""; i=0
+for c in "${CLIPS[@]}"; do
+  read -r f ss d <<<"$c"
+  args+=(-ss "$ss" -t "$d" -i "$f")
+  fc+="[$i:v]scale=${W}:${H}:flags=lanczos,fps=${FPS},setsar=1,format=yuv420p[v$i];"
+  cat+="[v$i]"; i=$((i+1))
+done
+args+=(-i "$MUSIC")
+fc+="${cat}concat=n=${i}:v=1:a=0[v];"
+fc+="[${i}:a]aresample=48000,apad=whole_dur=${LEN},afade=t=out:st=$((LEN-FADE)):d=${FADE}[a]"
+
+ffmpeg -n "${args[@]}" -filter_complex "$fc" -map "[v]" -map "[a]" \
+  -c:v libx264 -b:v "$VBR" -maxrate 16M -bufsize 24M -preset slow \
+  -c:a aac -b:a 192k -ac 2 -ar 48000 \
+  -t "$LEN" -movflags +faststart "$OUT"
+```
+
+- `-n` dosyayı ezmez. Aynı adla ikinci kez çalıştırırsan çıkış dosyasını önce sil.
+- Süreler 60 saniyeyi tutmazsa bitiş siyah kalır. Önce toplamı kontrol et.
+- Müzik 60 saniyeden kısaysa `apad` sessizlik ekler. Uzunsa `-t` keser.
+
+## Bittiğini kanıtlama
+Her adımı çalıştır, çıktıyı sakla.
+
+1. **Biçim ve süre:**
+   ```bash
+   ffprobe -v error -show_entries format=duration,bit_rate:stream=codec_name,width,height,r_frame_rate,channels,sample_rate -of json trailer_steam.mp4
+   ```
+   Beklenen:
+   - `duration` yaklaşık 60.0
+   - `bit_rate` 5.000.000 üstü
+   - `h264`, 1920, 1080, `60/1`
+   - `aac`, 2 kanal, 48000
+
+2. **Ses var mı, bozuk mu:**
+   ```bash
+   ffmpeg -i trailer_steam.mp4 -af volumedetect -vn -f null - 2>&1 | grep -E "mean_volume|max_volume"
+   ```
+   `max_volume` 0 dB'den küçük olmalı. Ses tamamen sessizse `mean_volume` çok düşük çıkar.
+
+3. **Gözle kontrol:**
+   ```bash
+   mkdir -p frames && ffmpeg -i trailer_steam.mp4 -vf fps=1 frames/f_%03d.png
+   ```
+   60 kare çıkmalı. Kesimleri, siyah kareleri ve son saniyeyi bak.
+
+4. **Dinle:** Müziğin girişini ve fade-out'u kendi kulağınla kontrol et.
+
+5. **Kayıt:** Müzik lisansını bir ledger satırına yaz. `render_trailer.sh` dosyasını proje klasöründe tut ki yeniden çalışsın.
+
+Bu beş adımın çıktısı tamam olunca "bitti" diyebilirsin. Benim burada kanıtım yok. Çıktıları bana yapıştırırsan birlikte değerlendiririm.

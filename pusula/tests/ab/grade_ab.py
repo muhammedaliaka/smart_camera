@@ -13,8 +13,9 @@ import sys
 from pathlib import Path
 
 EXPECTED = {"p1": "sales.md", "p2": "ai-production.md", "p3": "nextjs.md", "p4": "threejs-glb.md",
-            "p6": "tauri-rust.md", "p7": "game-production.md", "p8": "unity.md"}
-ITEMS = {"p1": 9, "p2": 9, "p3": 9, "p4": 8, "p5": 3, "p6": 9, "p7": 9, "p8": 8}
+            "p6": "tauri-rust.md", "p7": "game-production.md", "p8": "unity.md", "p9": "flutter.md", "p10": "unreal.md",
+            "p11": "marketing.md", "p12": "security.md", "p13": "video-production.md", "p14": "video-watching.md"}
+ITEMS = {"p1": 9, "p2": 9, "p3": 9, "p4": 8, "p5": 3, "p6": 9, "p7": 9, "p8": 8, "p9": 9, "p10": 8, "p11": 9, "p12": 9, "p13": 9, "p14": 8}
 # Cross-check only: crude patterns for the items a regex can see. Manual scores decide.
 REGEX = {
     "p1": {1: r"\$\s?100\b|\b100\s?(\$|usd|dolar)", 2: r"30\s*(gün|day)", 3: r"(iki|2)\s*hafta|two weeks|14\s*(gün|day)",

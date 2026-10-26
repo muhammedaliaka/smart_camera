@@ -1,0 +1,96 @@
+[probe p13]
+Aşağıdaki komutları burada çalıştırmadım. Sizin dosyalarınıza erişimim yok ve internetim olmadığı için Steam'in güncel şartlarını da doğrulayamadım. Steam değerleri hafızamdan, bu yüzden yüklemeden önce Steamworks'teki "Trailer / Store Assets" sayfasından bir kez karşılaştırın.
+
+## 1. Steam'in istediği biçim (hafızamdan)
+
+| Öğe | Değer |
+|---|---|
+| Kapsayıcı / video | MP4, H.264 (High profile), `yuv420p` |
+| Çözünürlük | En az 1920x1080. 2560x1440 de kabul edilir ama dosya büyür. |
+| Kare hızı | 30 veya 60 fps |
+| Ses | AAC-LC, 48 kHz, stereo, 320 kbps ve üstü |
+| Bit hızı | Yaklaşık 8–12 Mbps (1080p60) |
+| Süre | 60 sn hedefi uygun. Steam sert bir üst sınır koymuyor, ama mağaza sayfasında 30–60 sn öneriliyor. |
+
+Steam yüklenen videoyu kendisi yeniden kodlar. Bu yüzden iyi bir kaynak vermek yeterlidir, `faststart` ise yükleme sonrası önizleme için yararlıdır.
+
+## 2. Birleştirme ve dışa aktarma
+
+Dosya adlarını kendinize göre değiştirin. Üç klip ve bir müzik örneği:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Her klipten alınacak bölüm (başlangıç, süre). Toplam 60 sn olmalı.
+# 20 + 22 + 18 = 60
+ffmpeg -y \
+  -ss 00:00:10 -t 20 -i clip1.mp4 \
+  -ss 00:01:05 -t 22 -i clip2.mp4 \
+  -ss 00:00:30 -t 18 -i clip3.mp4 \
+  -i music.mp3 \
+  -filter_complex "
+    [0:v]scale=1920:1080:flags=lanczos,fps=60,setsar=1,format=yuv420p[v0];
+    [1:v]scale=1920:1080:flags=lanczos,fps=60,setsar=1,format=yuv420p[v1];
+    [2:v]scale=1920:1080:flags=lanczos,fps=60,setsar=1,format=yuv420p[v2];
+    [v0][v1][v2]concat=n=3:v=1:a=0,
+      fade=t=in:st=0:d=0.5,fade=t=out:st=59:d=1[v];
+    [3:a]atrim=0:60,asetpts=PTS-STARTPTS,
+      loudnorm=I=-16:TP=-1.5:LRA=11,
+      afade=t=in:st=0:d=1,afade=t=out:st=57:d=3,
+      aresample=48000[a]
+  " \
+  -map "[v]" -map "[a]" \
+  -c:v libx264 -profile:v high -preset slow -crf 16 \
+  -maxrate 12M -bufsize 24M -pix_fmt yuv420p \
+  -c:a aac -b:a 320k -ac 2 \
+  -movflags +faststart -t 60 \
+  trailer_1080p60.mp4
+```
+
+Notlar:
+- Oyun kayıtlarında ses de varsa ve istiyorsanız, onları ayrıca `amix` ile müziğin altına katmanız gerekir. Yukarıdaki komut yalnızca müziği kullanır.
+- Müzik 60 sn'den kısaysa `-stream_loop -1 -i music.mp3` ekleyin. Fazlaysa `atrim` zaten keser.
+- 1440p olarak bırakmak isterseniz `scale` satırlarını `scale=2560:1440` yapın ve `-maxrate 20M -bufsize 40M` kullanın.
+
+## 3. Bittiğini kanıtlama
+
+Her komutun çıktısı "bitti" demenin kanıtıdır. Çıktıyı bana yapıştırırsanız yorumlarım.
+
+```bash
+F=trailer_1080p60.mp4
+
+# a) Biçim: codec, profil, çözünürlük, fps, pixel format, ses
+ffprobe -v error -show_entries stream=codec_name,profile,width,height,r_frame_rate,pix_fmt,sample_rate,channels,bit_rate \
+  -of default=nw=1 "$F"
+
+# b) Süre: 59.9–60.1 olmalı
+ffprobe -v error -show_entries format=duration -of csv=p=0 "$F"
+
+# c) Dosya baştan sona hatasız çözülüyor mu? (çıktı boş olmalı)
+ffmpeg -v error -i "$F" -f null - 2>&1 | head
+
+# d) faststart: moov atom başta mı? ("moov" "mdat"tan önce gelmeli)
+ffprobe -v trace "$F" 2>&1 | grep -m2 -E "type:'(moov|mdat)'"
+
+# e) Ses seviyesi (hedef yaklaşık -16 LUFS, tepe <= -1.5 dBTP)
+ffmpeg -nostats -i "$F" -af ebur128=peak=true -f null - 2>&1 | tail -n 12
+
+# f) Gözle kontrol: ilk, orta ve son kareden küçük resim
+ffmpeg -y -ss 1  -i "$F" -frames:v 1 f1.png
+ffmpeg -y -ss 30 -i "$F" -frames:v 1 f2.png
+ffmpeg -y -ss 59 -i "$F" -frames:v 1 f3.png
+
+# g) Boyut ve özet
+ls -lh "$F"; sha256sum "$F"
+```
+
+Geçti sayılması için:
+- (a) `h264`, `High`, `1920x1080`, `60/1`, `yuv420p`, `aac`, `48000`, `2`
+- (b) süre yaklaşık 60
+- (c) hiçbir hata satırı yok
+- (d) `moov` önce geliyor
+- (e) seviyeler aralıkta
+- (f) üç kare doğru kliplerden geliyor ve siyah ya da bozuk kare yok
+
+Son olarak videoyu Steamworks'e yüklemeden önce oynatıcıda baştan sona izleyin. Ses senkronu ve kesim noktaları komutlarla değil, yalnızca izleyerek doğrulanır.

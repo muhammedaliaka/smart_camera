@@ -1,0 +1,70 @@
+[probe p13]
+Komutları yazdım ama çalıştırmadım. Bu oturumda Bash ve Write araçları kapalı, ffmpeg'i deneyemedim. Aşağıdaki kod **UNVERIFIED** (doğrulanmadı). Önce `ffmpeg -h full` ile bayrakları kontrol et.
+
+## Steam'in istediği biçim
+Kaynak: Steam trailer sayfası (partner.steamgames.com/doc/store/trailer). Paketimiz bunu bugün okumuş. [official]
+
+- Çözünürlük: en fazla 1920x1080. 2560x1440 kaydını küçültmelisin.
+- Kare hızı: 30 veya 60 fps. 60 fps'i koruyoruz.
+- Video hızı: en az 5.000 Kbps.
+- Kap: `.mp4`, `.mov` veya `.wmv`.
+- Kodek: H.264 video, AAC ses.
+- En-boy oranı: 16:9.
+- Ses: stereo, 44 veya 48 kHz.
+- Sayfa dosya boyutu, süre ve ses seviyesi için sınır vermiyor.
+- Geçerli ilk iki fragman, ekran görüntülerinden önce görünür.
+
+## Komut
+Why code: Filtre zinciri kısa yazılamaz. Her kayıt kesilir, küçültülür, 60 fps yapılır ve birleşir.
+Checked: UNVERIFIED. Bayraklar `video-production.md` paketindeki ffmpeg notlarına uyuyor.
+
+```bash
+ffmpeg -n -hide_banner \
+  -i klip1.mp4 -i klip2.mp4 -i klip3.mp4 -i muzik.mp3 \
+  -filter_complex "\
+[0:v]trim=start=10:duration=20,setpts=PTS-STARTPTS,scale=1920:1080:flags=lanczos,setsar=1,fps=60,format=yuv420p[v0];\
+[1:v]trim=start=5:duration=20,setpts=PTS-STARTPTS,scale=1920:1080:flags=lanczos,setsar=1,fps=60,format=yuv420p[v1];\
+[2:v]trim=start=0:duration=20,setpts=PTS-STARTPTS,scale=1920:1080:flags=lanczos,setsar=1,fps=60,format=yuv420p[v2];\
+[v0][v1][v2]concat=n=3:v=1:a=0,fade=t=out:st=58:d=2[v];\
+[3:a]aresample=48000,afade=t=out:st=58:d=2[a]" \
+  -map "[v]" -map "[a]" -t 60 \
+  -c:v libx264 -preset slow -profile:v high -b:v 12M -maxrate 15M -bufsize 24M \
+  -c:a aac -b:a 192k -ac 2 \
+  -movflags +faststart fragman_steam.mp4
+```
+
+Ne yapar:
+- `trim` her kayıttan bir parça alır. Üç parça 20 sn ise toplam 60 sn eder.
+- `scale` 1440p'yi 1080p'ye indirir.
+- `-b:v 12M` Steam'in 5.000 Kbps alt sınırının rahatça üstünde kalır.
+- `-n` var olan dosyanın üzerine yazmaz.
+- Oyun sesi alınmaz. Sadece müzik girer.
+
+Dikkat edilecekler:
+- Parça süreleri toplamı 60 sn olmalı. Az olursa fragman kısa çıkar.
+- Müzik 60 sn'den kısaysa `-i muzik.mp3` önüne `-stream_loop -1` ekle.
+- Kayıt sayısı değişirse `n=` değerini ve etiketleri güncelle.
+- Müziğin lisansı mağazada kullanmaya izin vermeli. Her varlık için lisans kaydı tut.
+
+## Bittiğini nasıl kanıtlarsın
+1. **Biçim ölçümü.** Çıktı dosyasını ölç, komutu değil:
+   ```bash
+   ffprobe -v error -show_entries format=duration,bit_rate:stream=codec_name,width,height,r_frame_rate,sample_rate,channels -of json fragman_steam.mp4
+   ```
+   Beklenen:
+   - `h264` ve `aac`
+   - 1920x1080
+   - `60/1`
+   - süre yaklaşık 60
+   - `bit_rate` 5.000.000'un üstünde
+   - 48000 Hz
+   - 2 kanal
+2. **Görüntüye bak.** `ffmpeg -i fragman_steam.mp4 -vf fps=1 kare_%03d.png` her saniyeden bir kare verir. Kesme noktalarına ve son fade'e bak.
+3. **Sesi dinle.** Ses var mı, patlama yok mu, fade çalışıyor mu bak. Sessiz çıktı sık görülen bir hatadır.
+4. **Komutu sakla.** Komutu proje klasöründe bir dosyaya kaydet. Gerekirse aynı çıktıyı yeniden üretirsin.
+5. **Steamworks'te yükle.** Yüklemeden sonra Steam'in işlemesini bekle. Hata vermezse bitti.
+
+## Varsayımlar
+- Kaç klip olduğunu ve hangi saniyelerin seçileceğini bilmiyorum. Örnekteki 3x20 sn sadece örnektir.
+- Müziğin süresini bilmiyorum.
+- Sana soru sormadım. İstersen komutu bu bilgilerle uyarlarım.

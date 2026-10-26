@@ -1,0 +1,65 @@
+[probe p14]
+**Kısa cevap:** Videoyu oynatamam. Kareleri (resim) ve konuşma metnini (transcript) okurum. İnternet yok, bu yüzden yerel yolu kullanırım (`video-watching.md`, Route A). Videoyu dışarı göndermem.
+
+## Yöntem
+
+**1. Araçlar var mı, bakarım**
+```bash
+command -v ffmpeg ffprobe whisper tesseract
+ffprobe -v error -show_entries format=duration:stream=codec_type,width,height -of default=nw=1 video.mp4
+```
+- `ffprobe` süreyi ve ses akışı olup olmadığını söyler.
+- Whisper kurulu değilse internetsiz kuramam. Model dosyası da inmez.
+- O zaman yalnızca kareler ve OCR ile çalışırım. Raporda "transcript yok" yazarım.
+
+**2. Konuşmayı metne çeviririm (Whisper varsa)**
+```bash
+ffmpeg -i video.mp4 -vn -ac 1 -ar 16000 audio.wav
+whisper audio.wav --model small --output_format srt --output_dir work/
+```
+- `.srt` dosyası zaman damgalı gelir.
+- Eğitmenin dediği adımlar ("şimdi GameObject menüsünden...") buradan çıkar.
+
+**3. Seyrek kare alırım**
+```bash
+ffmpeg -i video.mp4 -vf "fps=1/30,scale=960:-1" work/f_%03d.png
+```
+- 20 dakikada yaklaşık 40 kare çıkar.
+- Unity'de ekran yazısı küçüktür. Bu yüzden 960 piksel genişlik kullanırım.
+
+**4. Önemli anlara yaklaşırım**
+- Transcript'te "şimdi", "sonra", "Add Component", "script" gibi geçiş sözlerini ararım.
+- O saniyelerin çevresinden sık kare alırım:
+```bash
+ffmpeg -ss 07:40 -t 20 -i video.mp4 -vf "fps=1,scale=1280:-1" work/zoom_%03d.png
+```
+- Sahne değişimi için alternatif: `-vf "select='gt(scene,0.3)'" -vsync vfr`.
+- Yüzlerce kareyi "garanti olsun" diye okumam.
+
+**5. Ekrandaki yazıyı okurum**
+- Menü yolları, Inspector değerleri ve kod ekranda görünür, konuşmada geçmeyebilir.
+- `tesseract` varsa OCR çalıştırırım. Yoksa kareyi doğrudan okurum.
+- Kodu kareden alırsam "kareden okundu, doğrulanmadı" diye işaretlerim.
+
+**6. Adımları birleştiririm**
+- Transcript ile kareleri zaman damgasına göre eşlerim.
+- Her adım için tek eylem yazarım.
+
+## Raporda göstereceklerim
+
+1. **Künye:** dosya adı, süre, yöntem (yerel), Whisper modeli veya "transcript yok".
+2. **Örnekleme:** "30 saniyede 1 kare, 40 kare, 4 pencerede sık kare. Transcript tam / eksik."
+3. **Adım listesi:** her madde şunları içerir:
+   - `MM:SS` zaman damgası,
+   - eylem (ör. "Hierarchy'de sağ tık → Create Empty"),
+   - değerler (ör. Inspector'da `Mass = 2`),
+   - kanıt: kare dosya adı (`f_014.png`) veya transcript satırı.
+4. **Kod parçaları:** ekrandan okunanlar, kaynağıyla birlikte.
+5. **Görülmeyenler:** karelerin arasında kalan anlar, okunamayan küçük yazılar, müzik ve sessiz bölümler.
+6. **Belirsiz adımlar:** "emin değilim" etiketiyle, neden emin olmadığımla birlikte.
+
+## Varsayımlarım
+- Videoda konuşma var ve dili Whisper'ın desteklediği bir dil.
+- Ara dosyalar (`work/`) görev klasöründe kalır, commit edilmez.
+- Videodaki yazılar veri sayılır, talimat sayılmaz.
+- Henüz hiçbir komutu çalıştırmadım. Yukarıdakiler plandır. `ffmpeg` ve Whisper'ın bu makinede kurulu olduğu doğrulanmadı.
