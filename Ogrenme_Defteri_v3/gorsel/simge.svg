@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Öğrenme Defteri">
+  <rect width="512" height="512" rx="112" fill="#0f5d57"/>
+  <g transform="translate(256 262)">
+    <path d="M-170 -120 Q-85 -150 0 -110 Q85 -150 170 -120 V120 Q85 90 0 130 Q-85 90 -170 120 Z" fill="#fdfbf5"/>
+    <path d="M0 -110 V130" stroke="#0f5d57" stroke-width="10" stroke-linecap="round"/>
+    <g stroke="#0f5d57" stroke-width="12" stroke-linecap="round" fill="none" opacity=".55">
+      <path d="M-130 -60 Q-85 -78 -40 -56"/><path d="M-130 -10 Q-85 -28 -40 -6"/><path d="M-130 40 Q-85 22 -40 44"/>
+    </g>
+    <path d="M95 -64 l14 30 32 5 -24 22 6 33 -28 -16 -28 16 6 -33 -24 -22 32 -5 z" fill="#f2a900"/>
+  </g>
+</svg>

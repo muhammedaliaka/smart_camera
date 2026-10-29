@@ -1,0 +1,255 @@
+{
+  "paket": "dinleme",
+  "ad": "Dinleme",
+  "surum": 1,
+  "dersler": [
+    {
+      "id": "dinle-01-duyuru",
+      "iz": "dinleme",
+      "emoji": "📢",
+      "baslik": "Okul duyurusu",
+      "hedef": "Kısa bir İngilizce duyuruda gün, saat ve yapılacak işi yakalamak.",
+      "neden": "Gerçek hayatta İngilizce çoğu zaman bir kez, hızlıca söylenir. Her sözcüğü anlamak gerekmez; anahtar bilgileri (kim, ne zaman, ne yapılacak) yakalamak yeterlidir.",
+      "adimlar": [
+        {
+          "tur": "anlat",
+          "baslik": "Dinlerken ne yapmalısın?",
+          "bloklar": [
+            {
+              "emoji": "🎧",
+              "altyazi": "Dinleme yöntemi"
+            },
+            {
+              "liste": [
+                "**Her sözcüğü anlamaya çalışma.** Bilmediğin sözcükte durursan sonraki cümleyi kaçırırsın.",
+                "**Anahtar bilgilere kulak ver:** gün, saat, sayı, yer ve yapılacak iş.",
+                "**Dinledikten sonra** soruları cevapla. Yazıyı en son göreceksin."
+              ],
+              "sirali": true
+            },
+            {
+              "ipucu": "Bu kayıt 3 kez dinlenebilir. İlk dinlemede genel konuyu, ikincide saati ve günü, üçüncüde yapılacak işi yakalamaya çalış."
+            }
+          ]
+        },
+        {
+          "tur": "dinle",
+          "id": "duyuru",
+          "baslik": "Okul duyurusu",
+          "yonerge": "Kaydı dinle. Okulda bir duyuru yapılıyor.",
+          "sinir": 3,
+          "ses": {
+            "metin": "Good morning, students. Today is Monday. Class starts at eight. Please bring your book and your notebook. Please wait in the library. See you in class.",
+            "ses": "kadin",
+            "hiz": 0.95
+          },
+          "sorular": [
+            {
+              "soru": "Duyuruda hangi gün söyleniyor?",
+              "secenekler": [
+                "Pazartesi",
+                "Salı",
+                "Cuma"
+              ],
+              "aciklama": "“Today is Monday.”"
+            },
+            {
+              "soru": "Duyuruya göre ders saat kaçta başlıyor?",
+              "secenekler": [
+                "8",
+                "7",
+                "10"
+              ],
+              "aciklama": "“Class starts at eight.”"
+            },
+            {
+              "soru": "Öğrencilerden ne getirmeleri isteniyor?",
+              "secenekler": [
+                "Kitap ve defter",
+                "Çanta ve telefon",
+                "Kalem ve su"
+              ],
+              "aciklama": "“Please bring your book and your notebook.”"
+            },
+            {
+              "soru": "Öğrenciler nerede bekleyecek?",
+              "secenekler": [
+                "Kütüphanede",
+                "Bahçede",
+                "Evde"
+              ],
+              "aciklama": "“Please wait in the library.”"
+            }
+          ],
+          "metin": [
+            "Good morning, students.",
+            "Today is Monday. Class starts at eight.",
+            "Please bring your book and your notebook.",
+            "Please wait in the library. See you in class."
+          ],
+          "metinTr": "Günaydın öğrenciler. Bugün Pazartesi. Ders sekizde başlıyor. Lütfen kitabınızı ve defterinizi getirin. Lütfen kütüphanede bekleyin. Derste görüşürüz."
+        }
+      ]
+    },
+    {
+      "id": "dinle-02-mesaj",
+      "iz": "dinleme",
+      "emoji": "📱",
+      "baslik": "Sesli mesaj",
+      "hedef": "Bir arkadaşın bıraktığı kısa sesli mesajı anlayıp ne istediğini söylemek.",
+      "neden": "Sesli mesajlar günlük hayatta en sık karşılaşacağın dinleme türü. Kısadır, bir ricası vardır; bunu yakalamak yeter.",
+      "adimlar": [
+        {
+          "tur": "dinle",
+          "id": "mesaj",
+          "baslik": "Sam'den sesli mesaj",
+          "yonerge": "Sam, Ece'ye sesli mesaj bırakmış. Dinle ve Sam'in ne istediğini bul.",
+          "sinir": 3,
+          "ses": {
+            "metin": "Hi Ece, this is Sam. I am at home today. I am tired. I can't come to school. Can you bring my notebook tomorrow? Thank you. Goodbye.",
+            "ses": "erkek",
+            "hiz": 0.95
+          },
+          "sorular": [
+            {
+              "soru": "Sam şu an nerede?",
+              "secenekler": [
+                "Evde",
+                "Okulda",
+                "Parkta"
+              ],
+              "aciklama": "“I am at home today.”"
+            },
+            {
+              "soru": "Sam neden okula gelemiyor?",
+              "secenekler": [
+                "Yorgun",
+                "Ders yok",
+                "Telefonu yok"
+              ],
+              "aciklama": "“I am tired. I can't come to school.”"
+            },
+            {
+              "soru": "Sam, Ece'den ne istiyor?",
+              "secenekler": [
+                "Defterini yarın getirmesini",
+                "Bugün ona telefon etmesini",
+                "Parkta buluşmayı"
+              ],
+              "aciklama": "“Can you bring my notebook tomorrow?”"
+            },
+            {
+              "soru": "Mesajda Sam'in kız kardeşinden söz ediliyor mu?",
+              "secenekler": [
+                "Hayır, bahsedilmiyor",
+                "Evet",
+                "Bilinmiyor"
+              ],
+              "aciklama": "Mesajda kız kardeş geçmiyor. Duymadığın bir şeyi tahmin etme."
+            }
+          ],
+          "serbest": {
+            "id": "cevap",
+            "soru": "Ece olsaydın Sam'e **ne cevap yazardın**? Kısa bir cevap yaz (İngilizce ya da Türkçe).",
+            "dil": "en",
+            "dilSor": true,
+            "kip": "ikisi",
+            "ornek": "Okay, Sam. I can bring your notebook tomorrow. Get well soon!",
+            "yardimSor": true
+          },
+          "metin": [
+            "Hi Ece, this is Sam.",
+            "I am at home today. I am tired. I can't come to school.",
+            "Can you bring my notebook tomorrow?",
+            "Thank you. Goodbye."
+          ],
+          "metinTr": "Selam Ece, ben Sam. Bugün evdeyim. Yorgunum. Okula gelemiyorum. Yarın defterimi getirebilir misin? Teşekkürler. Hoşça kal."
+        }
+      ]
+    },
+    {
+      "id": "dinle-03-gunum",
+      "iz": "dinleme",
+      "emoji": "🌅",
+      "baslik": "Maya'nın günü",
+      "hedef": "Sırayla anlatılan bir günü dinleyip olayları doğru sıraya koymak.",
+      "neden": "Sıra bildiren sözcükler (sabah, öğleden sonra, akşam, gece) dinlerken sana yol gösterir. Olayları sıraya koymak, anlamanı kendine kanıtlamanın iyi bir yoludur.",
+      "adimlar": [
+        {
+          "tur": "dinle",
+          "id": "gun",
+          "baslik": "Maya'nın günü",
+          "yonerge": "Maya bir gününü anlatıyor. Sıraya dikkat ederek dinle.",
+          "sinir": 3,
+          "ses": {
+            "metin": "My name is Maya. I wake up in the morning. I eat breakfast and drink tea. In the afternoon I study in the library. In the evening I eat dinner with my family. At night I sleep.",
+            "ses": "kadin",
+            "hiz": 0.9
+          },
+          "sorular": [
+            {
+              "soru": "Maya sabah ne yapıyor?",
+              "secenekler": [
+                "Uyanıyor, kahvaltı yapıp çay içiyor",
+                "Okula gidip ders çalışıyor",
+                "Akşam yemeği yiyor"
+              ],
+              "aciklama": "“I wake up in the morning. I eat breakfast and drink tea.”"
+            },
+            {
+              "soru": "Maya öğleden sonra nerede ders çalışıyor?",
+              "secenekler": [
+                "Kütüphanede",
+                "Evde",
+                "Parkta"
+              ],
+              "aciklama": "“In the afternoon I study in the library.”"
+            },
+            {
+              "soru": "Maya akşam yemeğini kiminle yiyor?",
+              "secenekler": [
+                "Ailesiyle",
+                "Arkadaşıyla",
+                "Tek başına"
+              ],
+              "aciklama": "“In the evening I eat dinner with my family.”"
+            },
+            {
+              "soru": "Maya'nın gününün **son** işi nedir?",
+              "secenekler": [
+                "Uyumak",
+                "Ders çalışmak",
+                "Kahvaltı yapmak"
+              ],
+              "aciklama": "“At night I sleep.”"
+            },
+            {
+              "soru": "Hangisi doğru sırayı gösterir?",
+              "secenekler": [
+                "Kahvaltı → kütüphanede ders → akşam yemeği → uyku",
+                "Akşam yemeği → kahvaltı → uyku → kütüphane",
+                "Uyku → akşam yemeği → kütüphane → kahvaltı"
+              ],
+              "aciklama": "morning → afternoon → evening → night"
+            }
+          ],
+          "serbest": {
+            "id": "senin-gun",
+            "soru": "Maya gibi **kendi gününü** İngilizce bir iki cümleyle anlat. (Örnek kalıp: “In the morning I …”)",
+            "dil": "en",
+            "kip": "ikisi",
+            "ornek": "In the morning I eat breakfast. In the afternoon I study.",
+            "yardimSor": true
+          },
+          "metin": [
+            "My name is Maya.",
+            "I wake up in the morning. I eat breakfast and drink tea.",
+            "In the afternoon I study in the library.",
+            "In the evening I eat dinner with my family. At night I sleep."
+          ],
+          "metinTr": "Benim adım Maya. Sabah uyanırım. Kahvaltı yapar ve çay içerim. Öğleden sonra kütüphanede ders çalışırım. Akşam ailemle akşam yemeği yerim. Geceleri uyurum."
+        }
+      ]
+    }
+  ]
+}

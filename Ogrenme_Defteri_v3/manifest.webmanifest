@@ -1,0 +1,17 @@
+{
+  "name": "Öğrenme Defteri",
+  "short_name": "Defter",
+  "description": "İngilizce, hafıza, okuma, dinleme ve spor için günlük kısa görevler.",
+  "lang": "tr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f6f4ee",
+  "theme_color": "#0f5d57",
+  "icons": [
+    { "src": "gorsel/simge-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "gorsel/simge-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "gorsel/simge-maske-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

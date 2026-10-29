@@ -1,0 +1,929 @@
+{
+  "paket": "kontrol",
+  "ad": "Kontrol günleri",
+  "surum": 1,
+  "dersler": [
+    {
+      "id": "kontrol-01-ingilizce",
+      "iz": "olcum",
+      "emoji": "✅",
+      "baslik": "İngilizce kontrolü · Hafta 1",
+      "hedef": "İlk dört dersin kelimelerini, sayılarını ve kalıplarını yardımsız dene.",
+      "neden": "Öğrendiğini görmek, neyi tekrar etmen gerektiğini gösterir. Yanlış çıkanlar kötü değil: tekrar edilecek yerleri bulmanı sağlar.",
+      "adimlar": [
+        {
+          "tur": "anlat",
+          "baslik": "Bugün kontrol günü",
+          "bloklar": [
+            {
+              "emoji": "✅",
+              "altyazi": "Yeni bir şey öğrenmiyorsun"
+            },
+            {
+              "liste": [
+                "Önceki günlerde öğrendiklerini **yardımsız** deniyorsun.",
+                "Her soruyu **bir kez** cevaplarsın; yanlışlar sonda listelenir.",
+                "Sonuç bir not değil; hangi konuya dönmen gerektiğini gösterir."
+              ]
+            },
+            {
+              "ipucu": "Bilmediğin bir soruda tahmin etmek serbest. Ama tahmin ettiğini bil: kendini kandırmak yerine sonuca bak."
+            }
+          ]
+        },
+        {
+          "tur": "alistirma",
+          "kelimeler": [
+            "hello",
+            "goodbye",
+            "name",
+            "student",
+            "from",
+            "live",
+            "fine",
+            "thank-you",
+            "one",
+            "three",
+            "five",
+            "seven",
+            "ten",
+            "old",
+            "red",
+            "blue",
+            "green",
+            "black",
+            "bag",
+            "pen",
+            "notebook",
+            "book",
+            "phone",
+            "monday",
+            "friday",
+            "saturday",
+            "today",
+            "tomorrow",
+            "class",
+            "library",
+            "meet",
+            "see-you"
+          ],
+          "turler": [
+            "dinle-sec",
+            "anlam-sec",
+            "yaz"
+          ],
+          "adet": 14,
+          "bolum": "Kelimeler"
+        },
+        {
+          "tur": "sayi-dinle",
+          "aralik": [
+            11,
+            99
+          ],
+          "adet": 4,
+          "karisiklik": true,
+          "bolum": "Sayılar"
+        },
+        {
+          "tur": "sahne",
+          "id": "kalem",
+          "baslik": "Kimin kalemi?",
+          "ortam": "Kütüphane. Sam bir kalem buldu ve Ece'ye soruyor.",
+          "satirlar": [
+            {
+              "kim": "Sam",
+              "en": "Hi, Ece. Is this your pen?",
+              "tr": "Selam Ece. Bu senin kalemin mi?"
+            },
+            {
+              "kim": "Ece",
+              "en": "No, my pen is blue.",
+              "tr": "Hayır, benim kalemim mavi."
+            },
+            {
+              "kim": "Sam",
+              "en": "This pen is red. When is the class?",
+              "tr": "Bu kalem kırmızı. Ders ne zaman?"
+            },
+            {
+              "kim": "Ece",
+              "en": "The class is on Friday. It starts at four.",
+              "tr": "Ders Cuma günü. Dörtte başlıyor."
+            },
+            {
+              "kim": "Sam",
+              "en": "Thank you. See you on Friday!",
+              "tr": "Teşekkürler. Cuma görüşürüz!"
+            },
+            {
+              "kim": "Ece",
+              "en": "See you!",
+              "tr": "Görüşürüz!"
+            }
+          ],
+          "sorular": [
+            {
+              "soru": "Ece'nin kalemi hangi renk?",
+              "secenekler": [
+                "Mavi",
+                "Kırmızı",
+                "Yeşil"
+              ],
+              "aciklama": "“My pen is blue.”"
+            },
+            {
+              "soru": "Sam'in bulduğu kalem hangi renk?",
+              "secenekler": [
+                "Kırmızı",
+                "Mavi",
+                "Siyah"
+              ],
+              "aciklama": "“This pen is red.”"
+            },
+            {
+              "soru": "Ece'ye göre ders hangi gün?",
+              "secenekler": [
+                "Cuma",
+                "Pazartesi",
+                "Cumartesi"
+              ],
+              "aciklama": "“The class is on Friday.”"
+            },
+            {
+              "soru": "Ece'ye göre ders saat kaçta başlıyor?",
+              "secenekler": [
+                "Dört",
+                "Beş",
+                "Yedi"
+              ],
+              "aciklama": "“It starts at four.”"
+            }
+          ]
+        },
+        {
+          "tur": "dikte",
+          "bolum": "Dikte",
+          "ogeler": [
+            {
+              "metin": "Nice to meet you."
+            },
+            {
+              "metin": "I have a blue pen."
+            },
+            {
+              "metin": "The class is on Tuesday."
+            },
+            {
+              "metin": "See you tomorrow."
+            }
+          ]
+        },
+        {
+          "tur": "cumle-kur",
+          "bolum": "Cümle kur",
+          "ogeler": [
+            {
+              "tr": "Benim adım Ece.",
+              "en": "My name is Ece."
+            },
+            {
+              "tr": "Ben Ankara'dan geliyorum.",
+              "en": "I am from Ankara."
+            },
+            {
+              "tr": "Ders Perşembe günü.",
+              "en": "The class is on Thursday.",
+              "ek": [
+                "at"
+              ]
+            }
+          ]
+        },
+        {
+          "tur": "serbest",
+          "id": "tanit",
+          "bolum": "Konuşma kaydı",
+          "kip": "ikisi",
+          "dil": "en",
+          "yardimSor": false,
+          "soru": "**Kendini İngilizce tanıt:** adın, nerelisin, nerede yaşıyorsun, öğrenci misin. (Dört cümle.)",
+          "ornek": "My name is Ece. I am from Ankara. I live in Ankara. I am a student.",
+          "noktalar": [
+            {
+              "ad": "Adını söyledin",
+              "kabul": [
+                "my name is",
+                "i am"
+              ]
+            },
+            {
+              "ad": "Nereden geldiğini söyledin",
+              "kabul": [
+                "from"
+              ]
+            },
+            {
+              "ad": "Nerede yaşadığını söyledin",
+              "kabul": [
+                "live"
+              ]
+            },
+            {
+              "ad": "Öğrenci olduğunu söyledin",
+              "kabul": [
+                "student"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kontrol-02-hafiza",
+      "iz": "olcum",
+      "emoji": "🏛️",
+      "baslik": "Hafıza kontrolü · Hafta 1",
+      "hedef": "Önceki günlerde kurduğun iki listeyi, bakmadan rotandan hatırla.",
+      "neden": "Hafıza sarayı yöntemi, bakmadan hatırlamayı çalışınca anlam kazanır. Burada iki rotanı sırayla yürürsün.",
+      "adimlar": [
+        {
+          "tur": "anlat",
+          "baslik": "Bugün kontrol günü",
+          "bloklar": [
+            {
+              "emoji": "✅",
+              "altyazi": "Yeni bir şey öğrenmiyorsun"
+            },
+            {
+              "liste": [
+                "Önceki günlerde öğrendiklerini **yardımsız** deniyorsun.",
+                "Her soruyu **bir kez** cevaplarsın; yanlışlar sonda listelenir.",
+                "Sonuç bir not değil; hangi konuya dönmen gerektiğini gösterir."
+              ]
+            },
+            {
+              "ipucu": "Bilmediğin bir soruda tahmin etmek serbest. Ama tahmin ettiğini bil: kendini kandırmak yerine sonuca bak."
+            }
+          ]
+        },
+        {
+          "tur": "liste-hatirla",
+          "ref": "haf-02-liste/l1",
+          "saray": "ev",
+          "baslik": "1. liste · Ev rotası",
+          "yonerge": "Evinde rotanı yürü. Her durakta duran nesneyi yaz."
+        },
+        {
+          "tur": "liste-hatirla",
+          "ref": "haf-03-uzun-liste/l2",
+          "saray": "okul",
+          "baslik": "2. liste · Okul rotası",
+          "yonerge": "Okul rotanı yürü. Her durakta duran nesneyi yaz."
+        },
+        {
+          "tur": "serbest",
+          "id": "takildin",
+          "kip": "yaz",
+          "dil": "tr",
+          "yardimSor": false,
+          "soru": "Hangi **duraklarda takıldın?** O duraktaki resim neden silik kalmış olabilir?",
+          "ornek": "4. durakta takıldım; resim yeterince tuhaf değildi."
+        }
+      ]
+    },
+    {
+      "id": "kontrol-03-okuma-dinleme",
+      "iz": "olcum",
+      "emoji": "📖",
+      "baslik": "Okuma ve dinleme kontrolü · Hafta 1",
+      "hedef": "Daha önce görmediğin bir metni okuyup bir kaydı dinleyerek ne kadar anladığını gör.",
+      "neden": "Okuduğunu ve dinlediğini anlamak, bilgiyi ezberlemekten farklıdır. Bu kontrol metne bakmadan cevap vermeni ister.",
+      "adimlar": [
+        {
+          "tur": "anlat",
+          "baslik": "Bugün kontrol günü",
+          "bloklar": [
+            {
+              "emoji": "✅",
+              "altyazi": "Yeni bir şey öğrenmiyorsun"
+            },
+            {
+              "liste": [
+                "Önceki günlerde öğrendiklerini **yardımsız** deniyorsun.",
+                "Her soruyu **bir kez** cevaplarsın; yanlışlar sonda listelenir.",
+                "Sonuç bir not değil; hangi konuya dönmen gerektiğini gösterir."
+              ]
+            },
+            {
+              "ipucu": "Bilmediğin bir soruda tahmin etmek serbest. Ama tahmin ettiğini bil: kendini kandırmak yerine sonuca bak."
+            }
+          ]
+        },
+        {
+          "tur": "oku",
+          "id": "su",
+          "baslik": "Dünya'daki su",
+          "kapali": true,
+          "metin": [
+            "Dünya uzaydan bakıldığında mavi görünür; çünkü yüzeyinin yaklaşık yüzde 71'i suyla kaplıdır. Ama bu suyun neredeyse hepsi içilemez.",
+            "Dünya'daki suyun yaklaşık yüzde 97'si okyanuslardadır ve tuzludur. Geriye kalan yaklaşık yüzde 3 tatlı sudur.",
+            "Tatlı suyun da büyük bölümü buzullarda ve kutuplardaki buz tabakalarında donmuş hâldedir. Nehir ve göllerde bulunan, insanın kolayca ulaşabildiği su çok küçük bir paydır.",
+            "Bu yüzden temiz suyu israf etmemek önemlidir."
+          ],
+          "sozluk": [
+            {
+              "k": "tatlı su",
+              "a": "tuzlu olmayan su"
+            },
+            {
+              "k": "buzul",
+              "a": "dağlarda ya da kutuplarda biriken büyük buz kütlesi"
+            },
+            {
+              "k": "israf",
+              "a": "gereksiz yere harcama"
+            }
+          ],
+          "kaynak": {
+            "ad": "USGS Su Bilimi Okulu: Dünya'da ne kadar su var?",
+            "url": "https://www.usgs.gov/special-topics/water-science-school/science/how-much-water-there-earth"
+          },
+          "sorular": [
+            {
+              "soru": "Dünya yüzeyinin yaklaşık ne kadarı suyla kaplı?",
+              "secenekler": [
+                "Yüzde 71",
+                "Yüzde 29",
+                "Yüzde 97"
+              ],
+              "aciklama": "1. paragraf."
+            },
+            {
+              "soru": "Dünya'daki suyun yaklaşık yüzde 97'si nerededir?",
+              "secenekler": [
+                "Okyanuslarda, tuzlu",
+                "Göllerde",
+                "Buzullarda"
+              ],
+              "aciklama": "2. paragraf."
+            },
+            {
+              "soru": "Tatlı su, toplam suyun yaklaşık yüzde kaçıdır?",
+              "secenekler": [
+                "Yüzde 3",
+                "Yüzde 30",
+                "Yüzde 71"
+              ],
+              "aciklama": "2. paragraf."
+            },
+            {
+              "soru": "Tatlı suyun büyük bölümü nerede bulunur?",
+              "secenekler": [
+                "Buzullarda, donmuş hâlde",
+                "Nehirlerde, akarken",
+                "Bulutlarda"
+              ],
+              "aciklama": "3. paragraf."
+            },
+            {
+              "soru": "Metne göre “Dünya'daki suyun çoğu içilebilir” cümlesi için ne denir?",
+              "secenekler": [
+                "Yanlış",
+                "Doğru",
+                "Metinde yok"
+              ],
+              "aciklama": "1. paragraf: suyun neredeyse hepsi içilemez."
+            }
+          ],
+          "serbest": {
+            "id": "anlat",
+            "soru": "Metni kapat ve **kendi cümlelerinle** anlat: Dünya'daki su neden azdır?",
+            "dil": "tr",
+            "ornek": "Dünya'nın suyunun yüzde 97'si tuzlu okyanus. Tatlı su yüzde 3 ve çoğu buzulda donmuş durumda, o yüzden kolay ulaşılabilir su çok az.",
+            "noktalar": [
+              {
+                "ad": "Suyun çoğunun tuzlu okyanus olduğunu söyledin",
+                "kabul": [
+                  "okyanus",
+                  "tuzlu",
+                  "97"
+                ]
+              },
+              {
+                "ad": "Tatlı suyun az olduğunu söyledin",
+                "kabul": [
+                  "tatlı",
+                  "yüzde 3",
+                  "az"
+                ]
+              },
+              {
+                "ad": "Tatlı suyun çoğunun donmuş olduğunu söyledin",
+                "kabul": [
+                  "buz",
+                  "donmuş"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "tur": "dinle",
+          "id": "tanisma",
+          "baslik": "Daniel kendini tanıtıyor",
+          "yonerge": "Kaydı dinle. Soruları kayıttan cevapla.",
+          "sinir": 2,
+          "ses": {
+            "metin": "Hi, my name is Daniel. I am from Izmir. I am a student. I am sixteen years old. I have a blue bag and a red pen. The class is on Friday.",
+            "ses": "erkek",
+            "hiz": 0.95
+          },
+          "sorular": [
+            {
+              "soru": "Daniel hangi şehirden?",
+              "secenekler": [
+                "İzmir",
+                "Ankara",
+                "İstanbul"
+              ],
+              "aciklama": "“I am from Izmir.”"
+            },
+            {
+              "soru": "Daniel kaç yaşında?",
+              "secenekler": [
+                "16",
+                "13",
+                "30"
+              ],
+              "aciklama": "“I am sixteen years old.”"
+            },
+            {
+              "soru": "Daniel'in çantası hangi renk?",
+              "secenekler": [
+                "Mavi",
+                "Kırmızı",
+                "Siyah"
+              ],
+              "aciklama": "“I have a blue bag.”"
+            },
+            {
+              "soru": "Daniel'in dersi hangi gün?",
+              "secenekler": [
+                "Cuma",
+                "Pazartesi",
+                "Cumartesi"
+              ],
+              "aciklama": "“The class is on Friday.”"
+            }
+          ],
+          "metin": [
+            "Hi, my name is Daniel.",
+            "I am from Izmir. I am a student. I am sixteen years old.",
+            "I have a blue bag and a red pen.",
+            "The class is on Friday."
+          ],
+          "metinTr": "Selam, benim adım Daniel. İzmir'denim. Öğrenciyim. On altı yaşındayım. Mavi bir çantam ve kırmızı bir kalemim var. Ders Cuma günü."
+        }
+      ]
+    },
+    {
+      "id": "kontrol-04-hafta1",
+      "iz": "olcum",
+      "emoji": "🧭",
+      "baslik": "Haftayı değerlendir · Hafta 1",
+      "hedef": "İlk haftanın nasıl geçtiğini kısaca not et; programı kendi düzenine göre ayarla.",
+      "neden": "Uyku, yorgunluk ve görev yükü öğrenmeyi doğrudan etkiler. Bu kayıtlar, sonraki haftaların yükünü senin için doğru ayarlamana yarar.",
+      "adimlar": [
+        {
+          "tur": "olcek",
+          "id": "h1-zorluk",
+          "soru": "Bu hafta ders çalışmak sana ne kadar zor geldi?",
+          "aciklama": "0 = çok kolay · 10 = çok zor",
+          "min": 0,
+          "max": 10
+        },
+        {
+          "tur": "olcek",
+          "id": "h1-uyku",
+          "soru": "Bu hafta bir gecede ortalama kaç saat uyudun?",
+          "aciklama": "Yaklaşık değer yeter.",
+          "min": 4,
+          "max": 12
+        },
+        {
+          "tur": "olcek",
+          "id": "h1-spor",
+          "soru": "Spor görevlerini ne kadar rahat tamamladın?",
+          "aciklama": "0 = hiç rahat değil · 10 = çok rahat",
+          "min": 0,
+          "max": 10
+        },
+        {
+          "tur": "olcek",
+          "id": "h1-yuk",
+          "soru": "Günlük görev sayısı sana ne kadar fazla geldi?",
+          "aciklama": "0 = çok az · 10 = çok fazla",
+          "min": 0,
+          "max": 10
+        },
+        {
+          "tur": "serbest",
+          "id": "h1-not",
+          "kip": "yaz",
+          "dil": "tr",
+          "yardimSor": false,
+          "soru": "Gelecek hafta **neyi değiştirmek istersin?** En çok zorlandığın şey neydi?",
+          "ornek": "Akşam çalışmayı erken bitirip daha erken yatacağım."
+        }
+      ]
+    },
+    {
+      "id": "kontrol-05-ingilizce",
+      "iz": "olcum",
+      "emoji": "✅",
+      "baslik": "İngilizce kontrolü · Hafta 2",
+      "hedef": "İkinci haftanın kelimelerini ve kalıplarını yardımsız dene.",
+      "adimlar": [
+        {
+          "tur": "anlat",
+          "baslik": "Bugün kontrol günü",
+          "bloklar": [
+            {
+              "emoji": "✅",
+              "altyazi": "Yeni bir şey öğrenmiyorsun"
+            },
+            {
+              "liste": [
+                "Önceki günlerde öğrendiklerini **yardımsız** deniyorsun.",
+                "Her soruyu **bir kez** cevaplarsın; yanlışlar sonda listelenir.",
+                "Sonuç bir not değil; hangi konuya dönmen gerektiğini gösterir."
+              ]
+            },
+            {
+              "ipucu": "Bilmediğin bir soruda tahmin etmek serbest. Ama tahmin ettiğini bil: kendini kandırmak yerine sonuca bak."
+            }
+          ]
+        },
+        {
+          "tur": "alistirma",
+          "kelimeler": [
+            "please",
+            "excuse-me",
+            "open",
+            "close",
+            "wait",
+            "bring",
+            "listen",
+            "repeat",
+            "understand",
+            "k-repeat-please",
+            "k-dont-understand",
+            "where",
+            "under",
+            "next-to",
+            "table",
+            "chair",
+            "door",
+            "window",
+            "school",
+            "home",
+            "mother",
+            "father",
+            "sister",
+            "brother",
+            "friend",
+            "bread",
+            "water",
+            "milk",
+            "tea",
+            "hot",
+            "cold",
+            "eat",
+            "drink",
+            "like",
+            "want",
+            "wake-up",
+            "sleep",
+            "morning",
+            "evening",
+            "homework",
+            "can",
+            "walk",
+            "run",
+            "swim",
+            "play",
+            "tired",
+            "happy"
+          ],
+          "turler": [
+            "dinle-sec",
+            "anlam-sec",
+            "yaz"
+          ],
+          "adet": 18,
+          "bolum": "Kelimeler"
+        },
+        {
+          "tur": "sahne",
+          "id": "kahvalti",
+          "baslik": "Kahvaltı masasında",
+          "ortam": "Maya ve Daniel kahvaltı ediyor.",
+          "satirlar": [
+            {
+              "kim": "Daniel",
+              "en": "Good morning, Maya! Do you want tea?",
+              "tr": "Günaydın Maya! Çay ister misin?"
+            },
+            {
+              "kim": "Maya",
+              "en": "Yes, please. I like tea. I want bread, too.",
+              "tr": "Evet, lütfen. Çayı severim. Ekmek de istiyorum."
+            },
+            {
+              "kim": "Daniel",
+              "en": "The tea is hot. Please wait.",
+              "tr": "Çay sıcak. Lütfen bekle."
+            },
+            {
+              "kim": "Maya",
+              "en": "Okay. Where is my bag?",
+              "tr": "Tamam. Çantam nerede?"
+            },
+            {
+              "kim": "Daniel",
+              "en": "Your bag is under the chair.",
+              "tr": "Çantan sandalyenin altında."
+            },
+            {
+              "kim": "Maya",
+              "en": "Thank you. Can you open the window? It is hot.",
+              "tr": "Teşekkürler. Pencereyi açabilir misin? Sıcak."
+            },
+            {
+              "kim": "Daniel",
+              "en": "Yes, I can.",
+              "tr": "Evet, açabilirim."
+            }
+          ],
+          "sorular": [
+            {
+              "soru": "Maya ne istiyor?",
+              "secenekler": [
+                "Çay ve ekmek",
+                "Süt ve elma",
+                "Sadece su"
+              ],
+              "aciklama": "“I want tea… I want bread, too.”"
+            },
+            {
+              "soru": "Çay nasıl?",
+              "secenekler": [
+                "Sıcak",
+                "Soğuk",
+                "Yeni"
+              ],
+              "aciklama": "“The tea is hot.”"
+            },
+            {
+              "soru": "Maya'nın çantası nerede?",
+              "secenekler": [
+                "Sandalyenin altında",
+                "Masanın üstünde",
+                "Kapının yanında"
+              ],
+              "aciklama": "“Your bag is under the chair.”"
+            },
+            {
+              "soru": "Maya, Daniel'den ne yapmasını istiyor?",
+              "secenekler": [
+                "Pencereyi açmasını",
+                "Kapıyı kapatmasını",
+                "Çay getirmesini"
+              ],
+              "aciklama": "“Can you open the window?”"
+            }
+          ]
+        },
+        {
+          "tur": "dikte",
+          "bolum": "Dikte",
+          "ogeler": [
+            {
+              "metin": "Can you repeat that, please?"
+            },
+            {
+              "metin": "She is my sister."
+            },
+            {
+              "metin": "I wake up at seven."
+            },
+            {
+              "metin": "I can swim but I can't run."
+            }
+          ]
+        },
+        {
+          "tur": "cumle-kur",
+          "bolum": "Cümle kur",
+          "ogeler": [
+            {
+              "tr": "Çantam masanın altında.",
+              "en": "My bag is under the table."
+            },
+            {
+              "tr": "Çay istiyorum.",
+              "en": "I want tea."
+            },
+            {
+              "tr": "Yüzebilir misin?",
+              "en": "Can you swim?"
+            }
+          ]
+        },
+        {
+          "tur": "serbest",
+          "id": "gunum",
+          "bolum": "Konuşma kaydı",
+          "kip": "ikisi",
+          "dil": "en",
+          "yardimSor": false,
+          "soru": "**Bir gününü anlat:** kaçta uyanıyorsun, ne yiyorsun, ne yapabiliyorsun? (Üç dört cümle.)",
+          "ornek": "I wake up at seven. I eat bread and drink tea. I can swim and I can run.",
+          "noktalar": [
+            {
+              "ad": "Uyanma saatini söyledin",
+              "kabul": [
+                "wake up"
+              ]
+            },
+            {
+              "ad": "Ne yediğini ya da içtiğini söyledin",
+              "kabul": [
+                "eat",
+                "drink"
+              ]
+            },
+            {
+              "ad": "Yapabildiğin bir şey söyledin",
+              "kabul": [
+                " can "
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kontrol-06-hafiza-dinleme",
+      "iz": "olcum",
+      "emoji": "🏛️",
+      "baslik": "Hafıza ve dinleme kontrolü · Hafta 2",
+      "hedef": "İngilizce kelime listeni ve gezegenleri bakmadan hatırla; yeni bir kaydı dinleyip anla.",
+      "adimlar": [
+        {
+          "tur": "anlat",
+          "baslik": "Bugün kontrol günü",
+          "bloklar": [
+            {
+              "emoji": "✅",
+              "altyazi": "Yeni bir şey öğrenmiyorsun"
+            },
+            {
+              "liste": [
+                "Önceki günlerde öğrendiklerini **yardımsız** deniyorsun.",
+                "Her soruyu **bir kez** cevaplarsın; yanlışlar sonda listelenir.",
+                "Sonuç bir not değil; hangi konuya dönmen gerektiğini gösterir."
+              ]
+            },
+            {
+              "ipucu": "Bilmediğin bir soruda tahmin etmek serbest. Ama tahmin ettiğini bil: kendini kandırmak yerine sonuca bak."
+            }
+          ]
+        },
+        {
+          "tur": "liste-hatirla",
+          "ref": "haf-04-ingilizce-saray/l3",
+          "saray": "mahalle",
+          "baslik": "İngilizce kelimeler · Mahalle yolu",
+          "yonerge": "Mahalle yolunu yürü. Her durakta duran kelimeyi İngilizce yaz."
+        },
+        {
+          "tur": "liste-hatirla",
+          "ref": "haf-05-gezegenler/l4",
+          "saray": "akraba",
+          "baslik": "Gezegenler · Akraba evi",
+          "yonerge": "Rotanı yürü. Her durakta duran gezegeni Güneş'e yakınlık sırasıyla yaz."
+        },
+        {
+          "tur": "dinle",
+          "id": "sam",
+          "baslik": "Sam'in günü",
+          "yonerge": "Kaydı dinle. Soruları kayıttan cevapla.",
+          "sinir": 2,
+          "ses": {
+            "metin": "Hi, I am Sam. I wake up at seven. I eat bread and drink milk for breakfast. I go to school at eight. After school I play in the park. I can run, but I can't swim.",
+            "ses": "erkek",
+            "hiz": 0.95
+          },
+          "sorular": [
+            {
+              "soru": "Sam kaçta uyanıyor?",
+              "secenekler": [
+                "7",
+                "6",
+                "8"
+              ],
+              "aciklama": "“I wake up at seven.”"
+            },
+            {
+              "soru": "Sam kahvaltıda ne yiyip içiyor?",
+              "secenekler": [
+                "Ekmek ve süt",
+                "Elma ve çay",
+                "Ekmek ve su"
+              ],
+              "aciklama": "“I eat bread and drink milk.”"
+            },
+            {
+              "soru": "Sam okuldan sonra ne yapıyor?",
+              "secenekler": [
+                "Parkta oynuyor",
+                "Ödev yapıyor",
+                "Uyuyor"
+              ],
+              "aciklama": "“After school I play in the park.”"
+            },
+            {
+              "soru": "Sam hangisini yapamıyor?",
+              "secenekler": [
+                "Yüzmek",
+                "Koşmak",
+                "Oynamak"
+              ],
+              "aciklama": "“I can run, but I can't swim.”"
+            }
+          ],
+          "metin": [
+            "Hi, I am Sam.",
+            "I wake up at seven. I eat bread and drink milk for breakfast.",
+            "I go to school at eight.",
+            "After school I play in the park.",
+            "I can run, but I can't swim."
+          ],
+          "metinTr": "Selam, ben Sam. Yedide uyanırım. Kahvaltıda ekmek yer, süt içerim. Sekizde okula giderim. Okuldan sonra parkta oynarım. Koşabilirim ama yüzemem."
+        }
+      ]
+    },
+    {
+      "id": "kontrol-07-hafta2",
+      "iz": "olcum",
+      "emoji": "🧭",
+      "baslik": "Haftayı değerlendir · Hafta 2",
+      "hedef": "İkinci haftanın nasıl geçtiğini not et ve ilk haftayla karşılaştır.",
+      "adimlar": [
+        {
+          "tur": "olcek",
+          "id": "h2-zorluk",
+          "soru": "Bu hafta ders çalışmak sana ne kadar zor geldi?",
+          "aciklama": "0 = çok kolay · 10 = çok zor",
+          "min": 0,
+          "max": 10
+        },
+        {
+          "tur": "olcek",
+          "id": "h2-uyku",
+          "soru": "Bu hafta bir gecede ortalama kaç saat uyudun?",
+          "aciklama": "Yaklaşık değer yeter.",
+          "min": 4,
+          "max": 12
+        },
+        {
+          "tur": "olcek",
+          "id": "h2-spor",
+          "soru": "Spor görevlerini ne kadar rahat tamamladın?",
+          "aciklama": "0 = hiç rahat değil · 10 = çok rahat",
+          "min": 0,
+          "max": 10
+        },
+        {
+          "tur": "olcek",
+          "id": "h2-yuk",
+          "soru": "Günlük görev sayısı sana ne kadar fazla geldi?",
+          "aciklama": "0 = çok az · 10 = çok fazla",
+          "min": 0,
+          "max": 10
+        },
+        {
+          "tur": "serbest",
+          "id": "h2-not",
+          "kip": "yaz",
+          "dil": "tr",
+          "yardimSor": false,
+          "soru": "Gelecek hafta **neyi değiştirmek istersin?** En çok zorlandığın şey neydi?",
+          "ornek": "Akşam çalışmayı erken bitirip daha erken yatacağım."
+        }
+      ]
+    }
+  ]
+}

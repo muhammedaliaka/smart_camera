@@ -1,0 +1,15 @@
+{
+  "paketler": [
+    "genel.json",
+    "kelimeler.json",
+    "ingilizce-hafta1.json",
+    "ingilizce-hafta2.json",
+    "hafiza.json",
+    "okuma.json",
+    "dinleme.json",
+    "spor.json",
+    "kontrol.json",
+    "dis.json",
+    "program.json"
+  ]
+}

@@ -1,0 +1,1046 @@
+{
+  "paket": "spor",
+  "ad": "Spor",
+  "surum": 1,
+  "hareketler": [
+    {
+      "id": "sandalye",
+      "ad": "Sandalyeye otur-kalk",
+      "gorsel": "gorsel/spor/chair.svg",
+      "adimlar": [
+        "Sağlam bir sandalyeyi duvara daya; kaymadığından emin ol.",
+        "Ayakların yerde ve omuz genişliğinde olsun.",
+        "Yavaşça otur, sonra ayağa kalk. Oturmayı 2 saniyede yap.",
+        "Gerekirse elinle destek al ve bunu not et."
+      ],
+      "uyari": "Sandalye kayıyorsa ya da başın dönüyorsa dur."
+    },
+    {
+      "id": "duvar-sinav",
+      "ad": "Duvar şınavı",
+      "gorsel": "gorsel/spor/wall.svg",
+      "adimlar": [
+        "Duvara bir adım uzakta dur. Ellerini omuz hizasında duvara koy.",
+        "Vücudunu düz tut; dirsekleri bükerek göğsünü duvara yaklaştır.",
+        "Dirsekleri açarak geri it.",
+        "Ayaklarını duvardan uzaklaştırmak zorlaştırır; bu hafta yakın dur."
+      ],
+      "uyari": "Omuzda ya da bilekte ağrı olursa bırak."
+    },
+    {
+      "id": "kalca-kopru",
+      "ad": "Kalça köprüsü",
+      "gorsel": "gorsel/spor/bridge.svg",
+      "adimlar": [
+        "Sırtüstü yat; dizlerini bük, ayaklarını yere bas.",
+        "Kalçanı rahatça kaldır; omuzdan dize düz bir çizgi olsun.",
+        "Bir saniye bekle, yavaşça indir.",
+        "Belini fazla çukurlaştırma."
+      ],
+      "uyari": "Belinde ağrı varsa daha az kaldır ya da bırak."
+    },
+    {
+      "id": "cekis-prova",
+      "ad": "Çekiş provası",
+      "gorsel": "gorsel/spor/row.svg",
+      "adimlar": [
+        "Dik bir sandalyede otur; gövden dik, kollar önde uzatılmış.",
+        "Dirsekleri yavaşça gövdenin yanına çek.",
+        "Yavaşça geri bırak.",
+        "Bu bir kuvvet testi değil; hareketin sırasını öğrenme provasıdır."
+      ]
+    },
+    {
+      "id": "denge-turu",
+      "ad": "Denge turu",
+      "birim": "tur",
+      "gorsel": "gorsel/spor/balance.svg",
+      "adimlar": [
+        "Sağlam bir desteğin (duvar, masa) yanında dur.",
+        "Bir ayağını diğerinin tam önüne koy (tek çizgi gibi). Üç rahat nefes boyunca dur.",
+        "Ayak değiştir ve tekrarla.",
+        "Sonra tek ayak üstünde üç nefes dene. Destek almak serbest."
+      ],
+      "uyari": "Her zaman tutunabileceğin bir şey yanında olsun."
+    },
+    {
+      "id": "ceviklik-turu",
+      "ad": "Çeviklik turu",
+      "birim": "tur",
+      "gorsel": "gorsel/spor/steps.svg",
+      "adimlar": [
+        "Yere hayalî bir çizgi çiz (ya da bir ip ser).",
+        "Çizginin sağına, sonra soluna kontrollü beşer adım at.",
+        "Zıplamak ya da yarışmak gerekmez; adımların düzgün olsun."
+      ],
+      "uyari": "Yer kaygan ya da dağınıksa bu turu yapma."
+    }
+  ],
+  "dersler": [
+    {
+      "id": "spor-g01",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Temel hareketler",
+      "hedef": "Yürüyüş yap ve dört temel hareketi doğru öğren.",
+      "neden": "Uzun süre oturup ders çalıştıktan sonra hareket etmek hem bedeni hem zihni dinlendirir. İlk haftada amaç yorulmak değil, hareketleri doğru öğrenmek ve rahat bir düzen kurmaktır.",
+      "adimlar": [
+        {
+          "tur": "anlat",
+          "baslik": "Bugünkü başlangıç ölçümün",
+          "bloklar": [
+            {
+              "p": "İlk gün yürüyüşünü kaydet: yaklaşık kaç kilometre yürüdün, zorlandın mı? Bu bir puan değil; ileride hedefleri senin düzeyine göre ayarlamak için kullanılacak."
+            },
+            {
+              "ipucu": "Telefondaki adım sayar ya da harita uygulaması mesafeyi yaklaşık verir. Tam doğru olması gerekmez."
+            }
+          ]
+        },
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Temel hareketler",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "1,5–2 km",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 1 set × 6",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 1,
+                  "tekrar": "6"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 1
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g02",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Temel hareketler",
+      "hedef": "Yürüyüş yap ve dört temel hareketi doğru öğren.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Temel hareketler",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "1,5–2 km",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 1 set × 6",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 1,
+                  "tekrar": "6"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 1
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g03",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Temel hareketler",
+      "hedef": "Yürüyüş yap ve dört temel hareketi doğru öğren.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Temel hareketler",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "1,5–2 km",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 1 set × 6",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 1,
+                  "tekrar": "6"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 1
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g04",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Temel hareketler · ikinci set",
+      "hedef": "Yürüyüş yap; hareketleri 2 sette tekrarla.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Temel hareketler · ikinci set",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "2,5–3 km (zorlanıyorsan 2–2,5 km)",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 2 set × 6–8",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 2,
+                  "tekrar": "6–8"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g05",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Temel hareketler · ikinci set",
+      "hedef": "Yürüyüş yap; hareketleri 2 sette tekrarla.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Temel hareketler · ikinci set",
+          "giris": "Bugün test günü. Akşam spor yapıyorsan **yatmadan en az bir saat önce** bitir. Hedeflere uyku öncesine kadar ulaşman yeterli.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "2,5–3 km (zorlanıyorsan 2–2,5 km)",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 2 set × 6–8",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 2,
+                  "tekrar": "6–8"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g06",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Temel hareketler · ikinci set",
+      "hedef": "Yürüyüş yap; hareketleri 2 sette tekrarla.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Temel hareketler · ikinci set",
+          "giris": "Bugün test günü. Akşam spor yapıyorsan **yatmadan en az bir saat önce** bitir. Hedeflere uyku öncesine kadar ulaşman yeterli.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "2,5–3 km (zorlanıyorsan 2–2,5 km)",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 2 set × 6–8",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 2,
+                  "tekrar": "6–8"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 2,
+                  "tekrar": "6–8"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g07",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Hafif gün",
+      "hedef": "Rahat yürü ve hareketleri hafif tekrarla.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Hafif gün",
+          "giris": "Bugün test günü. Akşam spor yapıyorsan **yatmadan en az bir saat önce** bitir. Hedeflere uyku öncesine kadar ulaşman yeterli.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "önceki en kolay mesafe yeterli",
+              "not": "Bugün hız ya da mesafe hedefi yok."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "1 kolay tur",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 1,
+                  "tekrar": "6"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 1
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g08",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Güç günü",
+      "hedef": "Yürüyüş ve hareketler: 2 set × 8.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Güç günü",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "3 km (zorlanıyorsan 2,5 km)",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 2 set × 8",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 2,
+                  "tekrar": "8"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g09",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Yürüyüş günü",
+      "hedef": "Yürüyüş yap, denge ve çevikliği çalış.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Yürüyüş günü",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "2,5–3 km",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g10",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Güç günü",
+      "hedef": "Yürüyüş ve hareketler: 2 set × 8.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Güç günü",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "3 km (zorlanıyorsan 2,5 km)",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 2 set × 8",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 2,
+                  "tekrar": "8"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g11",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Yürüyüş günü",
+      "hedef": "Yürüyüş yap, denge ve çevikliği çalış.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Yürüyüş günü",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "2,5–3 km",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g12",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Güç günü",
+      "hedef": "Yürüyüş ve hareketler: 2 set × 8.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Güç günü",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "3 km (zorlanıyorsan 2,5 km)",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "her hareket 2 set × 8",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 2,
+                  "tekrar": "8"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 2,
+                  "tekrar": "8"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g13",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Yürüyüş günü",
+      "hedef": "Yürüyüş yap, denge ve çevikliği çalış.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Yürüyüş günü",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "2,5–3 km",
+              "not": "Kendi rahat hızında yürü; gerekirse parçalara böl."
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 2
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "2 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spor-g14",
+      "iz": "spor",
+      "emoji": "💪",
+      "baslik": "Spor · Hafif gün",
+      "hedef": "Rahat yürü ve hareketleri hafif tekrarla.",
+      "adimlar": [
+        {
+          "tur": "spor",
+          "id": "spor",
+          "baslik": "Hafif gün",
+          "giris": "Isınmak için birkaç rahat adım at ve hareketlerin kolay provasını yap. Hedeflere uyku öncesine kadar ulaşman yeterli; süre tutmak zorunda değilsin.",
+          "guvenlik": "Ağrı ya da baş dönmesi olursa hareketi bırak. Hedefi zorlayarak tamamlama; yapılmayan spor ertesi güne eklenmez.",
+          "bolumler": [
+            {
+              "tur": "mesafe",
+              "ad": "Yürüyüş",
+              "hedef": "önceki en kolay mesafe yeterli",
+              "not": "Bugün hız ya da mesafe hedefi yok."
+            },
+            {
+              "ad": "Güç ve teknik",
+              "simge": "💪",
+              "hedef": "1 kolay tur",
+              "not": "Her hareketin ilk setini kolayca yap. Nefesin toparlanınca sonraki sete geç.",
+              "hareketler": [
+                {
+                  "ref": "sandalye",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "duvar-sinav",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "kalca-kopru",
+                  "set": 1,
+                  "tekrar": "6"
+                },
+                {
+                  "ref": "cekis-prova",
+                  "set": 1,
+                  "tekrar": "6"
+                }
+              ]
+            },
+            {
+              "ad": "Denge",
+              "simge": "⚖️",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "denge-turu",
+                  "set": 1
+                }
+              ]
+            },
+            {
+              "ad": "Çeviklik",
+              "simge": "👟",
+              "hedef": "1 tur",
+              "hareketler": [
+                {
+                  "ref": "ceviklik-turu",
+                  "set": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
