@@ -46,6 +46,16 @@ Yarım bıraktığın ders için bir sonraki açılışta "kaldığın yerden de
 - **Açık uçlu sorular** (kendi cümlenle anlat, kısa konuşma) puanlanmaz. Yalnızca kaydedilir. Cevabından sonra "Yanıtında hangileri vardı?" listesi çıkar; hangi noktaları söylediğini kendin işaretlersin (yazıda bulabildiklerimiz önceden işaretlenir).
 - **Kontrol günleri** (Hafta 1: gün 5–7) tek seferliktir: yanlışlar tekrar sorulmaz. Amaç not almak değil, neyi tekrar etmen gerektiğini görmektir.
 
+### Çalışma raporu (öğretmene ya da yapay zekâya vermek için)
+
+"Ben → İlerleme" sayfasının altında **Çalışma raporu** kartı var. Rapor, yaptığın çalışmayı bir yapay zekânın ya da öğretmenin karıştırmadan okuyabileceği düz yazıya çevirir. Her satırda şunlar birlikte yazılır: hangi ders ve gün, uygulamanın ne sorduğu (dinlediysen ne duyduğun), senin yanıtın ve doğrusu. Yazdıkların olduğu gibi aktarılır; ses kayıtlarının içeriği girmez, yalnız süresi yazılır.
+
+1. **Hangi günler?** seç (Bugün, Son 7 gün, Son 30 gün, Tümü).
+2. **Ayrıntı:** *Kısa* (önerilen) doğru bildiklerini yalnız sayar, yanlışlarını ve yazdıklarını eksiksiz yazar. *Tam* her soruyu tek tek yazar (uzun olur).
+3. **Yapay zekâ için kopyala** düğmesi raporun başına kısa bir görev metni ekler (neleri iyi yaptığını, neyi karıştırdığını, 3 öneriyi iste); sonra yapay zekânın sohbet kutusuna yapıştır. **Raporu indir** ise `.md` dosyası verir.
+
+Raporun ilk bölümü ("Nasıl okunur") okuyan kişiye ✔/✘, "ilk deneme", "Beyan" gibi sözleri açıklar; ayrıca yapıştırmana gerek yok. Rapor bir **not değil, ham kayıttır**.
+
 ## 4. Dış uygulamalar (Voscreen, Busuu)
 
 Bazı günlerde isteğe bağlı bir görev olarak Voscreen ya da Busuu önerilir. Görev sayfasında:

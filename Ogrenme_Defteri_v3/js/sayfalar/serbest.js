@@ -83,12 +83,12 @@ export const serbest = (sayfa, api) => {
     if (kaydedildi) return;
     kaydedildi = true;
     kutu?.birak();
-    const ev = { ders: api.dersId, id: sayfa.id, soru: a.soru, kip: bilmiyorum ? 'bilmiyorum' : mod, dil };
+    const ev = { soru: a.soru, kip: bilmiyorum ? 'bilmiyorum' : mod, dil };
     let yanit = '';
     if (bilmiyorum) { ev.yanit = 'bilmiyorum'; }
     else if (mod === 'yaz') { yanit = metinAlani.value.trim(); ev.yanit = yanit; ev.sozcuk = sozcukSayisi(yanit); }
     else { const k = kutu.al(); ev.sureMs = k.sureMs; }
-    const e = store.olay('serbest', ev);
+    const e = api.kaydet('serbest', ev, { ornek: a.ornek ? String(a.ornek).slice(0, 400) : null, beklenen: (a.noktalar || []).map((n) => n.ad) });
     if (!bilmiyorum && mod === 'ses') {
       try { await store.depo.koy('kayitlar', e.i, kutu.al().blob); } catch { bildir('Ses kaydı cihazda saklanamadı; yazı ile de not düşebilirsin.'); }
     }
@@ -115,7 +115,7 @@ export const serbest = (sayfa, api) => {
     api.alt('Devam', () => {
       const var_ = secimler.filter((x) => x.cb.checked).length;
       if (secimler.length) api.nokta(var_, secimler.length);
-      store.olay('serbest-kontrol', { ders: api.dersId, id: sayfa.id, olay: olayId, yardim: yardim.deger(), noktalar: secimler.length ? { var: var_, toplam: secimler.length, secilen: secimler.filter((x) => x.cb.checked).map((x) => x.n.ad) } : null, anahtarAcildi: a.ornek || a.noktalar ? 'elle' : null });
+      api.kaydet('serbest-kontrol', { olay: olayId, yardim: yardim.deger(), noktalar: secimler.length ? { var: var_, toplam: secimler.length, secilen: secimler.filter((x) => x.cb.checked).map((x) => x.n.ad), tumu: secimler.map((x) => x.n.ad) } : null, anahtarAcildi: a.ornek || a.noktalar ? 'elle' : null });
       api.ilerle();
     });
   };
@@ -135,7 +135,7 @@ export const serbest = (sayfa, api) => {
 export const listeSun = (sayfa, api) => {
   const a = sayfa.adim;
   const t0 = Date.now();
-  api.alt(a.dugme || 'Hazırım — gizle', () => { store.olay('liste-sun', { ders: api.dersId, id: sayfa.id, sureMs: Date.now() - t0, tekrar: !!a.tekrar }); api.ilerle(); });
+  api.alt(a.dugme || 'Hazırım — gizle', () => { api.kaydet('liste-sun', { sureMs: Date.now() - t0, tekrar: !!a.tekrar }, { baslik: a.baslik || null, adet: a.liste.length }); api.ilerle(); });
   return h('div',
     h('div.iz-etiket', { style: 'margin-top:10px' }, 'Sun ve ezberle'),
     h('h2', a.baslik || 'Listeyi oku'),
@@ -166,7 +166,7 @@ export const listeHatirla = (sayfa, api) => {
     const yanit = bilmiyorum ? [] : al();
     const r = listeKarsilastir(yanit, sayfa.liste);
     api.puanla({ adet: r.toplam, dogruAdet: r.var, yanit: yanit.join(', ') || 'bilmiyorum', dogruCevap: sayfa.liste.join(', '), soru: a.baslik || 'Liste', tekrarYok: true });
-    store.olay('liste', { ders: api.dersId, id: sayfa.id, var: r.var, sirali: r.sirali, toplam: r.toplam, yanit, yenidenBaktim });
+    api.kaydet('liste', { var: r.var, sirali: r.sirali, toplam: r.toplam, yanit, yenidenBaktim }, { baslik: sayfa.baslik || a.baslik || 'Liste', anahtar: sayfa.liste, rota: rota?.ad || null });
     girdiler.forEach((g) => { g.disabled = true; });
     alan.after(h('div.kart.duz', { style: 'margin-top:14px' }, h('h3', `${r.var}/${r.toplam} öğeyi hatırladın · ${r.sirali} tanesi doğru yerde`),
       h('ul.sade-liste', r.durumlar.map((d, i) => h('li', `${i + 1}. ${d.ad} `, d.var ? (d.yerinde ? h('span.rozet.dogru', 'doğru yerde') : h('span.rozet.uyari', 'var, yeri farklı')) : h('span.rozet.yanlis', 'hatırlanmadı'))))));
@@ -188,7 +188,7 @@ export const gecikmeli = (sayfa, api) => {
   const satirlar = a.kontroller.map((k) => h('li', h('strong', KONTROL_AD[k]), ' ', h('span.alt-yazi', `(≈ ${saatMetni(new Date(simdi + KONTROL_SURELERI[k]).toISOString())}${KONTROL_SURELERI[k] >= 86400e3 ? ', ' + new Date(simdi + KONTROL_SURELERI[k]).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' }) : ''})`)));
   api.alt('Kapattım — hatırlatma kur', () => {
     store.gecikmeliKur({ id: store.yeniId(), ders: api.dersId, ref: a.ref, baslik: sayfa.baslik, soru: a.soru, anahtar: sayfa.liste, kontroller: a.kontroller.map((ad) => ({ ad, vade: Date.now() + KONTROL_SURELERI[ad], yapildi: false })) });
-    store.olay('gecikmeli-kur', { ders: api.dersId, id: sayfa.id });
+    api.kaydet('gecikmeli-kur', { kontroller: a.kontroller }, { baslik: sayfa.baslik || null, soru: a.soru, anahtar: sayfa.liste });
     bildir('Hatırlatmalar Bugün sayfasında görünecek.');
     api.ilerle();
   });
@@ -212,7 +212,7 @@ export const gecikmeliKontrol = (sayfa, api) => {
     if (tekil) { dogru = !bilmiyorum && karsilastir(yanit, g.anahtar, { tr: true }).durum !== 'yok'; }
     else { const r = listeKarsilastir(listeyeAyir(yanit), g.anahtar); dogru = r.var === r.toplam; ayrinti = `${r.var}/${r.toplam} öğe, ${r.sirali} doğru yerde`; }
     k.yapildi = true; k.yanit = yanit || 'bilmiyorum'; k.dogru = dogru; k.zaman = Date.now(); k.yenidenBaktim = yenidenBaktim;
-    store.olay('gecikmeli-yanit', { ders: g.ders, kontrol: k.ad, id: g.id, dogru, yanit: k.yanit, yenidenBaktim, ayrinti, gecikmeSn: Math.round((Date.now() - k.vade) / 1000) });
+    api.kaydet('gecikmeli-yanit', { kontrol: k.ad, id: g.id, dogru, yanit: k.yanit, yenidenBaktim, ayrinti, gecikmeSn: Math.round((Date.now() - k.vade) / 1000) }, { baslik: g.baslik, soru: g.soru, anahtar: g.anahtar, kaynakDers: g.ders });
     store.kaydet();
     api.bildirim({ tip: dogru ? 'dogru' : 'bilgi', baslik: dogru ? 'Hatırladın!' : 'Kaydedildi', metin: `Doğru yanıt: ${g.anahtar.join(', ')}${ayrinti ? ' · ' + ayrinti : ''}` });
   };
@@ -273,7 +273,7 @@ export const sarayKur = (sayfa, api) => {
   const kaydet = () => {
     const d = editor.deger();
     sarayKaydet(kimlik, ad, d);
-    store.olay('saray', { ders: api.dersId, rota: kimlik, duraklar: d });
+    api.kaydet('saray', { rota: kimlik, duraklar: d }, { ad });
     api.ilerle();
   };
   editor = sarayEditoru(a, { ayarla: (ok) => api.alt('Rotayı kaydet', kaydet, { devre: !ok }) }, sarayBul(kimlik)?.duraklar);
@@ -298,7 +298,7 @@ export const sarayYerlestir = (sayfa, api) => {
     return h('div.kart', h('div.satir', h('span.rozet', String(i + 1)), h('strong', durak), h('span', '→'), h('strong', { style: 'color:var(--iz)' }, nesne)), t);
   });
   api.alt('Kaydet ve devam', () => {
-    store.olay('saray-hayal', { ders: api.dersId, id: sayfa.id, hayaller: a.liste.map((n, i) => ({ nesne: n, durak: saray.duraklar[i % saray.duraklar.length], hayal: alanlar[i].value.trim() })) });
+    api.kaydet('saray-hayal', { hayaller: a.liste.map((n, i) => ({ nesne: n, durak: saray.duraklar[i % saray.duraklar.length], hayal: alanlar[i].value.trim() })) }, { rota: saray.ad });
     api.ilerle();
   });
   return h('div', h('h2', { style: 'margin-top:12px' }, a.baslik || 'Nesneleri duraklara yerleştir'), h('p.alt-yazi', `Rota: ${saray.ad}`),

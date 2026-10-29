@@ -83,11 +83,11 @@ export const sahneDinle = (sayfa, api) => {
     }
     calDugme.disabled = yavasDugme.disabled = false;
     durum.textContent = `${calindi} kez dinledin. Hazırsan sorulara geç, istersen yine dinle.`;
-    api.alt('Sorulara geç', () => { store.olay('dinleme', { ders: api.dersId, id: sayfa.id, sayi: calindi }); api.ilerle(); });
+    api.alt('Sorulara geç', () => { api.kaydet('dinleme', { sayi: calindi }, { baslik: sahne.baslik }); api.ilerle(); });
   };
   calDugme.addEventListener('click', () => oynat(false));
   yavasDugme.addEventListener('click', () => oynat(true));
-  api.alt('Sorulara geç', () => { store.olay('dinleme', { ders: api.dersId, id: sayfa.id, sayi: calindi }); api.ilerle(); }, { ikincil: null });
+  api.alt('Sorulara geç', () => { api.kaydet('dinleme', { sayi: calindi }, { baslik: sahne.baslik }); api.ilerle(); }, { ikincil: null });
   return h('div',
     h('div.iz-etiket', { style: 'margin-top:10px' }, 'Kısa sahne'),
     h('h2', sahne.baslik),
@@ -112,7 +112,7 @@ export const sahneMetin = (sayfa, api) => {
 export const dinle = (sayfa, api) => {
   const a = sayfa.adim;
   let sayi = 0;
-  const kaydet = () => { if (sayi) store.olay('dinleme', { ders: api.dersId, id: sayfa.id, sayi, sinir: a.sinir || null }); };
+  const kaydet = () => { if (sayi) api.kaydet('dinleme', { sayi, sinir: a.sinir || null }, { baslik: a.baslik || null }); };
   const dugme = sesDugme(sayfa.ses, { etiket: a.dugme || 'Dinle', sinir: a.sinir || null, yavas: !a.sinir && a.yavasIzin !== false, buyuk: true, sayac: (n) => { sayi = n; if (n > 0) api.alt(a.devam || 'Devam', () => { kaydet(); api.ilerle(); }); } });
   api.alt(a.devam || 'Devam', () => { kaydet(); api.ilerle(); }, { devre: true });
   return h('div',
@@ -151,7 +151,7 @@ export const oku = (sayfa, api) => {
   );
   kap.append(okuma);
   const bitir = () => {
-    if (!a.sayim) { store.olay('okuma', { ders: api.dersId, id: sayfa.id, kosul: a.kosul || null }); api.ilerle(); return; }
+    if (!a.sayim) { api.kaydet('okuma', { kosul: a.kosul || null }, { baslik: a.baslik }); api.ilerle(); return; }
     kap.replaceChildren(sayimFormu());
     api.alt('Devam', gonder);
   };
@@ -169,7 +169,7 @@ export const oku = (sayfa, api) => {
     );
   };
   const gonder = () => {
-    store.olay('okuma', { ders: api.dersId, id: sayfa.id, kosul: a.kosul || null, satirKaybi: sayamadim.checked ? 'sayamadim' : (kayip.value === '' ? null : +kayip.value), geriDonus: sayamadim.checked ? 'sayamadim' : (geri.value === '' ? null : +geri.value) });
+    api.kaydet('okuma', { kosul: a.kosul || null, satirKaybi: sayamadim.checked ? 'sayamadim' : (kayip.value === '' ? null : +kayip.value), geriDonus: sayamadim.checked ? 'sayamadim' : (geri.value === '' ? null : +geri.value) }, { baslik: a.baslik });
     api.ilerle();
   };
   api.alt(a.dugme || 'Okudum', bitir);
@@ -187,7 +187,7 @@ export const olcek = (sayfa, api) => {
     d.addEventListener('click', () => { deger = i; dugmeler.forEach((x, j) => x.setAttribute('aria-pressed', String(j + min === i))); api.alt('Kaydet', kaydet); });
     dugmeler.push(d); satir.append(d);
   }
-  const kaydet = () => { store.olay('olcek', { ders: api.dersId, id: sayfa.id, deger }); api.ilerle(); };
+  const kaydet = () => { api.kaydet('olcek', { deger }, { soru: a.soru, min, max, altEtiket: a.altEtiket || null, ustEtiket: a.ustEtiket || null }); api.ilerle(); };
   api.alt('Kaydet', kaydet, { devre: true });
   return h('div', h('h2', { style: 'margin-top:12px' }, a.soru), a.aciklama ? h('p.alt-yazi', a.aciklama) : null, satir,
     h('div.satir', { style: 'justify-content:space-between' }, h('span.alt-yazi', a.altEtiket || ''), h('span.alt-yazi', a.ustEtiket || '')));

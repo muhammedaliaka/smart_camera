@@ -4,6 +4,8 @@ Telefonda ve tabletde çalışan, İngilizce + hafıza + okuma + dinleme + spor 
 
 **Ne yapar?** Her gün 2–4 küçük görev verir. Dersler uygulamanın içinde öğretilir (kelime kartları, sesli sahneler, alıştırmalar, sorular). Sonuç ekranında doğru sayısı ve yüzde görünür; eski kelimeleri 3, 10, 20 ve 50 gün sonra yeniden sorar. İçeriği JSON dosyalarına ekleyerek aylık program kurabilirsin.
 
+**Çalışma raporu:** Ben → İlerleme sayfasından, yapılan çalışmanın her sorusunu (soru metni, öğrencinin yanıtı, doğru yanıt, ders ve gün) tek başına anlaşılır biçimde Markdown olarak indirebilir ya da "Yapay zekâ için kopyala" ile bir yapay zekâya verebilirsin. Puan ikinci plandadır; rapor ham kayıttır, not değildir.
+
 ## Hızlı başlangıç
 
 ```

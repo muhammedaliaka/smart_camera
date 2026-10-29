@@ -11,6 +11,19 @@ Bu belge, tasarımda verilen kararları ve bilerek bırakılan sınırları tek 
 | **Kontrol günleri tek seferliktir** (yanlışlar tekrar sorulmaz). | Amaç öğretmek değil, ne öğrendiğini görmek. |
 | Yardım sorusu 4 seçenekli: yardımsız, ipucu/araç, kitap-sözlük-video, yapay zekâ/çeviri aracı. | Öğrenci için kısa ve anlaşılır tutuldu. (Kayıtlarda görünen kodlar A0, A1, A3, A4'tür; A2 kullanılmıyor.) |
 
+**Puan ikinci plandadır, asıl çıktı rapordur.** Kullanıcının isteği: sistem bir not verme aracı olmasın; yalnız tek doğru yanıtlı sorularda kısmi puan olabilir. Asıl amaç, yapılan çalışmanın bir yapay zekâya ya da öğretmene karıştırmadan verilebilmesidir. Bu yüzden her kayıt soru metnini, öğrencinin yanıtını ve doğru yanıtı kendi içinde taşır (aşağıda "Kayıt ve rapor").
+
+## Kayıt ve rapor
+
+| Karar | Neden |
+|---|---|
+| **Her kayıt tek başına anlaşılır:** soru metni, dinlenen sesin yazısı, öğrencinin yanıtı, doğru yanıt, yanlışsa ekrandaki seçenekler, ders adı, konu, bölüm ve programın kaçıncı günü olduğu birlikte saklanır. | Eskiden yalnız `ders`, `id` ve doğru/yanlış tutuluyordu; bir yapay zekâ "hangi soruydu, ne yanıtlanmıştı" diye soramıyordu. |
+| **Bağlam kataloğu:** değişmeyen bilgi (soru, doğru yanıt, ders adı…) `bag` içinde **bir kez** saklanır; olay yalnız kısa anahtarını (`b`) taşır. Aynı soru yüz kez sorulsa bir bağlam kaydı olur. | Tarayıcı depolaması ≈ 5 milyon karakterdir; aylarca kayıt tutulacağı için yer tasarrufu gerekli. Yedek yüklenirken katalog birleşir. |
+| **Rapor tek bir saf fonksiyondur** (`js/rapor.js`) ve Markdown üretir: okuma kılavuzu, özet, en çok karıştırılanlar, tekrar sistemi durumu, günlük kayıt. Kısa kipte doğru bilinenler yalnız sayılır, yanlışlar ve açık uçlu yanıtlar eksiksiz yazılır; tam kipte her soru yazılır. | Uzun raporu bir yapay zekâ daha kötü okur; asıl bilgi yanlışlarda ve yazılan yanıtlardadır. |
+| **Beyanlar ayrı etiketlenir** ("Beyan: zorlanma 6/10, yardım = ipucu…"); açık uçlu yanıtlar puanlanmaz, uygulamanın örnek yanıtı "tek doğru değildir" notuyla verilir. | Okuyan kişi öğrencinin söylediğini uygulamanın ölçtüğünden ayırabilmeli. |
+| **Hiçbir kayıt türü unutulmaz:** uygulamanın yazdığı her kayıt türünün raporda bir biçimi ya da gerekçeli bir "atlandı" kararı olmak zorundadır; yeni bir tür eklenip raporu unutulursa birim testi (`tests/unit/rapor.test.mjs`) kırılır. Bilinmeyen türler yine de ham veri olarak yazılır. | "Bir kısım bile unutulmasın" isteği. |
+| **Kota koruması:** alan 3,8 milyon karakteri aşınca **en eski** kayıtların yalnız ayrıntısı silinir (yanlışta gösterilen seçenekler, doğru yanıtların yazısı, tekrar sistemi hareketleri). Soru, doğru/yanlış, tarih ve en yeni %20 dokunulmaz. "Ben → Ayarlar → Yedek" kartında doluluk yüzdesi görünür. | Sessizce kayıt kaybetmektense ayrıntıyı bilerek azaltmak daha güvenli; düzenli yedek/rapor yine önerilir. |
+
 ## Tek kaynak ve tutarlılık
 
 - **Kelimeler bir kez yazılır** (`kelimeler.json`); alıştırmalar, oyunlar, tekrar ve sahne çevirileri bu bankadan üretilir. Aynı `en` farklı `tr` ile iki kez yazılırsa doğrulayıcı hata verir.
@@ -63,6 +76,8 @@ Bu belge, tasarımda verilen kararları ve bilerek bırakılan sınırları tek 
 Ayrıntı: `DIS_UYGULAMALAR.md`. Özet: otomatik bağlantı yok, sonuç elle girilir, görevler isteğe bağlıdır; mağaza bağlantıları üçüncü taraf kaynaklarla teyit edildi (Google'ın kendi sayfasından değil).
 
 ## Bilerek yapılmayanlar ve bilinen sınırlar
+
+- **Rapor bir yapay zekâ tarafından okunarak denenmedi.** Biçimi örnek ve gerçek ders kayıtlarıyla (tarayıcı testi) denetlendi: her soru satırında soru, öğrenci yanıtı ve doğru yanıt var, "undefined/null" yok, kayıt sayısı satır sayısıyla eşleşiyor. Bir yapay zekânın bu raporu ne kadar iyi yorumladığı ayrıca denenmedi.
 
 - **Gerçek cihazda test yapılmadı.** Testler masaüstü Chromium'da (Playwright) 390×844 (telefon), 820×1180 (tablet) ve 1280×800 boyutlarında yapıldı. iPhone/Safari ve gerçek Android cihazda denenmedi.
 - **Ses dosyaları insan kulağıyla onaylanmadı.**

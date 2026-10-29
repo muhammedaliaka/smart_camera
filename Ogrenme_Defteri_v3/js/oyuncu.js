@@ -9,6 +9,17 @@ import { CIZ } from './sayfalar/index.js';
 
 let aktif = null;
 
+/** Rapora giren kısa, işaretsiz metin. */
+const temiz = (m, n = 200) => String(m ?? '').replace(/\*\*/g, '').replace(/\s+/g, ' ').trim().slice(0, n);
+
+// Sayfanın öğrenciden ne istediği (kayıtta ve raporda "Görev" olarak görünür). Üreticiler sayfa.gorev ile ezebilir.
+const GOREV = {
+  mcq: 'Çoktan seçmeli soru', yaz: 'Türkçesi verilen kelimenin İngilizcesini yaz', eslestir: 'İngilizce kelimeleri Türkçe karşılıklarıyla eşle',
+  cumle: 'Karışık sözcüklerden İngilizce cümleyi kur', dikte: 'Duyduğunu aynen yaz', sayi: 'Duyduğun sayıyı rakamla yaz',
+  kartlar: 'Hafıza kartlarında İngilizce–Türkçe çiftleri bul', 'liste-hatirla': 'Listeyi bakmadan sırayla hatırlayıp yaz',
+  'gecikmeli-kontrol': 'Bir süre önce öğrenilen bilgiyi bakmadan hatırla',
+};
+
 export function ctxOlustur(deneme = 0) {
   return {
     kelime: icerik.kelime,
@@ -45,7 +56,7 @@ export function oynat(o) {
   if (S.dersMi) {
     const kayit = store.al().notlar[devamAnahtar];
     if (kayit && kayit.i > 0 && kayit.i < S.sayfalar.length && kayit.deneme === S.ctx.deneme) { S.i = 0; S.devamTeklif = kayit.i; }
-    else store.dersiBaslat(S.id);
+    else store.dersiBaslat(S.id, { dersAd: S.baslik, iz: S.iz || null });
   }
   const kok = h('div.oyuncu', { role: 'dialog', 'aria-modal': 'true', 'aria-label': S.baslik, data: { iz: S.iz || '' } });
   const kapatDugme = h('button.dugme.ikon-dugme', { type: 'button', 'aria-label': 'Dersten çık' }, simge('x'));
@@ -82,7 +93,11 @@ export function oynat(o) {
     setTimeout(() => devam.focus({ preventScroll: true }), 50);
   };
 
-  const puanla = ({ dogru, yanit, dogruCevap, soru, adet, dogruAdet, tekrarYok, ayrinti }) => {
+  /**
+   * Bir yanıtı kaydeder. baglam (isteğe bağlı) rapor için ek bilgi: { soru, duyulan, secenekler } —
+   * soru metni, dinlenen ses yazısı ve ekranda gösterilen seçenekler.
+   */
+  const puanla = ({ dogru, yanit, dogruCevap, soru, adet, dogruAdet, tekrarYok, ayrinti, baglam }) => {
     const sayfa = S.sayfalar[S.i];
     const ilk = !sayfa.tekrar;
     const dogruMu = adet != null ? dogruAdet === adet : !!dogru;
@@ -92,7 +107,17 @@ export function oynat(o) {
       const b = S.puan.bolumler.get(sayfa.bolum || 'Genel') || { dogru: 0, toplam: 0 };
       b.dogru += d; b.toplam += n; S.puan.bolumler.set(sayfa.bolum || 'Genel', b);
     }
-    store.olay('soru', { ders: S.id, id: sayfa.id, bolum: sayfa.bolum || null, dogru: dogruMu, ilk, yanit: String(yanit ?? '').slice(0, 200), ...(ayrinti ? { ayrinti } : {}) });
+    const bg = baglam || {};
+    const secenekler = Array.isArray(bg.secenekler) ? bg.secenekler.slice(0, 6).map((x) => temiz(x, 60)) : null;
+    store.olay('soru', {
+      ders: S.id, id: sayfa.id, bolum: sayfa.bolum || null, dogru: dogruMu, ilk, yanit: temiz(yanit),
+      ...(!sayfa.puan ? { puansiz: true } : {}),
+      ...(!dogruMu && secenekler ? { sec: secenekler } : {}),
+      ...(ayrinti ? { ayrinti } : {}),
+    }, {
+      dersAd: S.baslik, iz: S.iz || null, tur: sayfa.t, gorev: sayfa.gorev || GOREV[sayfa.t] || null, bolum: sayfa.bolum || null,
+      soru: temiz(bg.soru ?? soru), dogruCevap: temiz(dogruCevap), duyulan: bg.duyulan ? temiz(bg.duyulan, 160) : null,
+    });
     if (ilk && !dogruMu && sayfa.puan) S.yanlislar.push({ soru, dogruCevap, yanit, bolum: sayfa.bolum });
     if (S.srsModu && ilk && sayfa.maddeId) store.maddeCevapla(sayfa.maddeId, dogruMu);
     if (ilk && !dogruMu && sayfa.puan && !tekrarYok && !S.olcum && !S.tekrarYok) S.sayfalar.push({ ...sayfa, tekrar: true });
@@ -103,6 +128,11 @@ export function oynat(o) {
     alt: altYaz,
     ilerle: () => ilerle(),
     puanla,
+    /** Sayfaya özgü bir kaydı (spor, ölçek, hayal...) ders ve bölüm bilgisiyle birlikte deftere yazar. veri: olayın değişken kısmı; baglam: sabit açıklama. */
+    kaydet: (tur, veri = {}, baglam = {}) => {
+      const sayfa = S.sayfalar[S.i] || {};
+      return store.olay(tur, { ders: S.id, id: sayfa.id, ...veri }, { dersAd: S.baslik, iz: S.iz || null, bolum: sayfa.bolum || null, ...baglam });
+    },
     bildirim: bildirimGoster,
     nokta: (v, t) => { S.puan.nokta.var += v; S.puan.nokta.toplam += t; },
     dis: (d, t) => S.disSonuc.push({ d, t }),
@@ -149,7 +179,7 @@ export function oynat(o) {
     S.bitti = true;
     ilerlemeCiz();
     if (S.dersMi && !S.kaydetme) {
-      store.dersiBitir(S.id, { dogru: S.puan.dogru, toplam: S.puan.toplam });
+      store.dersiBitir(S.id, { dogru: S.puan.dogru, toplam: S.puan.toplam, bolumler: [...S.puan.bolumler.entries()].map(([ad, b]) => [ad, b.dogru, b.toplam]) }, { dersAd: S.baslik, iz: S.iz || null });
       for (const id of S.ogrenilenKelimeler || []) store.maddeEkle('k:' + id);
       for (const id of S.srsListeleri || []) store.maddeEkle(id);
       delete store.al().notlar[devamAnahtar];

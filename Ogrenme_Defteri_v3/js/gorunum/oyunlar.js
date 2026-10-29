@@ -82,7 +82,7 @@ export function oyunBaslat(id) {
     oturumBitti: (S) => {
       const { dogru, toplam } = S.puan;
       const yuzde = toplam ? Math.round((dogru / toplam) * 100) : 0;
-      store.olay('oyun', { oyun: id, dogru, toplam, yuzde });
+      store.olay('oyun', { oyun: id, ders: S.id, dogru, toplam, yuzde }, { dersAd: S.baslik, iz: 'oyun', oyunAd: o.ad });
       const kayit = store.al().oyunlar[id] || { enIyi: 0, oynama: 0 };
       store.al().oyunlar[id] = { enIyi: Math.max(kayit.enIyi, yuzde), oynama: kayit.oynama + 1 };
       store.kaydetHemen();

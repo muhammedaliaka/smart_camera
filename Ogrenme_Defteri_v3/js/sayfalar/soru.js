@@ -33,7 +33,7 @@ export const mcq = (sayfa, api) => {
     const dogru = secili === sayfa.dogru;
     dugmeler.forEach((d, i) => { d.disabled = true; if (i === sayfa.dogru) d.classList.add('dogru'); else if (i === secili) d.classList.add('yanlis'); });
     const dogruCevap = sayfa.secenekler[sayfa.dogru].m;
-    api.puanla({ dogru, yanit: sayfa.secenekler[secili].m, dogruCevap, soru: sayfa.soru });
+    api.puanla({ dogru, yanit: sayfa.secenekler[secili].m, dogruCevap, soru: sayfa.soru, baglam: { duyulan: sayfa.ses?.metin && sayfa.ses.metin !== sayfa.soru ? sayfa.ses.metin : null, secenekler: sayfa.secenekler.map((o) => o.m) } });
     api.bildirim({ tip: dogru ? 'dogru' : 'yanlis', baslik: dogru ? 'Doğru!' : 'Doğrusu:', metin: dogru ? (sayfa.aciklama || '') : `${dogruCevap}${sayfa.aciklama ? ' — ' + sayfa.aciklama : ''}` });
   };
   api.alt('Kontrol et', kontrol, { devre: true });
@@ -99,7 +99,7 @@ export const eslestir = (sayfa, api) => {
   };
   const bitti = () => {
     const dogru = hata <= 1;
-    api.puanla({ dogru, yanit: `${hata} hata`, dogruCevap: '', soru: 'Eşleştirme', tekrarYok: true });
+    api.puanla({ dogru, yanit: `${hata} yanlış deneme`, dogruCevap: sayfa.ciftler.map((c) => `${c.en} = ${c.tr}`).join('; '), soru: 'Eşleştirme', tekrarYok: true });
     api.bildirim({ tip: dogru ? 'dogru' : 'bilgi', baslik: hata === 0 ? 'Hepsi eşleşti!' : `Eşleşti — ${hata} yanlış deneme`, metin: '' });
   };
   api.alt('Devam', () => api.ilerle(), { devre: true });
@@ -155,7 +155,7 @@ export const dikte = (sayfa, api) => {
     const dogru = r.durum !== 'yok';
     girdi.classList.add(dogru ? 'dogru' : 'yanlis');
     const f = sozcukFarki(girdi.value, sayfa.metin, { tr });
-    api.puanla({ dogru, yanit: girdi.value || 'bilmiyorum', dogruCevap: sayfa.metin, soru: 'Dikte ' + sayfa.no, tekrarYok: !!sayfa.sinir || sayfa.puan === false ? true : false, ayrinti: { sozcuk: `${f.var}/${f.toplam}`, calma } });
+    api.puanla({ dogru, yanit: girdi.value || 'bilmiyorum', dogruCevap: sayfa.metin, soru: 'Dikte ' + sayfa.no, tekrarYok: !!sayfa.sinir || sayfa.puan === false ? true : false, ayrinti: { sozcuk: `${f.var}/${f.toplam}`, calma }, baglam: { soru: `${sayfa.etiket || 'Duyduğunu yaz'} (dikte ${sayfa.no}/${sayfa.toplam})`, duyulan: sayfa.metin } });
     const govde = h('div', { style: 'color:var(--yazi)' }, h('div', { style: 'font-weight:700;margin-bottom:4px' }, sayfa.metin), dogru ? null : farkGoster(girdi.value, sayfa.metin, tr), h('p.alt-yazi', { style: 'margin:6px 0 0' }, `Sözcük eşleşmesi: ${f.var}/${f.toplam}`));
     api.bildirim({ tip: dogru ? 'dogru' : 'yanlis', baslik: dogru ? (r.durum === 'yakin' ? 'Doğru sayıldı' : 'Doğru!') : 'Bu kez şöyle yazılırdı:', govde });
   };
@@ -178,7 +178,7 @@ export const sayi = (sayfa, api) => {
     const r = bilmiyorum ? { durum: 'yok' } : karsilastir(girdi.value, [String(sayfa.sayi), sayiEn(sayfa.sayi)]);
     const dogru = r.durum === 'tam';
     girdi.classList.add(dogru ? 'dogru' : 'yanlis');
-    api.puanla({ dogru, yanit: girdi.value || 'bilmiyorum', dogruCevap: String(sayfa.sayi), soru: 'Sayı dinleme' });
+    api.puanla({ dogru, yanit: girdi.value || 'bilmiyorum', dogruCevap: String(sayfa.sayi), soru: 'Hangi sayıyı duydun?', baglam: { duyulan: sayiEn(sayfa.sayi) } });
     api.bildirim({ tip: dogru ? 'dogru' : 'yanlis', baslik: dogru ? 'Doğru!' : 'Doğrusu:', metin: `${sayfa.sayi} — ${sayiEn(sayfa.sayi)}` });
   };
   girdi.addEventListener('keydown', (e) => { if (e.key === 'Enter') kontrol(); });

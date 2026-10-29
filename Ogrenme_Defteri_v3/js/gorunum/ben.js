@@ -9,6 +9,7 @@ import { bugun, gunEkle, kisaTarih, uzunTarih, saatMetni, goreceli } from '../za
 import { sayfaBasligi, bosKutu, toplamDers } from './yardimci.js';
 import { srsOzet } from './tekrar.js';
 import { cevrimdisiIndir, cevrimdisiDurum } from '../cevrimdisi.js';
+import { raporUret } from '../rapor.js';
 
 const SEKMELER = [['ilerleme', 'İlerleme'], ['gecmis', 'Geçmiş'], ['ayar', 'Ayarlar'], ['icerik', 'İçerik']];
 
@@ -24,7 +25,7 @@ export function benGorunum(sorgu) {
 const yuzde = (d, t) => (t ? Math.round((d / t) * 100) : null);
 
 export function sorular() {
-  return store.olaylar((o) => o.tur === 'soru' && o.ilk);
+  return store.olaylar((o) => o.tur === 'soru' && o.ilk && !o.puansiz);
 }
 function gruplaIz(olaylar) {
   const g = {};
@@ -68,8 +69,7 @@ function ilerleme() {
   const dis = store.olaylar((o) => o.tur === 'dis' && !o.yapilmadi && o.yuzde != null).slice(-5).reverse();
   if (dis.length) kok.append(h('div.kart.duz', h('h3', '📱 Dış uygulama sonuçların'), ...dis.map((o) => h('div.satir', { style: 'padding:6px 0' }, h('span', `${o.ad}`), h('span.alt-yazi', kisaTarih(o.g)), h('span.bosluk'), h('strong', `${o.dogru}/${o.toplam} (%${o.yuzde})`)))));
 
-  kok.append(h('div.kart.duz', h('h3', 'Rapor'), h('p.alt-yazi', 'Tüm sonuçlarını, yazdıklarını ve ölçümlerini tek bir yazı dosyası olarak al; öğretmenine ya da bir yapay zekâya göstererek değerlendirme isteyebilirsin.'),
-    h('div.esnek', h('button.dugme.cizgili', { type: 'button', onclick: raporIndir }, simge('indir'), 'Raporu indir (.md)'), h('button.dugme.cizgili', { type: 'button', onclick: raporKopyala }, 'Kopyala'))));
+  kok.append(raporKarti());
   return kok;
 }
 
@@ -94,38 +94,74 @@ function gunlukGrafik(qs) {
 }
 
 // ---------------- Rapor ----------------
-export function raporMetni() {
-  const d = store.al();
-  const satir = [];
-  const L = (s = '') => satir.push(s);
-  L(`# Öğrenme Defteri raporu`); L();
-  L(`- Kullanıcı: ${d.ad || '(adsız)'}`); L(`- Başlangıç: ${d.baslangic || '-'}`); L(`- Rapor tarihi: ${bugun()}`); L(`- Çalışılan gün sayısı: ${store.gunSayisi()}`); L();
-  const qs = sorular();
-  const dogru = qs.filter((o) => o.dogru).length;
-  L(`## Genel`); L(`- Soru (ilk deneme): ${dogru}/${qs.length}${qs.length ? ` (%${yuzde(dogru, qs.length)})` : ''}`);
-  const anlama = qs.filter((o) => /^(Sahne|Dinleme):/.test(o.bolum || ''));
-  if (anlama.length) L(`- Dinleyip anlama: ${anlama.filter((o) => o.dogru).length}/${anlama.length} (%${yuzde(anlama.filter((o) => o.dogru).length, anlama.length)})`);
-  L(); L(`## Dersler`);
-  for (const [id, v] of Object.entries(d.dersler)) { const ders = icerik.ders(id); L(`- ${ders?.baslik || id}: ${v.toplam ? `${v.dogru}/${v.toplam} (%${v.yuzde})` : 'tamamlandı'} · ${v.deneme} deneme · son ${v.son}`); }
-  const ser = store.olaylar((o) => o.tur === 'serbest');
-  if (ser.length) { L(); L(`## Yazdıkların / konuşmaların`); for (const o of ser) L(`- [${o.g}] ${o.soru || o.id}: ${o.kip === 'ses' ? `(ses kaydı ${Math.round((o.sureMs || 0) / 1000)} sn)` : o.yanit}`); }
-  const dis = store.olaylar((o) => o.tur === 'dis');
-  if (dis.length) { L(); L(`## Dış uygulamalar`); for (const o of dis) L(`- [${o.g}] ${o.ad}: ${o.yapilmadi ? 'yapılmadı' : `${o.dogru ?? '?'}/${o.toplam ?? '?'}`}${o.not ? ' — ' + o.not : ''}`); }
-  const spor = store.olaylar((o) => o.tur === 'spor');
-  if (spor.length) { L(); L(`## Spor`); for (const o of spor) L(`- [${o.g}] zorlanma ${o.zorlanma ?? '-'}/10${o.destek ? ', destekli' : ''}${o.kismi ? ', kısmen' : ''}${o.not ? ' — ' + o.not : ''}`); }
-  const olcek = store.olaylar((o) => o.tur === 'olcek');
-  if (olcek.length) { L(); L(`## Ölçekler`); for (const o of olcek) L(`- [${o.g}] ${o.id}: ${o.deger}`); }
-  const gec = store.olaylar((o) => o.tur === 'gecikmeli-yanit');
-  if (gec.length) { L(); L(`## Gecikmeli hatırlama`); for (const o of gec) L(`- [${o.g}] ${o.kontrol}: ${o.dogru ? 'hatırladı' : 'hatırlamadı'}${o.yenidenBaktim ? ' (arada baktı)' : ''}${o.ayrinti ? ' — ' + o.ayrinti : ''}`); }
-  return satir.join('\n');
+// Rapor, bir yapay zekâya ya da öğretmene verilebilecek kadar açık yazılır (js/rapor.js). Burada yalnız seçim ve dışa aktarma var.
+const raporSecim = { aralik: '7', ayrinti: 'kisa' };
+const ARALIKLAR = [['1', 'Bugün'], ['7', 'Son 7 gün'], ['30', 'Son 30 gün'], ['0', 'Tümü']];
+
+export function raporMetni({ aralik = raporSecim.aralik, ayrinti = raporSecim.ayrinti } = {}) {
+  const b = bugun();
+  const gun = +aralik;
+  return raporUret({
+    durum: store.al(),
+    oku: { ders: (id) => icerik.ders(id), kelime: (id) => icerik.kelime(id) },
+    bas: gun ? gunEkle(b, -(gun - 1)) : null, son: b, bugun: b, ayrinti, surum: store.SURUM,
+  });
 }
+
+const YZ_GOREV = `Aşağıda bir lise öğrencisinin "Öğrenme Defteri" uygulamasından alınmış çalışma raporu var. Önce raporun "Nasıl okunur" bölümünü oku, sonra şunları yap:
+1. Öğrencinin neleri iyi yaptığını söyle.
+2. En çok karıştırdığı şeyleri ve olası nedenini açıkla.
+3. Yazdığı açık uçlu yanıtları değerlendir; İngilizce yazdıklarında hata varsa düzeltip nedenini kısaca anlat.
+4. Önümüzdeki günler için en fazla 3 somut öneri ver.
+Türkçe, sade ve 16 yaşındaki bir öğrenciye uygun yaz. "Beyan" etiketli bilgileri doğrulanmış gibi sunma. Raporda olmayan bir şey uydurma.
+
+---
+
+`;
+
+function raporKarti() {
+  const kart = h('div.kart.duz', h('h3', 'Çalışma raporu'),
+    h('p.alt-yazi', 'Yaptığın çalışmaların ayrıntılı kaydı: hangi derste ne sorulmuş, sen ne yanıtlamışsın, doğrusu neymiş. Bir yapay zekâya ya da öğretmenine verirsen karıştırmadan okuyabilir.'));
+  const bilgi = h('p.alt-yazi', { 'aria-live': 'polite' });
+  const onizleme = h('pre', { style: 'white-space:pre-wrap;word-break:break-word;font-size:.85rem;max-height:50vh;overflow:auto;margin:0' });
+  const ac = h('details.ac', h('summary', 'Raporu önizle'), onizleme);
+  const yenile = () => {
+    const m = raporMetni();
+    bilgi.textContent = `Bu seçimle rapor yaklaşık ${Math.max(1, Math.round(m.length / 1000))} bin karakter.`;
+    if (ac.open) onizleme.textContent = m;
+  };
+  ac.addEventListener('toggle', yenile);
+  const secici = (etiket, secimler, anahtar) => {
+    const kap = h('div.yardim-cip', { role: 'group', 'aria-label': etiket });
+    secimler.forEach(([k, ad]) => {
+      const c = h('button.cip', { type: 'button', 'aria-pressed': String(raporSecim[anahtar] === k) }, ad);
+      c.addEventListener('click', () => { raporSecim[anahtar] = k; kap.querySelectorAll('.cip').forEach((x, i) => x.setAttribute('aria-pressed', String(secimler[i][0] === k))); yenile(); });
+      kap.append(c);
+    });
+    return h('div', h('label.alan', etiket), kap);
+  };
+  kart.append(secici('Hangi günler?', ARALIKLAR, 'aralik'),
+    secici('Ayrıntı', [['kisa', 'Kısa (önerilen)'], ['tam', 'Tam']], 'ayrinti'),
+    h('p.alt-yazi', 'Kısa: doğru bildiklerin yalnız sayılır; yanlışların, yazdıkların ve diğer tüm kayıtların eksiksiz yazılır. Tam: her soru tek tek yazılır.'),
+    bilgi,
+    h('div', { style: 'display:grid;gap:8px;margin-top:8px' },
+      h('button.dugme.birincil.tam', { type: 'button', onclick: raporIndir }, simge('indir'), 'Raporu indir (.md)'),
+      h('button.dugme.cizgili.tam', { type: 'button', onclick: () => raporKopyala(false) }, 'Raporu kopyala'),
+      h('button.dugme.cizgili.tam', { type: 'button', onclick: () => raporKopyala(true) }, 'Yapay zekâ için kopyala')),
+    h('p.alt-yazi', '“Yapay zekâ için kopyala”, raporun başına ne yapması gerektiğini anlatan kısa bir görev metni de ekler.'),
+    ac);
+  yenile();
+  return kart;
+}
+
 function raporIndir() {
   const url = URL.createObjectURL(new Blob([raporMetni()], { type: 'text/markdown;charset=utf-8' }));
   const a = h('a', { href: url, download: `ogrenme-defteri-rapor-${bugun()}.md` });
   document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
-async function raporKopyala() {
-  try { await navigator.clipboard.writeText(raporMetni()); bildir('Rapor panoya kopyalandı'); } catch { bildir('Kopyalanamadı; “indir” düğmesini kullan'); }
+async function raporKopyala(yapayZekaIcin) {
+  try { await navigator.clipboard.writeText((yapayZekaIcin ? YZ_GOREV : '') + raporMetni()); bildir(yapayZekaIcin ? 'Görev metniyle birlikte panoya kopyalandı' : 'Rapor panoya kopyalandı'); }
+  catch { bildir('Kopyalanamadı; “indir” düğmesini kullan'); }
 }
 
 // ---------------- Geçmiş ----------------
@@ -239,7 +275,8 @@ function ayar() {
       await icerik.yukle(); ayarlariUygula(); window.dispatchEvent(new HashChangeEvent('hashchange'));
     } catch (e) { bildir('Yedek yüklenemedi: ' + e.message, 5000); }
   });
-  kok.append(h('div.kart', h('h3', 'Yedek'), h('p.alt-yazi', 'Verilerin yalnız bu cihazın tarayıcısında saklanır. Düzenli yedek almanı öneririz; yedeği başka cihaza yükleyebilirsin (kayıtlar birleştirilir, hiçbiri silinmez).'),
+  const kul = store.kullanim();
+  kok.append(h('div.kart', h('h3', 'Yedek'), h('p.alt-yazi', `Kayıt alanı: %${Math.round(kul.oran * 100)} dolu${kul.oran > 0.7 ? ' — yedek indirip raporunu da kaydetmeni öneririz; alan dolarken eski günlerin yalnız ayrıntısı sadeleşir.' : '.'}`), h('p.alt-yazi', 'Verilerin yalnız bu cihazın tarayıcısında saklanır. Düzenli yedek almanı öneririz; yedeği başka cihaza yükleyebilirsin (kayıtlar birleştirilir, hiçbiri silinmez).'),
     h('div.esnek', h('button.dugme.birincil', { type: 'button', onclick: () => yedekIndir(false) }, simge('indir'), 'Yedek indir'), h('button.dugme.cizgili', { type: 'button', onclick: () => yedekIndir(true) }, 'Ses kayıtlarıyla indir'), h('button.dugme.cizgili', { type: 'button', onclick: () => dosya.click() }, simge('yukle'), 'Yedekten yükle')), dosya));
 
   kok.append(h('div.kart.duz', h('h3', 'Tüm verileri sil'), h('p.alt-yazi', 'Bu cihazdaki tüm kayıtlar silinir. Önce yedek indirmeni öneririz.'),

@@ -181,6 +181,8 @@ Sınır: Konuşma tanıma doğruluğu kulakla dinlemenin yerini tutmaz, **tek s�
 
 **Çok okunuşlu sözcükler:** Bilgisayar sesi bazen bağlamdan yanlış anlamı seçer: tek başına "close" yazınca "yakın" (klos) diye okur, "lives" cümle içinde bile "canlı" (layvz) okunur; oysa derste bunlar fiildir (kapatmak, yaşamak). Bu tür sözcüklerin okunuşu `scripts/ses-uret.py` başındaki `SOZCUKLER` tablosunda elle verilir. Yeni bir çok okunuşlu sözcük (ör. `wind`, `tear`, `lead`, `use`) kullanırsan birim testi seni uyarır: okunuşunu `SOZCUKLER`'e yaz, o sözcüğü içeren mp3'leri sil, betiği yeniden çalıştır ve kulakla dinle.
 
+**Yeni bir sayfa türü ya da kayıt eklersen (kod değişikliği):** Sayfa bir şey kaydediyorsa `store.olay(...)` yerine oynatıcının verdiği `api.kaydet(tur, değişenBilgi, sabitAçıklama)` ya da soru için `api.puanla({... baglam })` kullan; sabit açıklamaya raporu okuyanın ihtiyaç duyacağı her şeyi yaz (soru metni, doğru yanıt, başlık). Sonra `js/rapor.js` içinde o türün biçimini ekle. Biçimi unutursan `npm test` içindeki "kapsam" testi hata verir.
+
 ## 8. Dış uygulamalar neden otomatik bağlanmıyor?
 
 Voscreen ve Busuu için herkese açık bir geliştirici arayüzü (API) bulamadım. Telefonda bir web uygulaması da başka bir uygulamanın ekranını okuyamaz. Bu yüzden uygulama bağlantıyı açar, sen sonucu (doğru/toplam) girersin. Ayrıntı: `docs/DIS_UYGULAMALAR.md`.

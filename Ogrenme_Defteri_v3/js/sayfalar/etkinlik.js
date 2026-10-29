@@ -50,7 +50,13 @@ export const spor = (sayfa, api) => {
   const kaydet = (kismi) => {
     const olcu = {};
     for (const [k, s] of Object.entries(sayaclar)) olcu[k] = s.deger();
-    store.olay('spor', { ders: api.dersId, id: sayfa.id, olcu, zorlanma, destek, kismi, not: notAlani.value.trim() || null });
+    // Okunur özet: hareket adı, yapılan, hedef (olcu anahtarları "hareket:kimlik" gibi kısaltmalardır)
+    const yapilanlar = [];
+    for (const b of a.bolumler) {
+      if (b.tur === 'mesafe') yapilanlar.push({ ad: b.ad, yapilan: olcu['mesafe:' + b.ad], birim: 'km', hedef: b.hedef || null });
+      else for (const m of b.hareketler) yapilanlar.push({ ad: m.ad, yapilan: olcu['hareket:' + m.id], birim: m.birim || 'set', hedef: m.birim ? `${m.set || 1} ${m.birim}` : `${m.set || 1} set × ${m.tekrar || ''}`.trim() });
+    }
+    api.kaydet('spor', { olcu, yapilanlar, zorlanma, destek, kismi, not: notAlani.value.trim() || null }, { baslik: a.baslik });
     api.ilerle();
   };
   api.alt('Spor tamam — kaydet', () => kaydet(false), { ikincil: { etiket: 'Kısmen yaptım', fn: () => kaydet(true) } });
@@ -94,7 +100,7 @@ export const kartlar = (sayfa, api) => {
   });
   const bitti = () => {
     const dogru = hamle <= sayfa.ciftler.length + 5;
-    api.puanla({ dogru, yanit: `${hamle} hamle`, dogruCevap: '', soru: 'Hafıza kartları', tekrarYok: true });
+    api.puanla({ dogru, yanit: `${hamle} hamle`, dogruCevap: sayfa.ciftler.map((c) => `${c.en} = ${c.tr}`).join('; '), soru: 'Hafıza kartları', tekrarYok: true });
     api.bildirim({ tip: dogru ? 'dogru' : 'bilgi', baslik: `${hamle} hamlede bitirdin`, metin: dogru ? 'Harika bir hafıza!' : 'Bir daha dene; kartların yerini aklında tutmaya çalış.' });
   };
   api.alt('Devam', () => api.ilerle(), { devre: true });
@@ -110,7 +116,7 @@ export const dis = (sayfa, api) => {
   const notAlani = h('input.girdi', { type: 'text', placeholder: 'İstersen not (kaçıncı ders, neyi zorlandın…)', 'aria-label': 'Not' });
   const kaydet = (yapilmadi = false) => {
     const d = dogru.value === '' ? null : +dogru.value, t = toplam.value === '' ? null : +toplam.value;
-    store.olay('dis', { ders: api.dersId, id: sayfa.id, uygulama: u.id, ad: u.ad, gorev: a.gorev, dogru: d, toplam: t, yuzde: d != null && t ? Math.round((d / t) * 100) : null, yapilmadi, not: notAlani.value.trim() || null });
+    api.kaydet('dis', { uygulama: u.id, ad: u.ad, gorev: a.gorev, dogru: d, toplam: t, yuzde: d != null && t ? Math.round((d / t) * 100) : null, yapilmadi, not: notAlani.value.trim() || null });
     if (!yapilmadi && d != null && t) api.dis(d, t);
     api.ilerle();
   };
