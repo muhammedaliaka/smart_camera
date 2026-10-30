@@ -1,5 +1,3 @@
-<!-- Bu dosya bir ÖRNEKTİR; gerçek öğrenci kaydı değildir ve hiçbir öğrenciyi temsil etmez. Otomatik bir tarayıcı testi uygulamayı 8 gün boyunca gezdi ve çoktan seçmeli soruları RASTGELE işaretledi (öğrenci adı "Test"); bu yüzden doğru yüzdeleri düşüktür. Dosya yalnızca raporun BİÇİMİNİ göstermek içindir: uygulamanın Kısa kipteki çıktısı ve MCP rapor_al aracının çıktısı bu biçimdedir. -->
-
 # Öğrenme Defteri · Çalışma raporu
 
 Bu rapor, bir öğrencinin “Öğrenme Defteri” uygulamasında yaptığı çalışmaları anlatır. Uygulama tarafından otomatik hazırlanmıştır; bir öğretmenin ya da yapay zekâ asistanının okuyup değerlendirmesi için yazılmıştır. Öğrenci Türkçe konuşan bir lise öğrencisidir ve İngilizce, hafıza teknikleri, okuma, dinleme ve spor çalışır.
@@ -18,13 +16,13 @@ Bu rapor, bir öğrencinin “Öğrenme Defteri” uygulamasında yaptığı ça
 
 - Ad: Test
 - Program başlangıcı: 2026-11-02 · bugün programın 8. günü
-- Rapor aralığı: en baştan – 2026-11-09 · Rapor tarihi: 2026-11-09 · Uygulama sürümü 3.2.0
+- Rapor aralığı: en baştan – 2026-11-09 · Rapor tarihi: 2026-11-09 · Uygulama sürümü 3.3.0
 - Aralıkta çalışılan gün: 8 · Başlangıçtan beri toplam çalışılan gün: 8
 
 ## Özet
 
-- Tek doğru yanıtlı sorular, ilk denemede: **13/107** (%12)
-- Dinleyip/okuyup anlama soruları, ilk denemede: 6/33 (%18)
+- Tek doğru yanıtlı sorular, ilk denemede: **14/107** (%13)
+- Dinleyip/okuyup anlama soruları, ilk denemede: 7/33 (%21)
 - Bitirilen ders (aralıkta): 5 — Dört mevsim; Merhaba, ben Ali
 - Spor kaydı: 5 · Dış uygulama kaydı: 0
 
@@ -32,7 +30,7 @@ Bu rapor, bir öğrencinin “Öğrenme Defteri” uygulamasında yaptığı ça
 |---|---:|---:|---:|
 | İngilizce | 68 | 7 | %10 |
 | Okuma | 20 | 4 | %20 |
-| Dinleme | 13 | 2 | %15 |
+| Dinleme | 13 | 3 | %23 |
 | Hafıza sarayı | 6 | 0 | %0 |
 
 ### En çok karıştırılanlar
@@ -67,8 +65,8 @@ Her beceri 1’den başlayan, üst sınırı olmayan bir merdivenle ilerler; num
 | Beceri | Seviye | Yaklaşık düzey | Durum | Seviye oturumu |
 |---|---:|---|---|---:|
 | İngilizce | 1 | A1 başı | yoklamadan başladı | 5 |
-| Okuma | 1 | A1 başı | yoklamadan başladı | 3 |
-| Dinleme | 1 | A1 başı | yoklamadan başladı | 2 |
+| Okuma | 1 | A1 başı | yoklamadan başladı | 0 |
+| Dinleme | 1 | A1 başı | yoklamadan başladı | 0 |
 | Hafıza | 1 | A1 başı | yoklamadan başladı | 3 |
 | Spor | 1 | A1 başı | başlangıç değeri | 5 |
 
@@ -101,15 +99,14 @@ Her gün için dersler/etkinlikler sırayla verilmiştir.
 - ✘ [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Metne göre kışın ne olabilir?” · Öğrenci: “Yapraklar sararır” · Doğru: “Kar yağabilir” · Ekrandaki seçenekler: Çiçekler açar / Kar yağabilir / Yapraklar sararır / Bilmiyorum
 - [Yoklama sonucu] Okuma · denenen seviye 4: 0/5 doğru (%0) · yazılı ders: oku-sv4-dort-mevsim
 
-#### Seviye yoklaması: “Dinleme · Seviye 6 yoklaması”
+#### Seviye yoklaması: “Dinleme · Seviye 4 yoklaması”
 
 - Yoklama haftasında başlangıç seviyesini bulmak için kısa bir deneme. Sorular kolaydan zora gider; “Bilmiyorum” seçeneği vardır ve yanlışlar yeniden sorulmaz. Not ya da değerlendirme değildir.
-- [Dinleme · Dinleme: Okul duyurusu] “Okul duyurusu” · Öğrenci 1 kez dinledi (en çok 3 hakkı vardı)
-- ✘ [Çoktan seçmeli soru · Dinleme: Okul duyurusu] Soru: “Duyuruda hangi gün söyleniyor?” · Öğrenci: “Cuma” · Doğru: “Pazartesi” · Ekrandaki seçenekler: Salı / Pazartesi / Cuma / Bilmiyorum
-- ✘ [Çoktan seçmeli soru · Dinleme: Okul duyurusu] Soru: “Öğrencilerden ne getirmeleri isteniyor?” · Öğrenci: “Kalem ve su” · Doğru: “Kitap ve defter” · Ekrandaki seçenekler: Kalem ve su / Çanta ve telefon / Kitap ve defter / Bilmiyorum
-- ✘ [Çoktan seçmeli soru · Dinleme: Okul duyurusu] Soru: “Öğrenciler nerede bekleyecek?” · Öğrenci: “Bilmiyorum” · Doğru: “Kütüphanede” · Ekrandaki seçenekler: Kütüphanede / Bahçede / Evde / Bilmiyorum
-- [Yoklama sonucu] Dinleme · denenen seviye 6: 1/4 doğru (%25) · yazılı ders: dinle-01-duyuru
-- ✔ İlk denemede doğru bilinen 1 soru tek tek yazılmadı (kısa kip).
+- [Dinleme · Dinleme: Benim ailem] “Benim ailem” · Öğrenci 1 kez dinledi (en çok 3 hakkı vardı)
+- ✘ [Çoktan seçmeli soru · Dinleme: Benim ailem] Soru: “Kız kardeşi kaç yaşında?” · Öğrenci: “On” · Doğru: “Altı” · Ekrandaki seçenekler: On / Altı / Üç / Bilmiyorum
+- ✘ [Çoktan seçmeli soru · Dinleme: Benim ailem] Soru: “Köpeğin adı ne?” · Öğrenci: “Bilmiyorum” · Doğru: “Max” · Ekrandaki seçenekler: Rex / Tom / Max / Bilmiyorum
+- [Yoklama sonucu] Dinleme · denenen seviye 4: 2/4 doğru (%50) · yazılı ders: dinle-sv4-benim-ailem
+- ✔ İlk denemede doğru bilinen 2 soru tek tek yazılmadı (kısa kip).
 
 #### Seviye yoklaması: “Hafıza · Seviye 5 yoklaması”
 
@@ -192,7 +189,7 @@ Her gün için dersler/etkinlikler sırayla verilmiştir.
 - ✔ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Çiçekler hangi mevsimde açar?” · Öğrenci: “İlkbaharda” · Doğru: “İlkbaharda”
 - ✘ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Metne göre hangi mevsimde hava sıcak olur?” · Öğrenci: “Kışın” · Doğru: “Yazın” · Ekrandaki seçenekler: Sonbaharda / Yazın / Kışın
 - ✘ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Yapraklar ne zaman yere düşer?” · Öğrenci: “Yazın” · Doğru: “Sonbaharda” · Ekrandaki seçenekler: Sonbaharda / Yazın / İlkbaharda
-- [Seviye oturumu sonucu] Okuma · seviye 4: 1/5 doğru (%20)
+- [Seviye oturumu sonucu] Okuma · seviye 4: 1/5 doğru (%20) · AYNI METNİN TEKRARI (yeni içerik kalmamıştı; cevaplar bellekten gelmiş olabilir, seviyeye sayılmadı)
 - ✔ İlk denemede doğru bilinen 1 soru tek tek yazılmadı (kısa kip).
 
 #### Seviye oturumu: “Spor · Seviye 1”
@@ -233,7 +230,7 @@ Her gün için dersler/etkinlikler sırayla verilmiştir.
 - ✘ (tekrar) [Çoktan seçmeli soru · Dinleme: Merhaba, ben Ali] Soru: “Konuşan kişinin adı ne?” · Öğrenci: “Sam” · Doğru: “Ali” · Ekrandaki seçenekler: Tom / Ali / Sam
 - ✘ (tekrar) [Çoktan seçmeli soru · Dinleme: Merhaba, ben Ali] Soru: “Kaç yaşında?” · Öğrenci: “On bir” · Doğru: “On” · Ekrandaki seçenekler: Dokuz / On bir / On
 - ✘ (tekrar) [Çoktan seçmeli soru · Dinleme: Merhaba, ben Ali] Soru: “Ne seviyor?” · Öğrenci: “Köpekleri” · Doğru: “Kedileri” · Ekrandaki seçenekler: Kuşları / Kedileri / Köpekleri
-- [Seviye oturumu sonucu] Dinleme · seviye 2: 0/3 doğru (%0)
+- [Seviye oturumu sonucu] Dinleme · seviye 2: 0/3 doğru (%0) · AYNI METNİN TEKRARI (yeni içerik kalmamıştı; cevaplar bellekten gelmiş olabilir, seviyeye sayılmadı)
 
 #### Seviye oturumu: “Hafıza · Seviye 1 oturumu”
 
@@ -279,7 +276,7 @@ Her gün için dersler/etkinlikler sırayla verilmiştir.
 - ✘ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Metne göre hangi mevsimde hava sıcak olur?” · Öğrenci: “Kışın” · Doğru: “Yazın” · Ekrandaki seçenekler: Sonbaharda / Yazın / Kışın
 - ✘ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Yapraklar ne zaman yere düşer?” · Öğrenci: “İlkbaharda” · Doğru: “Sonbaharda” · Ekrandaki seçenekler: Sonbaharda / İlkbaharda / Yazın
 - ✘ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Metne göre kışın ne olabilir?” · Öğrenci: “Çiçekler açar” · Doğru: “Kar yağabilir” · Ekrandaki seçenekler: Kar yağabilir / Yapraklar sararır / Çiçekler açar
-- [Seviye oturumu sonucu] Okuma · seviye 4: 2/5 doğru (%40)
+- [Seviye oturumu sonucu] Okuma · seviye 4: 2/5 doğru (%40) · AYNI METNİN TEKRARI (yeni içerik kalmamıştı; cevaplar bellekten gelmiş olabilir, seviyeye sayılmadı)
 - ✔ İlk denemede doğru bilinen 2 soru tek tek yazılmadı (kısa kip).
 
 #### Seviye oturumu: “Spor · Seviye 1”
@@ -323,7 +320,7 @@ Her gün için dersler/etkinlikler sırayla verilmiştir.
 - ✘ [Çoktan seçmeli soru · Dinleme: Merhaba, ben Ali] Soru: “Ne seviyor?” · Öğrenci: “Kuşları” · Doğru: “Kedileri” · Ekrandaki seçenekler: Kuşları / Köpekleri / Kedileri
 - ✘ (tekrar) [Çoktan seçmeli soru · Dinleme: Merhaba, ben Ali] Soru: “Konuşan kişinin adı ne?” · Öğrenci: “Sam” · Doğru: “Ali” · Ekrandaki seçenekler: Tom / Ali / Sam
 - ✘ (tekrar) [Çoktan seçmeli soru · Dinleme: Merhaba, ben Ali] Soru: “Ne seviyor?” · Öğrenci: “Köpekleri” · Doğru: “Kedileri” · Ekrandaki seçenekler: Kuşları / Köpekleri / Kedileri
-- [Seviye oturumu sonucu] Dinleme · seviye 2: 1/3 doğru (%33)
+- [Seviye oturumu sonucu] Dinleme · seviye 2: 1/3 doğru (%33) · AYNI METNİN TEKRARI (yeni içerik kalmamıştı; cevaplar bellekten gelmiş olabilir, seviyeye sayılmadı)
 - ✔ İlk denemede doğru bilinen 1 soru tek tek yazılmadı (kısa kip).
 
 #### Seviye oturumu: “Hafıza · Seviye 1 oturumu”
@@ -411,7 +408,7 @@ Her gün için dersler/etkinlikler sırayla verilmiştir.
 - ✘ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Metne göre hangi mevsimde hava sıcak olur?” · Öğrenci: “Kışın” · Doğru: “Yazın” · Ekrandaki seçenekler: Sonbaharda / Kışın / Yazın
 - ✘ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Yapraklar ne zaman yere düşer?” · Öğrenci: “İlkbaharda” · Doğru: “Sonbaharda” · Ekrandaki seçenekler: Sonbaharda / Yazın / İlkbaharda
 - ✘ (tekrar) [Çoktan seçmeli soru · Okuma: Dört mevsim] Soru: “Metne göre kışın ne olabilir?” · Öğrenci: “Çiçekler açar” · Doğru: “Kar yağabilir” · Ekrandaki seçenekler: Yapraklar sararır / Çiçekler açar / Kar yağabilir
-- [Seviye oturumu sonucu] Okuma · seviye 4: 1/5 doğru (%20)
+- [Seviye oturumu sonucu] Okuma · seviye 4: 1/5 doğru (%20) · AYNI METNİN TEKRARI (yeni içerik kalmamıştı; cevaplar bellekten gelmiş olabilir, seviyeye sayılmadı)
 - ✔ İlk denemede doğru bilinen 1 soru tek tek yazılmadı (kısa kip).
 
 #### Seviye oturumu: “Spor · Seviye 1”
