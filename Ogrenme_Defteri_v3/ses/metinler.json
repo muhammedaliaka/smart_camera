@@ -329,6 +329,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "01922888f2587b.mp3": {
+  "metin": "Welcome to the City Museum. Please listen carefully, because the tour is about to begin. The tour lasts about ninety minutes, and it starts on the ground floor, where you will see the Roman coins. After that, we will go up to the first floor to see paintings from the seventeenth century. Photography is allowed, but please do not use a flash in the painting rooms. Backpacks must be left in the lockers near the entrance. There will be a fifteen-minute break at the cafe on the second floor. The tour will finish at the gift shop at about half past twelve. If you cannot hear me, please move closer to the front.",
+  "ses": "kadin",
+  "hiz": 0.95
+ },
  "019ae50bcf1aed.mp3": {
   "metin": "yes",
   "ses": "anlatici",
@@ -809,6 +814,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "03f34597c15d17.mp3": {
+  "metin": "This is my family. I have a mother, a father and a sister. My sister is six. She likes red. We also have a dog. His name is Max.",
+  "ses": "kadin",
+  "hiz": 0.85
+ },
  "03ff0c1edc3846.mp3": {
   "metin": "My phone is on the table.",
   "ses": "anlatici",
@@ -1148,6 +1158,11 @@
   "metin": "My father drives to work.",
   "ses": "anlatici",
   "hiz": 1
+ },
+ "0568447b09ae96.mp3": {
+  "metin": "Yesterday I went to the shop. I bought two apples and a bottle of water. They cost three pounds. I paid with a five-pound note. I got two pounds back.",
+  "ses": "erkek",
+  "hiz": 0.85
  },
  "056dbad19cb42f.mp3": {
   "metin": "alone",
@@ -3019,6 +3034,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "0df728a011e543.mp3": {
+  "metin": "A small town library that was due to close next month has been saved after local residents raised more than forty thousand pounds in only three weeks. The library, which opened in nineteen sixty-two, was going to shut because the council needed to reduce its spending. However, after a group of teenagers started an online campaign, hundreds of people donated money, and a local bakery gave a share of its profits. The council has agreed to keep the building open for at least two more years, but it has not promised more than that. The librarian said she was delighted, though she warned that the money will cover only the basic costs, and that volunteers are still needed to run the children's reading hour.",
+  "ses": "erkek",
+  "hiz": 1
+ },
  "0dfb527e2e4798.mp3": {
   "metin": "Thank you. See you on Friday!",
   "ses": "erkek",
@@ -3159,6 +3179,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "0e782fffd8d993.mp3": {
+  "metin": "Anna and Tom went to a cafe after school. Anna ordered a hot chocolate and a cheese sandwich. Tom was not hungry, so he only had a glass of orange juice. The waiter said the sandwich would take ten minutes. While they waited, they talked about their homework. The bill was eleven pounds. It was Tom's turn, so he paid.",
+  "ses": "erkek",
+  "hiz": 0.9
+ },
  "0e7bdbed5abbfc.mp3": {
   "metin": "Good morning, students. Today is Monday. Class starts at eight. Please bring your book and your notebook. Please wait in the library. See you in class.",
   "ses": "kadin",
@@ -3217,6 +3242,11 @@
  "0ead9a3779dab1.mp3": {
   "metin": "The class starts at four.",
   "ses": "anlatici",
+  "hiz": 1
+ },
+ "0eb73e7309de18.mp3": {
+  "metin": "Many people think that to learn a language you need to live abroad. In fact, research and my own experience suggest that regular practice matters more than where you are. I studied Spanish for two years in my own city, for only thirty minutes a day. At first I memorised long lists of words, but I forgot most of them within a week. Then I changed my method. I started to listen to short podcasts and repeat the sentences aloud. I also tested myself the next day instead of simply reading my notes again. After six months, I could follow a simple conversation. The lesson I learned is that using the language actively is far more effective than passively reading about it.",
+  "ses": "erkek",
   "hiz": 1
  },
  "0ec301ac43c2db.mp3": {
@@ -4279,6 +4309,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "151aab3d4d6b8d.mp3": {
+  "metin": "Hi Sara, it's Mike. I'm sorry, but I can't come to the cinema tonight because I have to finish a school project. Could we go tomorrow instead? The film starts at seven thirty, and there is also a show at nine fifteen. I will buy the tickets online if you tell me which one you prefer. Also, my cousin may come with us. Please call me back after six.",
+  "ses": "erkek",
+  "hiz": 0.9
+ },
  "152cb6b09ffaef.mp3": {
   "metin": "thirty seven",
   "ses": "anlatici",
@@ -4829,10 +4864,20 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "17d0e3f476948d.mp3": {
+  "metin": "My room is small, but I like it. There is a bed next to the window and a desk in the corner. On the desk there is a lamp and three books. My bag is under the chair. On the wall there is a map of the world.",
+  "ses": "kadin",
+  "hiz": 0.9
+ },
  "17d6300b9d1ff5.mp3": {
   "metin": "bottle",
   "ses": "anlatici",
   "hiz": 1
+ },
+ "17d91037142488.mp3": {
+  "metin": "Last week I had a bad cold, so I went to see my doctor. She told me to drink plenty of water, rest for three days, and stay away from school until I felt better. She did not give me any antibiotics because, she said, a cold is caused by a virus, and antibiotics only work against bacteria. She also suggested that I eat more fruit. By Friday, I felt much better, and the following Monday I went back to school.",
+  "ses": "kadin",
+  "hiz": 0.95
  },
  "17e88ab9aedda0.mp3": {
   "metin": "beautiful",
@@ -6207,6 +6252,11 @@
  "1ef9ab771ae861.mp3": {
   "metin": "I need more information.",
   "ses": "anlatici",
+  "hiz": 1
+ },
+ "1f0558d993f9ac.mp3": {
+  "metin": "More and more companies now allow staff to work from home for at least part of the week. Supporters say that it saves commuting time, which for many people is more than an hour a day, and that it makes it easier to organise the day more flexibly. Critics, however, point out that it can be lonely, and that younger employees miss the chance to learn by watching their more experienced colleagues. A recent survey of one thousand employees found that most preferred a mixed arrangement, three days at home and two in the office, rather than working entirely from home. Managers remain divided. Some report that productivity has risen, while others say that creativity and teamwork suffer when people rarely meet face to face. What seems clear is that the answer depends on the type of job and on the individual.",
+  "ses": "kadin",
   "hiz": 1
  },
  "1f0bb000f5876a.mp3": {

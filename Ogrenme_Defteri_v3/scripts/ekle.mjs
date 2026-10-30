@@ -7,6 +7,7 @@
 // - Tüm içerik doğrulanır; hata çıkarsa yapılan değişiklikler geri alınır, hiçbir şey bozulmaz.
 // --siklik: her satırda bir sözcük, en sık olan en üstte (sv=auto için). Liste pakete DAHİL DEĞİLDİR (bkz. docs/SEVIYE_SISTEMI.md).
 // --kuru: dosya yazmaz, yalnız kontrol eder.
+// --ustune-yaz: aynı adlı, bu araçla üretilmemiş (elle yazılmış) paketin üzerine yazmaya izin verir.
 
 import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
@@ -22,9 +23,14 @@ const yaz = (yol, nesne) => writeFileSync(yol, JSON.stringify(nesne, null, 1) + 
  * Giriş metnini içeriğe ekler. Hata varsa değişiklikleri geri alır.
  * @returns {{ tamam: boolean, paketAd?: string, ozet?: object, hatalar: string[], uyarilar: string[], dogrulama?: { hata: string[], uyari: string[] } }}
  */
-export function icerikEkle(metin, { klasor = join(kok, 'icerik'), dosya = 'giris', siklik = null, kuru = false } = {}) {
+export function icerikEkle(metin, { klasor = join(kok, 'icerik'), dosya = 'giris', siklik = null, kuru = false, ustuneYaz = false } = {}) {
   const r = girisCoz(metin, { dosya, siklik });
   if (r.hatalar.length) return { tamam: false, hatalar: r.hatalar, uyarilar: r.uyarilar };
+  const yol = join(klasor, r.paketAd + '.json');
+  if (!ustuneYaz && existsSync(yol)) { // yalnız bu araçla üretilmiş paketin üzerine yazılır; elle yazılmışın değil
+    let eski = null; try { eski = JSON.parse(readFileSync(yol, 'utf8')); } catch { /* bozuk dosya: korunur */ }
+    if (eski?.uretim?.kaynak !== 'giris') return { tamam: false, paketAd: r.paketAd, hatalar: [`icerik/${r.paketAd}.json zaten var ve bu giriş biçiminden üretilmemiş; üzerine yazılmadı. Başka bir @paket adı seç (komut satırında bilerek yazacaksan --ustune-yaz).`], uyarilar: r.uyarilar };
+  }
   return uygula(r, klasor, kuru); // kuru: geçici yaz, doğrula, geri al
 }
 
@@ -59,11 +65,11 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const kuru = a.includes('--kuru');
   const siklikYolu = secenek('--siklik');
   const dosyalar = a.filter((x, i) => !x.startsWith('--') && a[i - 1] !== '--siklik');
-  if (!dosyalar.length) { console.log('Kullanım: node scripts/ekle.mjs giris/dosya.txt [--siklik liste.txt] [--kuru]\nBiçim: docs/KOLAY_GIRIS.md'); process.exit(1); }
+  if (!dosyalar.length) { console.log('Kullanım: node scripts/ekle.mjs giris/dosya.txt [--siklik liste.txt] [--kuru] [--ustune-yaz]\nBiçim: docs/KOLAY_GIRIS.md'); process.exit(1); }
   const siklik = siklikYolu ? siklikHaritasi(readFileSync(siklikYolu, 'utf8')) : null;
   let kotu = 0;
   for (const d of dosyalar) {
-    const r = icerikEkle(readFileSync(d, 'utf8'), { dosya: basename(d).replace(/\.[^.]+$/, ''), siklik, kuru });
+    const r = icerikEkle(readFileSync(d, 'utf8'), { dosya: basename(d).replace(/\.[^.]+$/, ''), siklik, kuru, ustuneYaz: a.includes('--ustune-yaz') });
     for (const u of r.uyarilar || []) console.log(`  uyarı  ${d}: ${u}`);
     if (!r.tamam) { kotu++; console.log(`✗ ${d}`); for (const h of r.hatalar) console.log('  HATA   ' + h); continue; }
     const o = r.ozet;

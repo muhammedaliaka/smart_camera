@@ -40,11 +40,29 @@ Böylece uygulama tam ekran açılır ve internet olmadan da çalışır.
 
 Yarım bıraktığın ders için bir sonraki açılışta "kaldığın yerden devam" önerilir.
 
+### İlk hafta: yoklama haftası
+İlk 7 gün normal ders yok; **seviyeni bulmak için kısa yoklamalar** var (İngilizce, okuma, dinleme, hafıza; spor için yoklama yoktur). Bilmen gerekmez:
+
+- Her yoklama **kolay bir seviyeden** (5. seviye) başlar. Geçersen bir sonraki yoklama biraz daha zor olur (10 → 20 → 35 → 50); geçemezsen uygulama ikisi arasında bir seviye dener. **50'den zorlusu sorulmaz.** Bir yoklamayı geçmek için soruların en az %80'i doğru olmalı; en az 4 soruluk yoklamada tek yanlış da kabul edilir (3/4).
+- Beceri başına günde en fazla bir yoklama çıkar; yani hepsini bir günde bitirmek zorunda değilsin.
+- Bilmediğin soruda **"Bilmiyorum"**'u seç. Şansa tıklamak seviyeni yanlış gösterir; bu bir not değil.
+- Yoklamada yanlış yaptığın sorular **yeniden sorulmaz** (amaç öğretmek değil ölçmek); sonuç ekranında yanlışlarının doğrusunu görürsün.
+
+Bir yoklama bitince **Ben → İlerleme → Seviyelerin** kartında başlangıç seviyen görünür. Başlangıç, bulunan seviyenin biraz altından başlar; çünkü gerçek çalışma başarıyla başlasın istenir.
+
+### İlk haftadan sonra: seviye oturumları
+Yedi günlük bir desenle, her gün İngilizce, o günün becerisi (okuma, dinleme ya da hafıza) ve spor için seviyene göre kısa bir **seviye oturumu** çıkar.
+
+- Oturumda puanlanan **bütün soruları ilk denemede doğru** yaparsan seviyen **bir basamak** yükselir. Birini bile yanlış yaparsan seviye aynı kalır (yanlış bir ceza değil; ilerlemeden önce sağlamlaşma). Spor'da üst üste 2 rahat oturum gerekir.
+- Oturum **çok zor** geçerse (doğru oranı %60'ın altında, üst üste iki kez) seviye bir basamak iner. Yarım bıraktığın oturum hiçbir şeyi değiştirmez.
+- Seviye bir not değil, **bugünkü çalışmanın zorluğunu** belirler. Düşmek başarısızlık değildir.
+- Seviyenin yanlış olduğunu düşünüyorsan **Ben → İlerleme → Seviyelerin → Elle ayarla** ile değiştirebilirsin (nedenini yazabilirsin; rapora girer).
+
 ## 3. Sonuçları nasıl okursun?
 
 - **Doğru / toplam ve yüzde** yalnızca nesnel sorular için gösterilir (çoktan seçmeli, dinleyip yazma, sayı, eşleştirme…). İlk denemedeki yanıt sayılır; yanlış yaptığın soru sonda bir kez daha sorulur ama sonucu değiştirmez.
 - **Açık uçlu sorular** (kendi cümlenle anlat, kısa konuşma) puanlanmaz. Yalnızca kaydedilir. Cevabından sonra "Yanıtında hangileri vardı?" listesi çıkar; hangi noktaları söylediğini kendin işaretlersin (yazıda bulabildiklerimiz önceden işaretlenir).
-- **Kontrol günleri** (Hafta 1: gün 5–7) tek seferliktir: yanlışlar tekrar sorulmaz. Amaç not almak değil, neyi tekrar etmen gerektiğini görmektir.
+- **Yoklamalar ve kontrol dersleri** tek seferliktir: yanlışlar tekrar sorulmaz. Amaç not almak değil, neyi tekrar etmen gerektiğini görmektir.
 
 ### Çalışma raporu (öğretmene ya da yapay zekâya vermek için)
 
@@ -72,9 +90,10 @@ Bu uygulamalarla **otomatik bağlantı yoktur**; nedeni `DIS_UYGULAMALAR.md`'de.
 - **Program başlangıç tarihi (Gün 1)**: bugünkü görevler bu tarihe göre belirlenir. Tarihi geriye ya da ileriye alabilirsin; **hiçbir kaydın silinmez**. Bir hafta ara verdiysen tarihi ileri alıp programı kaldığın yerden sürdürebilirsin.
 - **Çevrimdışı kullanım**: "Tüm sesleri indir" ile ders seslerini cihaza kaydet.
 - **Yedek**: kayıtların yalnızca bu cihazın tarayıcısında durur. Düzenli olarak "Yedek indir"i kullan. Yedeği başka bir cihaza yüklersen kayıtlar **birleşir**, hiçbiri silinmez.
+- **Yapay zekâ bağlantısı (isteğe bağlı)**: kaydını bilgisayardaki yerel sunucuya gönderir; orada çalışan MCP sunucusu raporunu bir yapay zekâ asistanına açar. Kurulum için bilgisayarı kuran kişiye `docs/MCP.md`'yi göster. Hiçbir şey internete gönderilmez; yine de yapay zekâya verdiklerini o hizmet görür.
 - **Tüm verileri sil**: yalnızca bu cihazdaki kayıtları temizler.
 
-**Ben → İlerleme / Geçmiş**: dersler, doğru oranları, seri, kayıt ve notların. **Ben → İçerik**: yüklü paketler; yeni paket eklemek ya da senin eklediğini kaldırmak (geri dönüş) için.
+**Ben → İlerleme / Geçmiş**: seviyelerin, dersler, doğru oranları, seri, kayıt ve notların. **Ben → İçerik**: yüklü paketler; yeni paket eklemek ya da senin eklediğini kaldırmak (geri dönüş) için.
 
 ## 6. Sık sorular
 
@@ -86,4 +105,8 @@ Bu uygulamalarla **otomatik bağlantı yoktur**; nedeni `DIS_UYGULAMALAR.md`'de.
 
 **İki cihazda kullanıyorum.** Her cihaz kendi kayıtlarını tutar. Birinden yedek indirip diğerine yükle; kayıtlar birleşir.
 
-**Yeni içerik nasıl gelir?** Siteyi güncelleyen kişi (ya da sen) yeni dosyaları aynı adrese yükler; uygulama bir sonraki açılışta günceller. Kendi paketini eklemek için "Ben → İçerik".
+**Yeni içerik nasıl gelir?** Siteyi güncelleyen kişi (ya da sen) yeni dosyaları aynı adrese yükler; uygulama bir sonraki açılışta günceller. Kendi paketini eklemek için "Ben → İçerik". Düz metinle içerik yazmak için `docs/KOLAY_GIRIS.md`.
+
+**"Bu seviyede içerik yok" ya da "Bu metni daha önce çözdün" diyor.** Hazır okuma ve dinleme metinleri belli bir seviyeye kadardır ve her aralıkta birkaç metin vardır (okuma 28, dinleme 23). Yeni metin kalmayınca uygulama en eski metni **pekiştirme** olarak yeniden verir: bu tur kaydedilir ama seviyeni değiştirmez, çünkü cevapları ezberlemiş olabilirsin. Yeni içerik gerekir (`docs/KOLAY_GIRIS.md`, `docs/MCP.md`); seviyen hatalı değildir. Yetkin bir öğrenci için bu durum yaklaşık 3. haftadan sonra görülebilir.
+
+**Seviyem çok yavaş yükseliyor.** Yükselme için oturumdaki bütün puanlanan soruların ilk denemede doğru olması gerekir; bu bilerek sıkı bir kuraldır (`docs/SEVIYE_SISTEMI.md`, bölüm 6). Çok yavaş buluyorsan kuralı ayarlamak için bilgisayarı kuran kişiye söyle.

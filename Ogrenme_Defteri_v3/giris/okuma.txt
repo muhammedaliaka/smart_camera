@@ -221,3 +221,221 @@ Para bugün ilk bakışta yalnızca bir ödeme aracıdır; oysa üç işlevi var
 ? Lidyalılar sikkelerini neyden yaptı? | Altın ve gümüş karışımından | Deniz kabuğundan | Kâğıttan
 ? Aşağıdakilerden hangisi paranın işlevlerinden biridir? | Değeri saklamak | Mal üretmek | Vergi toplamak
 ? Yazarın paranın değeri hakkındaki düşüncesi nedir? | Değer, insanların paraya duyduğu güvene dayanır | Değer metalin ağırlığındadır | Değer paranın rengine bağlıdır
+
+@okuma
+sv: 6
+baslik: Suyun üç hali
+emoji: 💧
+hedef: Çok kısa ve basit bir metinde “ne olur?” sorusunun cevabını bulmak.
+sozluk: sıvı = akan madde, örneğin su; katı = sert madde, örneğin buz; buhar = suyun gaz hali
+
+Su her yerde vardır. Su bir sıvıdır. Onu içeriz ve elimizi yıkarız.
+
+Su çok soğuyunca buz olur. Buz katıdır ve serttir. Su ısınınca buhar olur. Çay kaynarken çaydanlıktan buhar çıkar.
+
+? Su çok soğuyunca ne olur? | Buz olur | Buhar olur | Kum olur
+? Buz nasıl bir şeydir? | Katı ve sert | Akıcı | Görünmez
+? Su ısınınca ne olur? | Buhar olur | Buz olur | Toprak olur
+? Çay kaynarken çaydanlıktan ne çıkar? | Buhar | Buz | Kar
+? Suyu ne için kullanırız? | İçmek ve elimizi yıkamak için | Yürümek için | Uyumak için
+
+@okuma
+sv: 10
+baslik: Gece ve gündüz
+emoji: 🌗
+hedef: Kısa bir açıklamada neden–sonuç bağını (“bu yüzden”) bulmak.
+sozluk: eksen = Dünya’nın içinden geçtiği düşünülen çizgi; dönmek = bir şeyin çevresinde dönüp durmak
+
+Dünya kendi çevresinde döner. Bir tam dönüş yaklaşık yirmi dört saat sürer. Dünyanın Güneş’e dönük tarafında gündüz olur. Güneş’e dönük olmayan tarafında ise gece olur.
+
+Biz Dünya ile birlikte döndüğümüz için Güneş sabah doğuyor, akşam batıyor gibi görünür. Aslında Güneş doğmaz ve batmaz. Dünya döner.
+
+? Dünya kendi çevresinde bir kez dönmek için ne kadar zaman harcar? | Yaklaşık yirmi dört saat | Bir yıl | Bir hafta
+? Dünyanın Güneş’e dönük tarafında ne olur? | Gündüz | Gece | Kış
+? Güneş’e dönük olmayan tarafta ne olur? | Gece | Gündüz | Yaz
+? Güneş neden doğup batıyor gibi görünür? | Dünya döndüğü için | Güneş yürüdüğü için | Ay büyüdüğü için
+? Metne göre gerçekte ne olur? | Dünya döner | Güneş batar | Gece Güneş saklanır
+
+@okuma
+sv: 15
+baslik: Kelebeğin yaşamı
+emoji: 🦋
+hedef: Bir yaşam döngüsündeki aşamaları sırayla izlemek.
+sozluk: tırtıl = kelebeğin yumurtadan çıkan ilk hali; pupa = tırtılın hareketsiz ve değişim geçirdiği dönem; yaprak = ağacın yeşil kısmı
+
+Bir kelebek, tırtıl olarak başlar. Dişi kelebek yumurtalarını bir yaprağın üzerine bırakır. Yumurtadan küçük bir tırtıl çıkar. Tırtıl sürekli yaprak yer ve hızla büyür.
+
+Tırtıl yeterince büyüyünce hareketsiz bir pupaya dönüşür. Bu dönemde vücudu içeriden tamamen değişir. Bir süre sonra pupa açılır ve içinden kelebek çıkar. Kelebek kanatlarını kurutur ve uçmaya başlar.
+
+? Dişi kelebek yumurtalarını nereye bırakır? | Bir yaprağın üzerine | Suyun içine | Toprağın altına
+? Yumurtadan ne çıkar? | Tırtıl | Kelebek | Pupa
+? Tırtıl çoğunlukla ne yapar? | Yaprak yer ve büyür | Uçar | Uyur
+? Kelebeğin yaşam döngüsü hangi sıradadır? | Yumurta → tırtıl → pupa → kelebek | Yumurta → kelebek → tırtıl → pupa | Tırtıl → yumurta → kelebek → pupa
+? Pupa döneminde ne olur? | Vücut içeriden tamamen değişir | Tırtıl yumurta bırakır | Tırtıl hızla yürür
+
+@okuma
+sv: 20
+baslik: Dişler ve şeker
+emoji: 🦷
+hedef: Bir sebep zincirini (şeker → bakteri → asit → çürük) sırasıyla yakalamak.
+sozluk: bakteri = çok küçük, tek hücreli canlı; asit = ekşi ve aşındırıcı madde; mine = dişin sert dış tabakası
+
+Ağzımızda çok sayıda bakteri yaşar. Bu bakterilerin çoğu zararsızdır, ama bazıları şekerle beslenir. Şekerli bir şey yediğimizde bu bakteriler şekeri kullanır ve asit üretir. Asit, dişin dış tabakası olan mineyi yavaş yavaş aşındırır. Bu aşınma sonunda diş çürüğüne yol açar.
+
+Dişleri günde en az iki kez fırçalamak bakteri tabakasını temizler. Şekerli yiyecekleri gün boyu sık sık atıştırmak yerine bir seferde yiyip sonra dişleri fırçalamak daha yararlıdır. Dişçiye düzenli gitmek de sorunların erken fark edilmesini sağlar.
+
+? Dişin mineyi aşındıran asidi ne üretir? | Şekerle beslenen bakteriler | Diş fırçası | Su
+? Diş çürüğü nasıl oluşur? | Asit mineyi aşındırınca | Dişler çok sert olunca | Dişler çok beyaz olunca
+? Metne göre günde en az kaç kez fırçalamak gerekir? | İki | Bir | Beş
+? Hangisi daha yararlıdır? | Şekerli yiyeceği bir seferde yiyip dişleri fırçalamak | Gün boyu sürekli şekerli atıştırmak | Hiç fırçalamamak
+? Dişçiye düzenli gitmenin yararı nedir? | Sorunlar erken fark edilir | Dişler hiç çürümez | Bakteriler tamamen yok olur
+
+@okuma
+sv: 25
+baslik: Mevsimler neden oluşur?
+emoji: 🌍
+hedef: Yaygın bir yanlış inancın düzeltildiği metni izlemek.
+sozluk: eksen = Dünya’nın kuzey ve güney kutbundan geçtiği düşünülen çizgi; yarımküre = Dünya’nın yarısı; dolanmak = bir şeyin çevresinde dönmek
+
+Birçok kişi mevsimlerin, Dünya’nın Güneş’e yaklaşıp uzaklaşmasından oluştuğunu sanır. Oysa durum böyle değildir. Mevsimlerin asıl nedeni, Dünya’nın ekseninin eğik olmasıdır.
+
+Dünya bir yıl boyunca Güneş’in çevresinde dolanırken ekseni hep aynı yöne eğik kalır. Bu yüzden yılın bir bölümünde Kuzey Yarımküre Güneş’e daha dönük olur. Güneş ışınları daha dik gelir, günler uzar ve yaz yaşanır. Aynı sırada Güney Yarımküre’de kış vardır. Altı ay sonra durum tersine döner.
+
+Bu nedenle Türkiye’de yaz olduğunda Avustralya’da kış yaşanır.
+
+? Mevsimlerin asıl nedeni nedir? | Dünya’nın ekseninin eğik olması | Dünya’nın Güneş’e yaklaşıp uzaklaşması | Ay’ın Dünya’yı çekmesi
+? Türkiye’de yaz olduğunda Avustralya’da hangi mevsim yaşanır? | Kış | Yaz | Sonbahar
+? Kuzey Yarımküre Güneş’e daha dönükken ne olur? | Işınlar daha dik gelir, günler uzar | Günler kısalır | Hava hep soğuk kalır
+? Birçok kişi mevsimlerin nedeni hakkında neyi sanır? | Dünya’nın Güneş’e yaklaşıp uzaklaştığını | Eksenin eğik olduğunu | Ay’ın etkisini
+? Yazar bu metni yazarken ne yapıyor? | Yaygın bir yanlışı düzeltiyor | Bir şiir anlatıyor | Bir ürün satıyor
+
+@okuma
+sv: 29
+baslik: Yenilenebilir enerji
+emoji: 🌬️
+hedef: Bir konunun iki tarafını (yararı ve sınırı) metinde ayırt etmek.
+sozluk: fosil yakıt = kömür, petrol ve doğal gaz gibi yer altından çıkan yakıtlar; türbin = dönerek enerji üreten makine; depolamak = ileride kullanmak için saklamak
+
+Elektriğin büyük bir bölümü bugün de kömür, petrol ve doğal gaz gibi fosil yakıtlardan elde edilir. Bu yakıtların oluşması milyonlarca yıl sürdüğü için kullanıldıkça yenilenmezler; bir gün tükenebilirler. Üstelik yakıldıklarında havaya karbondioksit verirler ve bu gaz iklimin ısınmasına katkıda bulunur.
+
+Rüzgâr, güneş ve akan su gibi kaynaklar ise yenilenebilirdir; kullanıldıkça tükenmezler. Rüzgâr türbinleri rüzgârın gücüyle, güneş panelleri ise ışıkla elektrik üretir.
+
+Ancak her yöntemin bir sınırı vardır: rüzgâr her zaman esmez, güneş de geceleri yoktur. Bu yüzden elektriği depolamak ve farklı kaynakları birlikte kullanmak önemlidir.
+
+? Aşağıdakilerden hangisi fosil yakıttır? | Kömür | Rüzgâr | Güneş
+? Fosil yakıtlar neden yenilenmez? | Oluşmaları milyonlarca yıl sürdüğü için | Çok ucuz oldukları için | Hiç yanmadıkları için
+? Güneş panelleri ne ile elektrik üretir? | Işıkla | Rüzgârla | Suyla
+? Yenilenebilir kaynakların sınırı nedir? | Rüzgâr her zaman esmez, güneş geceleri yoktur | Hiç elektrik üretmezler | Havaya karbondioksit verirler
+? Yazar neyi önemli buluyor? | Elektriği depolamayı ve kaynakları birlikte kullanmayı | Yalnızca fosil yakıt kullanmayı | Rüzgâr türbinlerini kapatmayı
+
+@okuma
+sv: 34
+baslik: Matbaa
+emoji: 📚
+hedef: Bir icadın nedenini, sonucunu ve tarihini metinde birbirinden ayırmak.
+sozluk: matbaa = kitap basılan yer ya da makine; yazıcı = eskiden kitapları elle kopyalayan kişi; hareketli harf = tek tek dizilip yeniden kullanılabilen harf
+
+Matbaanın icadından önce kitaplar elle çoğaltılırdı. Bir yazıcı tek bir kitabı kopyalamak için aylarını harcardı. Bu yüzden kitaplar çok pahalıydı ve çoğu insan hiç kitap sahibi olamazdı.
+
+On beşinci yüzyılın ortalarında Almanya’da Johannes Gutenberg, hareketli metal harflerle baskı yapan bir makine geliştirdi. Harfler tek tek dizilir, mürekkeple boyanır ve kâğıda basılırdı. Aynı sayfadan yüzlerce kopya çıkarmak artık mümkündü. Kitaplar ucuzladı, okuma yazma yaygınlaştı ve yeni fikirler kısa sürede uzak yerlere ulaştı.
+
+Osmanlı’da Müslümanların kurduğu ilk matbaa ise çok daha sonra, on sekizinci yüzyılın başında İbrahim Müteferrika tarafından kuruldu.
+
+? Matbaadan önce kitaplar nasıl çoğaltılırdı? | Elle kopyalanarak | Makineyle | Fotokopiyle
+? Kitaplar neden çok pahalıydı? | Bir kitabı kopyalamak aylar sürerdi | Kâğıt hiç yoktu | Kimse okumak istemezdi
+? Gutenberg ne geliştirdi? | Hareketli metal harflerle baskı yapan bir makine | Telgraf | Yeni bir kâğıt türü
+? Matbaanın sonuçlarından biri nedir? | Kitaplar ucuzladı ve okuma yazma yaygınlaştı | Kitaplar azaldı | Yazıcılar çoğaldı
+? Osmanlı’da Müslümanların kurduğu ilk matbaayı kim kurdu? | İbrahim Müteferrika | Johannes Gutenberg | Mimar Sinan
+
+@okuma
+sv: 36
+baslik: Dünya’nın katmanları
+emoji: 🌋
+hedef: Sıralı bir betimlemede (dıştan içe) her katmanın özelliğini doğru eşleştirmek.
+sozluk: kabuk = Dünya’nın en dıştaki ince katmanı; manto = kabuğun altındaki kalın katman; çekirdek = Dünya’nın en iç bölümü; basınç = sıkıştıran güç; sondaj = yeri delerek derine inme
+
+Dünya, bir elma gibi katmanlıdır. En dıştaki ince katmana kabuk denir; biz kabuğun üzerinde yaşarız. Kabuğun altında manto bulunur. Manto, Dünya’nın hacminin büyük bölümünü oluşturur. Çok sıcak kayalardan oluşur; bu kayalar katıdır, ama milyonlarca yıl içinde çok yavaş hareket edebilir.
+
+Mantonun altında dış çekirdek vardır. Burada demir ve nikel gibi metaller çok sıcak olduğu için sıvı haldedir. En içte ise iç çekirdek bulunur. İç çekirdeğin sıcaklığı Güneş’in yüzeyine yakındır, ama çok büyük basınç altında olduğu için katıdır.
+
+Dünya’nın merkezine ulaşmak mümkün değildir. Yapılan en derin sondaj bile yalnızca kabuğun küçük bir bölümüne inebilmiştir.
+
+? Biz Dünya’nın hangi katmanı üzerinde yaşarız? | Kabuk | Manto | Dış çekirdek
+? Dünya’nın hacminin büyük bölümünü hangi katman oluşturur? | Manto | Kabuk | İç çekirdek
+? Dış çekirdek neden sıvı haldedir? | Metaller çok sıcak olduğu için | İçinde su olduğu için | Basınç hiç olmadığı için
+? İç çekirdek neden katıdır? | Çok büyük basınç altında olduğu için | Çok soğuk olduğu için | İçinde buz olduğu için
+? Metne göre Dünya’nın merkezine ulaşmak ne durumdadır? | Mümkün değildir | Kolaydır | Çoktan yapılmıştır
+
+@okuma
+sv: 40
+baslik: Mimar Sinan
+emoji: 🕌
+hedef: Bir kişinin yaşam öyküsünü zaman sırasıyla izlemek ve aktarılan bilgiyi kesin bilgiden ayırmak.
+sozluk: mimar = yapıları tasarlayan kişi; medrese = eski okul; kubbe = yapıların yuvarlak çatısı; çıraklık/kalfalık/ustalık = bir mesleğin öğrenme basamakları
+
+Mimar Sinan, on altıncı yüzyılda yaşamış ünlü bir Osmanlı mimarıdır. Gençliğinde orduda görev yaptı. Seferlerde köprü, kale ve depo yaparak mühendislik deneyimi kazandı. Sonra uzun yıllar boyunca saray mimarı olarak çalıştı ve yüzlerce yapıya imza attı: camiler, medreseler, hamamlar, köprüler ve su kemerleri.
+
+Aktarıldığına göre Sinan, İstanbul’daki Şehzade Camii’ni çıraklık, Süleymaniye Camii’ni kalfalık, Edirne’deki Selimiye Camii’ni ise ustalık eseri olarak nitelendirmiştir. Selimiye’nin geniş kubbesi sekiz ayak üzerine oturur; bu sayede iç mekân açık ve aydınlıktır.
+
+Sinan’ın yaptığı yapılardan birçoğu bugün de ayaktadır.
+
+? Mimar Sinan hangi yüzyılda yaşadı? | On altıncı | On dokuzuncu | Onuncu
+? Sinan mühendislik deneyimini nasıl kazandı? | Seferlerde köprü, kale ve depo yaparak | Yurtdışında okuyarak | Gemi yaparak
+? Sinan hangi camiyi ustalık eseri olarak nitelendirmiştir? | Selimiye Camii’ni | Şehzade Camii’ni | Süleymaniye Camii’ni
+? Selimiye Camii hangi şehirdedir? | Edirne | İstanbul | Bursa
+? Metne göre Sinan’ın yapılarının bugünkü durumu nedir? | Birçoğu bugün de ayaktadır | Hepsi yıkılmıştır | Hiçbiri bilinmemektedir
+
+@okuma
+sv: 43
+baslik: Ay’ın evreleri
+emoji: 🌙
+hedef: Yaygın bir yanlış açıklamayı (“Dünya’nın gölgesi”) doğru açıklamadan ayırmak.
+sozluk: yansıtmak = gelen ışığı geri göndermek; dolunay = Ay’ın aydınlık yüzünün tamamının göründüğü evre; yeni ay = Ay’ın aydınlık yüzünün görünmediği evre; hilal = ince, orak biçimli Ay
+
+Ay kendi ışığını yaymaz; yalnızca Güneş’ten aldığı ışığı yansıtır. Ay’ın her zaman yarısı Güneş tarafından aydınlatılır. Ama biz Dünya’dan bakarken bu aydınlık yarının ancak bir bölümünü görürüz. Ay, Dünya’nın çevresinde döndükçe gördüğümüz bölüm değişir. Aydınlık yüzün tamamını gördüğümüzde dolunay olur; hiç göremediğimizde ise yeni ay vardır. Arada hilal, ilk dördün ve son dördün gibi evreler izlenir.
+
+Ay’ın bir yeni aydan bir sonraki yeni aya dönüşü yaklaşık yirmi dokuz buçuk gün sürer. Evreleri Dünya’nın gölgesinin yarattığını düşünenler yanılır; Dünya’nın gölgesi yalnızca ay tutulması sırasında Ay’a düşer.
+
+? Ay’ın ışığı nereden gelir? | Güneş’ten gelir, Ay yansıtır | Ay’ın kendisinden | Dünya’dan
+? Yeni aydan bir sonraki yeni aya yaklaşık ne kadar sürer? | Yirmi dokuz buçuk gün | Yedi gün | Bir yıl
+? Dolunayda biz ne görürüz? | Ay’ın aydınlık yüzünün tamamını | Ay’ın hiçbir bölümünü | Yalnızca ince bir orak
+? Metne göre Ay’ın evrelerinin nedeni nedir? | Aydınlık yarının ne kadarını gördüğümüz | Dünya’nın gölgesi | Bulutlar
+? Dünya’nın gölgesi Ay’a ne zaman düşer? | Ay tutulması sırasında | Her gece | Yeni ayda
+
+@okuma
+sv: 54
+baslik: Elektrik nasıl üretilir?
+emoji: ⚡
+hedef: Farklı örnekleri tek bir ortak mantıkta toplayan metni çözmek ve istisnayı bulmak.
+sozluk: jeneratör = hareket enerjisini elektriğe çeviren makine; santral = elektrik üretilen tesis; akım = elektrik yükünün hareketi; baraj = suyu tutmak için yapılan duvar
+
+Evlerimize ulaşan elektriğin büyük bölümü santrallerdeki jeneratörlerde üretilir. Jeneratör basit bir ilkeye dayanır: bir telin yanında bir mıknatıs döndürülürse telde elektrik akımı oluşur. İngiliz bilim insanı Michael Faraday bu ilkeyi 1831 yılında keşfetti.
+
+Jeneratörün dönmesi için bir güce gerek vardır. Termik santrallerde kömür ya da doğal gaz yakılarak su buhara çevrilir ve yüksek basınçlı buhar türbini döndürür. Hidroelektrik santrallerde barajdan akan su, rüzgâr santrallerinde ise rüzgâr türbini çevirir. Nükleer santraller de aynı mantıkla çalışır: atom çekirdeklerinin bölünmesinden çıkan ısı suyu buhara çevirir.
+
+Demek ki çoğu santralde ortak nokta aynıdır: bir güç türbini döndürür, türbin jeneratörü, jeneratör de elektriği üretir. Güneş panelleri ise bu zincirin dışındadır; ışıktan doğrudan elektrik üretirler.
+
+? Jeneratörde elektrik akımı nasıl oluşur? | Bir telin yanında mıknatıs döndürülünce | Telin donmasıyla | Suyun tuzlanmasıyla
+? Bu ilkeyi kim keşfetti? | Michael Faraday | Thomas Edison | Isaac Newton
+? Termik ve nükleer santrallerin ortak noktası nedir? | İkisinde de ısı suyu buhara çevirir | İkisi de rüzgârdan yararlanır | İkisi de baraja ihtiyaç duyar
+? Hangisi “güç → türbin → jeneratör” zincirinin dışındadır? | Güneş panelleri | Hidroelektrik santral | Rüzgâr santrali
+? Hidroelektrik santralde türbini ne döndürür? | Barajdan akan su | Yakılan kömür | Atom çekirdeği
+
+@okuma
+sv: 62
+baslik: Hava durumu ve iklim
+emoji: 🌡️
+hedef: Birbirine karıştırılan iki kavramı tanımlarıyla ayırmak ve yanlış çıkarımı fark etmek.
+sozluk: iklim = bir yerin uzun yıllık ortalama hava koşulları; sera gazı = Dünya’dan kaçan ısının bir kısmını tutan gaz; ortalama = verilerin toplamının sayıya bölünmesiyle bulunan değer; aşırı hava olayı = sel, kuraklık, kasırga gibi olağandışı olay
+
+Hava durumu ile iklim sık sık birbirine karıştırılır. Hava durumu, belli bir yerde belli bir anda ya da birkaç gün içinde yaşanan sıcaklık, yağış ve rüzgâr gibi koşulları anlatır. İklim ise aynı yerde uzun yıllar boyunca gözlenen ortalama hava koşullarıdır; bilim insanları bunun için genellikle otuz yıllık verilerin ortalamasına bakar.
+
+Bu nedenle soğuk bir kış gününde “küresel ısınma yok” demek, tek bir günün hava durumundan iklim hakkında sonuç çıkarmaktır; ölçütler farklıdır. İklimdeki değişimler, küresel ortalama sıcaklığın onlarca yıl boyunca nasıl değiştiğine bakılarak anlaşılır.
+
+Karbondioksit gibi sera gazları, Dünya’dan uzaya kaçan ısının bir kısmını tutar. İnsan faaliyetleri, özellikle fosil yakıtların yakılması, bu gazların miktarını artırdığı için küresel ortalama sıcaklık yükselmektedir. Ancak bu, her bölgenin her mevsimde daha sıcak olacağı anlamına gelmez; yağış düzeni değişebilir ve bazı bölgelerde aşırı hava olayları artabilir.
+
+? Hava durumu neyi anlatır? | Belli bir yerdeki kısa süreli koşulları | Uzun yıllık ortalamayı | Yalnızca yağışı
+? İklim için bilim insanları genellikle kaç yıllık verinin ortalamasına bakar? | Otuz | Üç | Bin
+? “Soğuk bir günde küresel ısınma yok” demek neden hatalı bir çıkarımdır? | Tek günün hava durumundan iklim hakkında sonuç çıkarır | Sıcaklık hiç ölçülmemiştir | Kış günleri hiç soğuk olmaz
+? Sera gazları ne yapar? | Dünya’dan kaçan ısının bir kısmını tutar | Güneş ışığını tamamen durdurur | Yağmuru kesinlikle artırır
+? Metne göre küresel ortalama sıcaklığın yükselmesi ne anlama gelmez? | Her bölgenin her mevsimde daha sıcak olacağı | Karbondioksitin artması | İklimin uzun yılların verisiyle anlaşılması

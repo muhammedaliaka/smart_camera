@@ -23,8 +23,20 @@ test('yoklama geçme ölçütü: %80 ve en az bir soru', () => {
   assert.equal(yoklamaGecti(6, 7, K), true);
   assert.equal(yoklamaGecti(5, 7, K), false);
   assert.equal(yoklamaGecti(4, 5, K), true);
-  assert.equal(yoklamaGecti(3, 4, K), false);
   assert.equal(yoklamaGecti(0, 0, K), false);
+});
+
+test('küçük örneklem payı: en az 4 soruda tek yanlış geçer (3/4), iki yanlış geçmez; 3 soruda pay yok', () => {
+  assert.equal(K.yerlestirme.birYanlisHakki, 4);
+  assert.equal(yoklamaGecti(3, 4, K), true);
+  assert.equal(yoklamaGecti(2, 4, K), false);
+  assert.equal(yoklamaGecti(2, 3, K), false, '3 soruda tek yanlış geçmez');
+  assert.equal(yoklamaGecti(5, 6, K), true);
+  assert.equal(yoklamaGecti(4, 6, K), false);
+  assert.equal(yoklamaGecti(8, 10, K), true, 'oran kuralı: %80');
+  assert.equal(yoklamaGecti(7, 10, K), false);
+  const kapali = { ...K, yerlestirme: { ...K.yerlestirme, birYanlisHakki: 0 } };
+  assert.equal(yoklamaGecti(3, 4, kapali), false, 'pay kapatılabilir');
 });
 
 test('yerleştirme: her yoklama geçilirse 5 → 10 → 20 → 35 → 50 ve 50\'de biter (tavan)', () => {
@@ -189,3 +201,16 @@ test('yardımcılar: başlangıç seviyesi, CEFR yaklaşımı, basamak değeri',
   assert.equal(cefrYaklasim(5), 'A1 başı'); assert.equal(cefrYaklasim(30), 'A2'); assert.equal(cefrYaklasim(70), 'B1');
   assert.equal(basamakDeger([[1, 3], [10, 6]], 9), 3); assert.equal(basamakDeger([[1, 3], [10, 6]], 10), 6);
 });
+
+test('tekrar işaretli oturum (aynı metin yeniden verildi) seviyeyi ne yükseltir ne düşürür; kayıtta durur', () => {
+  const G = { programGunu: 20 }; // yerleştirme günleri geçmiş: oturumlar sayılır
+  const ev = [ayar('okuma', 20, 9)];
+  assert.equal(seviyeler([...ev], K, G).okuma.sv, 20);
+  const tam = otu('okuma', 5, 5, 10, { tekrar: true });
+  const zayif = otu('okuma', 0, 5, 11, { tekrar: true });
+  const r = seviyeler([...ev, tam, zayif, otu('okuma', 0, 5, 12, { tekrar: true })], K, G).okuma;
+  assert.equal(r.sv, 20, 'tekrar oturumları seviyeyi değiştirmez (ne yukarı ne aşağı)');
+  assert.equal(r.oturum, 0, 'tekrar oturumu sayaca girmez');
+  assert.equal(seviyeler([...ev, otu('okuma', 5, 5, 10)], K, G).okuma.sv, 21, 'aynı sonuç tekrar işaretsizse yükseltir');
+});
+

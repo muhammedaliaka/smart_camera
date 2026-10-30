@@ -132,6 +132,7 @@ function seviyeDogrula(ic, idx, H, U) {
     if (b.some((x, i) => i && x <= b[i - 1])) H('seviye', 'yerleştirme basamakları artan olmalı');
     if (y.tavan !== undefined && b.length && b.at(-1) > y.tavan) H('seviye', 'son basamak tavanı aşıyor');
     if (y.gecis !== undefined && !(y.gecis > 0 && y.gecis <= 1)) H('seviye', 'gecis 0–1 arasında olmalı');
+    if (y.birYanlisHakki !== undefined && !(Number.isInteger(y.birYanlisHakki) && y.birYanlisHakki >= 0)) H('seviye', 'birYanlisHakki 0 (kapalı) ya da pozitif tam sayı olmalı');
   }
   const izAdlari = Object.keys(s.izler || {});
   const sd = ic.seviyeli;

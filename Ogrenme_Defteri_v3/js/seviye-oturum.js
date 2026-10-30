@@ -233,7 +233,8 @@ export function olayVerisi(hazir, { dogru = 0, toplam = 0, spor: sp = null } = {
   }
   const ders = hazir.dersId ? { ders: hazir.dersId } : {};
   if (hazir.tur === 'yoklama') return { tur: 'yerlestirme', veri: { iz: hazir.iz, sv: hazir.etkinSv, hedefSv: hazir.sv, dogru, toplam, ...ders } };
-  return { tur: 'seviye-oturum', veri: { iz: hazir.iz, sv: hazir.etkinSv, dogru, toplam, ...ders } };
+  // tekrar: aynı metin yeniden verildi (yeni içerik kalmadı). Cevaplar bellekten gelebilir; kaydedilir ama seviyeyi değiştirmez.
+  return { tur: 'seviye-oturum', veri: { iz: hazir.iz, sv: hazir.etkinSv, dogru, toplam, ...ders, ...(hazir.tekrar ? { tekrar: true } : {}) } };
 }
 
 /**
@@ -253,6 +254,7 @@ export function sonucMetni(hazir, once, sonra, kural, veri) {
     satirlar.push(`Sıradaki yoklama ${y.sonraki}. seviye çevresinde.`);
     return { tur: 'yoklama-devam', baslik: 'Yoklama kaydedildi', satirlar, degisti: false };
   }
+  if (veri?.tekrar) return { tur: 'tekrar', baslik: `Seviye ${sonra.sv}`, satirlar: ['Bu metni daha önce çözdün; yeni bir metin kalmadı. Pekiştirme turu kaydedildi ama seviyeni değiştirmez (cevaplar bellekten gelmiş olabilir). Yeni içerik eklenince seviyen yine yükselebilir.'], degisti: false };
   const o = oturumSonucu(veri, hazir.iz, kural);
   const degisti = sonra.sv !== once.sv;
   if (degisti && sonra.sv > once.sv) return { tur: 'yukari', baslik: `Seviye ${once.sv} → ${sonra.sv}`, satirlar: [`${ad}: ${sonra.gecmis.at(-1)?.neden || 'yükseldin'}. Yeni seviye yaklaşık ${cefrYaklasim(sonra.sv)}.`], degisti };

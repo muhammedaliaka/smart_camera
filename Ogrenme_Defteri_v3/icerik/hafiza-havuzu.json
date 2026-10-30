@@ -2,6 +2,9 @@
  "paket": "hafiza-havuzu",
  "ad": "hafiza-havuzu",
  "surum": 1,
+ "uretim": {
+  "kaynak": "giris"
+ },
  "hafizaHavuzu": [
   "masa",
   "kapı",

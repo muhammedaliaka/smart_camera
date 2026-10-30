@@ -12,6 +12,7 @@ import { oyunlarGorunum, oyunBaslat, disOturumu } from './gorunum/oyunlar.js';
 import { benGorunum, ayarlariUygula } from './gorunum/ben.js';
 import { sonrakiDers } from './gorunum/yardimci.js';
 import { oturumAc } from './seviye-ac.js';
+import { otomatikBaslat } from './esitle.js';
 
 const KOK = document.getElementById('uygulama');
 const MENU = [
@@ -123,6 +124,7 @@ function hataEkrani(e) {
 
 async function basla() {
   store.yukle();
+  otomatikBaslat();
   ayarlariUygula();
   try { await icerik.yukle(); } catch (e) { hataEkrani(e); return; }
   window.addEventListener('hashchange', yonlendir);

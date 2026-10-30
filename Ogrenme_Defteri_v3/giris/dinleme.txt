@@ -216,3 +216,214 @@ It would be wrong, however, to conclude that choice is always bad. Researchers p
 ? Konuşmacı bu etkiyle ilgili hangi uyarıyı yapıyor? | Her araştırma bu etkiyi bulmuyor | Etki kesin olarak kanıtlanmıştır | Etki yalnızca çocuklarda görülür
 ? Konuşmacıya göre insanlar hangi durumda çok seçenekle genellikle iyi başa çıkar? | Ne istediklerini zaten biliyorsa ya da önemli bir şey seçiyorsa | Hiç düşünmeden seçiyorsa | Seçenekler çok benzerse
 ? Sorun asıl olarak ne zaman ortaya çıkıyor? | Seçenekler çok, benzer ve karşılaştırması zor olduğunda | Seçenek sayısı iki olduğunda | Seçenekler ucuz olduğunda
+
+@dinleme
+sv: 4
+baslik: Benim ailem
+emoji: 👨‍👩‍👧
+hedef: Çok kısa bir aile tanıtımında kişileri, yaşı ve evcil hayvanın adını yakalamak.
+neden: İlk dinlemelerde cümleler çok kısa, sözcükler günlük hayattandır. Amaç “anlıyorum” duygusunu pekiştirmektir.
+ses: kadin
+hiz: 0.85
+tr: Bu benim ailem. Bir annem, bir babam ve bir kız kardeşim var. Kız kardeşim altı yaşında. Kırmızıyı sever. Bir köpeğimiz de var. Adı Max.
+
+This is my family. I have a mother, a father and a sister. My sister is six. She likes red. We also have a dog. His name is Max.
+
+? Konuşanın ailesinde kimler var? | Anne, baba ve kız kardeş | Anne ve erkek kardeş | Yalnızca baba -> “a mother, a father and a sister”
+? Kız kardeşi kaç yaşında? | Altı | On | Üç
+? Kız kardeşi hangi rengi seviyor? | Kırmızı | Mavi | Yeşil
+? Köpeğin adı ne? | Max | Tom | Rex
+
+@dinleme
+sv: 8
+baslik: Markette
+emoji: 🛒
+hedef: Alışveriş anlatımında miktarı, fiyatı ve para üstünü yakalamak.
+neden: Sayılar ve fiyatlar günlük hayatın en sık duyulan bilgisidir. Üç sayıyı (ürün, fiyat, para üstü) birbirine karıştırmadan izlemek ilk büyük adımdır.
+ses: erkek
+hiz: 0.85
+tr: Dün markete gittim. İki elma ve bir şişe su aldım. Hepsi üç pound tuttu. Beş poundluk bir banknotla ödedim. İki pound para üstü aldım.
+
+Yesterday I went to the shop. I bought two apples and a bottle of water. They cost three pounds. I paid with a five-pound note. I got two pounds back.
+
+? Konuşan markete ne zaman gitti? | Dün | Bugün | Yarın -> “Yesterday”
+? Kaç elma aldı? | İki | Üç | Beş
+? Aldıklarının toplam fiyatı ne kadar? | Üç pound | Beş pound | İki pound
+? Para üstü ne kadar aldı? | İki pound | Üç pound | Hiç almadı -> “I got two pounds back.”
+
+@dinleme
+sv: 12
+baslik: Odam
+emoji: 🛏️
+hedef: Eşyaların yerini (yanında, üstünde, altında) doğru yakalamak.
+neden: Yer bildiren sözcükler (next to, on, under, in the corner) hem konuşmada hem yol tarifinde sürekli geçer. Bunları kulakla ayırt etmek temel bir beceridir.
+ses: kadin
+hiz: 0.9
+tr: Odam küçük ama onu seviyorum. Pencerenin yanında bir yatak ve köşede bir masa var. Masanın üstünde bir lamba ve üç kitap duruyor. Çantam sandalyenin altında. Duvarda dünya haritası asılı.
+
+My room is small, but I like it. There is a bed next to the window and a desk in the corner. On the desk there is a lamp and three books.
+
+My bag is under the chair. On the wall there is a map of the world.
+
+? Yatak nerede? | Pencerenin yanında | Köşede | Kapının arkasında
+? Masa nerede? | Köşede | Pencerenin yanında | Yatağın altında
+? Masanın üstünde ne var? | Bir lamba ve üç kitap | İki lamba ve bir kitap | Bir bilgisayar
+? Çanta nerede? | Sandalyenin altında | Masanın üstünde | Yatağın üstünde
+? Duvarda ne asılı? | Dünya haritası | Bir saat | Bir resim
+
+@dinleme
+sv: 16
+baslik: Kafede
+emoji: ☕
+hedef: Kısa bir olayda kim ne sipariş etti, neden ve kim ödedi sorularını yakalamak; küçük bir çıkarım yapmak.
+neden: Olay anlatımlarında kişiler, nedenler (so, because) ve sonuç birbirine bağlanır. “Kim ödedi” gibi bilgi bazen doğrudan söylenmez, ipucundan çıkar.
+ses: erkek
+hiz: 0.9
+tr: Anna ve Tom okuldan sonra bir kafeye gitti. Anna sıcak çikolata ve peynirli bir sandviç sipariş etti. Tom aç olmadığı için yalnızca bir bardak portakal suyu aldı. Garson sandviçin on dakika süreceğini söyledi. Beklerken ödevlerinden söz ettiler. Hesap on bir pound tuttu. Sıra Tom’daydı, bu yüzden hesabı o ödedi.
+
+Anna and Tom went to a cafe after school. Anna ordered a hot chocolate and a cheese sandwich. Tom was not hungry, so he only had a glass of orange juice.
+
+The waiter said the sandwich would take ten minutes. While they waited, they talked about their homework. The bill was eleven pounds. It was Tom's turn, so he paid.
+
+? Anna ne sipariş etti? | Sıcak çikolata ve peynirli sandviç | Portakal suyu | Çay ve kek
+? Tom neden yalnızca portakal suyu aldı? | Aç değildi | Parası yoktu | Sandviçi sevmiyordu
+? Sandviç ne kadar sürede gelecek? | On dakika | Beş dakika | Yarım saat
+? Beklerken ne hakkında konuştular? | Ödevleri | Tatil planlarını | Filmleri
+? Hesabı kim ödedi? | Tom | Anna | Garson -> “It was Tom's turn, so he paid.”
+
+@dinleme
+sv: 22
+baslik: Planı değiştirmek
+emoji: 🎬
+hedef: Sesli mesajda neden, öneri, iki seçenek ve rica bilgisini ayırt etmek.
+neden: Plan değiştiren mesajlarda “sorry but … could we …” kalıbı çok sık geçer. Eski plan, yeni öneri ve beklenen yanıt birlikte yakalanmalıdır.
+ses: erkek
+hiz: 0.9
+tr: Merhaba Sara, ben Mike. Üzgünüm ama bu akşam sinemaya gelemem, çünkü bir okul projesini bitirmem gerekiyor. Onun yerine yarın gidebilir miyiz? Film yedi buçukta başlıyor, dokuzu çeyrek geçe de bir seans var. Hangisini tercih edersen biletleri internetten alırım. Ayrıca kuzenim de bize katılabilir. Lütfen altıdan sonra beni ara.
+
+Hi Sara, it's Mike. I'm sorry, but I can't come to the cinema tonight because I have to finish a school project. Could we go tomorrow instead?
+
+The film starts at seven thirty, and there is also a show at nine fifteen. I will buy the tickets online if you tell me which one you prefer. Also, my cousin may come with us. Please call me back after six.
+
+? Mike neden bu akşam gelemiyor? | Bir okul projesini bitirmesi gerekiyor | Hasta | Başka bir arkadaşıyla buluşacak
+? Mike yeni bir gün olarak ne öneriyor? | Yarın | Cumartesi | Gelecek hafta
+? Filmin seansları hangi saatlerde? | Yedi buçuk ve dokuzu çeyrek geçe | Altı ve dokuz | Yedi ve sekiz buçuk
+? Mike biletleri nasıl alacak? | İnternetten | Gişeden | Arkadaşından
+? Sara’dan ne rica ediliyor? | Altıdan sonra Mike’ı araması | Biletleri alması | Kuzeniyle görüşmesi
+? Mesajda kuzeninin kesin olarak geleceği söyleniyor mu? | Hayır, “gelebilir” deniyor | Evet, kesin geliyor | Hayır, hiç gelmeyecek -> “may come” = gelebilir, kesin değil.
+
+@dinleme
+sv: 28
+baslik: Doktorda
+emoji: 🤒
+hedef: Bir olay anlatımında öneri listesini, bir gerekçeyi ve zaman sırasını (cuma … pazartesi) yakalamak.
+neden: Sağlık konuşmalarında öneriler ve nedenleri (“because …”) birlikte verilir. Gerekçeyi yakalamak, listeyi hatırlamaktan daha zordur.
+ses: kadin
+hiz: 0.95
+tr: Geçen hafta kötü bir nezle oldum, bu yüzden doktora gittim. Bana bol su içmemi, üç gün dinlenmemi ve kendimi daha iyi hissedene kadar okula gitmemeyi söyledi. Bana antibiyotik vermedi, çünkü nezlenin bir virüsten kaynaklandığını, antibiyotiklerin ise yalnızca bakterilere karşı işe yaradığını söyledi. Ayrıca daha fazla meyve yememi önerdi. Cuma gününe kadar kendimi çok daha iyi hissettim ve sonraki pazartesi okula döndüm.
+
+Last week I had a bad cold, so I went to see my doctor. She told me to drink plenty of water, rest for three days, and stay away from school until I felt better.
+
+She did not give me any antibiotics because, she said, a cold is caused by a virus, and antibiotics only work against bacteria. She also suggested that I eat more fruit.
+
+By Friday, I felt much better, and the following Monday I went back to school.
+
+? Konuşan kişi neden doktora gitti? | Kötü bir nezle olmuştu | Dişi ağrıyordu | Bir kaza geçirmişti
+? Doktor hangi öneriyi YAPMADI? | Hiç meyve yememesini | Bol su içmesini | Üç gün dinlenmesini
+? Doktor neden antibiyotik vermedi? | Nezle virüsten kaynaklanır, antibiyotik yalnızca bakterilere işe yarar | Antibiyotik çok pahalıdır | İlaç stokta yoktu
+? Konuşan kişi ne zaman çok daha iyi hissetti? | Cuma gününe kadar | Salı günü | İki hafta sonra
+? Okula ne zaman döndü? | Sonraki pazartesi | Aynı cuma | Üç gün sonra, çarşamba
+
+@dinleme
+sv: 34
+baslik: Müze turu
+emoji: 🏛️
+hedef: Bir turun duyurusunda sırayı, süreyi, kuralları ve yerleri yakalamak.
+neden: Gerçek duyurular çok sayıda ayrıntıyı tek seferde verir. Önemli olanı (süre, kural, buluşma yeri) ayıklamak, uzun dinlemelerin temel becerisidir.
+ses: kadin
+hiz: 0.95
+tr: Şehir Müzesi’ne hoş geldiniz. Lütfen dikkatle dinleyin, çünkü tur birazdan başlayacak. Tur yaklaşık doksan dakika sürüyor ve Roma paralarını göreceğiniz zemin katta başlıyor. Daha sonra on yedinci yüzyıldan resimleri görmek için birinci kata çıkacağız. Fotoğraf çekmek serbest, ama resim salonlarında lütfen flaş kullanmayın. Sırt çantaları girişin yanındaki dolaplara bırakılmalı. İkinci kattaki kafede on beş dakikalık bir mola olacak. Tur, yaklaşık on iki buçukta hediyelik eşya dükkânında bitecek. Beni duyamıyorsanız lütfen öne doğru gelin.
+
+Welcome to the City Museum. Please listen carefully, because the tour is about to begin. The tour lasts about ninety minutes, and it starts on the ground floor, where you will see the Roman coins.
+
+After that, we will go up to the first floor to see paintings from the seventeenth century. Photography is allowed, but please do not use a flash in the painting rooms. Backpacks must be left in the lockers near the entrance.
+
+There will be a fifteen-minute break at the cafe on the second floor. The tour will finish at the gift shop at about half past twelve. If you cannot hear me, please move closer to the front.
+
+? Tur yaklaşık ne kadar sürüyor? | Doksan dakika | Altmış dakika | İki saat
+? Tur nerede başlıyor? | Zemin katta, Roma paralarının olduğu yerde | Birinci katta | İkinci kattaki kafede
+? Resim salonlarında hangi kural var? | Flaş kullanılmaz | Fotoğraf çekilemez | Konuşulamaz
+? Sırt çantaları nereye bırakılmalı? | Girişin yanındaki dolaplara | Zemin kattaki odaya | Kafede masaya
+? Mola nerede ve ne kadar sürecek? | İkinci kattaki kafede on beş dakika | Hediyelik dükkânda yarım saat | Girişte beş dakika
+? Tur yaklaşık ne zaman bitecek? | Yaklaşık on iki buçukta | Yaklaşık bir buçukta | Yaklaşık on birde
+
+@dinleme
+sv: 40
+baslik: Yabancı dil nasıl öğrenilir?
+emoji: 🗨️
+hedef: Konuşmacının yaygın bir inancı, kendi deneyimini ve sonuçtaki dersi birbirinden ayırmak.
+neden: Kişisel deneyim anlatan konuşmalarda “yaygın inanç → kendi yaşadığı → çıkardığı ders” akışı sıkça görülür. Bu akışı izlemek ana fikri yakalamayı kolaylaştırır.
+ses: erkek
+hiz: 1.0
+tr: Birçok kişi bir dil öğrenmek için yurtdışında yaşamak gerektiğini düşünür. Aslında araştırmalar ve kendi deneyimim, düzenli pratiğin bulunduğun yerden daha önemli olduğunu gösteriyor. İki yıl boyunca İspanyolca öğrendim; kendi şehrimde, günde yalnızca otuz dakika. İlk başta uzun kelime listeleri ezberledim ama çoğunu bir hafta içinde unuttum. Sonra yöntemimi değiştirdim: kısa podcast’ler dinlemeye ve cümleleri yüksek sesle tekrar etmeye başladım. Ayrıca notlarımı yeniden okumak yerine ertesi gün kendimi sınadım. Altı ay sonra basit bir konuşmayı takip edebiliyordum. Öğrendiğim ders şu: dili etkin biçimde kullanmak, onun hakkında edilgen biçimde okumaktan çok daha etkilidir.
+
+Many people think that to learn a language you need to live abroad. In fact, research and my own experience suggest that regular practice matters more than where you are.
+
+I studied Spanish for two years in my own city, for only thirty minutes a day. At first I memorised long lists of words, but I forgot most of them within a week. Then I changed my method. I started to listen to short podcasts and repeat the sentences aloud. I also tested myself the next day instead of simply reading my notes again.
+
+After six months, I could follow a simple conversation. The lesson I learned is that using the language actively is far more effective than passively reading about it.
+
+? Birçok kişi dil öğrenmek için ne gerektiğini düşünüyor? | Yurtdışında yaşamak | Pahalı bir kurs | Çok genç olmak
+? Konuşmacı günde ne kadar çalıştı? | Otuz dakika | İki saat | Bir saat
+? Uzun kelime listeleriyle ne oldu? | Çoğunu bir hafta içinde unuttu | Hepsini hatırladı | Hiç ezberleyemedi
+? Konuşmacı yöntemini nasıl değiştirdi? | Podcast dinleyip yüksek sesle tekrar etti, ertesi gün kendini sınadı | Yurtdışına taşındı | Daha uzun kelime listeleri yaptı
+? Altı ay sonra ne yapabiliyordu? | Basit bir konuşmayı takip edebiliyordu | Akıcı bir konuşma yapıyordu | Hâlâ hiçbir şey anlamıyordu
+? Konuşmacının çıkardığı ders nedir? | Dili etkin biçimde kullanmak, hakkında okumaktan etkilidir | Dil öğrenmek mümkün değildir | Yurtdışında yaşamak şarttır
+? Konuşmacı İspanya’ya taşındığını söylüyor mu? | Hayır, bundan söz edilmiyor | Evet, bir yıllığına | Evet, altı aylığına -> Duymadığın bir şeyi tahmin etme.
+
+@dinleme
+sv: 48
+baslik: Kütüphane kurtuldu
+emoji: 📚
+hedef: Bir haberde nedeni, rakamları, kimin ne yaptığını ve henüz kesinleşmemiş kısmı ayırmak.
+neden: Haberde olan biten ve söz verilen şey ayrıdır. “En az iki yıl” ile “süresiz” arasındaki fark gibi küçük ifadeler, dinlemede asıl anlamı belirler.
+ses: erkek
+hiz: 1.0
+tr: Gelecek ay kapanması beklenen küçük bir kasaba kütüphanesi, yerel halkın yalnızca üç haftada kırk binden fazla pound toplamasıyla kurtarıldı. Bin dokuz yüz altmış iki’de açılan kütüphane, belediyenin harcamalarını azaltması gerektiği için kapanacaktı. Ancak bir grup genç internette bir kampanya başlattıktan sonra yüzlerce kişi bağış yaptı ve yerel bir fırın kârının bir bölümünü verdi. Belediye binayı en az iki yıl daha açık tutmayı kabul etti, ama bundan fazlasını vaat etmedi. Kütüphaneci çok sevindiğini söyledi; ancak paranın yalnızca temel masrafları karşılayacağı konusunda uyardı ve çocuklar için okuma saatini yürütecek gönüllülere hâlâ ihtiyaç olduğunu belirtti.
+
+A small town library that was due to close next month has been saved after local residents raised more than forty thousand pounds in only three weeks. The library, which opened in nineteen sixty-two, was going to shut because the council needed to reduce its spending.
+
+However, after a group of teenagers started an online campaign, hundreds of people donated money, and a local bakery gave a share of its profits.
+
+The council has agreed to keep the building open for at least two more years, but it has not promised more than that. The librarian said she was delighted, though she warned that the money will cover only the basic costs, and that volunteers are still needed to run the children's reading hour.
+
+? Kütüphane neden kapanacaktı? | Belediyenin harcamalarını azaltması gerekiyordu | Bina yıkılacaktı | Okuyucu kalmamıştı
+? Halk ne kadar sürede ne kadar para topladı? | Üç haftada kırk binden fazla pound | Üç günde dört bin pound | Üç ayda yirmi bin pound
+? Online kampanyayı kim başlattı? | Bir grup genç | Kütüphaneci | Belediye başkanı
+? Belediye binayı ne kadar süreyle açık tutmayı kabul etti? | En az iki yıl | Süresiz | Yalnızca altı ay
+? Kütüphaneci neyi uyardı? | Para yalnızca temel masrafları karşılar, gönüllüler gerekli | Kütüphane yine kapanacak | Çocuk programı kaldırılacak
+? Haberde belediyenin kütüphaneyi süresiz açık tutacağı söyleniyor mu? | Hayır, “en az iki yıl” deniyor | Evet | Yalnızca çocuk bölümü için -> Duyduğunla duymadığını ayır.
+
+@dinleme
+sv: 56
+baslik: Evden çalışma
+emoji: 🏠
+hedef: İki karşıt görüşü, bir anketi ve sonuçta “duruma bağlı” sonucunu birbirinden ayırmak.
+neden: Tartışmalı konularda konuşmacı çoğu zaman taraf tutmaz; iki görüşü ve verileri sıralar. Kimin neyi söylediğini ve konuşmacının kendi sonucunu ayırmak üst düzey dinleme becerisidir.
+ses: kadin
+hiz: 1.0
+tr: Giderek daha fazla şirket, çalışanlarının haftanın en azından bir bölümünü evden çalışmasına izin veriyor. Destekleyenler, birçok insan için günde bir saatten fazla olan işe gidiş geliş süresinin kazanıldığını ve günü daha esnek düzenlemenin mümkün olduğunu söylüyor. Eleştirenler ise bunun yalnızlık yaratabileceğine ve genç çalışanların deneyimli meslektaşlarını izleyerek öğrenme fırsatını kaçırdığına dikkat çekiyor. Bin çalışanla yapılan yeni bir ankette çoğu kişi tamamen evden çalışmak yerine karma bir düzeni tercih etmiş: üç gün evde, iki gün ofiste. Yöneticiler ise bölünmüş durumda: bazıları verimliliğin arttığını bildiriyor, bazıları insanlar yüz yüze nadiren görüştüğünde yaratıcılığın ve takım çalışmasının zarar gördüğünü söylüyor. Açık olan tek şey, yanıtın işin türüne ve kişiye bağlı olduğu.
+
+More and more companies now allow staff to work from home for at least part of the week. Supporters say that it saves commuting time, which for many people is more than an hour a day, and that it makes it easier to organise the day more flexibly.
+
+Critics, however, point out that it can be lonely, and that younger employees miss the chance to learn by watching their more experienced colleagues.
+
+A recent survey of one thousand employees found that most preferred a mixed arrangement, three days at home and two in the office, rather than working entirely from home. Managers remain divided. Some report that productivity has risen, while others say that creativity and teamwork suffer when people rarely meet face to face. What seems clear is that the answer depends on the type of job and on the individual.
+
+? Evden çalışmayı destekleyenler hangi yararı söylüyor? | Gidiş geliş süresi kazanılıyor, gün daha esnek düzenleniyor | Maaşlar artıyor | Ofis kiraları düşüyor
+? Eleştirenlere göre genç çalışanlar neyi kaçırır? | Deneyimli meslektaşlarını izleyerek öğrenmeyi | Daha yüksek maaşı | Uzun tatili
+? Ankete göre çoğu kişi hangi düzeni tercih ediyor? | Üç gün evde, iki gün ofiste | Tamamen evden çalışmayı | Tamamen ofiste çalışmayı
+? Ankete kaç çalışan katılmış? | Bin | Yüz | On bin
+? Yöneticilerin görüşü nasıl? | Bölünmüş durumda | Hepsi destekliyor | Hepsi karşı
+? Konuşmacının kendi sonucu nedir? | Yanıt işin türüne ve kişiye bağlıdır | Evden çalışma yasaklanmalıdır | Herkes evden çalışmalıdır
+? Konuşmacı evden çalışmanın yasaklanması gerektiğini söylüyor mu? | Hayır, böyle bir şey söylenmiyor | Evet | Yalnızca genç çalışanlar için -> Duymadığın bir şeyi tahmin etme.

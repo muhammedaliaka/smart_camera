@@ -137,6 +137,30 @@ test('okuma oturumu: pencere içindeki bitmemiş en yakın metin; yoksa en eski 
   assert.equal(h.dersId, 'okuma-18'); // en eskisi
 });
 
+test('tekrar verilen metin: olay "tekrar" işaretli, seviye değişmez ve sonuç metni bunu söyler', () => {
+  const d = taze();
+  olayEkle(d, 'seviye-ayar', { iz: 'okuma', sv: 20, neden: 'test' });
+  for (const sv of [14, 18, 22, 26]) d.dersler[`okuma-${sv}`] = { bitti: true, son: `2026-05-0${sv % 9 || 1}` };
+  const h = hazirla(B(d), { iz: 'okuma', tur: 'oturum' });
+  assert.equal(h.tekrar, true);
+  const o = olayVerisi(h, { dogru: 4, toplam: 4 }, kural);
+  assert.equal(o.veri.tekrar, true);
+  olayEkle(d, o.tur, o.veri);
+  const G = { programGunu: 20 }; // yerleştirme günleri geçmiş: oturumlar sayılır
+  const sonra = seviyeler(d.olaylar, kural, G)['okuma'];
+  assert.equal(sonra.sv, 20, 'tam doğru bile olsa tekrar metni seviyeyi yükseltmez');
+  const { tekrar: _t, ...tekrarsiz } = o.veri;
+  const kontrol = { olaylar: [...d.olaylar.slice(0, -1)] };
+  olayEkle(kontrol, o.tur, tekrarsiz);
+  assert.equal(seviyeler(kontrol.olaylar, kural, G)['okuma'].sv, 21, 'aynı sonuç tekrar işaretsizse yükseltirdi (test anlamlı)');
+  const m = sonucMetni(h, { sv: 20 }, sonra, kural, o.veri);
+  assert.equal(m.tur, 'tekrar');
+  assert.match(m.satirlar[0], /daha önce çözdün/);
+  assert.equal(m.degisti, false);
+  const yeni = hazirla(B(taze()), { iz: 'okuma', tur: 'oturum' });
+  assert.equal(olayVerisi(yeni, { dogru: 4, toplam: 4 }, kural).veri.tekrar, undefined, 'yeni metinde tekrar işareti yok');
+});
+
 test('yeterli içerik yoksa: "icerik" nedeni ve açıklama (çökmez)', () => {
   const d = taze();
   olayEkle(d, 'seviye-ayar', { iz: 'okuma', sv: 95, neden: 'test' });

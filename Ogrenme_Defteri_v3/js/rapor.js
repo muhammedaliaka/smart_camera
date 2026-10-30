@@ -271,7 +271,7 @@ function bicimle(o, b, kontrolEslesme, oku) {
     case 'yerlestirme-son': return [`- ${etiket('Yoklama kapandı')} ${izAdi(o.iz)}${o.neden ? ` · neden: ${o.neden}` : ''}`];
     case 'seviye-oturum': {
       if (o.iz === 'spor') return [`- ${etiket('Seviye oturumu sonucu')} Spor · seviye ${o.sv} · sonuç: ${o.sonuc === 'tam' ? 'rahat tamamlandı (yükselmeye sayılır)' : o.sonuc === 'zayif' ? 'zor geçti ya da kısmen yapıldı' : 'tamamlandı'} · Beyan: zorlanma ${o.zorlanma ?? '-'}/10${o.kismi ? ', planın bir kısmını yaptı' : ''}${o.destek ? ', destek kullandı' : ''}`];
-      return [`- ${etiket('Seviye oturumu sonucu')} ${izAdi(o.iz)} · seviye ${o.sv}: ${o.dogru}/${o.toplam} doğru${o.toplam ? ` (%${yuzde(o.dogru, o.toplam)})` : ''}${o.toplam && o.dogru === o.toplam ? ' · hepsi ilk denemede doğru' : ''}`];
+      return [`- ${etiket('Seviye oturumu sonucu')} ${izAdi(o.iz)} · seviye ${o.sv}: ${o.dogru}/${o.toplam} doğru${o.toplam ? ` (%${yuzde(o.dogru, o.toplam)})` : ''}${o.toplam && o.dogru === o.toplam ? ' · hepsi ilk denemede doğru' : ''}${o.tekrar ? ' · AYNI METNİN TEKRARI (yeni içerik kalmamıştı; cevaplar bellekten gelmiş olabilir, seviyeye sayılmadı)' : ''}`];
     }
     case 'seviye-ayar': return [`- ${etiket('Seviye elle ayarlandı')} ${izAdi(o.iz)} → seviye ${o.sv}${o.neden ? ` · neden: ${tirnak(o.neden)}` : ''} (öğrenci ya da veli kararı; uygulama hesaplamadı)`];
     default: {
@@ -288,7 +288,7 @@ function seviyeBolumu(L, seviye, kural, bas, son) {
   L('## Seviyeler'); L();
   const y = kural?.yerlestirme, d = kural?.dusme;
   L('Her beceri 1’den başlayan, üst sınırı olmayan bir merdivenle ilerler; numara bir not değil, günlük çalışmanın zorluk basamağıdır. Numaralar bu uygulamaya özgüdür (bir sınav puanına çevrilemez); “yaklaşık düzey” yalnız kaba bir yorumdur.');
-  if (y) L(`- **Yoklama haftası (programın ilk ${y.sonGun} günü):** her beceride kısa yoklamalar yapılır; sorular ${(y.basamaklar || []).join(' → ')}. seviye basamaklarına doğru ilerler (üst sınır ${y.tavan}). Bir basamak, soruların en az %${Math.round((y.gecis ?? 0.8) * 100)}’i doğruysa geçilmiş sayılır. “Bilmiyorum” seçeneği vardır; yoklamada yanlışlar yeniden sorulmaz ve tahmin beklenmez.`);
+  if (y) L(`- **Yoklama haftası (programın ilk ${y.sonGun} günü):** her beceride kısa yoklamalar yapılır; sorular ${(y.basamaklar || []).join(' → ')}. seviye basamaklarına doğru ilerler (üst sınır ${y.tavan}). Bir basamak, soruların en az %${Math.round((y.gecis ?? 0.8) * 100)}’i doğruysa geçilmiş sayılır${y.birYanlisHakki ? ` (en az ${y.birYanlisHakki} soruluk yoklamada tek yanlış da kabul edilir: küçük örneklemde bir dikkatsizlik seviyeyi yanlış göstermesin)` : ''}. “Bilmiyorum” seçeneği vardır; yoklamada yanlışlar yeniden sorulmaz ve tahmin beklenmez.`);
   if (y) L(`- **Başlangıç seviyesi:** geçilen son basamağın %${Math.round((y.guvenPayi ?? 0.8) * 100)}’i (öğrencinin hafifçe rahat başlaması için).`);
   L(`- **Yükselme:** bir oturumda puanlanan tüm sorular ilk denemede doğruysa seviye 1 artar (Spor’da ${kural?.izler?.spor?.yukselmeSeri ?? 2} oturum üst üste rahat tamamlama gerekir).`);
   if (d) L(`- **Düşme:** ${d.ardisik} oturum üst üste doğru oranı %${Math.round(d.altinda * 100)}’in altında kalırsa seviye 1 azalır.`);

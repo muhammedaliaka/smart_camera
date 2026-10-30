@@ -6,7 +6,7 @@
 // Not: yanıtlar rastgele olduğu için seviye sayıları sabit değildir; burada doğrulanan şey bağlantıların çalışmasıdır
 // (seviyenin doğru hesaplanması tests/unit/seviye*.test.mjs içinde sabit senaryolarla denetlenir).
 //   NODE_PATH=$(npm root -g) node tests/e2e/seviye-akisi.cjs
-// Ortam: ADRES (varsayılan http://localhost:8812), CIKTI (ekran görüntüsü klasörü), GUN_SAYISI (varsayılan 8)
+// Ortam: ADRES (varsayılan http://localhost:8812), CIKTI (ekran görüntüsü klasörü), GUN_SAYISI (varsayılan 8), DURUM_CIKTI (verilirse uygulamanın kaydı bu dosyaya yazılır)
 const { chromium } = require('playwright');
 const { gez } = require('./gezgin.cjs');
 const fs = require('fs');
@@ -84,6 +84,10 @@ fs.mkdirSync(CIKTI, { recursive: true });
   if (kotu) sorunlar.push(`rapor: kötü ifade: ${[...new Set(kotu)].join(', ')}`);
   for (const t of ['yerlestirme']) if (!veri.turler.includes(t)) sorunlar.push(`olay türü hiç yazılmadı: ${t}`);
 
+  if (process.env.DURUM_CIKTI) { // MCP testi için gerçek uygulamanın ürettiği kaydı dosyaya yaz (yedek biçiminde)
+    const durum = await p.evaluate(() => JSON.parse(localStorage.getItem('od3.durum')));
+    fs.writeFileSync(process.env.DURUM_CIKTI, JSON.stringify({ tur: 'od3-yedek', surum: '3.2.0', tarih: new Date().toISOString(), durum }));
+  }
   console.log(gunKaydi.join('\n'));
   console.log('Olay türleri:', veri.turler.join(', '));
   await b.close();

@@ -6,7 +6,7 @@ import { bugun, simdiISO, gunEkle, gunFarki } from './zaman.js';
 import * as srsModul from './srs.js';
 
 const ANAHTAR = 'od3.durum';
-export const SURUM = '3.1.0';
+export const SURUM = '3.2.0';
 
 function bos() {
   return {

@@ -2,6 +2,9 @@
  "paket": "kelime-bankasi",
  "ad": "kelime-bankasi",
  "surum": 1,
+ "uretim": {
+  "kaynak": "giris"
+ },
  "kelimeler": [
   {
    "id": "person",
@@ -2498,7 +2501,7 @@
   {
    "id": "cost",
    "en": "cost",
-   "tr": "maliyeti olmak",
+   "tr": "tutmak (fiyat)",
    "grup": "fiil-gunluk",
    "ornek": {
     "en": "How much does it cost?",

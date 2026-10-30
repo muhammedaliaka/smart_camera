@@ -43,7 +43,7 @@ SOZCUKLER = {
     "use": "jˈuːz",  # yalnız "use" yazınca isim (jˈuːs) okur; derste hep fiildir (kullanmak)
 }
 # Whisper'a özel adların yazımını ipucu olarak verir (aksi halde "Ece" yerine "Ajah" gibi bir şey yazar).
-ASR_ISIMLER = ["Ece", "Sam", "Maya", "Daniel", "Türkiye", "Bursa", "Izmir", "Ali", "Anna", "Smith", "Manchester", "Leeds"]
+ASR_ISIMLER = ["Ece", "Sam", "Maya", "Daniel", "Türkiye", "Bursa", "Izmir", "Ali", "Anna", "Smith", "Manchester", "Leeds", "Max", "Tom", "Sara", "Mike"]
 ASR_IPUCU = ", ".join(ASR_ISIMLER) + "."
 
 ONLAR = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()

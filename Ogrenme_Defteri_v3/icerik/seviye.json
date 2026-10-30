@@ -10,6 +10,7 @@
       "basamaklar": [5, 10, 20, 35, 50],
       "tavan": 50,
       "gecis": 0.8,
+      "birYanlisHakki": 4,
       "soru": 7,
       "enCokYoklama": 7,
       "cozunurluk": 2,

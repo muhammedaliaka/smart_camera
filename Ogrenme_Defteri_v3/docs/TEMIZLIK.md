@@ -19,7 +19,7 @@ Eski paket yaklaşık 19 MB idi: `web` 9,7 MB, `reference_v11` 6,6 MB, `docs` 1,
 | `web/legacy-content.json` | 200 görev, 209 soru (çoğunun cevap anahtarı "kendi sözlerinle kaydet") | Doğru cevabı olmayan, ölçülemeyen, tekrarlı içerik. Yerine kelime bankası ve sorulu dersler. |
 | `web/program/articles.json` (50 yazı) | 25 konuda bilgi yazıları | Her yazının iki sorusu aynı şablondu; çoğu konu hedeften bağımsızdı. Öğretici bulunanlar (uyku, uzayda su) sorularla okuma dersine dönüştü. Bkz. `KONU_ANALIZI.md`. |
 | `program.json` içindeki `writingPrompts` (36), `networkScenarios` (36), `readingPassages` (50), `courses` (USA Learns / VOA), `sport.unitEquivalents`, `focusCycle`, `policy`, `profile`, `sources` | Eski program verisi | Yerine ders içindeki sahneler, sorular ve kayıt alanları; "denk dakika" yerine doğrudan mesafe/set hedefi. |
-| `web/audio` içindeki 61 mp3 | Eski içerik sesleri | Yeni içerik farklı; sesler `ses/` altında yeniden üretildi (şimdi 454 konuşma). |
+| `web/audio` içindeki 61 mp3 | Eski içerik sesleri | Yeni içerik farklı; sesler `ses/` altında yeniden üretildi (şimdi 1288 konuşma). |
 | `web/*.js` (core, db, app, activities, journey, free-practice, …), `web/index.html`, `web/assets/` | Eski arayüz ve mantık | Telefonda kullanılabilirlik sorunlu, tek dosyada çok uzun satırlar; sıfırdan modüler yazıldı (`js/`, `css/`). |
 
 ## Yeni pakette ne var, neden?

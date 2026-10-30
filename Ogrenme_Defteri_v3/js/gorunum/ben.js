@@ -12,6 +12,7 @@ import { cevrimdisiIndir, cevrimdisiDurum } from '../cevrimdisi.js';
 import { raporUret } from '../rapor.js';
 import { seviyeDurumu, kural } from '../seviye-ac.js';
 import { cefrYaklasim } from '../seviye.js';
+import * as esitleme from '../esitle.js';
 
 const SEKMELER = [['ilerleme', 'İlerleme'], ['gecmis', 'Geçmiş'], ['ayar', 'Ayarlar'], ['icerik', 'İçerik']];
 
@@ -93,8 +94,8 @@ function seviyeKarti() {
       h('div.satir', h('span', `${iz.simge} ${s.ad}`), h('span.bosluk'), s.yoklamaBekliyor ? h('strong', 'yoklamada') : h('strong', `Seviye ${s.sv}`)),
       h('div.alt-yazi', alt));
     if (!s.yoklamaBekliyor) {
-      const giris = h('input', { type: 'number', min: '1', max: '100', value: String(s.sv), 'aria-label': `${s.ad} seviyesi`, style: 'width:80px' });
-      const neden = h('input', { type: 'text', placeholder: 'Neden? (isteğe bağlı)', 'aria-label': 'Neden', style: 'flex:1;min-width:0' });
+      const giris = h('input.girdi', { type: 'number', min: '1', max: '100', value: String(s.sv), 'aria-label': `${s.ad} seviyesi`, style: 'width:84px' });
+      const neden = h('input.girdi', { type: 'text', placeholder: 'Neden? (isteğe bağlı)', 'aria-label': 'Neden', style: 'flex:1;min-width:0;width:auto' });
       satir.append(h('details.ac', h('summary', 'Elle ayarla'),
         h('div.satir', { style: 'gap:8px;margin:8px 0' }, giris, neden,
           h('button.dugme.cizgili', { type: 'button', onclick: () => {
@@ -320,6 +321,8 @@ function ayar() {
   kok.append(h('div.kart', h('h3', 'Yedek'), h('p.alt-yazi', `Kayıt alanı: %${Math.round(kul.oran * 100)} dolu${kul.oran > 0.7 ? ' — yedek indirip raporunu da kaydetmeni öneririz; alan dolarken eski günlerin yalnız ayrıntısı sadeleşir.' : '.'}`), h('p.alt-yazi', 'Verilerin yalnız bu cihazın tarayıcısında saklanır. Düzenli yedek almanı öneririz; yedeği başka cihaza yükleyebilirsin (kayıtlar birleştirilir, hiçbiri silinmez).'),
     h('div.esnek', h('button.dugme.birincil', { type: 'button', onclick: () => yedekIndir(false) }, simge('indir'), 'Yedek indir'), h('button.dugme.cizgili', { type: 'button', onclick: () => yedekIndir(true) }, 'Ses kayıtlarıyla indir'), h('button.dugme.cizgili', { type: 'button', onclick: () => dosya.click() }, simge('yukle'), 'Yedekten yükle')), dosya));
 
+  kok.append(esitleKarti());
+
   kok.append(h('div.kart.duz', h('h3', 'Tüm verileri sil'), h('p.alt-yazi', 'Bu cihazdaki tüm kayıtlar silinir. Önce yedek indirmeni öneririz.'),
     h('button.dugme.tehlike', { type: 'button', onclick: async () => {
       if (!confirm('Bu cihazdaki TÜM kayıtlar silinecek. Emin misin?')) return;
@@ -376,4 +379,22 @@ function icerikSekmesi() {
     h('button.dugme.birincil', { type: 'button', onclick: () => dosya.click() }, simge('yukle'), 'Paket dosyası seç'), dosya, sonucAlani,
     h('details.ac', { style: 'margin-top:12px' }, h('summary', 'Paket nasıl hazırlanır?'), h('ol.liste-duz', h('li', 'Paket bir JSON dosyasıdır: kelimeler, dersler ve haftalar tek yerde yazılır.'), h('li', 'Cevap anahtarı yoktur: soruların doğru şıkkı her zaman ilk yazılan şıktır, uygulama karıştırır.'), h('li', 'Kelime bir kez tanımlanır; her derste kimliğiyle kullanılır.'), h('li', 'Ayrıntılı rehber: docs/ICERIK_EKLEME.md')))));
   return kok;
+}
+
+/** Bilgisayarla eşitleme (yapay zekâ asistanının MCP sunucusu için). Yalnız scripts/sunucu.mjs ile açılan uygulamada çalışır. */
+function esitleKarti() {
+  const a = esitleme.ayarOku();
+  const belirtec = h('input.girdi', { type: 'password', value: a.belirtec, placeholder: 'Sunucunun yazdığı belirteç', 'aria-label': 'Eşitleme belirteci', autocomplete: 'off' });
+  const durum = h('p.alt-yazi', { 'aria-live': 'polite' }, a.son ? `Son eşitleme: ${saatMetni(a.son)} (${goreceli(a.son.slice(0, 10))})` : 'Henüz eşitlenmedi.');
+  const kaydet = () => { const y = esitleme.ayarOku(); y.belirtec = belirtec.value.trim(); esitleme.ayarYaz(y); };
+  belirtec.addEventListener('change', kaydet);
+  const dugme = h('button.dugme.cizgili', { type: 'button' }, 'Şimdi eşitle');
+  dugme.addEventListener('click', async () => {
+    kaydet(); dugme.disabled = true; durum.textContent = 'Gönderiliyor…';
+    try { const r = await esitleme.esitle(); durum.textContent = `Eşitlendi ✓ (${saatMetni(r.tarih)})`; }
+    catch (e) { durum.textContent = e.message; } finally { dugme.disabled = false; }
+  });
+  return h('div.kart.duz', h('h3', 'Yapay zekâ bağlantısı (isteğe bağlı)'),
+    h('p.alt-yazi', 'Kaydını bilgisayarındaki yerel sunucuya gönderirsin; orada çalışan MCP sunucusu (scripts/mcp.mjs) raporunu ve seviyelerini bir yapay zekâ asistanına açar. Veri yalnız kendi sunucuna gider. Kurulum: docs/MCP.md'),
+    belirtec, onay('Her değişiklikten sonra kendiliğinden eşitle', a.otomatik, (v) => { const y = esitleme.ayarOku(); y.otomatik = v; esitleme.ayarYaz(y); }), dugme, durum);
 }

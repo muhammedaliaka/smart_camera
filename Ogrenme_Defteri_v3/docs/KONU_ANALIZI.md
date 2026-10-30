@@ -19,7 +19,15 @@ v3'ün ilkeleri: **(1)** öğretim uygulamanın içinde; **(2)** nesnel sorulard
 
 ## Sayılarla v3
 
-132 kelime/kalıp · 47 ders (10 İngilizce, 5 hafıza, 4 okuma, 3 dinleme, 14 spor, 7 kontrol, 4 dış uygulama) · 12 konuşma sahnesi · 14 günlük program · 6 spor hareketi · her kelime için ses · 454 farklı ses dosyası.
+545 kelime/kalıp (hepsi seviyeli, 1–70) · 91 ders (12 İngilizce, 5 hafıza, 28 okuma, 25 dinleme, 14 spor, 7 ölçüm) · 147 sözcüklük hafıza havuzu · 12 konuşma sahnesi · 6 spor hareketi · her kelime için ses · 1288 farklı ses dosyası.
+
+**Program artık sabit 14 gün değil:** 1–7. gün yoklama haftası, sonrası seviyeye göre kurulan, 7 günlük desenle sonsuz sürdürülen oturumlar (`KARARLAR.md`, "Program"). Seviye sistemi, kanıt tablosu ve sınırları: `SEVIYE_SISTEMI.md`. Düz metinle içerik ekleme: `KOLAY_GIRIS.md`. Yapay zekâ bağlantısı: `MCP.md`.
+
+**Bu oturumdaki ek çalışma (seviyeli içerik):**
+- **Kelime bankası** 132'den 545'e çıkarıldı (413 yeni; `giris/kelime-bankasi.txt` → `icerik/kelime-bankasi.json`). Her kelimenin seviyesi konu grubu aralığı + sıklık sırası + elle düzeltmeyle verildi (yöntem ve sınırı: `SEVIYE_SISTEMI.md`, bölüm 4).
+- **Okuma:** 24 yeni seviyeli bilgi metni (seviye 4–66; toplam havuz 28), her biri 5 soruyla; **dinleme:** 20 yeni seviyeli kayıt (2–70; toplam havuz 23), uydurma alıştırma metinleri. Yeni okuma/dinleme metinleri ve sorular tarafımdan yazıldı, **bir öğretmen tarafından gözden geçirilmedi**; sesler bilgisayar sesiyle üretilip ASR ile geri okutuldu, **insan kulağıyla dinlenmedi**.
+- **Benzetim:** gerçek motor + gerçek içerik + üretilmiş öğrenci yanıtlarıyla (`tests/benzetim.mjs`, `tests/unit/benzetim.test.mjs`) kuralların tuttuğu ve okuma/dinleme havuzunun yetkin bir öğrenci için yaklaşık 3. haftada yetmeye başladığı görüldü (`SEVIYE_SISTEMI.md`, bölüm 6). Bunun üzerine iki kural eklendi: aynı metnin tekrarı seviyeyi değiştirmez; en az 4 soruluk yoklamada tek yanlış geçmeyi bozmaz.
+- **Hafıza havuzu:** 147 somut Türkçe sözcük (somut sözcüklerin hatırlanma avantajı: `SEVIYE_SISTEMI.md`, kanıt tablosu; benzer görünen çiftler çıkarıldı).
 
 ---
 
@@ -97,7 +105,7 @@ v3'ün ilkeleri: **(1)** öğretim uygulamanın içinde; **(2)** nesnel sorulard
 
 **v3.**
 - **6 hareket** (sandalyeye otur-kalk, duvar şınavı, kalça köprüsü, çekiş provası, denge turu, çeviklik turu); her biri **bir kez** tanımlanır ve **hareket çizimiyle** gösterilir. Aynı hareket her günde yeniden yazılmaz, sayısı (set, tekrar, tur) günden güne değişir.
-- 14 günlük sakin ilerleme: 1–3. gün 1 set, 4–6. gün 2 set, 7. gün hafif gün; 2. haftada güç günleri ile yürüyüş günleri **dönüşümlü**, 14. gün yine hafif.
+- **Seviyeli hacim:** spor için yoklama yoktur; 1. basamaktan başlar (`icerik/seviye.json` → `spor` tablosu: set × tekrar, yürüyüş km, denge ve çeviklik turu). **Üst üste 2 rahat tamamlanan oturumda** bir basamak yükselir (rahat = plan tam yapıldı ve bildirdiğin zorlanma 6/10 ya da altı); zorlanma 7–8 ise seviye aynı kalır, plan kısmen yapıldıysa ya da zorlanma 9–10 ise oturum "zor geçti" sayılır. Bu sayılar **bizim tasarımımızdır** (ilerleyici yükleme ilkesine uyar, kişiye özel değildir). Eski 14 günlük kartlar (1–3. gün 1 set, 4–6. gün 2 set, 7. gün hafif …) Dersler sayfasındaki kütüphanede durur.
 - Hedef **dakika değil, mesafe ve tamamlanan set/tur** (ör. yürüyüş 1,5–2 km → 2,5–3 km).
 - Her kartta güvenlik notu vardır: ağrı ya da baş dönmesinde bırak; yapılmayan spor ertesi güne eklenmez.
 - Zorlanma (0–10), "destek (duvar, sandalye) kullandım" ve kısmi tamamlama kaydedilir; puan değildir.
@@ -155,4 +163,4 @@ Ayrıntı: `DIS_UYGULAMALAR.md`. Kısaca: Voscreen ve Busuu tercih edildi; otoma
 - **Konuşma telaffuzu:** uygulama senin söylediğini değerlendirmez. Ses kaydı alabilir, ama telaffuz puanlaması yoktur.
 - **Dilbilgisi anlatımı** yalnızca kalıp düzeyindedir (I am…, "on Monday", "Can you repeat that, please?", can / can't gibi). Ayrıntılı bir dilbilgisi kitabı değildir.
 - **Ses kalitesi:** Konuşmalar bilgisayarla üretildi ve bilgisayarla kontrol edildi (kayıt metnini geri okuyup karşılaştırma). Bir insanın baştan sona dinleyip onaylaması **yapılmadı**; garip duyduğun bir yer olursa `ICERIK_EKLEME.md`'deki "Ses" bölümüyle o dosyayı yeniden üretebilirsin.
-- **İlerleme sınırı:** 2 haftalık içerik hazır. Yeni haftalar için `ICERIK_EKLEME.md`.
+- **İlerleme sınırı:** Seviye merdiveni sınırsızdır ama hazır içerik kelimede 70, okumada 66, dinlemede 70. seviyeye kadardır ve okuma/dinlemede her ~2–4 seviyede bir metin vardır (yetkin öğrenci için yaklaşık 3. haftada yeni metin biter; bölüm `SEVIYE_SISTEMI.md` 6). Yeni içerik: `KOLAY_GIRIS.md` ya da `MCP.md`.

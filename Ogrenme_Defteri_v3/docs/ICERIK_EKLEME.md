@@ -2,6 +2,10 @@
 
 Uygulamadaki her şey (kelime, ders, program, spor hareketi, dış uygulama bağlantısı) `icerik/` klasöründeki JSON dosyalarından gelir. Kod değiştirmeden ay ay içerik ekleyebilirsin.
 
+> **En kolay yol (kelime, okuma, dinleme, hafıza sözcükleri):** JSON yazma; düz metin yaz. `node scripts/ekle.mjs giris/dosyam.txt` bunu paket dosyasına çevirir, doğrular ve yanlışlık olursa hiçbir şeyi değiştirmez. Biçim: **`docs/KOLAY_GIRIS.md`**. Yapay zekâ ile birlikte çalışıyorsan aynı işi MCP sunucusu yapar: **`docs/MCP.md`**. Bu sayfa, düz metnin karşılamadığı durumlar (program, spor, sahne, hafıza sarayı, dış uygulama) ve her şeyin altında yatan JSON biçimi içindir.
+>
+> Her kelime, okuma ve dinleme dersinin bir **seviyesi (`sv`, 1–100)** vardır; seviye sistemi bunu kullanır (`docs/SEVIYE_SISTEMI.md`). Elle JSON yazarsan kelimeye ve derse `"sv": 12` ekle. `sv` olmayan içerik seviye oturumlarında hiç çıkmaz; yalnız programa bağlı günlerde ya da (dersse) `"kutuphane": true` ile Dersler sayfasında görünür. Hiçbir yerde kullanılmayan, `sv`'siz bir kelime ya da programa bağlı olmayan, `sv`'siz bir ders için doğrulayıcı uyarır.
+
 **Altın kural: her bilgi tek yerde yazılır.** Aynı şeyi iki yere yazman gerekmez; yazarsan doğrulayıcı seni uyarır.
 
 ## 1. Neyi nereye yazarım?

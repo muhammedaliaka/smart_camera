@@ -70,7 +70,7 @@ export function girisCoz(metin, { dosya = 'giris', siklik = null } = {}) {
     else dersBlogu(b, dersler, H, U);
   }
 
-  const paket = { paket: paketAd, ad: paketAd, surum: 1 };
+  const paket = { paket: paketAd, ad: paketAd, surum: 1, uretim: { kaynak: 'giris' } }; // işaret: elle yazılmış paketin üzerine yanlışlıkla yazılmasın (scripts/ekle.mjs)
   if (kelimeler.length) paket.kelimeler = kelimeler;
   if (dersler.length) paket.dersler = dersler;
   if (havuz.length) paket.hafizaHavuzu = havuz;

@@ -11,7 +11,7 @@ export const IZ_SIRASI = ['ingilizce', 'okuma', 'dinleme', 'hafiza', 'spor'];
 
 export const VARSAYILAN = {
   olcek: { en: 1, ust: 100 },
-  yerlestirme: { ilkGun: 1, sonGun: 7, basamaklar: [5, 10, 20, 35, 50], tavan: 50, gecis: 0.8, soru: 7, enCokYoklama: 7, cozunurluk: 2, guvenPayi: 0.8 },
+  yerlestirme: { ilkGun: 1, sonGun: 7, basamaklar: [5, 10, 20, 35, 50], tavan: 50, gecis: 0.8, birYanlisHakki: 4, soru: 7, enCokYoklama: 7, cozunurluk: 2, guvenPayi: 0.8 },
   yukselme: { enAzSoru: 5 },
   dusme: { altinda: 0.6, ardisik: 2 },
   izler: {
@@ -39,9 +39,16 @@ export function kuralKur(ic = null) {
 
 export const izlerListesi = (kural) => IZ_SIRASI.filter((iz) => kural.izler[iz]).concat(Object.keys(kural.izler).filter((iz) => !IZ_SIRASI.includes(iz)));
 
-/** Yoklama geçildi mi: en az bir soru olmalı ve doğru oranı geçiş sınırında ya da üstünde olmalı. */
+/**
+ * Yoklama geçildi mi: en az bir soru olmalı ve doğru oranı geçiş sınırında ya da üstünde olmalı.
+ * Küçük örneklem payı: en az `birYanlisHakki` soruluk yoklamada tek yanlış (ör. 3/4) geçmeyi bozmaz; yoksa 4 soruda tek bir dikkatsizlik
+ * seviyeyi kalıcı olarak en alta iterdi (5 soruda 4/5 zaten geçer, 4 soruda 3/4 geçmezdi). 0 ya da yoksa pay kapalıdır.
+ */
 export function yoklamaGecti(dogru, toplam, kural) {
-  return toplam > 0 && dogru / toplam >= kural.yerlestirme.gecis - 1e-9;
+  const y = kural.yerlestirme;
+  if (!(toplam > 0)) return false;
+  if (dogru / toplam >= y.gecis - 1e-9) return true;
+  return !!y.birYanlisHakki && toplam >= y.birYanlisHakki && toplam - dogru <= 1;
 }
 
 const sirala = (olaylar) => [...olaylar].sort((a, b) => String(a.t).localeCompare(String(b.t)));
@@ -147,6 +154,7 @@ export function seviyeler(olaylar, kural, { programGunu = null } = {}) {
         continue;
       }
       if (!yerKapandi) continue; // yerleştirme bitmeden yapılan oturum sayılmaz
+      if (o.tekrar) continue; // aynı metnin tekrarı: kayıtta durur, seviyeyi ne yükseltir ne düşürür
       const r = oturumSonucu(o, iz, kural);
       if (!r) continue;
       oturum++;
