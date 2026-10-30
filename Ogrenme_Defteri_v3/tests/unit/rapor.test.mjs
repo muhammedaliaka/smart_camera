@@ -185,6 +185,8 @@ test('kapsam: uygulamanın yazdığı her kayıt türünün raporda biçimi ya d
   for (const f of dosyalar) {
     const kaynak = readFileSync(f, 'utf8');
     for (const m of kaynak.matchAll(/(?:store\.olay|api\.kaydet|[^.\w]olay)\(\s*'([a-z-]+)'/g)) turler.add(m[1]);
+    // seviye olayları js/seviye-oturum.js içinde { tur: '…' } olarak kurulur, seviye-ac.js store.olay(o.tur, …) ile yazar
+    if (f.endsWith('seviye-oturum.js')) for (const m of kaynak.matchAll(/tur:\s*'((?:yerlestirme|seviye)[a-z-]*)'/g)) turler.add(m[1]);
   }
   assert.ok(turler.size >= 15, `beklenenden az kayıt türü bulundu: ${[...turler]}`);
   const eksik = [...turler].filter((t) => !RAPOR_TURLERI.has(t) && !RAPOR_ATLANAN[t]);

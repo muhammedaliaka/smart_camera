@@ -68,7 +68,16 @@ for (const h of r.ic.haftalar) {
   const dersSayisi = h.gunler.reduce((t, g) => t + (g.gorevler || []).length, 0);
   console.log(`   Hafta ${h.hafta}: ${h.baslik || ''} — ${h.gunler.length} gün, ${dersSayisi} görev`);
 }
-console.log(`   Toplam: ${r.idx.enSonGun} gün`);
+if (r.ic.seviyeli) {
+  const ad = (g) => (g.oturum || r.idx.ders.get(g.ders)?.baslik || g.ders) + (g.istege ? '*' : '');
+  console.log(`   Yoklama haftasından sonra her hafta (desen, ${r.ic.seviyeli.desen.length} gün; * isteğe bağlı):`);
+  r.ic.seviyeli.desen.forEach((gun, i) => console.log(`     ${i + 1}. gün: ${gun.map(ad).join(', ')}`));
+  const pool = {};
+  for (const d of r.ic.dersler) if (Number.isFinite(d.sv)) (pool[d.iz] ||= []).push(d.sv);
+  console.log(`   Seviyeli ders havuzu: ${Object.entries(pool).map(([iz, a]) => `${iz} ${a.length} ders (sv ${Math.min(...a)}–${Math.max(...a)})`).join(' · ')}`);
+  console.log(`   Kelime: ${r.ic.kelimeler.filter((k) => Number.isFinite(k.sv)).length} seviyeli (sv ${Math.min(...r.ic.kelimeler.map((k) => k.sv).filter(Number.isFinite))}–${Math.max(...r.ic.kelimeler.map((k) => k.sv).filter(Number.isFinite))}) · hafıza havuzu ${r.ic.hafizaHavuzu.length} sözcük`);
+  console.log(`   Gün gün yazılmış günler: ${r.idx.acikSonGun}; sonrası sonsuz (seviyeli)`);
+} else console.log(`   Toplam: ${r.idx.enSonGun} gün`);
 
 console.log(sorun ? `\nTamamlandı; ${sorun} noktaya bakmak gerekebilir (yukarıya bak).` : '\n✓ Her şey tamam: içerik doğru, program eksiksiz, sesler hazır.');
 process.exit(0);

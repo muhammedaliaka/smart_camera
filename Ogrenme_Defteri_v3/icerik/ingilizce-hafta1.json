@@ -4,7 +4,7 @@
   "surum": 1,
   "dersler": [
     {
-      "id": "en-01-tanisma", "iz": "ingilizce", "emoji": "🤝",
+      "id": "en-01-tanisma", "iz": "ingilizce", "sv": 2, "emoji": "🤝",
       "baslik": "Merhaba! Kendini tanıt",
       "hedef": "İngilizce 4 cümleyle kendini tanıtmak (adın, nerelisin, nerede yaşıyorsun, öğrenci misin) ve karşındakine nasıl olduğunu sormak.",
       "neden": "Tanışma her konuşmanın ilk adımı. Bu kalıpları bir kez doğru öğrenirsen İngilizce konuşan biriyle ilk dakikayı rahat geçirirsin. Sonraki derslerin kelimeleri de bunların üzerine kurulur.",
@@ -71,7 +71,7 @@
     },
 
     {
-      "id": "en-02-sayilar", "iz": "ingilizce", "emoji": "🔢",
+      "id": "en-02-sayilar", "iz": "ingilizce", "sv": 3, "emoji": "🔢",
       "baslik": "Sayılar ve yaş",
       "hedef": "1–10 arası sayıları söylemek, 11–99 arası sayıları duyunca anlamak (13 ile 30'u karıştırmamak) ve yaşını söylemek.",
       "neden": "Telefonda, saatte, fiyatta, adreste hep sayı duyarsın. Sayıyı duyunca hemen anlamak, İngilizce dinlemenin en işe yarayan becerilerinden biridir.",
@@ -134,7 +134,7 @@
     },
 
     {
-      "id": "en-03-esyalar", "iz": "ingilizce", "emoji": "🎒",
+      "id": "en-03-esyalar", "iz": "ingilizce", "sv": 4, "emoji": "🎒",
       "baslik": "Eşyalar ve renkler",
       "hedef": "Bir eşyanın ne olduğunu ve rengini söylemek: “This is a pen. It is blue.” ve “Is this your bag?” diye sormak.",
       "neden": "Çevrendeki şeylerin adını bilmek, gün içinde sürekli kullanacağın en somut kelime hazinesidir. Renk + eşya kalıbı da tüm cümlelerin temeli.",
@@ -193,7 +193,7 @@
     },
 
     {
-      "id": "en-04-gunler", "iz": "ingilizce", "emoji": "📅",
+      "id": "en-04-gunler", "iz": "ingilizce", "sv": 5, "emoji": "📅",
       "baslik": "Günler ve plan yapmak",
       "hedef": "Haftanın günlerini bilmek, “The class is on Tuesday. It starts at four.” gibi bir planı söylemek ve anlamak.",
       "neden": "Buluşma, ders, randevu: her plan bir gün ve bir saatle söylenir. “on + gün”, “at + saat” kalıbını bir kez öğrenince bunu hiç karıştırmazsın.",

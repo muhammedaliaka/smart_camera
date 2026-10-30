@@ -1,0 +1,907 @@
+{
+ "paket": "okuma-seviyeli",
+ "ad": "okuma-seviyeli",
+ "surum": 1,
+ "dersler": [
+  {
+   "id": "oku-sv4-dort-mevsim",
+   "iz": "okuma",
+   "sv": 4,
+   "emoji": "🍂",
+   "baslik": "Dört mevsim",
+   "hedef": "Kısa bir metni okuyup ayrıntıları bulmak.",
+   "neden": "Kısa ve basit metinlerde “ne, ne zaman” sorularının cevabını metinden bulma alışkanlığı kurulur.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Dört mevsim",
+     "kilavuz": "parmak",
+     "metin": [
+      "Bir yılda dört mevsim vardır: ilkbahar, yaz, sonbahar ve kış. İlkbaharda çiçekler açar. Yazın hava sıcak olur. Sonbaharda yapraklar sararır ve yere düşer. Kışın hava soğur ve bazen kar yağar."
+     ],
+     "sorular": [
+      {
+       "soru": "Bir yılda kaç mevsim vardır?",
+       "secenekler": [
+        "Dört",
+        "Üç",
+        "Beş"
+       ],
+       "aciklama": "İlk cümle: dört mevsim vardır."
+      },
+      {
+       "soru": "Çiçekler hangi mevsimde açar?",
+       "secenekler": [
+        "İlkbaharda",
+        "Kışın",
+        "Sonbaharda"
+       ]
+      },
+      {
+       "soru": "Metne göre hangi mevsimde hava sıcak olur?",
+       "secenekler": [
+        "Yazın",
+        "Kışın",
+        "Sonbaharda"
+       ]
+      },
+      {
+       "soru": "Yapraklar ne zaman yere düşer?",
+       "secenekler": [
+        "Sonbaharda",
+        "Yazın",
+        "İlkbaharda"
+       ]
+      },
+      {
+       "soru": "Metne göre kışın ne olabilir?",
+       "secenekler": [
+        "Kar yağabilir",
+        "Çiçekler açar",
+        "Yapraklar sararır"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv8-arilar",
+   "iz": "okuma",
+   "sv": 8,
+   "emoji": "🐝",
+   "baslik": "Arılar",
+   "hedef": "Bir hayvanın yaşamını anlatan metinden ayrıntıları ve nedeni bulmak.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Arılar",
+     "kilavuz": "parmak",
+     "metin": [
+      "Arılar küçük böceklerdir. Çiçeklerden nektar toplarlar ve bunu kovanlarına taşırlar. Kovanda nektardan bal yapılır. Her kovanda bir kraliçe arı ve binlerce işçi arı yaşar. İşçi arılar çiçek toplar, kovanı temizler ve yavruları besler.",
+      "Arılar olmasa birçok bitki meyve veremezdi. Çünkü arılar çiçekten çiçeğe giderken polen taşır."
+     ],
+     "sorular": [
+      {
+       "soru": "Arılar çiçeklerden ne toplar?",
+       "secenekler": [
+        "Nektar",
+        "Su",
+        "Yaprak"
+       ]
+      },
+      {
+       "soru": "Arıların yaşadığı yere ne denir?",
+       "secenekler": [
+        "Kovan",
+        "Ağıl",
+        "Kümes"
+       ]
+      },
+      {
+       "soru": "Her kovanda kaç kraliçe arı yaşar?",
+       "secenekler": [
+        "Bir",
+        "İki",
+        "Binlerce"
+       ],
+       "aciklama": "“bir kraliçe arı ve binlerce işçi arı”"
+      },
+      {
+       "soru": "Arılar neden önemlidir?",
+       "secenekler": [
+        "Çiçekten çiçeğe polen taşırlar",
+        "Ağaçları keserler",
+        "Meyveleri toplarlar"
+       ]
+      },
+      {
+       "soru": "İşçi arılar ne yapar?",
+       "secenekler": [
+        "Çiçek toplar, kovanı temizler, yavruları besler",
+        "Yalnızca uyur",
+        "Kovandan hiç çıkmaz"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "nektar",
+       "a": "çiçeklerin içindeki tatlı sıvı"
+      },
+      {
+       "k": "kovan",
+       "a": "arıların yaşadığı yer"
+      },
+      {
+       "k": "polen",
+       "a": "çiçeklerin içindeki sarı toz"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv12-yagmur-nasil-olusur",
+   "iz": "okuma",
+   "sv": 12,
+   "emoji": "🌧️",
+   "baslik": "Yağmur nasıl oluşur?",
+   "hedef": "Olayların sırasını (önce, sonra) bir metinden çıkarmak.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Yağmur nasıl oluşur?",
+     "kilavuz": "parmak",
+     "metin": [
+      "Güneş denizleri, gölleri ve nehirleri ısıtır. Sular buharlaşır ve gökyüzüne çıkar. Yukarıda hava soğuktur. Buhar soğuyunca küçük su damlacıklarına dönüşür ve bulutları oluşturur.",
+      "Bulutlardaki damlacıklar birleşip ağırlaşınca yere düşer. Buna yağmur denir. Yağmur suları tekrar denizlere, göllere ve nehirlere ulaşır. Böylece su yolculuğu baştan başlar."
+     ],
+     "sorular": [
+      {
+       "soru": "Su gökyüzüne nasıl çıkar?",
+       "secenekler": [
+        "Buharlaşarak",
+        "Donarak",
+        "Dökülerek"
+       ]
+      },
+      {
+       "soru": "Bulutlar neden oluşur?",
+       "secenekler": [
+        "Buhar soğuyup damlacıklara dönüşünce",
+        "Güneş büyüyünce",
+        "Rüzgâr esince"
+       ]
+      },
+      {
+       "soru": "Damlacıklar ne zaman yere düşer?",
+       "secenekler": [
+        "Birleşip ağırlaşınca",
+        "Isınınca",
+        "Hafifleyince"
+       ]
+      },
+      {
+       "soru": "Yağmur suları sonunda nereye ulaşır?",
+       "secenekler": [
+        "Denizlere, göllere ve nehirlere",
+        "Güneşe",
+        "Dağların tepesine"
+       ]
+      },
+      {
+       "soru": "Metne göre yukarıda hava nasıldır?",
+       "secenekler": [
+        "Soğuk",
+        "Sıcak",
+        "Rüzgârsız"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "buharlaşmak",
+       "a": "suyun gaz haline gelmesi"
+      },
+      {
+       "k": "damlacık",
+       "a": "çok küçük su damlası"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv17-bitkiler-nasil-beslenir",
+   "iz": "okuma",
+   "sv": 17,
+   "emoji": "🌱",
+   "baslik": "Bitkiler nasıl beslenir?",
+   "hedef": "Bir sürecin parçalarını (girenler, çıkanlar) metinden ayırmak.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Bitkiler nasıl beslenir?",
+     "kilavuz": "parmak",
+     "metin": [
+      "Hayvanlar yemek yer, ama bitkilerin ağzı yoktur. Peki bitkiler nasıl beslenir? Bitkiler besinlerini kendileri üretir.",
+      "Kökler topraktan su ve mineral alır. Yapraklar havadan karbondioksit gazını alır. Yaprakların içindeki yeşil madde, güneş ışığının yardımıyla su ile karbondioksiti şekere dönüştürür. Bu olaya fotosentez denir.",
+      "Fotosentez sırasında oksijen de oluşur ve havaya verilir. İnsanlar ve hayvanlar bu oksijeni soluyarak yaşar."
+     ],
+     "sorular": [
+      {
+       "soru": "Bitkiler besinlerini nasıl elde eder?",
+       "secenekler": [
+        "Kendileri üretir",
+        "Hayvanlardan alır",
+        "Topraktaki böcekleri yer"
+       ]
+      },
+      {
+       "soru": "Kökler topraktan ne alır?",
+       "secenekler": [
+        "Su ve mineral",
+        "Karbondioksit",
+        "Güneş ışığı"
+       ]
+      },
+      {
+       "soru": "Fotosentez için hangi üçü gerekir?",
+       "secenekler": [
+        "Su, karbondioksit ve güneş ışığı",
+        "Toprak, rüzgâr ve ısı",
+        "Oksijen, şeker ve su"
+       ]
+      },
+      {
+       "soru": "Fotosentez sırasında havaya ne verilir?",
+       "secenekler": [
+        "Oksijen",
+        "Karbondioksit",
+        "Şeker"
+       ]
+      },
+      {
+       "soru": "Yaprakların içindeki yeşil madde ne yapar?",
+       "secenekler": [
+        "Işığın yardımıyla su ve karbondioksiti şekere çevirir",
+        "Kökleri toprağa bağlar",
+        "Meyveyi olgunlaştırır"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "mineral",
+       "a": "toprakta bulunan, bitkinin ihtiyaç duyduğu madde"
+      },
+      {
+       "k": "fotosentez",
+       "a": "bitkinin ışıkla besin üretmesi"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv22-kagit-nasil-yapilir",
+   "iz": "okuma",
+   "sv": 22,
+   "emoji": "📄",
+   "baslik": "Kâğıt nasıl yapılır?",
+   "hedef": "Aşamalı bir üretim sürecini doğru sıraya koymak.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Kâğıt nasıl yapılır?",
+     "kilavuz": "parmak",
+     "metin": [
+      "Kâğıdın hammaddesi çoğunlukla ağaçtır. Önce ağaçlar kesilir ve kabukları soyulur. Sonra odunlar küçük parçalara ayrılır. Parçalar suyla ve bazı maddelerle birlikte kaynatılır; ortaya yumuşak, sulu bir hamur çıkar.",
+      "Bu hamur geniş bir elekten geçirilir ve suyunun büyük bölümü süzülür. Daha sonra silindirler arasında preslenerek ince bir tabaka haline getirilir ve kurutulur. Böylece kâğıt hazır olur.",
+      "Kullanılmış kâğıtlar da geri dönüştürülerek yeniden hamura çevrilebilir. Bu sayede daha az ağaç kesilir."
+     ],
+     "sorular": [
+      {
+       "soru": "Kâğıdın hammaddesi çoğunlukla nedir?",
+       "secenekler": [
+        "Ağaç",
+        "Taş",
+        "Kum"
+       ]
+      },
+      {
+       "soru": "Odun parçaları kaynatılınca ne olur?",
+       "secenekler": [
+        "Yumuşak, sulu bir hamur oluşur",
+        "Katı bir blok oluşur",
+        "Toz oluşur"
+       ]
+      },
+      {
+       "soru": "Hamur ince bir tabaka haline nasıl getirilir?",
+       "secenekler": [
+        "Silindirler arasında preslenerek",
+        "Elle yoğurularak",
+        "Dondurularak"
+       ]
+      },
+      {
+       "soru": "Hangisi doğru sıradır?",
+       "secenekler": [
+        "Kesme → kaynatma → eleme → presleme → kurutma",
+        "Kurutma → kaynatma → kesme → presleme → eleme",
+        "Kaynatma → kesme → kurutma → eleme → presleme"
+       ]
+      },
+      {
+       "soru": "Geri dönüşümün metindeki yararı nedir?",
+       "secenekler": [
+        "Daha az ağaç kesilir",
+        "Kâğıt daha beyaz olur",
+        "Kâğıt daha ince olur"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "hammadde",
+       "a": "bir şeyi yapmak için kullanılan ilk madde"
+      },
+      {
+       "k": "geri dönüşüm",
+       "a": "kullanılmış maddenin yeniden işlenip kullanılması"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv27-ses-nasil-yayilir",
+   "iz": "okuma",
+   "sv": 27,
+   "emoji": "🔊",
+   "baslik": "Ses nasıl yayılır?",
+   "hedef": "Neden–sonuç ilişkisini ve ayrıntıları aynı metinde birlikte izlemek.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Ses nasıl yayılır?",
+     "kilavuz": "parmak",
+     "metin": [
+      "Ses, bir şeyin titremesiyle oluşur. Bir gitarın telini çektiğinizde tel hızla titrer ve çevresindeki havayı da titreştirir. Bu titreşim, havada dalgalar halinde yayılarak kulağımıza ulaşır. Kulağımız bu titreşimleri algılar ve biz sesi duyarız.",
+      "Sesin yayılması için bir ortama ihtiyaç vardır. Ortam hava, su ya da katı bir madde olabilir. Uzayda hava olmadığı için sesler yayılamaz; astronotlar birbirleriyle telsizle konuşur.",
+      "Ses, katı maddelerde havadan daha hızlı yayılır. Bu yüzden kulağınızı ahşap bir masaya dayarsanız uzaktaki bir vuruşu daha çabuk duyabilirsiniz."
+     ],
+     "sorular": [
+      {
+       "soru": "Ses nasıl oluşur?",
+       "secenekler": [
+        "Bir şeyin titremesiyle",
+        "Havanın soğumasıyla",
+        "Işığın yayılmasıyla"
+       ]
+      },
+      {
+       "soru": "Uzayda sesler neden yayılamaz?",
+       "secenekler": [
+        "Orada sesi taşıyacak hava yoktur",
+        "Orası çok soğuktur",
+        "Astronotlar sessiz kalır"
+       ]
+      },
+      {
+       "soru": "Astronotlar birbirleriyle nasıl konuşur?",
+       "secenekler": [
+        "Telsizle",
+        "Bağırarak",
+        "Yazarak"
+       ]
+      },
+      {
+       "soru": "Ses hangi ortamda daha hızlı yayılır?",
+       "secenekler": [
+        "Katı maddede",
+        "Havada",
+        "Boşlukta"
+       ]
+      },
+      {
+       "soru": "Metinde “ortam” sözcüğü hangi anlamda kullanılmıştır?",
+       "secenekler": [
+        "Sesin içinde yayıldığı madde",
+        "Bir odanın içi",
+        "Kalabalık bir yer"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "titreşim",
+       "a": "hızlı ileri geri hareket"
+      },
+      {
+       "k": "ortam",
+       "a": "sesin içinde yayıldığı madde"
+      },
+      {
+       "k": "astronot",
+       "a": "uzaya giden kişi"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv32-miknatis",
+   "iz": "okuma",
+   "sv": 32,
+   "emoji": "🧲",
+   "baslik": "Mıknatıs",
+   "hedef": "Bir kuralı ve onun istisnalarını metinden ayırt etmek.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Mıknatıs",
+     "kilavuz": "parmak",
+     "metin": [
+      "Mıknatıslar demir gibi bazı metalleri kendine çeken cisimlerdir. Her mıknatısın iki ucu vardır; bunlara kutup denir: kuzey kutbu ve güney kutbu. İki mıknatısın aynı kutupları birbirini iter, farklı kutupları ise birbirini çeker. Bu kuralı iki mıknatısı yaklaştırarak kolayca deneyebilirsiniz.",
+      "Her metal mıknatıs tarafından çekilmez. Örneğin demir, nikel ve kobalt çekilir; ama alüminyum, bakır ve altın belirgin biçimde çekilmez.",
+      "Bir mıknatısı ortadan ikiye kırsanız bile elinizde iki yeni mıknatıs olur ve her birinin yine iki kutbu bulunur. Dünyamız da büyük bir mıknatıs gibi davranır; pusulalar bu yüzden hep kuzeyi gösterir."
+     ],
+     "sorular": [
+      {
+       "soru": "İki mıknatısın aynı kutupları birbirine ne yapar?",
+       "secenekler": [
+        "İter",
+        "Çeker",
+        "Hiçbir şey yapmaz"
+       ]
+      },
+      {
+       "soru": "Aşağıdakilerden hangisi mıknatıs tarafından çekilir?",
+       "secenekler": [
+        "Demir",
+        "Bakır",
+        "Altın"
+       ]
+      },
+      {
+       "soru": "Bir mıknatıs ortadan kırılırsa ne olur?",
+       "secenekler": [
+        "İki yeni mıknatıs olur ve her birinin iki kutbu bulunur",
+        "Mıknatıslık biter",
+        "Tek kutuplu iki parça olur"
+       ]
+      },
+      {
+       "soru": "Pusulalar neden kuzeyi gösterir?",
+       "secenekler": [
+        "Dünya büyük bir mıknatıs gibi davrandığı için",
+        "Rüzgâr kuzeyden estiği için",
+        "İçlerinde küçük bir güneş olduğu için"
+       ]
+      },
+      {
+       "soru": "Metnin ana fikri nedir?",
+       "secenekler": [
+        "Mıknatısların özelliklerini anlatmak",
+        "Pusula yapımını anlatmak",
+        "Metallerin fiyatını anlatmak"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "kutup",
+       "a": "mıknatısın çekme gücünün en büyük olduğu uç"
+      },
+      {
+       "k": "pusula",
+       "a": "yönü gösteren araç"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv38-eskiden-haberlesme",
+   "iz": "okuma",
+   "sv": 38,
+   "emoji": "✉️",
+   "baslik": "Eskiden haberleşme",
+   "hedef": "Zaman sırasını ve yazarın vurguladığı ortak noktayı yakalamak.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Eskiden haberleşme",
+     "kilavuz": "parmak",
+     "metin": [
+      "Bugün bir mesajı birkaç saniyede dünyanın öbür ucuna gönderebiliyoruz. Oysa insanlar haberleşmek için uzun zaman çok daha yavaş yöntemler kullandı. İlk çağlarda haberciler haberi ayaklarıyla ya da atla taşırdı. Bazı toplumlar uzak tepelerde ateş yakarak, bazıları ise davul sesiyle haber verdi. Güvercinlerin de mektup taşıdığı biliniyor; ama bu yöntem her zaman güvenilir değildi.",
+      "Yüzyıllar sonra posta teşkilatları kuruldu ve mektuplar düzenli olarak taşınmaya başladı. On dokuzuncu yüzyılda telgraf, mesajları teller aracılığıyla elektrik sinyali olarak göndermeyi mümkün kıldı. Ardından telefon, radyo ve televizyon geldi. Bugün ise internet sayesinde yazı, ses ve görüntüyü anında gönderebiliyoruz.",
+      "Yöntem değişti, ama amaç hep aynı kaldı: haberi karşıdaki kişiye ulaştırmak."
+     ],
+     "sorular": [
+      {
+       "soru": "İlk çağlarda haberi kimler taşırdı?",
+       "secenekler": [
+        "Haberciler",
+        "Gemiciler",
+        "Pilotlar"
+       ]
+      },
+      {
+       "soru": "Metin, güvercinle haberleşme için ne söylüyor?",
+       "secenekler": [
+        "Her zaman güvenilir değildi",
+        "En hızlı yöntemdi",
+        "Hiç kullanılmadı"
+       ]
+      },
+      {
+       "soru": "Telgraf mesajları nasıl gönderirdi?",
+       "secenekler": [
+        "Teller aracılığıyla elektrik sinyali olarak",
+        "Güvercinlerle",
+        "Davul sesiyle"
+       ]
+      },
+      {
+       "soru": "Metinde geçen yöntemlerden hangisi en son ortaya çıkmıştır?",
+       "secenekler": [
+        "İnternet",
+        "Telgraf",
+        "Ateş yakmak"
+       ]
+      },
+      {
+       "soru": "Yazar, bütün bu yöntemler için hangi ortak noktayı vurguluyor?",
+       "secenekler": [
+        "Amaç hep haberi ulaştırmaktı",
+        "Hepsi çok hızlıydı",
+        "Hepsi aynı sinyali kullanırdı"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "haberci",
+       "a": "haberi bir yerden bir yere götüren kişi"
+      },
+      {
+       "k": "sinyal",
+       "a": "bilgi taşıyan elektrik ya da ses işareti"
+      },
+      {
+       "k": "teşkilat",
+       "a": "düzenli çalışan kuruluş"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv44-depremler",
+   "iz": "okuma",
+   "sv": 44,
+   "emoji": "🌍",
+   "baslik": "Depremler",
+   "hedef": "Bilimsel bir açıklamayı izlemek ve metindeki bilgiyle yorumlamak.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Depremler",
+     "kilavuz": "parmak",
+     "metin": [
+      "Dünyanın yüzeyi tek parça değildir; levha adı verilen dev kaya parçalarından oluşur. Bu levhalar çok yavaş, yılda birkaç santimetre hızla hareket eder. Levhalar birbirine sürtündüğünde ya da çarpıştığında kayalarda büyük bir gerilim birikir. Kayalar bu gerilime daha fazla dayanamayınca aniden kırılır ve birikmiş enerji dalgalar halinde yayılır. Biz bu sarsıntıya deprem deriz.",
+      "Depremin yerin içinde başladığı noktaya odak, yeryüzünde tam üstüne denk gelen noktaya ise merkez üssü denir. Depremin büyüklüğü ölçeklerle belirlenir; ölçekte sayı büyüdükçe açığa çıkan enerji çok hızlı artar.",
+      "Depremi önceden kesin olarak bilmek bugün mümkün değildir. Bu yüzden asıl koruma, binaları depreme dayanıklı yapmak ve sarsıntı sırasında ne yapılacağını önceden öğrenmektir. Uzmanlar, sarsıntı sırasında “çök, kapan, tutun” hareketini önerir."
+     ],
+     "sorular": [
+      {
+       "soru": "Deprem nasıl oluşur?",
+       "secenekler": [
+        "Kayalarda biriken gerilim aniden boşalınca",
+        "Yağmur yeraltına sızınca",
+        "Rüzgâr dağlara çarpınca"
+       ]
+      },
+      {
+       "soru": "Depremin yeryüzündeki tam üst noktasına ne denir?",
+       "secenekler": [
+        "Merkez üssü",
+        "Odak",
+        "Levha"
+       ]
+      },
+      {
+       "soru": "Büyüklük ölçeğinde sayı büyüdükçe ne olur?",
+       "secenekler": [
+        "Açığa çıkan enerji çok hızlı artar",
+        "Deprem daha kısa sürer",
+        "Deprem daha yavaş yayılır"
+       ]
+      },
+      {
+       "soru": "Metne göre bugün neyi yapmak mümkün değildir?",
+       "secenekler": [
+        "Depremi önceden kesin olarak bilmek",
+        "Binaları dayanıklı yapmak",
+        "Depreme hazırlanmak"
+       ]
+      },
+      {
+       "soru": "Yazara göre asıl koruma yolu nedir?",
+       "secenekler": [
+        "Binaları dayanıklı yapmak ve ne yapılacağını öğrenmek",
+        "Depremi tahmin eden cihazlar almak",
+        "Sarsıntı gelince dışarı koşmak"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "levha",
+       "a": "Dünya'nın yüzeyini oluşturan dev kaya parçası"
+      },
+      {
+       "k": "gerilim",
+       "a": "zorlanma, sıkışma"
+      },
+      {
+       "k": "merkez üssü",
+       "a": "depremin yeryüzünde tam üstüne denk gelen nokta"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv58-vitaminler",
+   "iz": "okuma",
+   "sv": 58,
+   "emoji": "🥕",
+   "baslik": "Vitaminler",
+   "hedef": "Metindeki bilgiyi, yazarın görüşünü ve ana fikri birbirinden ayırmak.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Vitaminler",
+     "kilavuz": "parmak",
+     "metin": [
+      "Vücudumuz yaşamak için yalnızca enerjiye değil, çok küçük miktarlarda da olsa vitamin ve minerallere ihtiyaç duyar. Vitaminler vücudun kendi başına yeterince üretemediği, bu yüzden besinlerle alması gereken maddelerdir. Örneğin C vitamini bağışıklığı destekler ve turunçgillerde, biberde bulunur. A vitamini görmeye yardımcıdır ve havuçta, yumurtada, karaciğerde bulunur. D vitamini kemiklerin sağlıklı kalmasına katkıda bulunur; vücut bunu güneş ışığının yardımıyla da üretebilir.",
+      "Vitamin eksikliği çeşitli sağlık sorunlarına yol açabilir. Ancak bu, her vitamini hap olarak almanın yararlı olduğu anlamına gelmez. Dengeli beslenen çoğu insan, ihtiyacı olan vitaminlerin büyük bölümünü yediği besinlerden karşılar. Fazla miktarda alınan bazı vitaminler vücutta birikerek zarar da verebilir. Bu yüzden vitamin takviyesi kullanmadan önce bir hekime danışmak en doğrusudur."
+     ],
+     "sorular": [
+      {
+       "soru": "Vitaminler hakkında hangisi doğrudur?",
+       "secenekler": [
+        "Vücut çoğunu kendi üretemez, besinlerle almalıdır",
+        "Vücut hepsini kendi üretir",
+        "Yalnızca hap olarak alınır"
+       ]
+      },
+      {
+       "soru": "D vitaminini vücut hangi yolla da üretebilir?",
+       "secenekler": [
+        "Güneş ışığıyla",
+        "Soğuk havayla",
+        "Uykuyla"
+       ]
+      },
+      {
+       "soru": "Hangi vitamin görmeye yardımcıdır?",
+       "secenekler": [
+        "A",
+        "C",
+        "D"
+       ]
+      },
+      {
+       "soru": "Yazar vitamin takviyesi için ne öneriyor?",
+       "secenekler": [
+        "Kullanmadan önce hekime danışmayı",
+        "Her gün mutlaka almayı",
+        "Hiçbir zaman kullanmamayı"
+       ]
+      },
+      {
+       "soru": "“Fazla miktarda alınan bazı vitaminler zarar verebilir” cümlesinden ne anlaşılır?",
+       "secenekler": [
+        "Daha fazla her zaman daha iyi değildir",
+        "Vitaminler hiç alınmamalıdır",
+        "Zarar yalnızca çocuklarda görülür"
+       ]
+      },
+      {
+       "soru": "Bu metinde yazarın asıl vurgusu hangisidir?",
+       "secenekler": [
+        "Vitaminler önemlidir ama dengeli beslenme çoğu zaman yeterlidir",
+        "Herkes hap vitamin kullanmalıdır",
+        "Vitaminler zararlıdır"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "bağışıklık",
+       "a": "vücudun hastalıklara karşı direnci"
+      },
+      {
+       "k": "takviye",
+       "a": "eksik olanı tamamlamak için alınan ek madde"
+      },
+      {
+       "k": "turunçgil",
+       "a": "portakal, limon gibi meyveler"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv50-mikroplar-ve-asilar",
+   "iz": "okuma",
+   "sv": 50,
+   "emoji": "💉",
+   "baslik": "Mikroplar ve aşılar",
+   "hedef": "Bir açıklamanın mantığını, benzetmeleri ve yazarın amacını çözmek.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Mikroplar ve aşılar",
+     "kilavuz": "parmak",
+     "metin": [
+      "Bazı mikroplar hastalığa yol açar. Bağışıklık sistemimiz, vücuda giren bir mikropla karşılaştığında onu tanır ve ona karşı savunma maddeleri üretir. Aynı mikropla bir daha karşılaşırsak vücut onu hatırlar ve çok daha hızlı tepki verir. Aşılar bu hatırlama özelliğinden yararlanır. Aşıda mikrobun öldürülmüş ya da zayıflatılmış hali ya da yalnızca bir parçası bulunur. Bu yüzden aşı, hastalığa yol açmadan bağışıklık sistemine mikrobu “tanıtır”.",
+      "Aşılar sayesinde çiçek hastalığı dünyadan tamamen silinmiştir; çocuk felci ise birçok ülkede neredeyse yok olmuştur. Aşıların yan etkisi olabilir; ancak bunlar çoğunlukla hafiftir ve kısa sürer: kolda ağrı, hafif ateş gibi.",
+      "Aşıların önemli bir yararı da toplumsal korumadır. Yeterince çok kişi aşılandığında, aşı olamayan bebekler ve hasta insanlar da hastalıktan korunmuş olur; çünkü mikrop yayılacak yer bulamaz."
+     ],
+     "sorular": [
+      {
+       "soru": "Aşı bağışıklık sistemine ne yapar?",
+       "secenekler": [
+        "Mikrobu hastalık yapmadan tanıtır",
+        "Mikrobu vücuda sokup hasta eder",
+        "Savunma maddelerini siler"
+       ]
+      },
+      {
+       "soru": "Metne göre dünyadan tamamen silinen hastalık hangisidir?",
+       "secenekler": [
+        "Çiçek hastalığı",
+        "Çocuk felci",
+        "Grip"
+       ]
+      },
+      {
+       "soru": "Aşının yan etkileri çoğunlukla nasıldır?",
+       "secenekler": [
+        "Hafif ve kısa sürelidir",
+        "Ağır ve uzun sürelidir",
+        "Hiç görülmez"
+       ]
+      },
+      {
+       "soru": "“Toplumsal koruma” ile ne kastedilmektedir?",
+       "secenekler": [
+        "Çok kişi aşılanınca aşı olamayanların da korunması",
+        "Devletin herkese ilaç dağıtması",
+        "Okulların kapatılması"
+       ]
+      },
+      {
+       "soru": "Yazar aşıyı neden bir tür “tanıtma” olarak anlatıyor?",
+       "secenekler": [
+        "Bağışıklık sisteminin mikrobu hatırlamasını açıklamak için",
+        "Aşının tadını anlatmak için",
+        "Mikropları sevimli göstermek için"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "bağışıklık sistemi",
+       "a": "vücudu hastalıklardan koruyan sistem"
+      },
+      {
+       "k": "yan etki",
+       "a": "ilacın ya da aşının istenmeyen etkisi"
+      },
+      {
+       "k": "zayıflatılmış",
+       "a": "gücü azaltılmış"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "oku-sv66-para-nasil-ortaya-cikti",
+   "iz": "okuma",
+   "sv": 66,
+   "emoji": "🪙",
+   "baslik": "Para nasıl ortaya çıktı?",
+   "hedef": "Uzun, soyut bir metinde neden–sonuç zincirini ve yazarın görüşünü izlemek.",
+   "adimlar": [
+    {
+     "tur": "oku",
+     "id": "metin",
+     "baslik": "Para nasıl ortaya çıktı?",
+     "kilavuz": "parmak",
+     "metin": [
+      "İnsanlar para icat edilmeden önce mal alışverişini takas yoluyla yapıyordu: bir çiftçi, buğdayını bir çömlekçinin yaptığı çömlekle değiştirebiliyordu. Ancak takasın büyük bir sorunu vardı. Karşı tarafın tam da sizin sahip olduğunuz şeye ihtiyaç duyması gerekiyordu. Buğday satmak isteyen çiftçi, buğdaya ihtiyacı olan bir çömlekçi bulamazsa elinde mal kalırdı. Ayrıca bir inek ile bir çuval buğdayın karşılığının ne olduğu konusunda anlaşmak da kolay değildi.",
+      "Bu sorunları çözmek için toplumlar yavaş yavaş herkesin değer verdiği ortak bir ölçüye yöneldi. Bazı yerlerde deniz kabukları, bazı yerlerde tuz ya da tahıl bu işi gördü. Sonra metaller öne çıktı; çünkü dayanıklıydılar, bölünebiliyorlardı ve kolay taşınıyorlardı. Anadolu'da Lidyalıların yaklaşık iki bin altı yüz yıl önce altın ve gümüş karışımından yaptığı sikkeler, bilinen ilk paralar arasında sayılır. Kâğıt para ise çok daha sonra yaygınlaştı.",
+      "Para bugün ilk bakışta yalnızca bir ödeme aracıdır; oysa üç işlevi vardır: değişim aracı olmak, değer ölçüsü olmak ve değeri saklamak. Bir paranın değeri, ondan yapılan metale ya da kâğıda değil, insanların onu kabul edeceğine duydukları güvene dayanır."
+     ],
+     "sorular": [
+      {
+       "soru": "Takasın en büyük sorunu neydi?",
+       "secenekler": [
+        "Karşı tarafın tam sizin elinizdekine ihtiyaç duyması gerekiyordu",
+        "Malların çok ağır olması",
+        "Çiftçilerin çalışmak istememesi"
+       ]
+      },
+      {
+       "soru": "Metne göre metaller paraya dönüşürken hangisi neden olarak belirtilmemiştir?",
+       "secenekler": [
+        "Çok güzel parlamaları",
+        "Dayanıklı olmaları",
+        "Kolay taşınmaları"
+       ]
+      },
+      {
+       "soru": "Lidyalılar sikkelerini neyden yaptı?",
+       "secenekler": [
+        "Altın ve gümüş karışımından",
+        "Deniz kabuğundan",
+        "Kâğıttan"
+       ]
+      },
+      {
+       "soru": "Aşağıdakilerden hangisi paranın işlevlerinden biridir?",
+       "secenekler": [
+        "Değeri saklamak",
+        "Mal üretmek",
+        "Vergi toplamak"
+       ]
+      },
+      {
+       "soru": "Yazarın paranın değeri hakkındaki düşüncesi nedir?",
+       "secenekler": [
+        "Değer, insanların paraya duyduğu güvene dayanır",
+        "Değer metalin ağırlığındadır",
+        "Değer paranın rengine bağlıdır"
+       ]
+      }
+     ],
+     "sozluk": [
+      {
+       "k": "takas",
+       "a": "malı mal ile değiştirme"
+      },
+      {
+       "k": "sikke",
+       "a": "madeni para"
+      },
+      {
+       "k": "işlev",
+       "a": "bir şeyin görevi"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

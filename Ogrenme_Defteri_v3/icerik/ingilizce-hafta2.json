@@ -4,7 +4,7 @@
   "surum": 1,
   "dersler": [
     {
-      "id": "en-05-sinif-dili", "iz": "ingilizce", "emoji": "🙋",
+      "id": "en-05-sinif-dili", "iz": "ingilizce", "sv": 6, "emoji": "🙋",
       "baslik": "Sınıf dili: anlamadığında ne dersin?",
       "hedef": "Sınıfta sık duyulan komutları (“Open the door.”) anlamak ve anlamadığında kibarca yardım istemek (“Can you repeat that, please?”).",
       "neden": "İngilizce öğrenirken en çok işine yarayacak cümleler bunlar: anlamadığında pes etmek yerine ne diyeceğini bilirsen konuşma devam eder. Gerçek hayatta da herkes tekrar ister.",
@@ -67,7 +67,7 @@
     },
 
     {
-      "id": "en-06-yerler", "iz": "ingilizce", "emoji": "📍",
+      "id": "en-06-yerler", "iz": "ingilizce", "sv": 7, "emoji": "📍",
       "baslik": "Nerede? Yerler ve eşyaların yeri",
       "hedef": "Bir şeyin yerini söylemek ve sormak: “Where is my bag? — It is under the chair.”",
       "neden": "“Nerede?” en sık sorulan sorulardan biri. Ayrıca yer bildiren küçük sözcükler (in, on, under, next to) hemen hemen her cümlede karşına çıkar.",
@@ -123,7 +123,7 @@
     },
 
     {
-      "id": "en-07-aile", "iz": "ingilizce", "emoji": "👪",
+      "id": "en-07-aile", "iz": "ingilizce", "sv": 8, "emoji": "👪",
       "baslik": "Ailen ve arkadaşların",
       "hedef": "Ailenden ve arkadaşlarından söz etmek: “She is my mother. He is my brother. I have one sister.”",
       "neden": "İnsanlar en çok kendileri ve sevdikleri hakkında konuşur. “O (he / she)” demeyi öğrenince başkalarını da anlatabilirsin.",
@@ -180,7 +180,7 @@
     },
 
     {
-      "id": "en-08-yemek", "iz": "ingilizce", "emoji": "🍽️",
+      "id": "en-08-yemek", "iz": "ingilizce", "sv": 8, "emoji": "🍽️",
       "baslik": "Yemek, içecek ve sevdiklerin",
       "hedef": "Ne sevdiğini ve ne istediğini söylemek (I like… / I want…) ve sormak (Do you like…?).",
       "neden": "Bir kafede, bir arkadaşınla ya da misafirken ne istediğini söyleyebilmek çok gerçekçi bir ihtiyaç. “Sevmek” ve “istemek” fiilleri de en çok kullanılan fiiller arasında.",
@@ -235,7 +235,7 @@
     },
 
     {
-      "id": "en-09-gunluk-duzen", "iz": "ingilizce", "emoji": "⏰",
+      "id": "en-09-gunluk-duzen", "iz": "ingilizce", "sv": 9, "emoji": "⏰",
       "baslik": "Günlük düzenin",
       "hedef": "Gününü anlatmak: “I wake up at seven. I go to school in the morning. I sleep at ten.”",
       "neden": "“Günün nasıl geçiyor?” en doğal sohbet konularından biri. Ayrıca düzenli yapılan işleri anlatmanın kalıbını (I + fiil) öğrenirsin; sonraki konuların çoğu bu kalıba dayanır.",
@@ -289,7 +289,7 @@
     },
 
     {
-      "id": "en-10-yapabildiklerin", "iz": "ingilizce", "emoji": "💪",
+      "id": "en-10-yapabildiklerin", "iz": "ingilizce", "sv": 10, "emoji": "💪",
       "baslik": "Neler yapabilirsin?",
       "hedef": "Yapabildiğin ve yapamadığın şeyleri söylemek (I can swim. I can't run.) ve sormak (Can you swim?).",
       "neden": "“Yapabilirim” demek, rica etmek, izin istemek ve yeteneklerini anlatmak için gerekli. Üstelik **can** çok kolay bir yapı: fiilin şekli hiç değişmez.",

@@ -1,0 +1,17 @@
+# Hafıza havuzu: liste ezberi (ve dikkat) etkinliklerinde kullanılan, somut ve kolay hayal edilen Türkçe adlar.
+# Seçim ölçütü: günlük hayattan, görselleştirilebilir (somut sözcükler soyutlardan daha iyi hatırlanır — Paivio'nun ikili kodlama kuramı),
+# yazımı tartışmasız ve birbirine çok benzemeyen sözcükler (doğrulayıcı "kedi/keçi" gibi karışabilecek çiftleri uyarır).
+# Havuzdan her oturumda rastgele seçilir; sözcük sayısı arttıkça aynı listenin tekrar görülme olasılığı azalır.
+@paket hafiza-havuzu
+
+@hafiza
+masa, kapı, pencere, sandalye, kalem, defter, kitap, çanta, ayakkabı, çorap, gömlek, ceket, şapka, eldiven, atkı, gözlük
+saat, anahtar, telefon, bilgisayar, televizyon, buzdolabı, fırın, tabak, bardak, çatal, kaşık, bıçak, çaydanlık
+ekmek, peynir, zeytin, domates, salatalık, patates, soğan, havuç, elma, armut, portakal, muz, üzüm, karpuz, kavun, kiraz, şeftali, limon
+bal, süt, yumurta, balık, tavuk, pilav, çorba, makarna, şeker, tuz, simit, kurabiye
+kedi, köpek, kuş, at, inek, koyun, tavşan, kaplan, aslan, fil, zürafa, maymun, kurbağa, kaplumbağa, arı, kelebek, karınca, örümcek, penguen, yunus
+ağaç, çiçek, yaprak, çimen, dağ, deniz, nehir, göl, ada, yol, köprü, bulut, yıldız, güneş, ay, yağmur, kar, gökkuşağı
+ev, okul, hastane, market, bahçe, otobüs, tren, uçak, gemi, bisiklet, araba, kamyon, merdiven
+ayna, yastık, battaniye, halı, perde, lamba, takvim, harita, bayrak, balon, top, oyuncak, gitar, davul, piyano, kamera
+mum, şemsiye, valiz, para, cüzdan, sepet, kutu, makas, çekiç, testere, iğne, ip, sabun, havlu, fincan
+kule, çadır, ördek, horoz, kartal, balina

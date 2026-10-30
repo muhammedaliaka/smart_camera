@@ -6,6 +6,7 @@
     {
       "id": "dinle-01-duyuru",
       "iz": "dinleme",
+      "sv": 6,
       "emoji": "📢",
       "baslik": "Okul duyurusu",
       "hedef": "Kısa bir İngilizce duyuruda gün, saat ve yapılacak işi yakalamak.",
@@ -94,6 +95,7 @@
     {
       "id": "dinle-02-mesaj",
       "iz": "dinleme",
+      "sv": 11,
       "emoji": "📱",
       "baslik": "Sesli mesaj",
       "hedef": "Bir arkadaşın bıraktığı kısa sesli mesajı anlayıp ne istediğini söylemek.",
@@ -170,6 +172,7 @@
     {
       "id": "dinle-03-gunum",
       "iz": "dinleme",
+      "sv": 9,
       "emoji": "🌅",
       "baslik": "Maya'nın günü",
       "hedef": "Sırayla anlatılan bir günü dinleyip olayları doğru sıraya koymak.",

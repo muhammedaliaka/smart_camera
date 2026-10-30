@@ -5,7 +5,7 @@
   "dersler": [
     {
       "id": "kontrol-01-ingilizce",
-      "iz": "olcum",
+      "iz": "olcum", "kutuphane": true,
       "emoji": "✅",
       "baslik": "İngilizce kontrolü · Hafta 1",
       "hedef": "İlk dört dersin kelimelerini, sayılarını ve kalıplarını yardımsız dene.",
@@ -241,7 +241,7 @@
     },
     {
       "id": "kontrol-02-hafiza",
-      "iz": "olcum",
+      "iz": "olcum", "kutuphane": true,
       "emoji": "🏛️",
       "baslik": "Hafıza kontrolü · Hafta 1",
       "hedef": "Önceki günlerde kurduğun iki listeyi, bakmadan rotandan hatırla.",
@@ -294,7 +294,7 @@
     },
     {
       "id": "kontrol-03-okuma-dinleme",
-      "iz": "olcum",
+      "iz": "olcum", "kutuphane": true,
       "emoji": "📖",
       "baslik": "Okuma ve dinleme kontrolü · Hafta 1",
       "hedef": "Daha önce görmediğin bir metni okuyup bir kaydı dinleyerek ne kadar anladığını gör.",
@@ -489,7 +489,7 @@
     },
     {
       "id": "kontrol-04-hafta1",
-      "iz": "olcum",
+      "iz": "olcum", "kutuphane": true,
       "emoji": "🧭",
       "baslik": "Haftayı değerlendir · Hafta 1",
       "hedef": "İlk haftanın nasıl geçtiğini kısaca not et; programı kendi düzenine göre ayarla.",
@@ -540,7 +540,7 @@
     },
     {
       "id": "kontrol-05-ingilizce",
-      "iz": "olcum",
+      "iz": "olcum", "kutuphane": true,
       "emoji": "✅",
       "baslik": "İngilizce kontrolü · Hafta 2",
       "hedef": "İkinci haftanın kelimelerini ve kalıplarını yardımsız dene.",
@@ -776,7 +776,7 @@
     },
     {
       "id": "kontrol-06-hafiza-dinleme",
-      "iz": "olcum",
+      "iz": "olcum", "kutuphane": true,
       "emoji": "🏛️",
       "baslik": "Hafıza ve dinleme kontrolü · Hafta 2",
       "hedef": "İngilizce kelime listeni ve gezegenleri bakmadan hatırla; yeni bir kaydı dinleyip anla.",
@@ -877,7 +877,7 @@
     },
     {
       "id": "kontrol-07-hafta2",
-      "iz": "olcum",
+      "iz": "olcum", "kutuphane": true,
       "emoji": "🧭",
       "baslik": "Haftayı değerlendir · Hafta 2",
       "hedef": "İkinci haftanın nasıl geçtiğini not et ve ilk haftayla karşılaştır.",

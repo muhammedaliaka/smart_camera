@@ -1,0 +1,218 @@
+# Dinleme kayıtları (İngilizce), seviyeye göre. Biçim: docs/KOLAY_GIRIS.md
+# Kayıtlar bu uygulama için YAZILMIŞ alıştırma metinleridir; gerçek bir haber, çalışma ya da kişi değildir. Rakamlar uydurmadır.
+# Soruda ilk seçenek doğrudur (uygulama sırayı karıştırır). Seviye yükseldikçe: daha uzun, daha hızlı, "söylenmiyor" soruları, çıkarım.
+# Yeni kayıt eklenince: node scripts/guncelle.mjs → eksik ses listesi → node scripts/ses-liste.mjs / scripts/ses-uret.py
+@paket dinleme-seviyeli
+
+@dinleme
+sv: 2
+baslik: Merhaba, ben Ali
+emoji: 👋
+hedef: Çok kısa bir tanışmada adı, yaşı ve sevdiği şeyi yakalamak.
+neden: İlk dinlemeler çok kısa olmalı: amaç kulağın İngilizce sese alışması ve “anlıyorum” duygusunun oluşmasıdır.
+ses: erkek
+hiz: 0.85
+tr: Merhaba. Benim adım Ali. On yaşındayım. Kedileri severim.
+
+Hello. My name is Ali. I am ten. I like cats.
+
+? Konuşan kişinin adı ne? | Ali | Sam | Tom -> “My name is Ali.”
+? Kaç yaşında? | On | Dokuz | On bir -> “I am ten.”
+? Ne seviyor? | Kedileri | Köpekleri | Kuşları -> “I like cats.”
+
+@dinleme
+sv: 14
+baslik: Hafta sonum
+emoji: 🗓️
+hedef: Bir hafta sonu anlatımında kimle, nerede, ne yapıldığını yakalamak.
+neden: Günlük hayat anlatımları (ne yaptım, kiminle yaptım) gerçek hayatta en sık duyacağın konuşma biçimidir. Sıra sözcükleri (first, then, in the afternoon) yol gösterir.
+ses: kadin
+hiz: 0.9
+tr: Cumartesi günleri genellikle geç kalkarım. Önce kardeşimle büyük bir kahvaltı yaparım. Sonra pazara gidip meyve ve sebze alırız. Öğleden sonra parkta arkadaşlarımla buluşur, futbol oynarız. Pazar günü büyükannemi ziyaret ederim. O çorba pişirir ve birlikte film izleriz.
+
+On Saturday I usually get up late. First I have a big breakfast with my brother. Then we go to the market and buy fruit and vegetables.
+
+In the afternoon I meet my friends at the park and we play football. On Sunday I visit my grandmother. She cooks soup and we watch a film together.
+
+? Konuşan kişi cumartesi günleri genellikle ne zaman kalkıyor? | Geç | Erken | Hiç uyumuyor -> “I usually get up late.”
+? Kahvaltıyı kiminle yapıyor? | Kardeşiyle | Arkadaşlarıyla | Büyükannesiyle -> “with my brother.”
+? Pazardan ne alıyorlar? | Meyve ve sebze | Ekmek ve süt | Kitap ve defter
+? Öğleden sonra parkta ne yapıyor? | Arkadaşlarıyla futbol oynuyor | Kitap okuyor | Bisiklete biniyor
+? Pazar günü büyükannesi ne pişiriyor? | Çorba | Pilav | Börek -> “She cooks soup.”
+
+@dinleme
+sv: 19
+baslik: Hava durumu
+emoji: 🌦️
+hedef: Hava tahmininde saat, sıcaklık ve değişimi (önce güneş, sonra yağmur) yakalamak.
+neden: Sayılar, saatler ve “sonra ne olacak” bilgisi dinlemenin en çok işine yarayan kısmıdır. Hava durumu bunu kısa ve düzenli bir biçimde verir.
+ses: kadin
+hiz: 0.9
+tr: İşte yarının hava durumu. Sabah hava bulutlu ve serin, yaklaşık on iki derece olacak. Öğleye doğru güneş açacak ve hava daha ılık, yaklaşık on sekiz derece olacak. Akşam batıdan yağmur geliyor. Saat altıdan sonra dışarı çıkacaksanız şemsiye alın. Cuma günü rüzgârlı ama kuru olacak.
+
+Here is the weather for tomorrow. In the morning it will be cloudy and cool, about twelve degrees. By noon the sun will come out, and it will be warmer, around eighteen degrees.
+
+In the evening, rain is coming from the west. Take an umbrella if you go out after six o'clock. On Friday it will be windy but dry.
+
+? Yarın sabah hava nasıl olacak? | Bulutlu ve serin | Güneşli ve sıcak | Yağmurlu -> “cloudy and cool”
+? Öğlen sıcaklık yaklaşık kaç derece? | On sekiz | On iki | Yirmi sekiz
+? Yağmur ne zaman geliyor? | Akşam | Sabah | Öğle
+? Konuşmacı ne almayı öneriyor? | Şemsiye | Mont | Güneş gözlüğü -> “Take an umbrella.”
+? Cuma günü hava nasıl olacak? | Rüzgârlı ama kuru | Karlı | Sisli ve yağmurlu
+
+@dinleme
+sv: 25
+baslik: Yol tarifi
+emoji: 🧭
+hedef: Adım adım yol tarifinde yönleri (sola, sağa, karşısında) sırayla takip etmek.
+neden: Yol tarifinde sıra hatası yanlış yere götürür; bu yüzden hem sıraya hem de yer adlarına dikkat etmek gerekir. Sayıları ve dönüş yönlerini yakalama pratiğidir.
+ses: erkek
+hiz: 0.9
+tr: Evimden istasyona gitmek için çıkınca sola dön. Köşede bir banka görene kadar yaklaşık beş dakika dümdüz yürü. Orada sağa dön. Sonra postanenin ve küçük kafenin önünden geç. İstasyon büyük marketin karşısında. Acelen varsa on iki numaralı otobüse binebilirsin. Evimin hemen önünde durur ama yalnızca yirmi dakikada bir gelir.
+
+To get to the station from my house, go out and turn left. Walk straight for about five minutes until you see a bank on the corner. Turn right there.
+
+Then go past the post office and the small cafe. The station is opposite the big supermarket. If you are in a hurry, you can take bus number twelve. It stops right in front of my house, but it only comes every twenty minutes.
+
+? Evden çıkınca önce ne yapılıyor? | Sola dönülüyor | Sağa dönülüyor | Dümdüz gidiliyor -> “turn left.”
+? Hangi yapıyı görünce sağa dönülüyor? | Bankayı | Postaneyi | Marketi
+? İstasyon nerede? | Büyük marketin karşısında | Bankanın yanında | Kafenin arkasında -> “opposite the big supermarket”
+? Hangi otobüs öneriliyor? | On iki numara | On beş numara | İki numara
+? Otobüs ne sıklıkla geliyor? | Yirmi dakikada bir | Beş dakikada bir | Saatte bir
+
+@dinleme
+sv: 31
+baslik: Randevu mesajı
+emoji: 🩺
+hedef: Sesli mesajdaki değişikliği (eski saat → yeni saat) ve yapılması gerekeni ayırt etmek.
+neden: Sesli mesajlarda genellikle bir değişiklik ve bir rica birlikte gelir. Eski ve yeni bilgiyi karıştırmamak, dinleme becerisinin gerçek hayattaki sınavıdır.
+ses: kadin
+hiz: 0.95
+tr: Merhaba, klinikten Anna Smith için arıyorum. Randevunuz yarın dokuz buçukta, ama doktorun bir toplantısı var, bu yüzden saati değiştirmemiz gerekiyor. Onun yerine öğleden sonra ikiyi çeyrek geçe gelebilir misiniz? Uygun değilse lütfen bugün beşten önce bizi geri arayın. Numaramız kartın üzerinde. Ayrıca sigorta kartınızı getirmeyi unutmayın. Teşekkürler, iyi günler.
+
+Hello, this is the clinic calling for Anna Smith. Your appointment is tomorrow at half past nine, but the doctor has a meeting, so we need to move it.
+
+Could you come at two fifteen in the afternoon instead? If that is not possible, please call us back before five today. Our number is on the card. Please also remember to bring your insurance card. Thank you, and have a nice day.
+
+? Mesaj kimin için bırakılmış? | Anna Smith | Doktor | Bir öğrenci -> “calling for Anna Smith”
+? Randevu başlangıçta ne zamandı? | Yarın dokuz buçuk | Yarın iki buçuk | Bugün beş
+? Randevu neden değişiyor? | Doktorun toplantısı var | Hasta gelemiyor | Muayenehane kapalı
+? Önerilen yeni saat nedir? | Öğleden sonra ikiyi çeyrek geçe | Sabah dokuz | Akşam beş
+? Yeni saat uygun değilse ne yapılmalı? | Bugün beşten önce geri aranmalı | Yarın sabah gelinmeli | Hiçbir şey yapılmamalı
+? Hastanın getirmesi istenen şey nedir? | Sigorta kartı | Eski raporlar | Kimlik fotoğrafı
+
+@dinleme
+sv: 37
+baslik: Tren anonsu
+emoji: 🚆
+hedef: Bir anonstaki gecikmeyi, nedenini ve yönlendirmeyi yakalamak; söylenmeyeni tahmin etmemek.
+neden: Anonslar hızlı ve tek seferliktir. Neden, süre ve yönerge gibi anahtar bilgiyi yakalayıp “bahsedilmeyen” şeyi ayırt etmek, dinleme güvenini artırır.
+ses: erkek
+hiz: 0.95
+tr: Dikkat lütfen. Saat on kırkta Manchester'a kalkacak tren, şehrin yakınındaki bir sinyal sorunu yüzünden yaklaşık yirmi beş dakika gecikmelidir. Yolcular dördüncü perondan beklemelidir. Bir sonraki tren, Leeds'e on bir on beşte kalkacak olan, zamanında ve ikinci perondan hareket edecektir. Gecikme için özür dileriz. Manchester treni için bileti olan yolcular, biletlerini göstererek kafeden ücretsiz bir içecek alabilir. Lütfen yeni anonsları dinleyin.
+
+Attention, please. The ten forty train to Manchester is delayed by about twenty-five minutes because of a signal problem near the city. Passengers should wait on platform four.
+
+The next train, the eleven fifteen to Leeds, is running on time from platform two. We are sorry for the delay. Passengers with tickets for the Manchester train can get a free drink at the cafe by showing their ticket. Please listen for further announcements.
+
+? Manchester treni neden gecikiyor? | Bir sinyal sorunu yüzünden | Hava kötü olduğu için | Makinist gelmediği için
+? Gecikme ne kadar sürecek? | Yaklaşık yirmi beş dakika | Yaklaşık bir saat | Yaklaşık beş dakika
+? Manchester yolcuları hangi peronda beklemeli? | Dördüncü | İkinci | Altıncı
+? Leeds treni ne durumda? | Zamanında, ikinci peron | Gecikmeli, dördüncü peron | İptal edildi
+? Manchester biletli yolcular ne alabilir? | Kafeden ücretsiz bir içecek | Bilet ücretinin iadesini | Bir sonraki tren için ek bilet
+? Anonsta gecikme nedeniyle bilet ücretinin iade edileceği söyleniyor mu? | Hayır, bundan söz edilmiyor | Evet, tamamı | Evet, yarısı -> Duymadığın bir şeyi tahmin etme.
+
+@dinleme
+sv: 44
+baslik: Çalışma alışkanlığım
+emoji: 🗣️
+hedef: Bir kişinin zamanla değişen görüşünü (eskiden … şimdi …) ve nedenini izlemek.
+neden: Görüş anlatan konuşmalarda “eskiden / sonra / şimdi” geçişini ve karşıt bağlaçları (but, although) yakalamak, uzun dinlemelerin temelidir.
+ses: kadin
+hiz: 1.0
+tr: Geçmişte uzun çalışma oturumlarının öğrenmenin en iyi yolu olduğunu düşünürdüm. Masamda dört saat ara vermeden otururdum. Ama genellikle ertesi haftaya her şeyi unuturdum. Sonra bir öğretmen farklı bir yöntem önerdi: kısa süreler çalış, tekrar okumak yerine kendini sına ve aynı konuya birkaç gün sonra geri dön. İlk başta daha zor ve yavaş geldi, ama sonuçlarım iyileşti. Şaşırtıcı olan, daha zor hissettiren yöntemin aslında daha iyi işlemesiydi. Artık bunu herkese öneriyorum, ama bazı arkadaşlarım eski alışkanlıklarını tercih ettiklerini söylüyor.
+
+In the past, I thought that long study sessions were the best way to learn. I would sit at my desk for four hours without a break. But I often forgot everything by the next week.
+
+Then a teacher suggested a different approach: study for short periods, test yourself instead of rereading, and come back to the same material after a few days. At first it felt harder and slower, but my results improved.
+
+The surprising thing was that the method that felt more difficult actually worked better. Now I recommend it to everyone, although some of my friends say they prefer their old habits.
+
+? Konuşmacı eskiden ne düşünüyordu? | Uzun çalışma oturumlarının en iyisi olduğunu | Hiç çalışmamak gerektiğini | Sadece geceleri çalışmak gerektiğini
+? Eski yöntemin sorunu neydi? | Ertesi haftaya her şeyi unutuyordu | Çok kısa sürüyordu | Çok pahalıydı
+? Öğretmen ne önerdi? | Kısa çalışma, kendini sınama ve birkaç gün sonra geri dönme | Daha uzun çalışma ve tekrar okuma | Hiç ara vermeden çalışma
+? Yeni yöntem ilk başta nasıl hissettirdi? | Daha zor ve yavaş | Çok kolay | Çok eğlenceli
+? Konuşmacıyı şaşırtan şey neydi? | Daha zor hissettiren yöntemin daha iyi işlemesi | Öğretmenin hata yapması | Arkadaşlarının hepsinin aynı yöntemi kullanması
+? Konuşmacının bazı arkadaşları ne diyor? | Eski alışkanlıklarını tercih ediyor | Yeni yöntemi hemen benimsedi | Çalışmayı bıraktı
+
+@dinleme
+sv: 52
+baslik: Bisiklet yolları haberi
+emoji: 🚲
+hedef: Haber tarzı bir metinde veriyi, nedeni ve iki karşıt görüşü ayırt etmek.
+neden: Haberlerde sayılar, resmî açıklama ve itirazlar iç içe geçer. Hangi bilginin kimden geldiğini ve neyin henüz karara bağlanmadığını ayırt etmek gerekir.
+ses: erkek
+hiz: 1.0
+tr: Belediyenin yeni bir raporu, son iki yılda işe bisikletle gidenlerin sayısının neredeyse üçte bir arttığını gösteriyor. Yetkililer asıl nedenin geçen ilkbaharda açılan korumalı bisiklet yolları ağı olduğunu söylüyor. Aynı zamanda merkezdeki trafik hafifçe azaldı, ama yoğun saatlerde hâlâ yoğun. Ancak herkes memnun değil. Bazı esnaf, daha az park yeri demek daha az müşteri demek olduğundan şikâyetçi. Belediye, daha fazla yol yapıp yapmayacağına karar vermeden önce rakamları gelecek yıl yeniden incelemeye söz verdi.
+
+A new report from the city council shows that the number of people who cycle to work has risen by almost a third in the last two years. Officials say the main reason is the new network of protected bike lanes, which opened last spring.
+
+At the same time, traffic in the centre has fallen slightly, although it is still heavy during rush hour. Not everyone is pleased, however. Some shop owners complain that fewer parking spaces mean fewer customers.
+
+The council has promised to review the figures again next year before deciding whether to build more lanes.
+
+? Rapora göre ne artmış? | İşe bisikletle gidenlerin sayısı | Otomobil sayısı | Park yeri sayısı
+? Artış yaklaşık ne kadar? | Üçte bir | Yarı yarıya | İki katı -> “almost a third”
+? Yetkililere göre asıl neden nedir? | Korumalı bisiklet yolları ağı | Benzin fiyatları | Havaların ısınması
+? Merkezdeki trafikle ilgili ne söyleniyor? | Hafifçe azaldı ama yoğun saatlerde hâlâ yoğun | Tamamen bitti | Çok arttı
+? Bazı esnaf neden şikâyetçi? | Park yeri azaldıkça müşteri azalıyor | Bisikletliler gürültü yapıyor | Yollar çok dar
+? Belediye ne yapacağını söylüyor? | Rakamları gelecek yıl yeniden inceleyecek | Hemen yeni yollar yapacak | Bisiklet yollarını kaldıracak
+? Raporda yeni bisiklet yolları için bütçe ayrıldığı söyleniyor mu? | Hayır, bundan söz edilmiyor | Evet | Yalnızca merkez için -> Duymadığın bir şeyi tahmin etme.
+
+@dinleme
+sv: 60
+baslik: Uyku ve hafıza
+emoji: 😴
+hedef: Temkinli ifadeleri (suggest, appear, tend to) ve “kanıt ne kadar ileri gidiyor” ayrımını yakalamak.
+neden: Gerçek konuşmalarda bilim insanları kesin değil, temkinli konuşur. “Kanıt buna işaret ediyor” ile “kesin böyledir” arasındaki farkı duymak, dinlediğini doğru yorumlamak için gereklidir.
+ses: kadin
+hiz: 1.0
+tr: Uyku çoğu zaman beynin basitçe kapandığı bir zaman olarak görülür, ama araştırmalar tam tersini düşündürüyor. Uykunun bazı evrelerinde beyin, gün içinde öğrendiklerimizi yeniden oynatıyor ve düzenliyor gibi görünür; bu da anıları daha kalıcı hale getirir. Bu yüzden birçok araştırmacı, bütün gece ders çalışmanın yarardan çok zarar verebileceğini savunur. Bununla birlikte bilim insanları kanıtın ne kadar ileri gittiği konusunda temkinlidir. Bulguların çoğu, sözcük listelerini hatırlamak gibi laboratuvar görevlerinden geliyor ve bunların karmaşık okul dersleri için ne kadar geçerli olduğu henüz net değil. Makul bir güvenle söyleyebileceğimiz şu: Öğrendikten sonra uyuyan insanlar, aynı süre boyunca uyanık kalanlara göre daha çok hatırlama eğilimindedir. Yani sınavdan önceki gece bir saat fazladan tekrar ile bir saat fazladan uyku arasında seçim yapmak zorundaysanız, kanıt uykudan yana.
+
+Sleep is often seen as a time when the brain simply switches off, but research suggests the opposite. During certain stages of sleep, the brain appears to replay and reorganise what we learned during the day, which makes memories more stable. This is why many researchers argue that an all-night study session may do more harm than good.
+
+That said, scientists are careful about how far the evidence goes. Most findings come from laboratory tasks, such as remembering word lists, and it is not yet clear how well they apply to complex school subjects.
+
+What we can say with reasonable confidence is that people who sleep after learning tend to remember more than those who stay awake for the same period. So, if you have to choose between an extra hour of revision and an extra hour of sleep the night before an exam, the evidence leans towards sleep.
+
+? Konuşmacıya göre uyku sırasında beyin ne yapıyor gibi görünüyor? | Öğrenilenleri yeniden oynatıp düzenliyor | Tamamen kapanıyor | Yeni sözcükler üretiyor
+? Bütün gece ders çalışmak hakkında birçok araştırmacı ne savunuyor? | Yarardan çok zarar verebileceğini | Her zaman en iyi yöntem olduğunu | Yalnızca yaz aylarında işe yaradığını
+? Bilim insanları kanıtın sınırları konusunda nasıl? | Temkinli | Kesin ve iddialı | İlgisiz -> “careful about how far the evidence goes”
+? Bulguların çoğu nereden geliyor? | Sözcük listeleri gibi laboratuvar görevlerinden | Okul sınav sonuçlarından | Hayvan deneylerinden
+? Makul bir güvenle söylenebilen nedir? | Öğrendikten sonra uyuyanlar daha çok hatırlama eğiliminde | Herkesin sekiz saat uyuması gerektiği | Kâbusların öğrenmeyi artırdığı
+? Konuşmacı, sınavdan önceki gece için ne öneriyor? | Fazladan tekrar yerine uykuyu tercih etmeyi | Sabaha kadar çalışmayı | Hiç ders çalışmamayı
+? Konuşmacı kaç saat uyunması gerektiğini söylüyor mu? | Hayır, bundan söz edilmiyor | Evet, yedi saat | Evet, dokuz saat -> Duymadığın bir şeyi tahmin etme.
+
+@dinleme
+sv: 70
+baslik: Çok seçenek, çok mutluluk mu?
+emoji: 🛒
+hedef: Uzun, soyut bir konuşmada ana iddiayı, açıklamaları ve karşı kanıtı/sınırlamayı ayırt etmek.
+neden: İleri düzey dinleme, bilgiyi tek tek duymak değil; konuşmacının iddiasını, destekleyen nedenleri ve kendi sınırlamalarını bir arada izlemektir.
+ses: erkek
+hiz: 1.0
+tr: Birçok insan, ne kadar çok seçeneği olursa o kadar mutlu olacağını varsayar. Oysa tüketici davranışı üzerine birkaç araştırma, çok sayıda seçeneğin kararları aslında zorlaştırabileceğini ve insanların seçtikleri şeyden daha az memnun kalmasına yol açabileceğini düşündürüyor. Bir açıklama şu: düzinelerce benzer ürün arasından seçerken vazgeçtiğimiz bütün alternatifleri hayal ederiz ve bu, son seçimimizi daha az çekici gösterir. Bir diğeri basit yorgunluk: karar vermek çaba ister ve bu çaba birikir. Her araştırma bu etkiyi bulmuyor. Yine de seçimin her zaman kötü olduğu sonucuna varmak yanlış olur. Araştırmacılar etkinin duruma bağlı olduğuna dikkat çekiyor. Ne istediğini zaten bilen ya da önemli bir şey seçen insanlar, çok seçenekle genellikle iyi başa çıkar. Sorun asıl olarak seçenekler çok, benzer ve karşılaştırması zor olduğunda ortaya çıkıyor.
+
+Many people assume that the more choices they have, the happier they will be. Yet several studies in consumer behaviour suggest that a large number of options can actually make decisions harder, and leave people less satisfied with what they pick.
+
+One explanation is that when we choose among dozens of similar items, we imagine all the alternatives we gave up, and this makes our final choice feel less attractive. Another is simple fatigue: deciding takes effort, and the effort adds up. Not every study finds this effect.
+
+It would be wrong, however, to conclude that choice is always bad. Researchers point out that the effect depends on the situation. People who already know what they want, or who are choosing something important, usually cope well with many options. The problem appears mainly when the options are numerous, similar, and difficult to compare.
+
+? Konuşmacının başta andığı yaygın varsayım nedir? | Seçenek çoksa insan daha mutlu olur | Seçenek azsa insan daha mutlu olur | İnsanlar karar vermeyi sever
+? Birkaç araştırmaya göre çok sayıda seçenek ne yapabilir? | Kararları zorlaştırıp memnuniyeti azaltabilir | Kararları her zaman kolaylaştırır | Fiyatları düşürür
+? Birinci açıklama nedir? | Vazgeçilen alternatifler seçimi daha az çekici gösterir | Seçenekler insanı korkutur | Ürünler pahalıdır
+? İkinci açıklama nedir? | Karar vermek çaba ister ve bu çaba birikir | İnsanların zamanı yoktur | Mağazalar kalabalıktır
+? Konuşmacı bu etkiyle ilgili hangi uyarıyı yapıyor? | Her araştırma bu etkiyi bulmuyor | Etki kesin olarak kanıtlanmıştır | Etki yalnızca çocuklarda görülür
+? Konuşmacıya göre insanlar hangi durumda çok seçenekle genellikle iyi başa çıkar? | Ne istediklerini zaten biliyorsa ya da önemli bir şey seçiyorsa | Hiç düşünmeden seçiyorsa | Seçenekler çok benzerse
+? Sorun asıl olarak ne zaman ortaya çıkıyor? | Seçenekler çok, benzer ve karşılaştırması zor olduğunda | Seçenek sayısı iki olduğunda | Seçenekler ucuz olduğunda

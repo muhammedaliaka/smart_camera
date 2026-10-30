@@ -12,7 +12,7 @@ export function programGunu() {
   const idx = icerik.idx();
   if (!d.baslangic) return { no: 1, durum: 'ayarsiz' };
   const no = gunFarki(d.baslangic, bugun()) + 1;
-  if (!idx.gunler.size) return { no, durum: 'programYok' };
+  if (!idx.gunler.size && !icerik.ic().seviyeli) return { no, durum: 'programYok' };
   if (no < 1) return { no, durum: 'baslamadi' };
   if (no > idx.enSonGun) return { no, durum: 'bitti' };
   return { no, durum: 'surer', gun: idx.gunler.get(no) || null };

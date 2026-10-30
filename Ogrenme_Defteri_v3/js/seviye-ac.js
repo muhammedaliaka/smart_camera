@@ -63,10 +63,11 @@ export function oturumAc(iz, tur, { donus = '#/bugun' } = {}) {
   }
   const once = seviyeler(durum.olaylar, k, { programGunu: B.programGunu })[iz];
   const anahtar = `${tur}:${iz}`;
+  const oturumKimligi = hazir.yazili ? (tur === 'yoklama' ? `yoklama:${hazir.dersId}` : hazir.dersId) : hazir.ders.id; // soru kayıtlarındaki ders kimliğiyle aynı: rapor bunlarla birleştirir
   const bitir = (S) => {
     const o = olayVerisi(hazir, { dogru: S.puan.dogru, toplam: S.puan.toplam, spor: S.sonuc || null }, k);
     if (iz !== 'spor' && !(o.veri.toplam > 0)) return; // hiçbir soru puanlanmadıysa seviyeye etki etmez
-    store.olay(o.tur, o.veri, { dersAd: hazir.baslik, iz, seviyeTur: tur });
+    store.olay(o.tur, { ...o.veri, oturum: oturumKimligi }, { dersAd: hazir.baslik, iz, seviyeTur: tur });
     if (tur === 'oturum') for (const id of hazir.yeniKelimeler || []) store.maddeEkle('k:' + id);
     const sonra = seviyeler(store.al().olaylar, k, { programGunu: B.programGunu })[iz];
     S.seviyeSonucu = sonucMetni(hazir, once, sonra, k, o.veri);

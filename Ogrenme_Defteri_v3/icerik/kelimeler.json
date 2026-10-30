@@ -1,154 +1,1680 @@
 {
-  "paket": "kelimeler",
-  "ad": "Kelime bankası",
-  "surum": 1,
-  "kelimeler": [
-    {"id": "hello", "en": "hello", "tr": "merhaba", "emoji": "👋", "grup": "selam", "ornek": {"en": "Hello, I'm Ece.", "tr": "Merhaba, ben Ece."}},
-    {"id": "hi", "en": "hi", "tr": "selam", "emoji": "🙋", "grup": "selam", "ornek": {"en": "Hi, Sam!", "tr": "Selam, Sam!"}},
-    {"id": "goodbye", "en": "goodbye", "tr": "hoşça kal", "emoji": "🚶", "grup": "selam", "ornek": {"en": "Goodbye, Ece!", "tr": "Hoşça kal, Ece!"}},
-    {"id": "good-morning", "en": "good morning", "tr": "günaydın", "emoji": "🌅", "grup": "selam", "ornek": {"en": "Good morning, Ece!", "tr": "Günaydın, Ece!"}},
-    {"id": "see-you", "en": "see you", "tr": "görüşürüz", "emoji": "🤙", "grup": "selam", "ornek": {"en": "See you tomorrow.", "tr": "Yarın görüşürüz."}},
-    {"id": "please", "en": "please", "tr": "lütfen", "emoji": "🙏", "grup": "selam", "ornek": {"en": "Please wait here.", "tr": "Lütfen burada bekle."}},
-    {"id": "thank-you", "en": "thank you", "tr": "teşekkür ederim", "emoji": "😊", "grup": "selam", "ornek": {"en": "Thank you, Sam.", "tr": "Teşekkür ederim, Sam."}},
-    {"id": "sorry", "en": "sorry", "tr": "özür dilerim", "emoji": "😔", "grup": "selam", "ornek": {"en": "Sorry, I'm late.", "tr": "Özür dilerim, geciktim."}},
-    {"id": "excuse-me", "en": "excuse me", "tr": "affedersiniz", "emoji": "🗣️", "grup": "selam", "ornek": {"en": "Excuse me, where is the library?", "tr": "Affedersiniz, kütüphane nerede?"}},
-    {"id": "yes", "en": "yes", "tr": "evet", "emoji": "✅", "grup": "selam", "ornek": {"en": "Yes, I am.", "tr": "Evet, öyleyim."}},
-    {"id": "no", "en": "no", "tr": "hayır", "emoji": "❌", "grup": "selam", "ornek": {"en": "No, thank you.", "tr": "Hayır, teşekkürler."}},
-    {"id": "how-are-you", "en": "how are you", "tr": "nasılsın", "emoji": "💬", "grup": "selam", "ornek": {"en": "Hi Ece, how are you?", "tr": "Selam Ece, nasılsın?"}},
-    {"id": "fine", "en": "fine", "tr": "iyi (hal hatır)", "emoji": "👍", "grup": "selam", "ornek": {"en": "I'm fine, thank you.", "tr": "İyiyim, teşekkür ederim."}},
-    {"id": "nice-to-meet-you", "en": "nice to meet you", "tr": "tanıştığımıza memnun oldum", "emoji": "🤝", "grup": "selam", "ornek": {"en": "Nice to meet you, Sam.", "tr": "Tanıştığımıza memnun oldum, Sam."}},
-
-    {"id": "name", "en": "name", "tr": "ad, isim", "emoji": "🏷️", "grup": "ben", "ornek": {"en": "My name is Ece.", "tr": "Benim adım Ece."}},
-    {"id": "from", "en": "from", "tr": "…'den, …'dan (geldiği yer)", "emoji": "🧭", "grup": "ben", "ornek": {"en": "I am from Türkiye.", "tr": "Ben Türkiye'denim."}},
-    {"id": "live", "en": "live", "tr": "yaşamak, oturmak", "emoji": "🏘️", "grup": "ben", "ornek": {"en": "I live in Bursa.", "tr": "Bursa'da yaşıyorum."}},
-    {"id": "student", "en": "student", "tr": "öğrenci", "emoji": "🧑‍🎓", "grup": "ben", "ornek": {"en": "I am a student.", "tr": "Ben bir öğrenciyim."}},
-    {"id": "teacher", "en": "teacher", "tr": "öğretmen", "emoji": "🧑‍🏫", "grup": "ben", "ornek": {"en": "Our teacher is in the room.", "tr": "Öğretmenimiz odada."}},
-    {"id": "friend", "en": "friend", "tr": "arkadaş", "emoji": "🧑‍🤝‍🧑", "grup": "ben", "ornek": {"en": "My friend is at home.", "tr": "Arkadaşım evde."}},
-    {"id": "city", "en": "city", "tr": "şehir", "emoji": "🏙️", "grup": "ben", "ornek": {"en": "My city is big.", "tr": "Şehrim büyük."}},
-    {"id": "country", "en": "country", "tr": "ülke", "emoji": "🌍", "grup": "ben", "ornek": {"en": "My country is Türkiye.", "tr": "Ülkem Türkiye."}},
-
-    {"id": "one", "en": "one", "tr": "bir", "emoji": "1️⃣", "grup": "sayi", "ornek": {"en": "I have one book.", "tr": "Bir kitabım var."}},
-    {"id": "two", "en": "two", "tr": "iki", "emoji": "2️⃣", "grup": "sayi", "ornek": {"en": "Two pens, please.", "tr": "İki kalem, lütfen."}},
-    {"id": "three", "en": "three", "tr": "üç", "emoji": "3️⃣", "grup": "sayi", "ornek": {"en": "I read three pages.", "tr": "Üç sayfa okurum."}},
-    {"id": "four", "en": "four", "tr": "dört", "emoji": "4️⃣", "grup": "sayi", "ornek": {"en": "The meeting starts at four.", "tr": "Toplantı dörtte başlıyor."}},
-    {"id": "five", "en": "five", "tr": "beş", "emoji": "5️⃣", "grup": "sayi", "ornek": {"en": "Five students are here.", "tr": "Beş öğrenci burada."}},
-    {"id": "six", "en": "six", "tr": "altı", "emoji": "6️⃣", "grup": "sayi", "ornek": {"en": "It is six o'clock.", "tr": "Saat altı."}},
-    {"id": "seven", "en": "seven", "tr": "yedi", "emoji": "7️⃣", "grup": "sayi", "ornek": {"en": "There are seven days in a week.", "tr": "Bir haftada yedi gün var."}},
-    {"id": "eight", "en": "eight", "tr": "sekiz", "emoji": "8️⃣", "grup": "sayi", "ornek": {"en": "The class is at eight.", "tr": "Ders sekizde."}},
-    {"id": "nine", "en": "nine", "tr": "dokuz", "emoji": "9️⃣", "grup": "sayi", "ornek": {"en": "Nine students are in the room.", "tr": "Odada dokuz öğrenci var."}},
-    {"id": "ten", "en": "ten", "tr": "on", "emoji": "🔟", "grup": "sayi", "ornek": {"en": "I count to ten.", "tr": "Ona kadar sayarım."}},
-
-    {"id": "monday", "en": "Monday", "tr": "Pazartesi", "grup": "gun", "ornek": {"en": "The class starts on Monday.", "tr": "Ders Pazartesi başlıyor."}},
-    {"id": "tuesday", "en": "Tuesday", "tr": "Salı", "grup": "gun", "ornek": {"en": "The study group meets on Tuesday.", "tr": "Çalışma grubu Salı günü buluşuyor."}},
-    {"id": "wednesday", "en": "Wednesday", "tr": "Çarşamba", "grup": "gun", "ornek": {"en": "I go to the library on Wednesday.", "tr": "Çarşamba günü kütüphaneye giderim."}},
-    {"id": "thursday", "en": "Thursday", "tr": "Perşembe", "grup": "gun", "ornek": {"en": "Thursday is a busy day.", "tr": "Perşembe yoğun bir gün."}},
-    {"id": "friday", "en": "Friday", "tr": "Cuma", "grup": "gun", "ornek": {"en": "Friday is the last school day.", "tr": "Cuma, okulun son günü."}},
-    {"id": "saturday", "en": "Saturday", "tr": "Cumartesi", "grup": "gun", "ornek": {"en": "I walk on Saturday.", "tr": "Cumartesi yürüyüşe çıkarım."}},
-    {"id": "sunday", "en": "Sunday", "tr": "Pazar", "grup": "gun", "ornek": {"en": "Sunday is a rest day.", "tr": "Pazar dinlenme günü."}},
-
-    {"id": "red", "en": "red", "tr": "kırmızı", "emoji": "🔴", "grup": "renk", "ornek": {"en": "The bag is red.", "tr": "Çanta kırmızı."}},
-    {"id": "blue", "en": "blue", "tr": "mavi", "emoji": "🔵", "grup": "renk", "ornek": {"en": "I have a blue pen.", "tr": "Mavi bir kalemim var."}},
-    {"id": "green", "en": "green", "tr": "yeşil", "emoji": "🟢", "grup": "renk", "ornek": {"en": "The door is green.", "tr": "Kapı yeşil."}},
-    {"id": "yellow", "en": "yellow", "tr": "sarı", "emoji": "🟡", "grup": "renk", "ornek": {"en": "I want a yellow pencil.", "tr": "Sarı bir kurşun kalem istiyorum."}},
-    {"id": "black", "en": "black", "tr": "siyah", "emoji": "⚫", "grup": "renk", "ornek": {"en": "My phone is black.", "tr": "Telefonum siyah."}},
-    {"id": "white", "en": "white", "tr": "beyaz", "emoji": "⚪", "grup": "renk", "ornek": {"en": "The notebook is white.", "tr": "Defter beyaz."}},
-    {"id": "orange", "en": "orange", "tr": "turuncu", "emoji": "🟠", "grup": "renk", "ornek": {"en": "I have an orange bag.", "tr": "Turuncu bir çantam var."}},
-
-    {"id": "bag", "en": "bag", "tr": "çanta", "emoji": "🎒", "grup": "esya", "ornek": {"en": "My bag is blue.", "tr": "Çantam mavi."}},
-    {"id": "pen", "en": "pen", "tr": "tükenmez kalem", "emoji": "🖊️", "grup": "esya", "ornek": {"en": "Please bring a blue pen.", "tr": "Lütfen mavi bir tükenmez kalem getir."}},
-    {"id": "pencil", "en": "pencil", "tr": "kurşun kalem", "emoji": "✏️", "grup": "esya", "ornek": {"en": "I write with a pencil.", "tr": "Kurşun kalemle yazarım."}},
-    {"id": "notebook", "en": "notebook", "tr": "defter", "emoji": "📓", "grup": "esya", "ornek": {"en": "Please bring your notebook.", "tr": "Lütfen defterini getir."}},
-    {"id": "book", "en": "book", "tr": "kitap", "emoji": "📘", "grup": "esya", "ornek": {"en": "This book is new.", "tr": "Bu kitap yeni."}},
-    {"id": "phone", "en": "phone", "tr": "telefon", "emoji": "📱", "grup": "esya", "ornek": {"en": "My phone is on the table.", "tr": "Telefonum masanın üzerinde."}},
-    {"id": "door", "en": "door", "tr": "kapı", "emoji": "🚪", "grup": "esya", "ornek": {"en": "Please open the door.", "tr": "Lütfen kapıyı aç."}},
-    {"id": "window", "en": "window", "tr": "pencere", "grup": "esya", "ornek": {"en": "Please close the window.", "tr": "Lütfen pencereyi kapat."}},
-    {"id": "table", "en": "table", "tr": "masa", "grup": "esya", "ornek": {"en": "The pen is on the table.", "tr": "Tükenmez kalem masanın üzerinde."}},
-    {"id": "chair", "en": "chair", "tr": "sandalye", "emoji": "🪑", "grup": "esya", "ornek": {"en": "The bag is under the chair.", "tr": "Çanta sandalyenin altında."}},
-
-    {"id": "school", "en": "school", "tr": "okul", "emoji": "🏫", "grup": "yer", "ornek": {"en": "I go to school every day.", "tr": "Her gün okula giderim."}},
-    {"id": "library", "en": "library", "tr": "kütüphane", "emoji": "📚", "grup": "yer", "ornek": {"en": "We meet at the library.", "tr": "Kütüphanede buluşuyoruz."}},
-    {"id": "home", "en": "home", "tr": "ev", "emoji": "🏠", "grup": "yer", "ornek": {"en": "My friend is at home.", "tr": "Arkadaşım evde."}},
-    {"id": "room", "en": "room", "tr": "oda", "emoji": "🛋️", "grup": "yer", "ornek": {"en": "The teacher is in the room.", "tr": "Öğretmen odada."}},
-    {"id": "park", "en": "park", "tr": "park", "emoji": "🌳", "grup": "yer", "ornek": {"en": "I walk in the park.", "tr": "Parkta yürürüm."}},
-
-    {"id": "in", "en": "in", "tr": "içinde, -de/-da", "emoji": "📥", "grup": "yerlesim", "ornek": {"en": "The key is in the bag.", "tr": "Anahtar çantanın içinde."}},
-    {"id": "on", "en": "on", "tr": "üzerinde", "emoji": "⬆️", "grup": "yerlesim", "ornek": {"en": "The book is on the table.", "tr": "Kitap masanın üzerinde."}},
-    {"id": "under", "en": "under", "tr": "altında", "emoji": "⬇️", "grup": "yerlesim", "ornek": {"en": "The bag is under the table.", "tr": "Çanta masanın altında."}},
-    {"id": "next-to", "en": "next to", "tr": "yanında", "emoji": "↔️", "grup": "yerlesim", "ornek": {"en": "The lamp is next to the phone.", "tr": "Lamba telefonun yanında."}},
-
-    {"id": "what", "en": "what", "tr": "ne", "emoji": "❓", "grup": "soru", "ornek": {"en": "What is your name?", "tr": "Adın ne?"}},
-    {"id": "where", "en": "where", "tr": "nerede, nereye", "emoji": "📍", "grup": "soru", "ornek": {"en": "Where are you from?", "tr": "Nerelisin?"}},
-    {"id": "who", "en": "who", "tr": "kim", "emoji": "👤", "grup": "soru", "ornek": {"en": "Who is your teacher?", "tr": "Öğretmenin kim?"}},
-    {"id": "when", "en": "when", "tr": "ne zaman", "emoji": "🕒", "grup": "soru", "ornek": {"en": "When is the meeting?", "tr": "Toplantı ne zaman?"}},
-
-    {"id": "open", "en": "open", "tr": "açmak", "emoji": "📂", "grup": "fiil", "ornek": {"en": "Please open the door.", "tr": "Lütfen kapıyı aç."}},
-    {"id": "close", "en": "close", "tr": "kapatmak", "emoji": "🔒", "grup": "fiil", "ornek": {"en": "Please close the window.", "tr": "Lütfen pencereyi kapat."}},
-    {"id": "wait", "en": "wait", "tr": "beklemek", "emoji": "⏳", "grup": "fiil", "ornek": {"en": "Please wait at the door.", "tr": "Lütfen kapıda bekle."}},
-    {"id": "bring", "en": "bring", "tr": "getirmek", "emoji": "🧺", "grup": "fiil", "ornek": {"en": "Please bring a notebook.", "tr": "Lütfen bir defter getir."}},
-    {"id": "read", "en": "read", "tr": "okumak", "emoji": "📖", "grup": "fiil", "ornek": {"en": "I read a book every day.", "tr": "Her gün bir kitap okurum."}},
-    {"id": "write", "en": "write", "tr": "yazmak", "emoji": "✍️", "grup": "fiil", "ornek": {"en": "I write in my notebook.", "tr": "Defterime yazarım."}},
-    {"id": "listen", "en": "listen", "tr": "dinlemek", "emoji": "👂", "grup": "fiil", "ornek": {"en": "I listen to English every day.", "tr": "Her gün İngilizce dinlerim."}},
-    {"id": "speak", "en": "speak", "tr": "konuşmak", "emoji": "🎤", "grup": "fiil", "ornek": {"en": "I speak English and Turkish.", "tr": "İngilizce ve Türkçe konuşurum."}},
-    {"id": "repeat", "en": "repeat", "tr": "tekrar etmek", "emoji": "🔁", "grup": "fiil", "ornek": {"en": "Please repeat the word.", "tr": "Lütfen sözcüğü tekrar et."}},
-    {"id": "understand", "en": "understand", "tr": "anlamak", "emoji": "🧠", "grup": "fiil", "ornek": {"en": "I understand the word.", "tr": "Sözcüğü anlıyorum."}},
-    {"id": "like", "en": "like", "tr": "sevmek, hoşlanmak", "emoji": "❤️", "grup": "fiil", "ornek": {"en": "I like science.", "tr": "Bilimi severim."}},
-    {"id": "want", "en": "want", "tr": "istemek", "emoji": "🙌", "grup": "fiil", "ornek": {"en": "I want a blue pen.", "tr": "Mavi bir tükenmez kalem istiyorum."}},
-    {"id": "have", "en": "have", "tr": "sahip olmak, … var", "emoji": "🤲", "grup": "fiil", "ornek": {"en": "I have a red bag.", "tr": "Kırmızı bir çantam var."}},
-    {"id": "study", "en": "study", "tr": "ders çalışmak", "emoji": "📝", "grup": "fiil", "ornek": {"en": "I study after school.", "tr": "Okuldan sonra ders çalışırım."}},
-    {"id": "learn", "en": "learn", "tr": "öğrenmek", "emoji": "🌱", "grup": "fiil", "ornek": {"en": "I learn new words.", "tr": "Yeni sözcükler öğrenirim."}},
-    {"id": "go", "en": "go", "tr": "gitmek", "emoji": "➡️", "grup": "fiil", "ornek": {"en": "I go to school.", "tr": "Okula giderim."}},
-    {"id": "come", "en": "come", "tr": "gelmek", "emoji": "↩️", "grup": "fiil", "ornek": {"en": "Please come to the library.", "tr": "Lütfen kütüphaneye gel."}},
-    {"id": "start", "en": "start", "tr": "başlamak", "emoji": "▶️", "grup": "fiil", "ornek": {"en": "The class starts at four.", "tr": "Ders dörtte başlıyor."}},
-    {"id": "meet", "en": "meet", "tr": "buluşmak, tanışmak", "emoji": "🫂", "grup": "fiil", "ornek": {"en": "We meet at the library.", "tr": "Kütüphanede buluşuyoruz."}},
-
-    {"id": "today", "en": "today", "tr": "bugün", "emoji": "📅", "grup": "zaman", "ornek": {"en": "Today is Monday.", "tr": "Bugün Pazartesi."}},
-    {"id": "tomorrow", "en": "tomorrow", "tr": "yarın", "emoji": "⏭️", "grup": "zaman", "ornek": {"en": "See you tomorrow.", "tr": "Yarın görüşürüz."}},
-    {"id": "morning", "en": "morning", "tr": "sabah", "emoji": "🌄", "grup": "zaman", "ornek": {"en": "I read in the morning.", "tr": "Sabahları okurum."}},
-    {"id": "afternoon", "en": "afternoon", "tr": "öğleden sonra", "emoji": "🌤️", "grup": "zaman", "ornek": {"en": "The class is in the afternoon.", "tr": "Ders öğleden sonra."}},
-    {"id": "evening", "en": "evening", "tr": "akşam", "emoji": "🌆", "grup": "zaman", "ornek": {"en": "I walk in the evening.", "tr": "Akşamları yürürüm."}},
-    {"id": "night", "en": "night", "tr": "gece", "emoji": "🌙", "grup": "zaman", "ornek": {"en": "I sleep at night.", "tr": "Geceleri uyurum."}},
-    {"id": "week", "en": "week", "tr": "hafta", "emoji": "🗓️", "grup": "zaman", "ornek": {"en": "There are seven days in a week.", "tr": "Bir haftada yedi gün var."}},
-    {"id": "class", "en": "class", "tr": "ders, sınıf", "emoji": "🖍️", "grup": "zaman", "ornek": {"en": "The class starts at four.", "tr": "Ders dörtte başlıyor."}},
-
-    {"id": "k-repeat-please", "en": "Can you repeat that, please?", "tr": "Tekrar eder misin, lütfen?", "emoji": "🔂", "grup": "kalip"},
-    {"id": "k-speak-slowly", "en": "Can you speak more slowly, please?", "tr": "Biraz daha yavaş konuşur musun, lütfen?", "emoji": "🐢", "grup": "kalip"},
-    {"id": "k-dont-understand", "en": "I don't understand.", "tr": "Anlamıyorum.", "emoji": "🤷", "grup": "kalip"},
-    {"id": "k-what-mean", "en": "What does this word mean?", "tr": "Bu sözcük ne demek?", "emoji": "🔍", "grup": "kalip"},
-    {"id": "k-how-say", "en": "How do you say this in English?", "tr": "Bunu İngilizce nasıl söylersin?", "emoji": "🗨️", "grup": "kalip"},
-
-    {"id": "mother", "en": "mother", "tr": "anne", "emoji": "👩", "grup": "aile", "ornek": {"en": "My mother is at home.", "tr": "Annem evde."}},
-    {"id": "father", "en": "father", "tr": "baba", "emoji": "👨", "grup": "aile", "ornek": {"en": "My father reads a book.", "tr": "Babam kitap okuyor."}},
-    {"id": "sister", "en": "sister", "tr": "kız kardeş, abla", "emoji": "👧", "grup": "aile", "ornek": {"en": "My sister is a student.", "tr": "Kız kardeşim öğrenci."}},
-    {"id": "brother", "en": "brother", "tr": "erkek kardeş, abi", "emoji": "👦", "grup": "aile", "ornek": {"en": "My brother is at school.", "tr": "Erkek kardeşim okulda."}},
-    {"id": "family", "en": "family", "tr": "aile", "emoji": "👪", "grup": "aile", "ornek": {"en": "My family lives in Bursa.", "tr": "Ailem Bursa'da yaşıyor."}},
-
-    {"id": "bread", "en": "bread", "tr": "ekmek", "emoji": "🍞", "grup": "yiyecek", "ornek": {"en": "I like bread.", "tr": "Ekmeği severim."}},
-    {"id": "water", "en": "water", "tr": "su", "emoji": "💧", "grup": "yiyecek", "ornek": {"en": "I drink water.", "tr": "Su içerim."}},
-    {"id": "milk", "en": "milk", "tr": "süt", "emoji": "🥛", "grup": "yiyecek", "ornek": {"en": "I drink milk in the morning.", "tr": "Sabahları süt içerim."}},
-    {"id": "tea", "en": "tea", "tr": "çay", "emoji": "🍵", "grup": "yiyecek", "ornek": {"en": "My father drinks tea.", "tr": "Babam çay içer."}},
-    {"id": "apple", "en": "apple", "tr": "elma", "emoji": "🍎", "grup": "yiyecek", "ornek": {"en": "I eat an apple.", "tr": "Bir elma yerim."}},
-    {"id": "eat", "en": "eat", "tr": "yemek (yemek eylemi)", "emoji": "🍽️", "grup": "yiyecek", "ornek": {"en": "We eat dinner at seven.", "tr": "Akşam yemeğini yedide yeriz."}},
-    {"id": "drink", "en": "drink", "tr": "içmek", "emoji": "🥤", "grup": "yiyecek", "ornek": {"en": "I drink tea in the evening.", "tr": "Akşamları çay içerim."}},
-    {"id": "breakfast", "en": "breakfast", "tr": "kahvaltı", "emoji": "🥐", "grup": "yiyecek", "ornek": {"en": "I eat breakfast at eight.", "tr": "Kahvaltıyı sekizde yaparım."}},
-    {"id": "lunch", "en": "lunch", "tr": "öğle yemeği", "emoji": "🥪", "grup": "yiyecek", "ornek": {"en": "We eat lunch at school.", "tr": "Öğle yemeğini okulda yeriz."}},
-    {"id": "dinner", "en": "dinner", "tr": "akşam yemeği", "emoji": "🍝", "grup": "yiyecek", "ornek": {"en": "Dinner is at seven.", "tr": "Akşam yemeği yedide."}},
-
-    {"id": "big", "en": "big", "tr": "büyük", "emoji": "🐘", "grup": "sifat", "ornek": {"en": "The room is big.", "tr": "Oda büyük."}},
-    {"id": "small", "en": "small", "tr": "küçük", "emoji": "🐜", "grup": "sifat", "ornek": {"en": "My bag is small.", "tr": "Çantam küçük."}},
-    {"id": "new", "en": "new", "tr": "yeni", "emoji": "🆕", "grup": "sifat", "ornek": {"en": "I have a new notebook.", "tr": "Yeni bir defterim var."}},
-    {"id": "old", "en": "old", "tr": "eski, yaşlı", "emoji": "👴", "grup": "sifat", "ornek": {"en": "This clock is old.", "tr": "Bu saat eski."}},
-    {"id": "hot", "en": "hot", "tr": "sıcak", "emoji": "🔥", "grup": "sifat", "ornek": {"en": "The tea is hot.", "tr": "Çay sıcak."}},
-    {"id": "cold", "en": "cold", "tr": "soğuk", "emoji": "🧊", "grup": "sifat", "ornek": {"en": "The water is cold.", "tr": "Su soğuk."}},
-    {"id": "happy", "en": "happy", "tr": "mutlu", "emoji": "😀", "grup": "sifat", "ornek": {"en": "I am happy today.", "tr": "Bugün mutluyum."}},
-    {"id": "tired", "en": "tired", "tr": "yorgun", "emoji": "🥱", "grup": "sifat", "ornek": {"en": "I am tired in the evening.", "tr": "Akşamları yorgunum."}},
-
-    {"id": "wake-up", "en": "wake up", "tr": "uyanmak", "emoji": "🌞", "grup": "rutin", "ornek": {"en": "I wake up at seven.", "tr": "Yedide uyanırım."}},
-    {"id": "sleep", "en": "sleep", "tr": "uyumak", "emoji": "🛌", "grup": "rutin", "ornek": {"en": "I sleep at ten.", "tr": "Onda uyurum."}},
-    {"id": "homework", "en": "homework", "tr": "ev ödevi", "emoji": "🗒️", "grup": "rutin", "ornek": {"en": "I do my homework after school.", "tr": "Ev ödevimi okuldan sonra yaparım."}},
-    {"id": "walk", "en": "walk", "tr": "yürümek", "emoji": "🥾", "grup": "rutin", "ornek": {"en": "I walk to school.", "tr": "Okula yürüyerek giderim."}},
-    {"id": "run", "en": "run", "tr": "koşmak", "emoji": "🏃", "grup": "rutin", "ornek": {"en": "I run in the park.", "tr": "Parkta koşarım."}},
-    {"id": "swim", "en": "swim", "tr": "yüzmek", "emoji": "🏊", "grup": "rutin", "ornek": {"en": "I can swim.", "tr": "Yüzebilirim."}},
-    {"id": "play", "en": "play", "tr": "oynamak", "emoji": "⚽", "grup": "rutin", "ornek": {"en": "We play in the park.", "tr": "Parkta oynarız."}},
-    {"id": "can", "en": "can", "tr": "-ebilmek (yapabilmek)", "emoji": "💪", "grup": "rutin", "ornek": {"en": "I can read English.", "tr": "İngilizce okuyabilirim."}}
-  ]
+ "paket": "kelimeler",
+ "ad": "Kelime bankası",
+ "surum": 1,
+ "kelimeler": [
+  {
+   "id": "hello",
+   "en": "hello",
+   "tr": "merhaba",
+   "emoji": "👋",
+   "grup": "selam",
+   "ornek": {
+    "en": "Hello, I'm Ece.",
+    "tr": "Merhaba, ben Ece."
+   },
+   "sv": 1,
+   "siklik": 2399
+  },
+  {
+   "id": "hi",
+   "en": "hi",
+   "tr": "selam",
+   "emoji": "🙋",
+   "grup": "selam",
+   "ornek": {
+    "en": "Hi, Sam!",
+    "tr": "Selam, Sam!"
+   },
+   "sv": 1,
+   "siklik": 1182
+  },
+  {
+   "id": "goodbye",
+   "en": "goodbye",
+   "tr": "hoşça kal",
+   "emoji": "🚶",
+   "grup": "selam",
+   "ornek": {
+    "en": "Goodbye, Ece!",
+    "tr": "Hoşça kal, Ece!"
+   },
+   "sv": 2
+  },
+  {
+   "id": "good-morning",
+   "en": "good morning",
+   "tr": "günaydın",
+   "emoji": "🌅",
+   "grup": "selam",
+   "ornek": {
+    "en": "Good morning, Ece!",
+    "tr": "Günaydın, Ece!"
+   },
+   "sv": 2
+  },
+  {
+   "id": "see-you",
+   "en": "see you",
+   "tr": "görüşürüz",
+   "emoji": "🤙",
+   "grup": "selam",
+   "ornek": {
+    "en": "See you tomorrow.",
+    "tr": "Yarın görüşürüz."
+   },
+   "sv": 3
+  },
+  {
+   "id": "please",
+   "en": "please",
+   "tr": "lütfen",
+   "emoji": "🙏",
+   "grup": "selam",
+   "ornek": {
+    "en": "Please wait here.",
+    "tr": "Lütfen burada bekle."
+   },
+   "sv": 2,
+   "siklik": 145
+  },
+  {
+   "id": "thank-you",
+   "en": "thank you",
+   "tr": "teşekkür ederim",
+   "emoji": "😊",
+   "grup": "selam",
+   "ornek": {
+    "en": "Thank you, Sam.",
+    "tr": "Teşekkür ederim, Sam."
+   },
+   "sv": 1
+  },
+  {
+   "id": "sorry",
+   "en": "sorry",
+   "tr": "özür dilerim",
+   "emoji": "😔",
+   "grup": "selam",
+   "ornek": {
+    "en": "Sorry, I'm late.",
+    "tr": "Özür dilerim, geciktim."
+   },
+   "sv": 2,
+   "siklik": 2243
+  },
+  {
+   "id": "excuse-me",
+   "en": "excuse me",
+   "tr": "affedersiniz",
+   "emoji": "🗣️",
+   "grup": "selam",
+   "ornek": {
+    "en": "Excuse me, where is the library?",
+    "tr": "Affedersiniz, kütüphane nerede?"
+   },
+   "sv": 3
+  },
+  {
+   "id": "yes",
+   "en": "yes",
+   "tr": "evet",
+   "emoji": "✅",
+   "grup": "selam",
+   "ornek": {
+    "en": "Yes, I am.",
+    "tr": "Evet, öyleyim."
+   },
+   "sv": 1,
+   "siklik": 483
+  },
+  {
+   "id": "no",
+   "en": "no",
+   "tr": "hayır",
+   "emoji": "❌",
+   "grup": "selam",
+   "ornek": {
+    "en": "No, thank you.",
+    "tr": "Hayır, teşekkürler."
+   },
+   "sv": 1,
+   "siklik": 48
+  },
+  {
+   "id": "how-are-you",
+   "en": "how are you",
+   "tr": "nasılsın",
+   "emoji": "💬",
+   "grup": "selam",
+   "ornek": {
+    "en": "Hi Ece, how are you?",
+    "tr": "Selam Ece, nasılsın?"
+   },
+   "sv": 3
+  },
+  {
+   "id": "fine",
+   "en": "fine",
+   "tr": "iyi (hal hatır)",
+   "emoji": "👍",
+   "grup": "selam",
+   "ornek": {
+    "en": "I'm fine, thank you.",
+    "tr": "İyiyim, teşekkür ederim."
+   },
+   "sv": 2,
+   "siklik": 1110
+  },
+  {
+   "id": "nice-to-meet-you",
+   "en": "nice to meet you",
+   "tr": "tanıştığımıza memnun oldum",
+   "emoji": "🤝",
+   "grup": "selam",
+   "ornek": {
+    "en": "Nice to meet you, Sam.",
+    "tr": "Tanıştığımıza memnun oldum, Sam."
+   },
+   "sv": 4
+  },
+  {
+   "id": "name",
+   "en": "name",
+   "tr": "ad, isim",
+   "emoji": "🏷️",
+   "grup": "ben",
+   "ornek": {
+    "en": "My name is Ece.",
+    "tr": "Benim adım Ece."
+   },
+   "sv": 3,
+   "siklik": 108
+  },
+  {
+   "id": "from",
+   "en": "from",
+   "tr": "…'den, …'dan (geldiği yer)",
+   "emoji": "🧭",
+   "grup": "ben",
+   "ornek": {
+    "en": "I am from Türkiye.",
+    "tr": "Ben Türkiye'denim."
+   },
+   "sv": 4,
+   "siklik": 21
+  },
+  {
+   "id": "live",
+   "en": "live",
+   "tr": "yaşamak, oturmak",
+   "emoji": "🏘️",
+   "grup": "ben",
+   "ornek": {
+    "en": "I live in Bursa.",
+    "tr": "Bursa'da yaşıyorum."
+   },
+   "sv": 5,
+   "siklik": 460
+  },
+  {
+   "id": "student",
+   "en": "student",
+   "tr": "öğrenci",
+   "emoji": "🧑‍🎓",
+   "grup": "ben",
+   "ornek": {
+    "en": "I am a student.",
+    "tr": "Ben bir öğrenciyim."
+   },
+   "sv": 4,
+   "siklik": 541
+  },
+  {
+   "id": "teacher",
+   "en": "teacher",
+   "tr": "öğretmen",
+   "emoji": "🧑‍🏫",
+   "grup": "ben",
+   "ornek": {
+    "en": "Our teacher is in the room.",
+    "tr": "Öğretmenimiz odada."
+   },
+   "sv": 4,
+   "siklik": 1702
+  },
+  {
+   "id": "friend",
+   "en": "friend",
+   "tr": "arkadaş",
+   "emoji": "🧑‍🤝‍🧑",
+   "grup": "ben",
+   "ornek": {
+    "en": "My friend is at home.",
+    "tr": "Arkadaşım evde."
+   },
+   "sv": 3,
+   "siklik": 502
+  },
+  {
+   "id": "city",
+   "en": "city",
+   "tr": "şehir",
+   "emoji": "🏙️",
+   "grup": "ben",
+   "ornek": {
+    "en": "My city is big.",
+    "tr": "Şehrim büyük."
+   },
+   "sv": 5,
+   "siklik": 139
+  },
+  {
+   "id": "country",
+   "en": "country",
+   "tr": "ülke",
+   "emoji": "🌍",
+   "grup": "ben",
+   "ornek": {
+    "en": "My country is Türkiye.",
+    "tr": "Ülkem Türkiye."
+   },
+   "sv": 5,
+   "siklik": 395
+  },
+  {
+   "id": "one",
+   "en": "one",
+   "tr": "bir",
+   "emoji": "1️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "I have one book.",
+    "tr": "Bir kitabım var."
+   },
+   "sv": 1,
+   "siklik": 45
+  },
+  {
+   "id": "two",
+   "en": "two",
+   "tr": "iki",
+   "emoji": "2️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "Two pens, please.",
+    "tr": "İki kalem, lütfen."
+   },
+   "sv": 1,
+   "siklik": 116
+  },
+  {
+   "id": "three",
+   "en": "three",
+   "tr": "üç",
+   "emoji": "3️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "I read three pages.",
+    "tr": "Üç sayfa okurum."
+   },
+   "sv": 1,
+   "siklik": 313
+  },
+  {
+   "id": "four",
+   "en": "four",
+   "tr": "dört",
+   "emoji": "4️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "The meeting starts at four.",
+    "tr": "Toplantı dörtte başlıyor."
+   },
+   "sv": 2,
+   "siklik": 599
+  },
+  {
+   "id": "five",
+   "en": "five",
+   "tr": "beş",
+   "emoji": "5️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "Five students are here.",
+    "tr": "Beş öğrenci burada."
+   },
+   "sv": 2,
+   "siklik": 761
+  },
+  {
+   "id": "six",
+   "en": "six",
+   "tr": "altı",
+   "emoji": "6️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "It is six o'clock.",
+    "tr": "Saat altı."
+   },
+   "sv": 3,
+   "siklik": 1117
+  },
+  {
+   "id": "seven",
+   "en": "seven",
+   "tr": "yedi",
+   "emoji": "7️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "There are seven days in a week.",
+    "tr": "Bir haftada yedi gün var."
+   },
+   "sv": 3,
+   "siklik": 1843
+  },
+  {
+   "id": "eight",
+   "en": "eight",
+   "tr": "sekiz",
+   "emoji": "8️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "The class is at eight.",
+    "tr": "Ders sekizde."
+   },
+   "sv": 3,
+   "siklik": 2418
+  },
+  {
+   "id": "nine",
+   "en": "nine",
+   "tr": "dokuz",
+   "emoji": "9️⃣",
+   "grup": "sayi",
+   "ornek": {
+    "en": "Nine students are in the room.",
+    "tr": "Odada dokuz öğrenci var."
+   },
+   "sv": 3,
+   "siklik": 2885
+  },
+  {
+   "id": "ten",
+   "en": "ten",
+   "tr": "on",
+   "emoji": "🔟",
+   "grup": "sayi",
+   "ornek": {
+    "en": "I count to ten.",
+    "tr": "Ona kadar sayarım."
+   },
+   "sv": 3,
+   "siklik": 1743
+  },
+  {
+   "id": "monday",
+   "en": "Monday",
+   "tr": "Pazartesi",
+   "grup": "gun",
+   "ornek": {
+    "en": "The class starts on Monday.",
+    "tr": "Ders Pazartesi başlıyor."
+   },
+   "sv": 6,
+   "siklik": 1009
+  },
+  {
+   "id": "tuesday",
+   "en": "Tuesday",
+   "tr": "Salı",
+   "grup": "gun",
+   "ornek": {
+    "en": "The study group meets on Tuesday.",
+    "tr": "Çalışma grubu Salı günü buluşuyor."
+   },
+   "sv": 6,
+   "siklik": 1145
+  },
+  {
+   "id": "wednesday",
+   "en": "Wednesday",
+   "tr": "Çarşamba",
+   "grup": "gun",
+   "ornek": {
+    "en": "I go to the library on Wednesday.",
+    "tr": "Çarşamba günü kütüphaneye giderim."
+   },
+   "sv": 7,
+   "siklik": 1194
+  },
+  {
+   "id": "thursday",
+   "en": "Thursday",
+   "tr": "Perşembe",
+   "grup": "gun",
+   "ornek": {
+    "en": "Thursday is a busy day.",
+    "tr": "Perşembe yoğun bir gün."
+   },
+   "sv": 7,
+   "siklik": 1179
+  },
+  {
+   "id": "friday",
+   "en": "Friday",
+   "tr": "Cuma",
+   "grup": "gun",
+   "ornek": {
+    "en": "Friday is the last school day.",
+    "tr": "Cuma, okulun son günü."
+   },
+   "sv": 7,
+   "siklik": 935
+  },
+  {
+   "id": "saturday",
+   "en": "Saturday",
+   "tr": "Cumartesi",
+   "grup": "gun",
+   "ornek": {
+    "en": "I walk on Saturday.",
+    "tr": "Cumartesi yürüyüşe çıkarım."
+   },
+   "sv": 7,
+   "siklik": 1165
+  },
+  {
+   "id": "sunday",
+   "en": "Sunday",
+   "tr": "Pazar",
+   "grup": "gun",
+   "ornek": {
+    "en": "Sunday is a rest day.",
+    "tr": "Pazar dinlenme günü."
+   },
+   "sv": 7,
+   "siklik": 1071
+  },
+  {
+   "id": "red",
+   "en": "red",
+   "tr": "kırmızı",
+   "emoji": "🔴",
+   "grup": "renk",
+   "ornek": {
+    "en": "The bag is red.",
+    "tr": "Çanta kırmızı."
+   },
+   "sv": 4,
+   "siklik": 553
+  },
+  {
+   "id": "blue",
+   "en": "blue",
+   "tr": "mavi",
+   "emoji": "🔵",
+   "grup": "renk",
+   "ornek": {
+    "en": "I have a blue pen.",
+    "tr": "Mavi bir kalemim var."
+   },
+   "sv": 4,
+   "siklik": 617
+  },
+  {
+   "id": "green",
+   "en": "green",
+   "tr": "yeşil",
+   "emoji": "🟢",
+   "grup": "renk",
+   "ornek": {
+    "en": "The door is green.",
+    "tr": "Kapı yeşil."
+   },
+   "sv": 4,
+   "siklik": 730
+  },
+  {
+   "id": "yellow",
+   "en": "yellow",
+   "tr": "sarı",
+   "emoji": "🟡",
+   "grup": "renk",
+   "ornek": {
+    "en": "I want a yellow pencil.",
+    "tr": "Sarı bir kurşun kalem istiyorum."
+   },
+   "sv": 5,
+   "siklik": 979
+  },
+  {
+   "id": "black",
+   "en": "black",
+   "tr": "siyah",
+   "emoji": "⚫",
+   "grup": "renk",
+   "ornek": {
+    "en": "My phone is black.",
+    "tr": "Telefonum siyah."
+   },
+   "sv": 4,
+   "siklik": 270
+  },
+  {
+   "id": "white",
+   "en": "white",
+   "tr": "beyaz",
+   "emoji": "⚪",
+   "grup": "renk",
+   "ornek": {
+    "en": "The notebook is white.",
+    "tr": "Defter beyaz."
+   },
+   "sv": 4,
+   "siklik": 347
+  },
+  {
+   "id": "orange",
+   "en": "orange",
+   "tr": "turuncu",
+   "emoji": "🟠",
+   "grup": "renk",
+   "ornek": {
+    "en": "I have an orange bag.",
+    "tr": "Turuncu bir çantam var."
+   },
+   "sv": 5,
+   "siklik": 2146
+  },
+  {
+   "id": "bag",
+   "en": "bag",
+   "tr": "çanta",
+   "emoji": "🎒",
+   "grup": "esya",
+   "ornek": {
+    "en": "My bag is blue.",
+    "tr": "Çantam mavi."
+   },
+   "sv": 6,
+   "siklik": 1980
+  },
+  {
+   "id": "pen",
+   "en": "pen",
+   "tr": "tükenmez kalem",
+   "emoji": "🖊️",
+   "grup": "esya",
+   "ornek": {
+    "en": "Please bring a blue pen.",
+    "tr": "Lütfen mavi bir tükenmez kalem getir."
+   },
+   "sv": 4,
+   "siklik": 4223
+  },
+  {
+   "id": "pencil",
+   "en": "pencil",
+   "tr": "kurşun kalem",
+   "emoji": "✏️",
+   "grup": "esya",
+   "ornek": {
+    "en": "I write with a pencil.",
+    "tr": "Kurşun kalemle yazarım."
+   },
+   "sv": 5,
+   "siklik": 9330
+  },
+  {
+   "id": "notebook",
+   "en": "notebook",
+   "tr": "defter",
+   "emoji": "📓",
+   "grup": "esya",
+   "ornek": {
+    "en": "Please bring your notebook.",
+    "tr": "Lütfen defterini getir."
+   },
+   "sv": 6,
+   "siklik": 3267
+  },
+  {
+   "id": "book",
+   "en": "book",
+   "tr": "kitap",
+   "emoji": "📘",
+   "grup": "esya",
+   "ornek": {
+    "en": "This book is new.",
+    "tr": "Bu kitap yeni."
+   },
+   "sv": 4,
+   "siklik": 176
+  },
+  {
+   "id": "phone",
+   "en": "phone",
+   "tr": "telefon",
+   "emoji": "📱",
+   "grup": "esya",
+   "ornek": {
+    "en": "My phone is on the table.",
+    "tr": "Telefonum masanın üzerinde."
+   },
+   "sv": 5,
+   "siklik": 254
+  },
+  {
+   "id": "door",
+   "en": "door",
+   "tr": "kapı",
+   "emoji": "🚪",
+   "grup": "esya",
+   "ornek": {
+    "en": "Please open the door.",
+    "tr": "Lütfen kapıyı aç."
+   },
+   "sv": 5,
+   "siklik": 1441
+  },
+  {
+   "id": "window",
+   "en": "window",
+   "tr": "pencere",
+   "grup": "esya",
+   "ornek": {
+    "en": "Please close the window.",
+    "tr": "Lütfen pencereyi kapat."
+   },
+   "sv": 6,
+   "siklik": 774
+  },
+  {
+   "id": "table",
+   "en": "table",
+   "tr": "masa",
+   "grup": "esya",
+   "ornek": {
+    "en": "The pen is on the table.",
+    "tr": "Tükenmez kalem masanın üzerinde."
+   },
+   "sv": 5,
+   "siklik": 463
+  },
+  {
+   "id": "chair",
+   "en": "chair",
+   "tr": "sandalye",
+   "emoji": "🪑",
+   "grup": "esya",
+   "ornek": {
+    "en": "The bag is under the chair.",
+    "tr": "Çanta sandalyenin altında."
+   },
+   "sv": 5,
+   "siklik": 1975
+  },
+  {
+   "id": "school",
+   "en": "school",
+   "tr": "okul",
+   "emoji": "🏫",
+   "grup": "yer",
+   "ornek": {
+    "en": "I go to school every day.",
+    "tr": "Her gün okula giderim."
+   },
+   "sv": 5,
+   "siklik": 165
+  },
+  {
+   "id": "library",
+   "en": "library",
+   "tr": "kütüphane",
+   "emoji": "📚",
+   "grup": "yer",
+   "ornek": {
+    "en": "We meet at the library.",
+    "tr": "Kütüphanede buluşuyoruz."
+   },
+   "sv": 8,
+   "siklik": 470
+  },
+  {
+   "id": "home",
+   "en": "home",
+   "tr": "ev",
+   "emoji": "🏠",
+   "grup": "yer",
+   "ornek": {
+    "en": "My friend is at home.",
+    "tr": "Arkadaşım evde."
+   },
+   "sv": 4,
+   "siklik": 33
+  },
+  {
+   "id": "room",
+   "en": "room",
+   "tr": "oda",
+   "emoji": "🛋️",
+   "grup": "yer",
+   "ornek": {
+    "en": "The teacher is in the room.",
+    "tr": "Öğretmen odada."
+   },
+   "sv": 5,
+   "siklik": 432
+  },
+  {
+   "id": "park",
+   "en": "park",
+   "tr": "park",
+   "emoji": "🌳",
+   "grup": "yer",
+   "ornek": {
+    "en": "I walk in the park.",
+    "tr": "Parkta yürürüm."
+   },
+   "sv": 6,
+   "siklik": 548
+  },
+  {
+   "id": "in",
+   "en": "in",
+   "tr": "içinde, -de/-da",
+   "emoji": "📥",
+   "grup": "yerlesim",
+   "ornek": {
+    "en": "The key is in the bag.",
+    "tr": "Anahtar çantanın içinde."
+   },
+   "sv": 5,
+   "siklik": 6
+  },
+  {
+   "id": "on",
+   "en": "on",
+   "tr": "üzerinde",
+   "emoji": "⬆️",
+   "grup": "yerlesim",
+   "ornek": {
+    "en": "The book is on the table.",
+    "tr": "Kitap masanın üzerinde."
+   },
+   "sv": 5,
+   "siklik": 9
+  },
+  {
+   "id": "under",
+   "en": "under",
+   "tr": "altında",
+   "emoji": "⬇️",
+   "grup": "yerlesim",
+   "ornek": {
+    "en": "The bag is under the table.",
+    "tr": "Çanta masanın altında."
+   },
+   "sv": 7,
+   "siklik": 189
+  },
+  {
+   "id": "next-to",
+   "en": "next to",
+   "tr": "yanında",
+   "emoji": "↔️",
+   "grup": "yerlesim",
+   "ornek": {
+    "en": "The lamp is next to the phone.",
+    "tr": "Lamba telefonun yanında."
+   },
+   "sv": 8
+  },
+  {
+   "id": "what",
+   "en": "what",
+   "tr": "ne",
+   "emoji": "❓",
+   "grup": "soru",
+   "ornek": {
+    "en": "What is your name?",
+    "tr": "Adın ne?"
+   },
+   "sv": 3,
+   "siklik": 56
+  },
+  {
+   "id": "where",
+   "en": "where",
+   "tr": "nerede, nereye",
+   "emoji": "📍",
+   "grup": "soru",
+   "ornek": {
+    "en": "Where are you from?",
+    "tr": "Nerelisin?"
+   },
+   "sv": 4,
+   "siklik": 159
+  },
+  {
+   "id": "who",
+   "en": "who",
+   "tr": "kim",
+   "emoji": "👤",
+   "grup": "soru",
+   "ornek": {
+    "en": "Who is your teacher?",
+    "tr": "Öğretmenin kim?"
+   },
+   "sv": 4,
+   "siklik": 72
+  },
+  {
+   "id": "when",
+   "en": "when",
+   "tr": "ne zaman",
+   "emoji": "🕒",
+   "grup": "soru",
+   "ornek": {
+    "en": "When is the meeting?",
+    "tr": "Toplantı ne zaman?"
+   },
+   "sv": 5,
+   "siklik": 68
+  },
+  {
+   "id": "open",
+   "en": "open",
+   "tr": "açmak",
+   "emoji": "📂",
+   "grup": "fiil",
+   "ornek": {
+    "en": "Please open the door.",
+    "tr": "Lütfen kapıyı aç."
+   },
+   "sv": 6,
+   "siklik": 282
+  },
+  {
+   "id": "close",
+   "en": "close",
+   "tr": "kapatmak",
+   "emoji": "🔒",
+   "grup": "fiil",
+   "ornek": {
+    "en": "Please close the window.",
+    "tr": "Lütfen pencereyi kapat."
+   },
+   "sv": 6,
+   "siklik": 732
+  },
+  {
+   "id": "wait",
+   "en": "wait",
+   "tr": "beklemek",
+   "emoji": "⏳",
+   "grup": "fiil",
+   "ornek": {
+    "en": "Please wait at the door.",
+    "tr": "Lütfen kapıda bekle."
+   },
+   "sv": 7,
+   "siklik": 2055
+  },
+  {
+   "id": "bring",
+   "en": "bring",
+   "tr": "getirmek",
+   "emoji": "🧺",
+   "grup": "fiil",
+   "ornek": {
+    "en": "Please bring a notebook.",
+    "tr": "Lütfen bir defter getir."
+   },
+   "sv": 8,
+   "siklik": 1418
+  },
+  {
+   "id": "read",
+   "en": "read",
+   "tr": "okumak",
+   "emoji": "📖",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I read a book every day.",
+    "tr": "Her gün bir kitap okurum."
+   },
+   "sv": 5,
+   "siklik": 180
+  },
+  {
+   "id": "write",
+   "en": "write",
+   "tr": "yazmak",
+   "emoji": "✍️",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I write in my notebook.",
+    "tr": "Defterime yazarım."
+   },
+   "sv": 5,
+   "siklik": 613
+  },
+  {
+   "id": "listen",
+   "en": "listen",
+   "tr": "dinlemek",
+   "emoji": "👂",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I listen to English every day.",
+    "tr": "Her gün İngilizce dinlerim."
+   },
+   "sv": 5,
+   "siklik": 1879
+  },
+  {
+   "id": "speak",
+   "en": "speak",
+   "tr": "konuşmak",
+   "emoji": "🎤",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I speak English and Turkish.",
+    "tr": "İngilizce ve Türkçe konuşurum."
+   },
+   "sv": 6,
+   "siklik": 2523
+  },
+  {
+   "id": "repeat",
+   "en": "repeat",
+   "tr": "tekrar etmek",
+   "emoji": "🔁",
+   "grup": "fiil",
+   "ornek": {
+    "en": "Please repeat the word.",
+    "tr": "Lütfen sözcüğü tekrar et."
+   },
+   "sv": 7,
+   "siklik": 4751
+  },
+  {
+   "id": "understand",
+   "en": "understand",
+   "tr": "anlamak",
+   "emoji": "🧠",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I understand the word.",
+    "tr": "Sözcüğü anlıyorum."
+   },
+   "sv": 7,
+   "siklik": 1307
+  },
+  {
+   "id": "like",
+   "en": "like",
+   "tr": "sevmek, hoşlanmak",
+   "emoji": "❤️",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I like science.",
+    "tr": "Bilimi severim."
+   },
+   "sv": 4,
+   "siklik": 96
+  },
+  {
+   "id": "want",
+   "en": "want",
+   "tr": "istemek",
+   "emoji": "🙌",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I want a blue pen.",
+    "tr": "Mavi bir tükenmez kalem istiyorum."
+   },
+   "sv": 4,
+   "siklik": 253
+  },
+  {
+   "id": "have",
+   "en": "have",
+   "tr": "sahip olmak, … var",
+   "emoji": "🤲",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I have a red bag.",
+    "tr": "Kırmızı bir çantam var."
+   },
+   "sv": 3,
+   "siklik": 26
+  },
+  {
+   "id": "study",
+   "en": "study",
+   "tr": "ders çalışmak",
+   "emoji": "📝",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I study after school.",
+    "tr": "Okuldan sonra ders çalışırım."
+   },
+   "sv": 6,
+   "siklik": 507
+  },
+  {
+   "id": "learn",
+   "en": "learn",
+   "tr": "öğrenmek",
+   "emoji": "🌱",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I learn new words.",
+    "tr": "Yeni sözcükler öğrenirim."
+   },
+   "sv": 6,
+   "siklik": 423
+  },
+  {
+   "id": "go",
+   "en": "go",
+   "tr": "gitmek",
+   "emoji": "➡️",
+   "grup": "fiil",
+   "ornek": {
+    "en": "I go to school.",
+    "tr": "Okula giderim."
+   },
+   "sv": 3,
+   "siklik": 123
+  },
+  {
+   "id": "come",
+   "en": "come",
+   "tr": "gelmek",
+   "emoji": "↩️",
+   "grup": "fiil",
+   "ornek": {
+    "en": "Please come to the library.",
+    "tr": "Lütfen kütüphaneye gel."
+   },
+   "sv": 4,
+   "siklik": 503
+  },
+  {
+   "id": "start",
+   "en": "start",
+   "tr": "başlamak",
+   "emoji": "▶️",
+   "grup": "fiil",
+   "ornek": {
+    "en": "The class starts at four.",
+    "tr": "Ders dörtte başlıyor."
+   },
+   "sv": 7,
+   "siklik": 473
+  },
+  {
+   "id": "meet",
+   "en": "meet",
+   "tr": "buluşmak, tanışmak",
+   "emoji": "🫂",
+   "grup": "fiil",
+   "ornek": {
+    "en": "We meet at the library.",
+    "tr": "Kütüphanede buluşuyoruz."
+   },
+   "sv": 7,
+   "siklik": 855
+  },
+  {
+   "id": "today",
+   "en": "today",
+   "tr": "bugün",
+   "emoji": "📅",
+   "grup": "zaman",
+   "ornek": {
+    "en": "Today is Monday.",
+    "tr": "Bugün Pazartesi."
+   },
+   "sv": 4,
+   "siklik": 283
+  },
+  {
+   "id": "tomorrow",
+   "en": "tomorrow",
+   "tr": "yarın",
+   "emoji": "⏭️",
+   "grup": "zaman",
+   "ornek": {
+    "en": "See you tomorrow.",
+    "tr": "Yarın görüşürüz."
+   },
+   "sv": 5,
+   "siklik": 3532
+  },
+  {
+   "id": "morning",
+   "en": "morning",
+   "tr": "sabah",
+   "emoji": "🌄",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I read in the morning.",
+    "tr": "Sabahları okurum."
+   },
+   "sv": 5,
+   "siklik": 1536
+  },
+  {
+   "id": "afternoon",
+   "en": "afternoon",
+   "tr": "öğleden sonra",
+   "emoji": "🌤️",
+   "grup": "zaman",
+   "ornek": {
+    "en": "The class is in the afternoon.",
+    "tr": "Ders öğleden sonra."
+   },
+   "sv": 6,
+   "siklik": 3852
+  },
+  {
+   "id": "evening",
+   "en": "evening",
+   "tr": "akşam",
+   "emoji": "🌆",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I walk in the evening.",
+    "tr": "Akşamları yürürüm."
+   },
+   "sv": 6,
+   "siklik": 2357
+  },
+  {
+   "id": "night",
+   "en": "night",
+   "tr": "gece",
+   "emoji": "🌙",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I sleep at night.",
+    "tr": "Geceleri uyurum."
+   },
+   "sv": 5,
+   "siklik": 593
+  },
+  {
+   "id": "week",
+   "en": "week",
+   "tr": "hafta",
+   "emoji": "🗓️",
+   "grup": "zaman",
+   "ornek": {
+    "en": "There are seven days in a week.",
+    "tr": "Bir haftada yedi gün var."
+   },
+   "sv": 7,
+   "siklik": 457
+  },
+  {
+   "id": "class",
+   "en": "class",
+   "tr": "ders, sınıf",
+   "emoji": "🖍️",
+   "grup": "zaman",
+   "ornek": {
+    "en": "The class starts at four.",
+    "tr": "Ders dörtte başlıyor."
+   },
+   "sv": 6,
+   "siklik": 387
+  },
+  {
+   "id": "k-repeat-please",
+   "en": "Can you repeat that, please?",
+   "tr": "Tekrar eder misin, lütfen?",
+   "emoji": "🔂",
+   "grup": "kalip",
+   "sv": 6
+  },
+  {
+   "id": "k-speak-slowly",
+   "en": "Can you speak more slowly, please?",
+   "tr": "Biraz daha yavaş konuşur musun, lütfen?",
+   "emoji": "🐢",
+   "grup": "kalip",
+   "sv": 8
+  },
+  {
+   "id": "k-dont-understand",
+   "en": "I don't understand.",
+   "tr": "Anlamıyorum.",
+   "emoji": "🤷",
+   "grup": "kalip",
+   "sv": 6
+  },
+  {
+   "id": "k-what-mean",
+   "en": "What does this word mean?",
+   "tr": "Bu sözcük ne demek?",
+   "emoji": "🔍",
+   "grup": "kalip",
+   "sv": 8
+  },
+  {
+   "id": "k-how-say",
+   "en": "How do you say this in English?",
+   "tr": "Bunu İngilizce nasıl söylersin?",
+   "emoji": "🗨️",
+   "grup": "kalip",
+   "sv": 9
+  },
+  {
+   "id": "mother",
+   "en": "mother",
+   "tr": "anne",
+   "emoji": "👩",
+   "grup": "aile",
+   "ornek": {
+    "en": "My mother is at home.",
+    "tr": "Annem evde."
+   },
+   "sv": 4,
+   "siklik": 1423
+  },
+  {
+   "id": "father",
+   "en": "father",
+   "tr": "baba",
+   "emoji": "👨",
+   "grup": "aile",
+   "ornek": {
+    "en": "My father reads a book.",
+    "tr": "Babam kitap okuyor."
+   },
+   "sv": 4,
+   "siklik": 1682
+  },
+  {
+   "id": "sister",
+   "en": "sister",
+   "tr": "kız kardeş, abla",
+   "emoji": "👧",
+   "grup": "aile",
+   "ornek": {
+    "en": "My sister is a student.",
+    "tr": "Kız kardeşim öğrenci."
+   },
+   "sv": 5,
+   "siklik": 3051
+  },
+  {
+   "id": "brother",
+   "en": "brother",
+   "tr": "erkek kardeş, abi",
+   "emoji": "👦",
+   "grup": "aile",
+   "ornek": {
+    "en": "My brother is at school.",
+    "tr": "Erkek kardeşim okulda."
+   },
+   "sv": 5,
+   "siklik": 2328
+  },
+  {
+   "id": "family",
+   "en": "family",
+   "tr": "aile",
+   "emoji": "👪",
+   "grup": "aile",
+   "ornek": {
+    "en": "My family lives in Bursa.",
+    "tr": "Ailem Bursa'da yaşıyor."
+   },
+   "sv": 5,
+   "siklik": 261
+  },
+  {
+   "id": "bread",
+   "en": "bread",
+   "tr": "ekmek",
+   "emoji": "🍞",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I like bread.",
+    "tr": "Ekmeği severim."
+   },
+   "sv": 6,
+   "siklik": 4865
+  },
+  {
+   "id": "water",
+   "en": "water",
+   "tr": "su",
+   "emoji": "💧",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I drink water.",
+    "tr": "Su içerim."
+   },
+   "sv": 4,
+   "siklik": 333
+  },
+  {
+   "id": "milk",
+   "en": "milk",
+   "tr": "süt",
+   "emoji": "🥛",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I drink milk in the morning.",
+    "tr": "Sabahları süt içerim."
+   },
+   "sv": 6,
+   "siklik": 3534
+  },
+  {
+   "id": "tea",
+   "en": "tea",
+   "tr": "çay",
+   "emoji": "🍵",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "My father drinks tea.",
+    "tr": "Babam çay içer."
+   },
+   "sv": 5,
+   "siklik": 2838
+  },
+  {
+   "id": "apple",
+   "en": "apple",
+   "tr": "elma",
+   "emoji": "🍎",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I eat an apple.",
+    "tr": "Bir elma yerim."
+   },
+   "sv": 6,
+   "siklik": 1633
+  },
+  {
+   "id": "eat",
+   "en": "eat",
+   "tr": "yemek (yemek eylemi)",
+   "emoji": "🍽️",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "We eat dinner at seven.",
+    "tr": "Akşam yemeğini yedide yeriz."
+   },
+   "sv": 5,
+   "siklik": 2706
+  },
+  {
+   "id": "drink",
+   "en": "drink",
+   "tr": "içmek",
+   "emoji": "🥤",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I drink tea in the evening.",
+    "tr": "Akşamları çay içerim."
+   },
+   "sv": 5,
+   "siklik": 2702
+  },
+  {
+   "id": "breakfast",
+   "en": "breakfast",
+   "tr": "kahvaltı",
+   "emoji": "🥐",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I eat breakfast at eight.",
+    "tr": "Kahvaltıyı sekizde yaparım."
+   },
+   "sv": 7,
+   "siklik": 2217
+  },
+  {
+   "id": "lunch",
+   "en": "lunch",
+   "tr": "öğle yemeği",
+   "emoji": "🥪",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "We eat lunch at school.",
+    "tr": "Öğle yemeğini okulda yeriz."
+   },
+   "sv": 7,
+   "siklik": 3551
+  },
+  {
+   "id": "dinner",
+   "en": "dinner",
+   "tr": "akşam yemeği",
+   "emoji": "🍝",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "Dinner is at seven.",
+    "tr": "Akşam yemeği yedide."
+   },
+   "sv": 7,
+   "siklik": 2961
+  },
+  {
+   "id": "big",
+   "en": "big",
+   "tr": "büyük",
+   "emoji": "🐘",
+   "grup": "sifat",
+   "ornek": {
+    "en": "The room is big.",
+    "tr": "Oda büyük."
+   },
+   "sv": 4,
+   "siklik": 329
+  },
+  {
+   "id": "small",
+   "en": "small",
+   "tr": "küçük",
+   "emoji": "🐜",
+   "grup": "sifat",
+   "ornek": {
+    "en": "My bag is small.",
+    "tr": "Çantam küçük."
+   },
+   "sv": 4,
+   "siklik": 349
+  },
+  {
+   "id": "new",
+   "en": "new",
+   "tr": "yeni",
+   "emoji": "🆕",
+   "grup": "sifat",
+   "ornek": {
+    "en": "I have a new notebook.",
+    "tr": "Yeni bir defterim var."
+   },
+   "sv": 5,
+   "siklik": 27
+  },
+  {
+   "id": "old",
+   "en": "old",
+   "tr": "eski, yaşlı",
+   "emoji": "👴",
+   "grup": "sifat",
+   "ornek": {
+    "en": "This clock is old.",
+    "tr": "Bu saat eski."
+   },
+   "sv": 5,
+   "siklik": 370
+  },
+  {
+   "id": "hot",
+   "en": "hot",
+   "tr": "sıcak",
+   "emoji": "🔥",
+   "grup": "sifat",
+   "ornek": {
+    "en": "The tea is hot.",
+    "tr": "Çay sıcak."
+   },
+   "sv": 5,
+   "siklik": 486
+  },
+  {
+   "id": "cold",
+   "en": "cold",
+   "tr": "soğuk",
+   "emoji": "🧊",
+   "grup": "sifat",
+   "ornek": {
+    "en": "The water is cold.",
+    "tr": "Su soğuk."
+   },
+   "sv": 5,
+   "siklik": 1971
+  },
+  {
+   "id": "happy",
+   "en": "happy",
+   "tr": "mutlu",
+   "emoji": "😀",
+   "grup": "sifat",
+   "ornek": {
+    "en": "I am happy today.",
+    "tr": "Bugün mutluyum."
+   },
+   "sv": 6,
+   "siklik": 1276
+  },
+  {
+   "id": "tired",
+   "en": "tired",
+   "tr": "yorgun",
+   "emoji": "🥱",
+   "grup": "sifat",
+   "ornek": {
+    "en": "I am tired in the evening.",
+    "tr": "Akşamları yorgunum."
+   },
+   "sv": 7,
+   "siklik": 5615
+  },
+  {
+   "id": "wake-up",
+   "en": "wake up",
+   "tr": "uyanmak",
+   "emoji": "🌞",
+   "grup": "rutin",
+   "ornek": {
+    "en": "I wake up at seven.",
+    "tr": "Yedide uyanırım."
+   },
+   "sv": 7
+  },
+  {
+   "id": "sleep",
+   "en": "sleep",
+   "tr": "uyumak",
+   "emoji": "🛌",
+   "grup": "rutin",
+   "ornek": {
+    "en": "I sleep at ten.",
+    "tr": "Onda uyurum."
+   },
+   "sv": 6,
+   "siklik": 2683
+  },
+  {
+   "id": "homework",
+   "en": "homework",
+   "tr": "ev ödevi",
+   "emoji": "🗒️",
+   "grup": "rutin",
+   "ornek": {
+    "en": "I do my homework after school.",
+    "tr": "Ev ödevimi okuldan sonra yaparım."
+   },
+   "sv": 8,
+   "siklik": 6557
+  },
+  {
+   "id": "walk",
+   "en": "walk",
+   "tr": "yürümek",
+   "emoji": "🥾",
+   "grup": "rutin",
+   "ornek": {
+    "en": "I walk to school.",
+    "tr": "Okula yürüyerek giderim."
+   },
+   "sv": 7,
+   "siklik": 2050
+  },
+  {
+   "id": "run",
+   "en": "run",
+   "tr": "koşmak",
+   "emoji": "🏃",
+   "grup": "rutin",
+   "ornek": {
+    "en": "I run in the park.",
+    "tr": "Parkta koşarım."
+   },
+   "sv": 7,
+   "siklik": 670
+  },
+  {
+   "id": "swim",
+   "en": "swim",
+   "tr": "yüzmek",
+   "emoji": "🏊",
+   "grup": "rutin",
+   "ornek": {
+    "en": "I can swim.",
+    "tr": "Yüzebilirim."
+   },
+   "sv": 8,
+   "siklik": 6764
+  },
+  {
+   "id": "play",
+   "en": "play",
+   "tr": "oynamak",
+   "emoji": "⚽",
+   "grup": "rutin",
+   "ornek": {
+    "en": "We play in the park.",
+    "tr": "Parkta oynarız."
+   },
+   "sv": 6,
+   "siklik": 515
+  },
+  {
+   "id": "can",
+   "en": "can",
+   "tr": "-ebilmek (yapabilmek)",
+   "emoji": "💪",
+   "grup": "rutin",
+   "ornek": {
+    "en": "I can read English.",
+    "tr": "İngilizce okuyabilirim."
+   },
+   "sv": 5,
+   "siklik": 34
+  }
+ ]
 }

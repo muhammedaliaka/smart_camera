@@ -91,7 +91,7 @@
     },
 
     {
-      "id": "haf-04-ingilizce-saray", "iz": "hafiza", "emoji": "🔤",
+      "id": "haf-04-ingilizce-saray", "iz": "hafiza", "sv": 12, "emoji": "🔤",
       "baslik": "İngilizce kelimeleri saraya yerleştir",
       "hedef": "7 İngilizce kelimeyi (anlamıyla birlikte) hafıza sarayına yerleştirmek ve sırayla hatırlamak.",
       "neden": "Aynı yöntemi İngilizce kelimelerde kullanmak, hem kelime öğrenmeyi hem hafızanı birlikte güçlendirir. Soyut kelimeler (yarın, yorgun) için resim kurmak özellikle iyi bir antrenman.",
@@ -111,7 +111,7 @@
     },
 
     {
-      "id": "haf-05-gezegenler", "iz": "hafiza", "emoji": "🪐",
+      "id": "haf-05-gezegenler", "iz": "hafiza", "sv": 18, "emoji": "🪐",
       "baslik": "Gerçek bir konu: Güneş sistemi",
       "hedef": "Sekiz gezegeni Güneş'e yakınlık sırasıyla öğrenmek ve rotanı 8 durağa çıkarmak.",
       "neden": "Hafıza sarayı yalnız rastgele listeler için değil, **okulda öğrenmen gereken sıralı bilgiler** için de işe yarar. Burada hem güzel bir konuyu hem tekniği birlikte çalışırsın.",

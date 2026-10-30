@@ -1,264 +1,133 @@
 {
-  "paket": "program",
-  "ad": "Program",
-  "surum": 1,
-  "haftalar": [
+ "paket": "program",
+ "ad": "Program",
+ "surum": 2,
+ "haftalar": [
+  {
+   "hafta": 1,
+   "baslik": "Yoklama haftası",
+   "gunler": [
     {
-      "hafta": 1,
-      "baslik": "Başlangıç haftası · 4 gün öğrenme, 3 gün kontrol",
-      "gunler": [
-        {
-          "gun": 1,
-          "baslik": "Tanış ve rotanı kur",
-          "hedef": "İngilizce kendini tanıt, hafıza rotanı kur ve ilk spor hareketlerini öğren.",
-          "gorevler": [
-            {
-              "ders": "en-01-tanisma"
-            },
-            {
-              "ders": "haf-01-saray"
-            },
-            {
-              "ders": "spor-g01"
-            }
-          ]
-        },
-        {
-          "gun": 2,
-          "baslik": "Sayılar ve ilk liste",
-          "hedef": "Sayıları öğren, ilk listeni rotana yerleştir.",
-          "gorevler": [
-            {
-              "ders": "en-02-sayilar"
-            },
-            {
-              "ders": "haf-02-liste"
-            },
-            {
-              "ders": "spor-g02"
-            }
-          ]
-        },
-        {
-          "gun": 3,
-          "baslik": "Eşyalar ve uzun liste",
-          "hedef": "Eşya ve renk adlarını öğren, daha uzun bir listeyi yeni bir rotaya yerleştir.",
-          "gorevler": [
-            {
-              "ders": "en-03-esyalar"
-            },
-            {
-              "ders": "haf-03-uzun-liste"
-            },
-            {
-              "ders": "spor-g03"
-            }
-          ]
-        },
-        {
-          "gun": 4,
-          "baslik": "Günler ve ilk okuma",
-          "hedef": "Günleri öğren, ilk okuma metnini yöntemle oku.",
-          "gorevler": [
-            {
-              "ders": "en-04-gunler"
-            },
-            {
-              "ders": "oku-01-uzay-suyu"
-            },
-            {
-              "ders": "spor-g04"
-            }
-          ]
-        },
-        {
-          "gun": 5,
-          "baslik": "Kontrol 1 · İngilizce",
-          "hedef": "İlk dört dersi yardımsız dene.",
-          "gorevler": [
-            {
-              "ders": "kontrol-01-ingilizce"
-            },
-            {
-              "ders": "spor-g05"
-            },
-            {
-              "ders": "dis-01-voscreen",
-              "istege": true
-            }
-          ]
-        },
-        {
-          "gun": 6,
-          "baslik": "Kontrol 2 · Hafıza",
-          "hedef": "İki listeni rotandan bakmadan hatırla.",
-          "gorevler": [
-            {
-              "ders": "kontrol-02-hafiza"
-            },
-            {
-              "ders": "spor-g06"
-            },
-            {
-              "ders": "dis-02-busuu",
-              "istege": true
-            }
-          ]
-        },
-        {
-          "gun": 7,
-          "baslik": "Kontrol 3 · Okuma, dinleme, değerlendirme",
-          "hedef": "Yeni bir metin oku, yeni bir kaydı dinle ve haftanı değerlendir.",
-          "gorevler": [
-            {
-              "ders": "kontrol-03-okuma-dinleme"
-            },
-            {
-              "ders": "kontrol-04-hafta1"
-            },
-            {
-              "ders": "spor-g07"
-            }
-          ]
-        }
-      ]
+     "gun": 1,
+     "baslik": "İlk yoklama ve hafıza yöntemi",
+     "hedef": "Her beceride kısa bir yoklama yap: sınav değil, yalnız nereden başlayacağını bulmak için. Bilmediğine “Bilmiyorum” de. Sonra hafıza yöntemini (saray) öğren.",
+     "gorevler": [
+      {
+       "ders": "haf-01-saray"
+      }
+     ]
     },
     {
-      "hafta": 2,
-      "baslik": "İkinci hafta · 6 gün öğrenme, 1 gün kontrol",
-      "gunler": [
-        {
-          "gun": 8,
-          "baslik": "Sınıf dili",
-          "hedef": "Anlamadığında yardım iste; ilk duyuruyu dinle.",
-          "gorevler": [
-            {
-              "ders": "en-05-sinif-dili"
-            },
-            {
-              "ders": "dinle-01-duyuru"
-            },
-            {
-              "ders": "spor-g08"
-            }
-          ]
-        },
-        {
-          "gun": 9,
-          "baslik": "Yerler",
-          "hedef": "Bir şeyin yerini söyle ve sor; gökyüzü metnini oku.",
-          "gorevler": [
-            {
-              "ders": "en-06-yerler"
-            },
-            {
-              "ders": "oku-02-gokyuzu"
-            },
-            {
-              "ders": "spor-g09"
-            }
-          ]
-        },
-        {
-          "gun": 10,
-          "baslik": "Aile ve gezegenler",
-          "hedef": "Ailenden söz et; gezegenleri rotana yerleştir.",
-          "gorevler": [
-            {
-              "ders": "en-07-aile"
-            },
-            {
-              "ders": "haf-05-gezegenler"
-            },
-            {
-              "ders": "spor-g10"
-            },
-            {
-              "ders": "dis-03-voscreen",
-              "istege": true
-            }
-          ]
-        },
-        {
-          "gun": 11,
-          "baslik": "Yemek ve içecek",
-          "hedef": "Ne sevdiğini ve istediğini söyle; arıların dansını oku.",
-          "gorevler": [
-            {
-              "ders": "en-08-yemek"
-            },
-            {
-              "ders": "oku-03-ari-dansi"
-            },
-            {
-              "ders": "spor-g11"
-            }
-          ]
-        },
-        {
-          "gun": 12,
-          "baslik": "Günlük düzen",
-          "hedef": "Gününü anlat; Maya'nın gününü dinle.",
-          "gorevler": [
-            {
-              "ders": "en-09-gunluk-duzen"
-            },
-            {
-              "ders": "dinle-03-gunum"
-            },
-            {
-              "ders": "spor-g12"
-            },
-            {
-              "ders": "oku-04-uyku",
-              "istege": true
-            }
-          ]
-        },
-        {
-          "gun": 13,
-          "baslik": "Yapabildiklerin",
-          "hedef": "Yapabildiğin şeyleri söyle; İngilizce kelimeleri rotana yerleştir.",
-          "gorevler": [
-            {
-              "ders": "en-10-yapabildiklerin"
-            },
-            {
-              "ders": "haf-04-ingilizce-saray"
-            },
-            {
-              "ders": "spor-g13"
-            },
-            {
-              "ders": "dinle-02-mesaj",
-              "istege": true
-            },
-            {
-              "ders": "dis-04-busuu",
-              "istege": true
-            }
-          ]
-        },
-        {
-          "gun": 14,
-          "baslik": "Kontrol · İngilizce, hafıza, dinleme",
-          "hedef": "İkinci haftanın kontrolleri ve değerlendirme.",
-          "gorevler": [
-            {
-              "ders": "kontrol-05-ingilizce"
-            },
-            {
-              "ders": "kontrol-06-hafiza-dinleme"
-            },
-            {
-              "ders": "kontrol-07-hafta2"
-            },
-            {
-              "ders": "spor-g14"
-            }
-          ]
-        }
-      ]
+     "gun": 2,
+     "baslik": "İlk hafıza listesi",
+     "gorevler": [
+      {
+       "ders": "haf-02-liste"
+      }
+     ]
+    },
+    {
+     "gun": 3,
+     "baslik": "Uzun liste",
+     "gorevler": [
+      {
+       "ders": "haf-03-uzun-liste"
+      }
+     ]
     }
+   ]
+  }
+ ],
+ "seviyeli": {
+  "baslangicGunu": 1,
+  "desen": [
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "okuma"
+    },
+    {
+     "oturum": "spor"
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "dinleme"
+    },
+    {
+     "oturum": "hafiza"
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "okuma"
+    },
+    {
+     "oturum": "spor"
+    },
+    {
+     "ders": "dis-01-voscreen",
+     "istege": true
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "dinleme"
+    },
+    {
+     "oturum": "hafiza"
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "okuma"
+    },
+    {
+     "oturum": "spor"
+    },
+    {
+     "ders": "dis-02-busuu",
+     "istege": true
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "dinleme"
+    },
+    {
+     "oturum": "hafiza"
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "hafiza",
+     "istege": true
+    },
+    {
+     "oturum": "spor",
+     "istege": true
+    }
+   ]
   ]
+ }
 }

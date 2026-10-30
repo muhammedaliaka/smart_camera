@@ -1,7 +1,7 @@
 // İçerik doğrulayıcı. Tarayıcıda (paket içe aktarırken) ve komut satırında (scripts/dogrula.mjs) aynı kod çalışır.
 // Amaç: cevap anahtarı, kelime, ders ve program arasındaki çelişkileri ve eksik bağlantıları yayına çıkmadan yakalamak.
 
-import { sadelestir } from './metin.js';
+import { sadelestir, asciiKatla, mesafe, atesman } from './metin.js';
 import { IZLER } from './paket.js';
 
 export const ADIM_TURLERI = [
@@ -18,7 +18,7 @@ export function dogrula(ic, idx) {
   for (const c of ic.cakismalar || []) hata.push(`Çakışma: ${c}`);
 
   // ---- kelimeler ----
-  const enGorulen = new Map(), emojiGorulen = new Map();
+  const enGorulen = new Map(), emojiGorulen = new Map(), trGorulen = new Map();
   for (const k of ic.kelimeler) {
     const y = `kelime:${k.id}`;
     if (!k.en || !String(k.en).trim()) H(y, 'İngilizce metin (en) boş');
@@ -31,6 +31,11 @@ export function dogrula(ic, idx) {
       H(y, d.tr === k.tr ? `"${k.en}" iki kez tanımlı (${d.id})` : `"${k.en}" iki farklı karşılıkla tanımlı: "${d.tr}" ve "${k.tr}" (${d.id})`);
     } else enGorulen.set(anahtar, k);
     bosluk(k.en, y, 'en', U); bosluk(k.tr, y, 'tr', U);
+    if (k.sv !== undefined && !svGecerli(k.sv)) H(y, `sv 1–100 arasında tam sayı olmalı (${k.sv})`);
+    if (k.siklik !== undefined && !(Number.isInteger(k.siklik) && k.siklik >= 1)) H(y, `siklik pozitif tam sayı olmalı (${k.siklik})`);
+    const trAnahtar = sadelestir(k.tr || '', { tr: true });
+    if (trAnahtar && trGorulen.has(trAnahtar)) U(y, `"${k.tr}" karşılığı "${trGorulen.get(trAnahtar)}" ile aynı: "Türkçesi verilen kelimenin İngilizcesini seç/yaz" sorusunda iki doğru cevap olur`);
+    else if (trAnahtar) trGorulen.set(trAnahtar, k.id);
     if (k.emoji) {
       if (emojiGorulen.has(k.emoji)) U(y, `emoji ${k.emoji} "${emojiGorulen.get(k.emoji)}" ile aynı: resimli seçeneklerde ikisi ayırt edilemez`);
       else emojiGorulen.set(k.emoji, k.id);
@@ -47,6 +52,12 @@ export function dogrula(ic, idx) {
     if (!IZLER[d.iz]) H(y, `iz "${d.iz}" geçersiz (${Object.keys(IZLER).join(', ')})`);
     if (!d.baslik) H(y, 'başlık yok');
     if (!d.hedef) U(y, 'hedef cümlesi yok');
+    if (d.sv !== undefined) {
+      if (!svGecerli(d.sv)) H(y, `sv 1–100 arasında tam sayı olmalı (${d.sv})`);
+      const enAz = (ic.seviye?.izler?.[d.iz]?.enAzSoru) ?? (ic.seviye?.yukselme?.enAzSoru) ?? 5;
+      const n = puanliSoru(d);
+      if (['okuma', 'dinleme'].includes(d.iz) && n < enAz) U(y, `seviye oturumunda sayılması için en az ${enAz} soru gerekir (${n} var)`);
+    }
     if (!Array.isArray(d.adimlar) || !d.adimlar.length) { H(y, 'adımlar yok'); continue; }
     const adimIds = new Set(), listeSunIds = new Set();
     d.adimlar.forEach((a, i) => {
@@ -64,7 +75,7 @@ export function dogrula(ic, idx) {
       if (!kaynakDers?.adimlar.some((b) => b.tur === 'liste-sun' && b.id === aId)) H(`${y} > ${a.tur}`, `ref "${a.ref}" ile eşleşen liste-sun adımı yok`);
     }
   }
-  for (const k of ic.kelimeler) if (!kullanilanKelime.has(k.id)) U(`kelime:${k.id}`, 'hiçbir derste kullanılmıyor');
+  for (const k of ic.kelimeler) if (!kullanilanKelime.has(k.id) && !Number.isFinite(k.sv)) U(`kelime:${k.id}`, 'hiçbir derste kullanılmıyor (seviye sv= verilirse seviye oturumlarında kullanılır)');
   for (const m of ic.hareketler) {
     if (!m.ad || !m.adimlar?.length) H(`hareket:${m.id}`, 'ad ve adimlar gerekli');
     if (!kullanilanHareket.has(m.id)) U(`hareket:${m.id}`, 'hiçbir spor dersinde kullanılmıyor');
@@ -87,7 +98,10 @@ export function dogrula(ic, idx) {
     }
   }
   const programda = new Set(); for (const g of idx.gunler.values()) for (const t of g.gorevler || []) programda.add(t.ders);
-  for (const d of ic.dersler) if (!programda.has(d.id)) U(`ders:${d.id}`, 'programdaki hiçbir güne bağlı değil (yalnız Dersler sayfasında görünür)');
+  const desenDersleri = new Set();
+  for (const gun of ic.seviyeli?.desen || []) for (const g of gun) if (g.ders) desenDersleri.add(g.ders);
+  for (const d of ic.dersler) if (!programda.has(d.id) && !desenDersleri.has(d.id) && !Number.isFinite(d.sv) && !d.kutuphane) U(`ders:${d.id}`, 'programdaki hiçbir güne bağlı değil (yalnız Dersler sayfasında görünür; seviye oturumlarına girmesi için sv, kasıtlıysa kutuphane: true ekle)');
+  seviyeDogrula(ic, idx, H, U);
 
   // ---- dış uygulamalar ----
   for (const o of ic.disUygulamalar) {
@@ -95,6 +109,69 @@ export function dogrula(ic, idx) {
     if (!/^https:\/\//.test(o.web || o.link || '')) H(`dış:${o.id}`, 'https bağlantı (web) yok');
   }
   return { hata, uyari };
+}
+
+const svGecerli = (v) => Number.isInteger(v) && v >= 1 && v <= 100;
+
+/** Bir dersteki puanlanan soru sayısı (dinle/oku/sahne soruları + soru adımları). */
+function puanliSoru(d) {
+  let n = 0;
+  for (const a of d.adimlar || []) {
+    if (['dinle', 'oku', 'sahne'].includes(a.tur)) n += (a.sorular || []).length;
+    else if (a.tur === 'soru') n++;
+  }
+  return n;
+}
+
+/** Seviye kuralları, seviyeli program deseni, hafıza havuzu ve içerik kapsamı. */
+function seviyeDogrula(ic, idx, H, U) {
+  const s = ic.seviye || {};
+  const y = s.yerlestirme;
+  if (y) {
+    const b = y.basamaklar || [];
+    if (b.some((x, i) => i && x <= b[i - 1])) H('seviye', 'yerleştirme basamakları artan olmalı');
+    if (y.tavan !== undefined && b.length && b.at(-1) > y.tavan) H('seviye', 'son basamak tavanı aşıyor');
+    if (y.gecis !== undefined && !(y.gecis > 0 && y.gecis <= 1)) H('seviye', 'gecis 0–1 arasında olmalı');
+  }
+  const izAdlari = Object.keys(s.izler || {});
+  const sd = ic.seviyeli;
+  if (sd) {
+    if (!Number.isInteger(sd.baslangicGunu) || sd.baslangicGunu < 1) H('program: seviyeli', 'baslangicGunu pozitif tam sayı olmalı');
+    if (!Array.isArray(sd.desen) || !sd.desen.length) H('program: seviyeli', 'desen en az 1 günlük olmalı');
+    for (const [i, gun] of (sd.desen || []).entries()) {
+      if (!Array.isArray(gun)) { H('program: seviyeli', `desen ${i + 1}. gün liste olmalı`); continue; }
+      for (const g of gun) {
+        if (g.oturum && !izAdlari.includes(g.oturum)) H('program: seviyeli', `desen ${i + 1}. gün: "${g.oturum}" seviye kurallarında tanımlı değil`);
+        else if (g.ders && !idx.ders.has(g.ders)) H('program: seviyeli', `desen ${i + 1}. gün: ders "${g.ders}" tanımlı değil`);
+        else if (!g.oturum && !g.ders) H('program: seviyeli', `desen ${i + 1}. gün: oturum ya da ders gerekli`);
+      }
+    }
+  }
+  // hafıza havuzu: karıştırılabilecek (ascii katlanınca eşit ya da 1 harf farkı) sözcükler olmamalı
+  const havuz = ic.hafizaHavuzu || [];
+  const norm = havuz.map((w) => asciiKatla(sadelestir(w, { tr: true })));
+  for (let i = 0; i < norm.length; i++) {
+    if (!norm[i]) H('hafizaHavuzu', `boş sözcük (${i + 1}. sıra)`);
+    for (let j = i + 1; j < norm.length; j++) {
+      if (norm[i] === norm[j] || (norm[i].length >= 4 && norm[j].length >= 4 && mesafe(norm[i], norm[j]) <= 1)) U('hafizaHavuzu', `"${havuz[i]}" ile "${havuz[j]}" birbirine çok benziyor; cevap kontrolünde karışabilir`);
+    }
+  }
+  if (sd && havuz.length < 60) U('hafizaHavuzu', `${havuz.length} sözcük var; yüksek seviyeli listeler için en az 60 gerekir`);
+  // kapsam: yerleştirme basamakları çevresinde yeterli içerik var mı
+  if (sd && y) {
+    const kel = ic.kelimeler.filter((k) => Number.isFinite(k.sv));
+    for (const b of y.basamaklar || []) {
+      const n = kel.filter((k) => Math.abs(k.sv - b) <= 4).length;
+      if (n < 8) U(`seviye: kelime kapsamı`, `${b}. seviye çevresinde (±4) yalnız ${n} kelime var; yoklama için en az 8 önerilir`);
+    }
+    for (const iz of ['okuma', 'dinleme']) {
+      const ls = ic.dersler.filter((d) => d.iz === iz && Number.isFinite(d.sv));
+      for (const b of y.basamaklar || []) if (!ls.some((d) => Math.abs(d.sv - b) <= 5)) U(`seviye: ${iz} kapsamı`, `${b}. seviye çevresinde (±5) ${iz === 'okuma' ? 'metin' : 'kayıt'} yok; yoklama o noktada kapanır`);
+    }
+  }
+  // okuma sırası: seviye sırası ile Ateşman okunabilirliği ters düşüyorsa uyar (metin uzunluğu ve karmaşıklığı seviyeyle artmalı)
+  const okumalar = ic.dersler.filter((d) => d.iz === 'okuma' && Number.isFinite(d.sv)).map((d) => ({ d, a: atesman(d.adimlar.filter((x) => x.tur === 'oku').flatMap((x) => x.metin).join(' ')) })).filter((x) => x.a != null);
+  for (const p of okumalar) for (const q of okumalar) if (q.d.sv - p.d.sv >= 10 && q.a - p.a > 12) U(`ders:${q.d.id}`, `seviyesi ${q.d.sv} ama okunabilirliği (${q.a}) ${p.d.id} (sv ${p.d.sv}, ${p.a}) metninden daha kolay; seviye sırasını gözden geçir`);
 }
 
 function bosluk(v, y, alan, U) {

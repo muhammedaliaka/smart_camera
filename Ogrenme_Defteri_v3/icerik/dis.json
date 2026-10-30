@@ -7,7 +7,7 @@
       "id": "dis-01-voscreen",
       "iz": "dinleme",
       "emoji": "🎬",
-      "baslik": "Voscreen · Gerçek konuşma (1. hafta)",
+      "baslik": "Voscreen · Gerçek konuşma",
       "hedef": "Gerçek video kesitlerinde ne söylendiğini seçeneklerden bulmak ve kaç tanesini bildiğini kaydetmek.",
       "neden": "Bizim kayıtlarımız yavaş ve net. Gerçek konuşma daha hızlı ve birbirine bitişik. Voscreen sana bu farkı gösterir ve kulağını gerçek konuşmaya alıştırır.",
       "adimlar": [
@@ -38,7 +38,7 @@
       "id": "dis-02-busuu",
       "iz": "ingilizce",
       "emoji": "🟢",
-      "baslik": "Busuu · Başka bir ders (1. hafta)",
+      "baslik": "Busuu · Başka bir ders",
       "hedef": "Busuu'da sıradaki dersi bitirmek ve sonucunu kaydetmek.",
       "neden": "Aynı konuyu farklı bir anlatımla görmek kalıcı öğrenmeye yardım eder. Busuu düzenli, kısa dersler sunar.",
       "adimlar": [
@@ -64,9 +64,9 @@
     },
     {
       "id": "dis-03-voscreen",
-      "iz": "dinleme",
+      "iz": "dinleme", "kutuphane": true,
       "emoji": "🎬",
-      "baslik": "Voscreen · Gerçek konuşma (2. hafta)",
+      "baslik": "Voscreen · Gerçek konuşma (alternatif)",
       "hedef": "Gerçek video kesitlerinde ne söylendiğini seçeneklerden bulmak ve kaç tanesini bildiğini kaydetmek.",
       "neden": "Bizim kayıtlarımız yavaş ve net. Gerçek konuşma daha hızlı ve birbirine bitişik. Voscreen sana bu farkı gösterir ve kulağını gerçek konuşmaya alıştırır.",
       "adimlar": [
@@ -95,9 +95,9 @@
     },
     {
       "id": "dis-04-busuu",
-      "iz": "ingilizce",
+      "iz": "ingilizce", "kutuphane": true,
       "emoji": "🟢",
-      "baslik": "Busuu · Başka bir ders (2. hafta)",
+      "baslik": "Busuu · Başka bir ders (alternatif)",
       "hedef": "Busuu'da sıradaki dersi bitirmek ve sonucunu kaydetmek.",
       "neden": "Aynı konuyu farklı bir anlatımla görmek kalıcı öğrenmeye yardım eder. Busuu düzenli, kısa dersler sunar.",
       "adimlar": [

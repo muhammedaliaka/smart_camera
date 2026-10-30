@@ -6,6 +6,10 @@ import * as icerik from '../icerik.js';
 import { bugun, gunEkle, uzunTarih, saatMetni } from '../zaman.js';
 import { srsOzet } from './tekrar.js';
 import { programGunu, gorevSatiri, bosKutu } from './yardimci.js';
+import { IZLER } from '../paket.js';
+import { bugunPlani, kural } from '../seviye-ac.js';
+import { gorevAdresi } from '../plan.js';
+import { cefrYaklasim } from '../seviye.js';
 
 export function bugunGorunum() {
   const d = store.al();
@@ -27,7 +31,7 @@ export function bugunGorunum() {
   } else if (pg.durum === 'bitti') {
     kok.append(h('div.kart.vurgulu', h('h2', '🎉 Programın sonuna geldin'), h('p', `${idx.enSonGun} günlük programı tamamladın. Şimdi Tekrar ve Oyunlar ile bilgileri taze tut; yeni haftalar eklemek için Ben → İçerik bölümüne bak.`)));
   } else {
-    gunKarti(kok, pg, idx);
+    gunKarti(kok, pg);
   }
 
   tekrarKartlari(kok);
@@ -45,28 +49,62 @@ export function bugunGorunum() {
 
 function bugunYenile() { window.dispatchEvent(new HashChangeEvent('hashchange')); }
 
-function gunKarti(kok, pg, idx) {
-  const gun = pg.gun;
-  if (!gun) {
-    kok.append(bosKutu('😴', 'Bugün dinlenme günü', 'Bu güne görev konmamış. İstersen Tekrar ya da Oyunlar bölümüne bakabilirsin.'));
+function gunKarti(kok, pg) {
+  const plan = bugunPlani();
+  if (!plan || !plan.gorevler.length) {
+    kok.append(bosKutu('😴', 'Bugün dinlenme günü', 'Bugüne görev konmamış. İstersen Tekrar ya da Oyunlar bölümüne bakabilirsin.'));
     return;
   }
-  const gorevler = gun.gorevler || [];
-  const zorunlu = gorevler.filter((t) => !t.istege);
-  const bitenZorunlu = zorunlu.filter((t) => store.dersBitti(t.ders)).length;
-  const yuzde = zorunlu.length ? Math.round((bitenZorunlu / zorunlu.length) * 100) : 100;
-  const tamam = zorunlu.length > 0 && bitenZorunlu === zorunlu.length;
+  const zorunlu = plan.gorevler.filter((t) => !t.istege);
+  const biten = zorunlu.filter((t) => t.bitti).length;
+  const yuzde = zorunlu.length ? Math.round((biten / zorunlu.length) * 100) : 100;
+  const tamam = zorunlu.length > 0 && biten === zorunlu.length;
+  const yoklamada = Object.values(plan.seviye).some((s) => s.yoklamaBekliyor) && plan.no <= kural().yerlestirme.sonGun;
 
   kok.append(h('div.kart.vurgulu',
     h('div.gunluk',
-      halka(yuzde, `${bitenZorunlu}/${zorunlu.length}`, 72),
-      h('div', h('div.alt-yazi', `Gün ${gun.gun} · Hafta ${gun.hafta}`), h('h2', { style: 'margin:2px 0 4px;color:inherit' }, gun.baslik || 'Bugünün programı'),
-        gun.hedef ? h('div', { style: 'font-size:.95rem' }, '🎯 ', gun.hedef) : null)),
+      halka(yuzde, `${biten}/${zorunlu.length}`, 72),
+      h('div', h('div.alt-yazi', `Gün ${plan.no} · Hafta ${plan.hafta}`), h('h2', { style: 'margin:2px 0 4px;color:inherit' }, plan.baslik || 'Bugünün programı'),
+        plan.hedef ? h('div', { style: 'font-size:.95rem' }, '🎯 ', plan.hedef) : null)),
   ));
+  if (yoklamada) {
+    kok.append(h('div.kart.duz', h('h3', 'İlk hafta: nereden başlayacağını bulalım'),
+      h('p', { style: 'margin:0' }, 'Her beceri için kısa bir yoklama var. Sorular kolaydan zora doğru gider; bilmediğine “Bilmiyorum” de, tahmin etme. Sonuç not değil, yalnızca başlangıç seviyeni belirler; yoklama bitince gerçek çalışma başlar.')));
+  }
   if (tamam) kok.append(h('div.kart.duz', { style: 'background:var(--dogru-zemin);border-color:transparent;color:var(--dogru)' }, h('strong', '✅ Bugünkü görevlerin tamam. Eline sağlık!'), h('div.alt-yazi', { style: 'color:inherit' }, 'İstersen Tekrar, Oyunlar ya da isteğe bağlı görevlere bakabilirsin.')));
 
   kok.append(h('div.bolum-baslik', h('h2', 'Bugünün görevleri')));
-  for (const t of gorevler) { const s = gorevSatiri(t.ders, { istege: t.istege }); if (s) kok.append(s); }
+  for (const t of plan.gorevler) { const sat = planSatiri(t); if (sat) kok.append(sat); }
+  seviyeSeridi(kok, plan);
+}
+
+/** Planın bir görevi: yoklama ve seviye oturumu burada, yazılı dersler ortak satırla gösterilir. */
+function planSatiri(t) {
+  if (t.tur === 'ders') return gorevSatiri(t.ders, { istege: t.istege, ek: t.oneri ? 'önerilen · seviyene uygun' : null });
+  const iz = IZLER[t.iz] || { ad: t.iz, simge: '•' };
+  const ad = kural().izler[t.iz]?.ad || iz.ad;
+  const baslik = t.tur === 'yoklama' ? `${ad} yoklaması` : `${ad} oturumu`;
+  const alt = (t.tur === 'yoklama' ? [`${t.no}. yoklama`, 'sınav değil, yer bulma'] : [`Seviye ${t.sv}`, t.istege ? 'isteğe bağlı' : null]).filter(Boolean).join(' · ');
+  return h('a.gorev' + (t.bitti ? '.bitti' : ''), { href: gorevAdresi(t), data: { iz: t.iz } },
+    h('span.iz-simge', iz.simge),
+    h('span.metin', h('span.baslik', baslik), h('span.alt', alt)),
+    h('span.durum', { 'aria-label': t.bitti ? 'Tamamlandı' : 'Henüz yapılmadı' }, t.bitti ? simge('tik') : null));
+}
+
+/** Becerilerin güncel seviyesi (yoklama sürüyorsa “yoklamada”). */
+function seviyeSeridi(kok, plan) {
+  const sat = Object.values(plan.seviye);
+  if (!sat.length) return;
+  kok.append(h('div.bolum-baslik', h('h2', 'Seviyelerin'), h('a', { href: '#/ben' }, 'Ayrıntı')));
+  const izgara = h('div.izgara', { style: 'grid-template-columns:repeat(auto-fit,minmax(150px,1fr))' });
+  for (const s of sat) {
+    const iz = IZLER[s.iz] || { simge: '•' };
+    izgara.append(h('div.kart.duz', { style: 'padding:10px 12px' },
+      h('div.alt-yazi', iz.simge, ' ', s.ad),
+      s.yoklamaBekliyor ? h('strong', 'yoklamada') : h('strong', `Seviye ${s.sv}`),
+      s.yoklamaBekliyor ? null : h('div.alt-yazi', cefrYaklasim(s.sv))));
+  }
+  kok.append(izgara);
 }
 
 function tekrarKartlari(kok) {

@@ -4,7 +4,7 @@
   "surum": 1,
   "dersler": [
     {
-      "id": "oku-01-uzay-suyu", "iz": "okuma", "emoji": "🚀",
+      "id": "oku-01-uzay-suyu", "iz": "okuma", "sv": 47, "emoji": "🚀",
       "baslik": "Uzay istasyonunda su nasıl geri dönüşür?",
       "hedef": "Kısa bir bilgi metnini üç adımda okumak, soruları cevaplamak ve ana fikri kendi cümlenle anlatmak.",
       "neden": "Okuduğunu anlamak, her derste ve sınavda işe yarar. Bu ders yöntemi öğretir (önce bak, bir kez oku, kapat ve anlat) ve metinde olanla olmayanı ayırt etmeyi çalıştırır.",
@@ -51,7 +51,7 @@
     },
 
     {
-      "id": "oku-02-gokyuzu", "iz": "okuma", "emoji": "🌤️",
+      "id": "oku-02-gokyuzu", "iz": "okuma", "sv": 35, "emoji": "🌤️",
       "baslik": "Gökyüzü neden mavi?",
       "hedef": "Bir neden-sonuç açıklamasını okuyup adım adım anlatabilmek.",
       "neden": "Bilgi metinleri çoğunlukla “neden?” sorusunu cevaplar. Zinciri yakalamayı (A olunca B olur, B olunca C) öğrenmek, fen derslerinde de çok işe yarar.",
@@ -86,7 +86,7 @@
     },
 
     {
-      "id": "oku-03-ari-dansi", "iz": "okuma", "emoji": "🐝",
+      "id": "oku-03-ari-dansi", "iz": "okuma", "sv": 30, "emoji": "🐝",
       "baslik": "Arılar birbirine yön tarif eder",
       "hedef": "Bir metindeki iki ayrı bilgiyi (yön ve mesafe) birbirinden ayırarak anlamak.",
       "neden": "İyi bir okuyucu metindeki bilgileri ayrı ayrı tutar: “bu ne söylüyor, bu ne söylüyor?”. Arıların dansı bunun için güzel bir örnek: iki bilgi, iki işaret.",
@@ -120,7 +120,7 @@
     },
 
     {
-      "id": "oku-04-uyku", "iz": "okuma", "emoji": "😴",
+      "id": "oku-04-uyku", "iz": "okuma", "sv": 41, "emoji": "😴",
       "baslik": "Uyku öğrenmeye nasıl yardım eder?",
       "hedef": "Bilgi içeren bir metinden kendi hayatın için bir karar çıkarmak.",
       "neden": "Okuduğun her şeyin bir işe yaraması gerekmez; ama bazı metinler davranışını değiştirebilir. Uyku, öğrenmenin en çok ihmal edilen parçası.",

@@ -1,0 +1,782 @@
+{
+ "paket": "dinleme-seviyeli",
+ "ad": "dinleme-seviyeli",
+ "surum": 1,
+ "dersler": [
+  {
+   "id": "dinle-sv2-merhaba-ben-ali",
+   "iz": "dinleme",
+   "sv": 2,
+   "emoji": "👋",
+   "baslik": "Merhaba, ben Ali",
+   "hedef": "Çok kısa bir tanışmada adı, yaşı ve sevdiği şeyi yakalamak.",
+   "neden": "İlk dinlemeler çok kısa olmalı: amaç kulağın İngilizce sese alışması ve “anlıyorum” duygusunun oluşmasıdır.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Merhaba, ben Ali",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "Hello. My name is Ali. I am ten. I like cats.",
+      "ses": "erkek",
+      "hiz": 0.85
+     },
+     "sorular": [
+      {
+       "soru": "Konuşan kişinin adı ne?",
+       "secenekler": [
+        "Ali",
+        "Sam",
+        "Tom"
+       ],
+       "aciklama": "“My name is Ali.”"
+      },
+      {
+       "soru": "Kaç yaşında?",
+       "secenekler": [
+        "On",
+        "Dokuz",
+        "On bir"
+       ],
+       "aciklama": "“I am ten.”"
+      },
+      {
+       "soru": "Ne seviyor?",
+       "secenekler": [
+        "Kedileri",
+        "Köpekleri",
+        "Kuşları"
+       ],
+       "aciklama": "“I like cats.”"
+      }
+     ],
+     "metin": [
+      "Hello. My name is Ali. I am ten. I like cats."
+     ],
+     "metinTr": "Merhaba. Benim adım Ali. On yaşındayım. Kedileri severim."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv14-hafta-sonum",
+   "iz": "dinleme",
+   "sv": 14,
+   "emoji": "🗓️",
+   "baslik": "Hafta sonum",
+   "hedef": "Bir hafta sonu anlatımında kimle, nerede, ne yapıldığını yakalamak.",
+   "neden": "Günlük hayat anlatımları (ne yaptım, kiminle yaptım) gerçek hayatta en sık duyacağın konuşma biçimidir. Sıra sözcükleri (first, then, in the afternoon) yol gösterir.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Hafta sonum",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "On Saturday I usually get up late. First I have a big breakfast with my brother. Then we go to the market and buy fruit and vegetables. In the afternoon I meet my friends at the park and we play football. On Sunday I visit my grandmother. She cooks soup and we watch a film together.",
+      "ses": "kadin",
+      "hiz": 0.9
+     },
+     "sorular": [
+      {
+       "soru": "Konuşan kişi cumartesi günleri genellikle ne zaman kalkıyor?",
+       "secenekler": [
+        "Geç",
+        "Erken",
+        "Hiç uyumuyor"
+       ],
+       "aciklama": "“I usually get up late.”"
+      },
+      {
+       "soru": "Kahvaltıyı kiminle yapıyor?",
+       "secenekler": [
+        "Kardeşiyle",
+        "Arkadaşlarıyla",
+        "Büyükannesiyle"
+       ],
+       "aciklama": "“with my brother.”"
+      },
+      {
+       "soru": "Pazardan ne alıyorlar?",
+       "secenekler": [
+        "Meyve ve sebze",
+        "Ekmek ve süt",
+        "Kitap ve defter"
+       ]
+      },
+      {
+       "soru": "Öğleden sonra parkta ne yapıyor?",
+       "secenekler": [
+        "Arkadaşlarıyla futbol oynuyor",
+        "Kitap okuyor",
+        "Bisiklete biniyor"
+       ]
+      },
+      {
+       "soru": "Pazar günü büyükannesi ne pişiriyor?",
+       "secenekler": [
+        "Çorba",
+        "Pilav",
+        "Börek"
+       ],
+       "aciklama": "“She cooks soup.”"
+      }
+     ],
+     "metin": [
+      "On Saturday I usually get up late. First I have a big breakfast with my brother. Then we go to the market and buy fruit and vegetables.",
+      "In the afternoon I meet my friends at the park and we play football. On Sunday I visit my grandmother. She cooks soup and we watch a film together."
+     ],
+     "metinTr": "Cumartesi günleri genellikle geç kalkarım. Önce kardeşimle büyük bir kahvaltı yaparım. Sonra pazara gidip meyve ve sebze alırız. Öğleden sonra parkta arkadaşlarımla buluşur, futbol oynarız. Pazar günü büyükannemi ziyaret ederim. O çorba pişirir ve birlikte film izleriz."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv19-hava-durumu",
+   "iz": "dinleme",
+   "sv": 19,
+   "emoji": "🌦️",
+   "baslik": "Hava durumu",
+   "hedef": "Hava tahmininde saat, sıcaklık ve değişimi (önce güneş, sonra yağmur) yakalamak.",
+   "neden": "Sayılar, saatler ve “sonra ne olacak” bilgisi dinlemenin en çok işine yarayan kısmıdır. Hava durumu bunu kısa ve düzenli bir biçimde verir.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Hava durumu",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "Here is the weather for tomorrow. In the morning it will be cloudy and cool, about twelve degrees. By noon the sun will come out, and it will be warmer, around eighteen degrees. In the evening, rain is coming from the west. Take an umbrella if you go out after six o'clock. On Friday it will be windy but dry.",
+      "ses": "kadin",
+      "hiz": 0.9
+     },
+     "sorular": [
+      {
+       "soru": "Yarın sabah hava nasıl olacak?",
+       "secenekler": [
+        "Bulutlu ve serin",
+        "Güneşli ve sıcak",
+        "Yağmurlu"
+       ],
+       "aciklama": "“cloudy and cool”"
+      },
+      {
+       "soru": "Öğlen sıcaklık yaklaşık kaç derece?",
+       "secenekler": [
+        "On sekiz",
+        "On iki",
+        "Yirmi sekiz"
+       ]
+      },
+      {
+       "soru": "Yağmur ne zaman geliyor?",
+       "secenekler": [
+        "Akşam",
+        "Sabah",
+        "Öğle"
+       ]
+      },
+      {
+       "soru": "Konuşmacı ne almayı öneriyor?",
+       "secenekler": [
+        "Şemsiye",
+        "Mont",
+        "Güneş gözlüğü"
+       ],
+       "aciklama": "“Take an umbrella.”"
+      },
+      {
+       "soru": "Cuma günü hava nasıl olacak?",
+       "secenekler": [
+        "Rüzgârlı ama kuru",
+        "Karlı",
+        "Sisli ve yağmurlu"
+       ]
+      }
+     ],
+     "metin": [
+      "Here is the weather for tomorrow. In the morning it will be cloudy and cool, about twelve degrees. By noon the sun will come out, and it will be warmer, around eighteen degrees.",
+      "In the evening, rain is coming from the west. Take an umbrella if you go out after six o'clock. On Friday it will be windy but dry."
+     ],
+     "metinTr": "İşte yarının hava durumu. Sabah hava bulutlu ve serin, yaklaşık on iki derece olacak. Öğleye doğru güneş açacak ve hava daha ılık, yaklaşık on sekiz derece olacak. Akşam batıdan yağmur geliyor. Saat altıdan sonra dışarı çıkacaksanız şemsiye alın. Cuma günü rüzgârlı ama kuru olacak."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv25-yol-tarifi",
+   "iz": "dinleme",
+   "sv": 25,
+   "emoji": "🧭",
+   "baslik": "Yol tarifi",
+   "hedef": "Adım adım yol tarifinde yönleri (sola, sağa, karşısında) sırayla takip etmek.",
+   "neden": "Yol tarifinde sıra hatası yanlış yere götürür; bu yüzden hem sıraya hem de yer adlarına dikkat etmek gerekir. Sayıları ve dönüş yönlerini yakalama pratiğidir.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Yol tarifi",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "To get to the station from my house, go out and turn left. Walk straight for about five minutes until you see a bank on the corner. Turn right there. Then go past the post office and the small cafe. The station is opposite the big supermarket. If you are in a hurry, you can take bus number twelve. It stops right in front of my house, but it only comes every twenty minutes.",
+      "ses": "erkek",
+      "hiz": 0.9
+     },
+     "sorular": [
+      {
+       "soru": "Evden çıkınca önce ne yapılıyor?",
+       "secenekler": [
+        "Sola dönülüyor",
+        "Sağa dönülüyor",
+        "Dümdüz gidiliyor"
+       ],
+       "aciklama": "“turn left.”"
+      },
+      {
+       "soru": "Hangi yapıyı görünce sağa dönülüyor?",
+       "secenekler": [
+        "Bankayı",
+        "Postaneyi",
+        "Marketi"
+       ]
+      },
+      {
+       "soru": "İstasyon nerede?",
+       "secenekler": [
+        "Büyük marketin karşısında",
+        "Bankanın yanında",
+        "Kafenin arkasında"
+       ],
+       "aciklama": "“opposite the big supermarket”"
+      },
+      {
+       "soru": "Hangi otobüs öneriliyor?",
+       "secenekler": [
+        "On iki numara",
+        "On beş numara",
+        "İki numara"
+       ]
+      },
+      {
+       "soru": "Otobüs ne sıklıkla geliyor?",
+       "secenekler": [
+        "Yirmi dakikada bir",
+        "Beş dakikada bir",
+        "Saatte bir"
+       ]
+      }
+     ],
+     "metin": [
+      "To get to the station from my house, go out and turn left. Walk straight for about five minutes until you see a bank on the corner. Turn right there.",
+      "Then go past the post office and the small cafe. The station is opposite the big supermarket. If you are in a hurry, you can take bus number twelve. It stops right in front of my house, but it only comes every twenty minutes."
+     ],
+     "metinTr": "Evimden istasyona gitmek için çıkınca sola dön. Köşede bir banka görene kadar yaklaşık beş dakika dümdüz yürü. Orada sağa dön. Sonra postanenin ve küçük kafenin önünden geç. İstasyon büyük marketin karşısında. Acelen varsa on iki numaralı otobüse binebilirsin. Evimin hemen önünde durur ama yalnızca yirmi dakikada bir gelir."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv31-randevu-mesaji",
+   "iz": "dinleme",
+   "sv": 31,
+   "emoji": "🩺",
+   "baslik": "Randevu mesajı",
+   "hedef": "Sesli mesajdaki değişikliği (eski saat → yeni saat) ve yapılması gerekeni ayırt etmek.",
+   "neden": "Sesli mesajlarda genellikle bir değişiklik ve bir rica birlikte gelir. Eski ve yeni bilgiyi karıştırmamak, dinleme becerisinin gerçek hayattaki sınavıdır.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Randevu mesajı",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "Hello, this is the clinic calling for Anna Smith. Your appointment is tomorrow at half past nine, but the doctor has a meeting, so we need to move it. Could you come at two fifteen in the afternoon instead? If that is not possible, please call us back before five today. Our number is on the card. Please also remember to bring your insurance card. Thank you, and have a nice day.",
+      "ses": "kadin",
+      "hiz": 0.95
+     },
+     "sorular": [
+      {
+       "soru": "Mesaj kimin için bırakılmış?",
+       "secenekler": [
+        "Anna Smith",
+        "Doktor",
+        "Bir öğrenci"
+       ],
+       "aciklama": "“calling for Anna Smith”"
+      },
+      {
+       "soru": "Randevu başlangıçta ne zamandı?",
+       "secenekler": [
+        "Yarın dokuz buçuk",
+        "Yarın iki buçuk",
+        "Bugün beş"
+       ]
+      },
+      {
+       "soru": "Randevu neden değişiyor?",
+       "secenekler": [
+        "Doktorun toplantısı var",
+        "Hasta gelemiyor",
+        "Muayenehane kapalı"
+       ]
+      },
+      {
+       "soru": "Önerilen yeni saat nedir?",
+       "secenekler": [
+        "Öğleden sonra ikiyi çeyrek geçe",
+        "Sabah dokuz",
+        "Akşam beş"
+       ]
+      },
+      {
+       "soru": "Yeni saat uygun değilse ne yapılmalı?",
+       "secenekler": [
+        "Bugün beşten önce geri aranmalı",
+        "Yarın sabah gelinmeli",
+        "Hiçbir şey yapılmamalı"
+       ]
+      },
+      {
+       "soru": "Hastanın getirmesi istenen şey nedir?",
+       "secenekler": [
+        "Sigorta kartı",
+        "Eski raporlar",
+        "Kimlik fotoğrafı"
+       ]
+      }
+     ],
+     "metin": [
+      "Hello, this is the clinic calling for Anna Smith. Your appointment is tomorrow at half past nine, but the doctor has a meeting, so we need to move it.",
+      "Could you come at two fifteen in the afternoon instead? If that is not possible, please call us back before five today. Our number is on the card. Please also remember to bring your insurance card. Thank you, and have a nice day."
+     ],
+     "metinTr": "Merhaba, klinikten Anna Smith için arıyorum. Randevunuz yarın dokuz buçukta, ama doktorun bir toplantısı var, bu yüzden saati değiştirmemiz gerekiyor. Onun yerine öğleden sonra ikiyi çeyrek geçe gelebilir misiniz? Uygun değilse lütfen bugün beşten önce bizi geri arayın. Numaramız kartın üzerinde. Ayrıca sigorta kartınızı getirmeyi unutmayın. Teşekkürler, iyi günler."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv37-tren-anonsu",
+   "iz": "dinleme",
+   "sv": 37,
+   "emoji": "🚆",
+   "baslik": "Tren anonsu",
+   "hedef": "Bir anonstaki gecikmeyi, nedenini ve yönlendirmeyi yakalamak; söylenmeyeni tahmin etmemek.",
+   "neden": "Anonslar hızlı ve tek seferliktir. Neden, süre ve yönerge gibi anahtar bilgiyi yakalayıp “bahsedilmeyen” şeyi ayırt etmek, dinleme güvenini artırır.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Tren anonsu",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "Attention, please. The ten forty train to Manchester is delayed by about twenty-five minutes because of a signal problem near the city. Passengers should wait on platform four. The next train, the eleven fifteen to Leeds, is running on time from platform two. We are sorry for the delay. Passengers with tickets for the Manchester train can get a free drink at the cafe by showing their ticket. Please listen for further announcements.",
+      "ses": "erkek",
+      "hiz": 0.95
+     },
+     "sorular": [
+      {
+       "soru": "Manchester treni neden gecikiyor?",
+       "secenekler": [
+        "Bir sinyal sorunu yüzünden",
+        "Hava kötü olduğu için",
+        "Makinist gelmediği için"
+       ]
+      },
+      {
+       "soru": "Gecikme ne kadar sürecek?",
+       "secenekler": [
+        "Yaklaşık yirmi beş dakika",
+        "Yaklaşık bir saat",
+        "Yaklaşık beş dakika"
+       ]
+      },
+      {
+       "soru": "Manchester yolcuları hangi peronda beklemeli?",
+       "secenekler": [
+        "Dördüncü",
+        "İkinci",
+        "Altıncı"
+       ]
+      },
+      {
+       "soru": "Leeds treni ne durumda?",
+       "secenekler": [
+        "Zamanında, ikinci peron",
+        "Gecikmeli, dördüncü peron",
+        "İptal edildi"
+       ]
+      },
+      {
+       "soru": "Manchester biletli yolcular ne alabilir?",
+       "secenekler": [
+        "Kafeden ücretsiz bir içecek",
+        "Bilet ücretinin iadesini",
+        "Bir sonraki tren için ek bilet"
+       ]
+      },
+      {
+       "soru": "Anonsta gecikme nedeniyle bilet ücretinin iade edileceği söyleniyor mu?",
+       "secenekler": [
+        "Hayır, bundan söz edilmiyor",
+        "Evet, tamamı",
+        "Evet, yarısı"
+       ],
+       "aciklama": "Duymadığın bir şeyi tahmin etme."
+      }
+     ],
+     "metin": [
+      "Attention, please. The ten forty train to Manchester is delayed by about twenty-five minutes because of a signal problem near the city. Passengers should wait on platform four.",
+      "The next train, the eleven fifteen to Leeds, is running on time from platform two. We are sorry for the delay. Passengers with tickets for the Manchester train can get a free drink at the cafe by showing their ticket. Please listen for further announcements."
+     ],
+     "metinTr": "Dikkat lütfen. Saat on kırkta Manchester'a kalkacak tren, şehrin yakınındaki bir sinyal sorunu yüzünden yaklaşık yirmi beş dakika gecikmelidir. Yolcular dördüncü perondan beklemelidir. Bir sonraki tren, Leeds'e on bir on beşte kalkacak olan, zamanında ve ikinci perondan hareket edecektir. Gecikme için özür dileriz. Manchester treni için bileti olan yolcular, biletlerini göstererek kafeden ücretsiz bir içecek alabilir. Lütfen yeni anonsları dinleyin."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv44-calisma-aliskanligim",
+   "iz": "dinleme",
+   "sv": 44,
+   "emoji": "🗣️",
+   "baslik": "Çalışma alışkanlığım",
+   "hedef": "Bir kişinin zamanla değişen görüşünü (eskiden … şimdi …) ve nedenini izlemek.",
+   "neden": "Görüş anlatan konuşmalarda “eskiden / sonra / şimdi” geçişini ve karşıt bağlaçları (but, although) yakalamak, uzun dinlemelerin temelidir.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Çalışma alışkanlığım",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "In the past, I thought that long study sessions were the best way to learn. I would sit at my desk for four hours without a break. But I often forgot everything by the next week. Then a teacher suggested a different approach: study for short periods, test yourself instead of rereading, and come back to the same material after a few days. At first it felt harder and slower, but my results improved. The surprising thing was that the method that felt more difficult actually worked better. Now I recommend it to everyone, although some of my friends say they prefer their old habits.",
+      "ses": "kadin",
+      "hiz": 1
+     },
+     "sorular": [
+      {
+       "soru": "Konuşmacı eskiden ne düşünüyordu?",
+       "secenekler": [
+        "Uzun çalışma oturumlarının en iyisi olduğunu",
+        "Hiç çalışmamak gerektiğini",
+        "Sadece geceleri çalışmak gerektiğini"
+       ]
+      },
+      {
+       "soru": "Eski yöntemin sorunu neydi?",
+       "secenekler": [
+        "Ertesi haftaya her şeyi unutuyordu",
+        "Çok kısa sürüyordu",
+        "Çok pahalıydı"
+       ]
+      },
+      {
+       "soru": "Öğretmen ne önerdi?",
+       "secenekler": [
+        "Kısa çalışma, kendini sınama ve birkaç gün sonra geri dönme",
+        "Daha uzun çalışma ve tekrar okuma",
+        "Hiç ara vermeden çalışma"
+       ]
+      },
+      {
+       "soru": "Yeni yöntem ilk başta nasıl hissettirdi?",
+       "secenekler": [
+        "Daha zor ve yavaş",
+        "Çok kolay",
+        "Çok eğlenceli"
+       ]
+      },
+      {
+       "soru": "Konuşmacıyı şaşırtan şey neydi?",
+       "secenekler": [
+        "Daha zor hissettiren yöntemin daha iyi işlemesi",
+        "Öğretmenin hata yapması",
+        "Arkadaşlarının hepsinin aynı yöntemi kullanması"
+       ]
+      },
+      {
+       "soru": "Konuşmacının bazı arkadaşları ne diyor?",
+       "secenekler": [
+        "Eski alışkanlıklarını tercih ediyor",
+        "Yeni yöntemi hemen benimsedi",
+        "Çalışmayı bıraktı"
+       ]
+      }
+     ],
+     "metin": [
+      "In the past, I thought that long study sessions were the best way to learn. I would sit at my desk for four hours without a break. But I often forgot everything by the next week.",
+      "Then a teacher suggested a different approach: study for short periods, test yourself instead of rereading, and come back to the same material after a few days. At first it felt harder and slower, but my results improved.",
+      "The surprising thing was that the method that felt more difficult actually worked better. Now I recommend it to everyone, although some of my friends say they prefer their old habits."
+     ],
+     "metinTr": "Geçmişte uzun çalışma oturumlarının öğrenmenin en iyi yolu olduğunu düşünürdüm. Masamda dört saat ara vermeden otururdum. Ama genellikle ertesi haftaya her şeyi unuturdum. Sonra bir öğretmen farklı bir yöntem önerdi: kısa süreler çalış, tekrar okumak yerine kendini sına ve aynı konuya birkaç gün sonra geri dön. İlk başta daha zor ve yavaş geldi, ama sonuçlarım iyileşti. Şaşırtıcı olan, daha zor hissettiren yöntemin aslında daha iyi işlemesiydi. Artık bunu herkese öneriyorum, ama bazı arkadaşlarım eski alışkanlıklarını tercih ettiklerini söylüyor."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv52-bisiklet-yollari-haberi",
+   "iz": "dinleme",
+   "sv": 52,
+   "emoji": "🚲",
+   "baslik": "Bisiklet yolları haberi",
+   "hedef": "Haber tarzı bir metinde veriyi, nedeni ve iki karşıt görüşü ayırt etmek.",
+   "neden": "Haberlerde sayılar, resmî açıklama ve itirazlar iç içe geçer. Hangi bilginin kimden geldiğini ve neyin henüz karara bağlanmadığını ayırt etmek gerekir.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Bisiklet yolları haberi",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "A new report from the city council shows that the number of people who cycle to work has risen by almost a third in the last two years. Officials say the main reason is the new network of protected bike lanes, which opened last spring. At the same time, traffic in the centre has fallen slightly, although it is still heavy during rush hour. Not everyone is pleased, however. Some shop owners complain that fewer parking spaces mean fewer customers. The council has promised to review the figures again next year before deciding whether to build more lanes.",
+      "ses": "erkek",
+      "hiz": 1
+     },
+     "sorular": [
+      {
+       "soru": "Rapora göre ne artmış?",
+       "secenekler": [
+        "İşe bisikletle gidenlerin sayısı",
+        "Otomobil sayısı",
+        "Park yeri sayısı"
+       ]
+      },
+      {
+       "soru": "Artış yaklaşık ne kadar?",
+       "secenekler": [
+        "Üçte bir",
+        "Yarı yarıya",
+        "İki katı"
+       ],
+       "aciklama": "“almost a third”"
+      },
+      {
+       "soru": "Yetkililere göre asıl neden nedir?",
+       "secenekler": [
+        "Korumalı bisiklet yolları ağı",
+        "Benzin fiyatları",
+        "Havaların ısınması"
+       ]
+      },
+      {
+       "soru": "Merkezdeki trafikle ilgili ne söyleniyor?",
+       "secenekler": [
+        "Hafifçe azaldı ama yoğun saatlerde hâlâ yoğun",
+        "Tamamen bitti",
+        "Çok arttı"
+       ]
+      },
+      {
+       "soru": "Bazı esnaf neden şikâyetçi?",
+       "secenekler": [
+        "Park yeri azaldıkça müşteri azalıyor",
+        "Bisikletliler gürültü yapıyor",
+        "Yollar çok dar"
+       ]
+      },
+      {
+       "soru": "Belediye ne yapacağını söylüyor?",
+       "secenekler": [
+        "Rakamları gelecek yıl yeniden inceleyecek",
+        "Hemen yeni yollar yapacak",
+        "Bisiklet yollarını kaldıracak"
+       ]
+      },
+      {
+       "soru": "Raporda yeni bisiklet yolları için bütçe ayrıldığı söyleniyor mu?",
+       "secenekler": [
+        "Hayır, bundan söz edilmiyor",
+        "Evet",
+        "Yalnızca merkez için"
+       ],
+       "aciklama": "Duymadığın bir şeyi tahmin etme."
+      }
+     ],
+     "metin": [
+      "A new report from the city council shows that the number of people who cycle to work has risen by almost a third in the last two years. Officials say the main reason is the new network of protected bike lanes, which opened last spring.",
+      "At the same time, traffic in the centre has fallen slightly, although it is still heavy during rush hour. Not everyone is pleased, however. Some shop owners complain that fewer parking spaces mean fewer customers.",
+      "The council has promised to review the figures again next year before deciding whether to build more lanes."
+     ],
+     "metinTr": "Belediyenin yeni bir raporu, son iki yılda işe bisikletle gidenlerin sayısının neredeyse üçte bir arttığını gösteriyor. Yetkililer asıl nedenin geçen ilkbaharda açılan korumalı bisiklet yolları ağı olduğunu söylüyor. Aynı zamanda merkezdeki trafik hafifçe azaldı, ama yoğun saatlerde hâlâ yoğun. Ancak herkes memnun değil. Bazı esnaf, daha az park yeri demek daha az müşteri demek olduğundan şikâyetçi. Belediye, daha fazla yol yapıp yapmayacağına karar vermeden önce rakamları gelecek yıl yeniden incelemeye söz verdi."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv60-uyku-ve-hafiza",
+   "iz": "dinleme",
+   "sv": 60,
+   "emoji": "😴",
+   "baslik": "Uyku ve hafıza",
+   "hedef": "Temkinli ifadeleri (suggest, appear, tend to) ve “kanıt ne kadar ileri gidiyor” ayrımını yakalamak.",
+   "neden": "Gerçek konuşmalarda bilim insanları kesin değil, temkinli konuşur. “Kanıt buna işaret ediyor” ile “kesin böyledir” arasındaki farkı duymak, dinlediğini doğru yorumlamak için gereklidir.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Uyku ve hafıza",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "Sleep is often seen as a time when the brain simply switches off, but research suggests the opposite. During certain stages of sleep, the brain appears to replay and reorganise what we learned during the day, which makes memories more stable. This is why many researchers argue that an all-night study session may do more harm than good. That said, scientists are careful about how far the evidence goes. Most findings come from laboratory tasks, such as remembering word lists, and it is not yet clear how well they apply to complex school subjects. What we can say with reasonable confidence is that people who sleep after learning tend to remember more than those who stay awake for the same period. So, if you have to choose between an extra hour of revision and an extra hour of sleep the night before an exam, the evidence leans towards sleep.",
+      "ses": "kadin",
+      "hiz": 1
+     },
+     "sorular": [
+      {
+       "soru": "Konuşmacıya göre uyku sırasında beyin ne yapıyor gibi görünüyor?",
+       "secenekler": [
+        "Öğrenilenleri yeniden oynatıp düzenliyor",
+        "Tamamen kapanıyor",
+        "Yeni sözcükler üretiyor"
+       ]
+      },
+      {
+       "soru": "Bütün gece ders çalışmak hakkında birçok araştırmacı ne savunuyor?",
+       "secenekler": [
+        "Yarardan çok zarar verebileceğini",
+        "Her zaman en iyi yöntem olduğunu",
+        "Yalnızca yaz aylarında işe yaradığını"
+       ]
+      },
+      {
+       "soru": "Bilim insanları kanıtın sınırları konusunda nasıl?",
+       "secenekler": [
+        "Temkinli",
+        "Kesin ve iddialı",
+        "İlgisiz"
+       ],
+       "aciklama": "“careful about how far the evidence goes”"
+      },
+      {
+       "soru": "Bulguların çoğu nereden geliyor?",
+       "secenekler": [
+        "Sözcük listeleri gibi laboratuvar görevlerinden",
+        "Okul sınav sonuçlarından",
+        "Hayvan deneylerinden"
+       ]
+      },
+      {
+       "soru": "Makul bir güvenle söylenebilen nedir?",
+       "secenekler": [
+        "Öğrendikten sonra uyuyanlar daha çok hatırlama eğiliminde",
+        "Herkesin sekiz saat uyuması gerektiği",
+        "Kâbusların öğrenmeyi artırdığı"
+       ]
+      },
+      {
+       "soru": "Konuşmacı, sınavdan önceki gece için ne öneriyor?",
+       "secenekler": [
+        "Fazladan tekrar yerine uykuyu tercih etmeyi",
+        "Sabaha kadar çalışmayı",
+        "Hiç ders çalışmamayı"
+       ]
+      },
+      {
+       "soru": "Konuşmacı kaç saat uyunması gerektiğini söylüyor mu?",
+       "secenekler": [
+        "Hayır, bundan söz edilmiyor",
+        "Evet, yedi saat",
+        "Evet, dokuz saat"
+       ],
+       "aciklama": "Duymadığın bir şeyi tahmin etme."
+      }
+     ],
+     "metin": [
+      "Sleep is often seen as a time when the brain simply switches off, but research suggests the opposite. During certain stages of sleep, the brain appears to replay and reorganise what we learned during the day, which makes memories more stable. This is why many researchers argue that an all-night study session may do more harm than good.",
+      "That said, scientists are careful about how far the evidence goes. Most findings come from laboratory tasks, such as remembering word lists, and it is not yet clear how well they apply to complex school subjects.",
+      "What we can say with reasonable confidence is that people who sleep after learning tend to remember more than those who stay awake for the same period. So, if you have to choose between an extra hour of revision and an extra hour of sleep the night before an exam, the evidence leans towards sleep."
+     ],
+     "metinTr": "Uyku çoğu zaman beynin basitçe kapandığı bir zaman olarak görülür, ama araştırmalar tam tersini düşündürüyor. Uykunun bazı evrelerinde beyin, gün içinde öğrendiklerimizi yeniden oynatıyor ve düzenliyor gibi görünür; bu da anıları daha kalıcı hale getirir. Bu yüzden birçok araştırmacı, bütün gece ders çalışmanın yarardan çok zarar verebileceğini savunur. Bununla birlikte bilim insanları kanıtın ne kadar ileri gittiği konusunda temkinlidir. Bulguların çoğu, sözcük listelerini hatırlamak gibi laboratuvar görevlerinden geliyor ve bunların karmaşık okul dersleri için ne kadar geçerli olduğu henüz net değil. Makul bir güvenle söyleyebileceğimiz şu: Öğrendikten sonra uyuyan insanlar, aynı süre boyunca uyanık kalanlara göre daha çok hatırlama eğilimindedir. Yani sınavdan önceki gece bir saat fazladan tekrar ile bir saat fazladan uyku arasında seçim yapmak zorundaysanız, kanıt uykudan yana."
+    }
+   ]
+  },
+  {
+   "id": "dinle-sv70-cok-secenek-cok-mutluluk-mu",
+   "iz": "dinleme",
+   "sv": 70,
+   "emoji": "🛒",
+   "baslik": "Çok seçenek, çok mutluluk mu?",
+   "hedef": "Uzun, soyut bir konuşmada ana iddiayı, açıklamaları ve karşı kanıtı/sınırlamayı ayırt etmek.",
+   "neden": "İleri düzey dinleme, bilgiyi tek tek duymak değil; konuşmacının iddiasını, destekleyen nedenleri ve kendi sınırlamalarını bir arada izlemektir.",
+   "adimlar": [
+    {
+     "tur": "dinle",
+     "id": "kayit",
+     "baslik": "Çok seçenek, çok mutluluk mu?",
+     "yonerge": "Dinle ve soruları yanıtla.",
+     "sinir": 3,
+     "ses": {
+      "metin": "Many people assume that the more choices they have, the happier they will be. Yet several studies in consumer behaviour suggest that a large number of options can actually make decisions harder, and leave people less satisfied with what they pick. One explanation is that when we choose among dozens of similar items, we imagine all the alternatives we gave up, and this makes our final choice feel less attractive. Another is simple fatigue: deciding takes effort, and the effort adds up. Not every study finds this effect. It would be wrong, however, to conclude that choice is always bad. Researchers point out that the effect depends on the situation. People who already know what they want, or who are choosing something important, usually cope well with many options. The problem appears mainly when the options are numerous, similar, and difficult to compare.",
+      "ses": "erkek",
+      "hiz": 1
+     },
+     "sorular": [
+      {
+       "soru": "Konuşmacının başta andığı yaygın varsayım nedir?",
+       "secenekler": [
+        "Seçenek çoksa insan daha mutlu olur",
+        "Seçenek azsa insan daha mutlu olur",
+        "İnsanlar karar vermeyi sever"
+       ]
+      },
+      {
+       "soru": "Birkaç araştırmaya göre çok sayıda seçenek ne yapabilir?",
+       "secenekler": [
+        "Kararları zorlaştırıp memnuniyeti azaltabilir",
+        "Kararları her zaman kolaylaştırır",
+        "Fiyatları düşürür"
+       ]
+      },
+      {
+       "soru": "Birinci açıklama nedir?",
+       "secenekler": [
+        "Vazgeçilen alternatifler seçimi daha az çekici gösterir",
+        "Seçenekler insanı korkutur",
+        "Ürünler pahalıdır"
+       ]
+      },
+      {
+       "soru": "İkinci açıklama nedir?",
+       "secenekler": [
+        "Karar vermek çaba ister ve bu çaba birikir",
+        "İnsanların zamanı yoktur",
+        "Mağazalar kalabalıktır"
+       ]
+      },
+      {
+       "soru": "Konuşmacı bu etkiyle ilgili hangi uyarıyı yapıyor?",
+       "secenekler": [
+        "Her araştırma bu etkiyi bulmuyor",
+        "Etki kesin olarak kanıtlanmıştır",
+        "Etki yalnızca çocuklarda görülür"
+       ]
+      },
+      {
+       "soru": "Konuşmacıya göre insanlar hangi durumda çok seçenekle genellikle iyi başa çıkar?",
+       "secenekler": [
+        "Ne istediklerini zaten biliyorsa ya da önemli bir şey seçiyorsa",
+        "Hiç düşünmeden seçiyorsa",
+        "Seçenekler çok benzerse"
+       ]
+      },
+      {
+       "soru": "Sorun asıl olarak ne zaman ortaya çıkıyor?",
+       "secenekler": [
+        "Seçenekler çok, benzer ve karşılaştırması zor olduğunda",
+        "Seçenek sayısı iki olduğunda",
+        "Seçenekler ucuz olduğunda"
+       ]
+      }
+     ],
+     "metin": [
+      "Many people assume that the more choices they have, the happier they will be. Yet several studies in consumer behaviour suggest that a large number of options can actually make decisions harder, and leave people less satisfied with what they pick.",
+      "One explanation is that when we choose among dozens of similar items, we imagine all the alternatives we gave up, and this makes our final choice feel less attractive. Another is simple fatigue: deciding takes effort, and the effort adds up. Not every study finds this effect.",
+      "It would be wrong, however, to conclude that choice is always bad. Researchers point out that the effect depends on the situation. People who already know what they want, or who are choosing something important, usually cope well with many options. The problem appears mainly when the options are numerous, similar, and difficult to compare."
+     ],
+     "metinTr": "Birçok insan, ne kadar çok seçeneği olursa o kadar mutlu olacağını varsayar. Oysa tüketici davranışı üzerine birkaç araştırma, çok sayıda seçeneğin kararları aslında zorlaştırabileceğini ve insanların seçtikleri şeyden daha az memnun kalmasına yol açabileceğini düşündürüyor. Bir açıklama şu: düzinelerce benzer ürün arasından seçerken vazgeçtiğimiz bütün alternatifleri hayal ederiz ve bu, son seçimimizi daha az çekici gösterir. Bir diğeri basit yorgunluk: karar vermek çaba ister ve bu çaba birikir. Her araştırma bu etkiyi bulmuyor. Yine de seçimin her zaman kötü olduğu sonucuna varmak yanlış olur. Araştırmacılar etkinin duruma bağlı olduğuna dikkat çekiyor. Ne istediğini zaten bilen ya da önemli bir şey seçen insanlar, çok seçenekle genellikle iyi başa çıkar. Sorun asıl olarak seçenekler çok, benzer ve karşılaştırması zor olduğunda ortaya çıkıyor."
+    }
+   ]
+  }
+ ]
+}

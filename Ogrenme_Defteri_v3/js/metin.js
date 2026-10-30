@@ -134,3 +134,16 @@ export function listeyeAyir(metin) {
 
 /** Basit sözcük sayısı. */
 export function sozcukSayisi(metin) { return (String(metin).match(/\p{L}[\p{L}\p{N}'’-]*/gu) || []).length; }
+
+/**
+ * Ateşman (1997) Türkçe okunabilirlik: 198,825 − 40,175 × (hece/sözcük) − 2,610 × (sözcük/cümle). Yüksek = kolay (90+ çok kolay … 0–30 çok zor).
+ * Türkçede hece sayısı sesli harf sayısıdır. Yalnız metinlerin kendi aralarında sıralanması için kullanılır, mutlak not değildir.
+ */
+export function atesman(metin) {
+  const m = String(metin);
+  const sozcuk = sozcukSayisi(m);
+  const cumle = Math.max(1, (m.match(/[.!?…]+(\s|$)/g) || []).length);
+  const hece = (m.match(/[aeıioöuüAEIİOÖUÜâîû]/g) || []).length;
+  if (!sozcuk) return null;
+  return Math.round((198.825 - 40.175 * (hece / sozcuk) - 2.61 * (sozcuk / cumle)) * 10) / 10;
+}

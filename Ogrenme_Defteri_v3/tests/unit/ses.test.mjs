@@ -17,7 +17,7 @@ test('ses: her mp3 anlamlı büyüklükte (kesik ya da boş dosya yok)', () => {
 
 // Bu sözcükler cümle ortasında büyük harfle yazılsa da özel ad sorunu çıkarmaz.
 const GUVENLI = new Set(['I', "I'm", "I'll", "I've", "I'd", 'English', 'Turkish', 'Mr', 'Mrs', 'Ms', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
-  'Yes', 'No', 'Hello', 'Hi', 'Sorry', 'Please', 'Well', 'Thank', 'Thanks', 'Good', 'Goodbye', 'Excuse', 'Okay', 'OK', 'Look', 'Wait', 'Oh', 'Great', 'Nice', 'Welcome', 'See', 'Bye']);
+  'Sundays', 'Saturdays', 'Attention', 'French', 'So', 'Yes', 'No', 'Hello', 'Hi', 'Sorry', 'Please', 'Well', 'Thank', 'Thanks', 'Good', 'Goodbye', 'Excuse', 'Okay', 'OK', 'Look', 'Wait', 'Oh', 'Great', 'Nice', 'Welcome', 'See', 'Bye']);
 
 const SAYI = /^(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|(thir|four|fif|six|seven|eigh|nine)teen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred)$/i;
 
@@ -50,7 +50,8 @@ test('ses: özel adların hepsi ses-uret.py içindeki ASR_ISIMLER listesinde (ok
 // ya da burada "incelendi" listesinde olmalı (cümlelerde sesine bakıldı; aşağıdaki not geçerli).
 const COK_OKUNUSLU = ['close', 'closed', 'live', 'lives', 'living', 'use', 'used', 'read', 'lead', 'wind', 'tear', 'row', 'bow', 'minute', 'present', 'record', 'content', 'object', 'wound', 'bass', 'desert', 'refuse', 'project'];
 // read: yalnız şimdiki zaman (okurum) kullanılıyor, ɹˈiːd okunuyor. Geçmiş zaman ("I read it yesterday") eklenirse SOZCUKLER'e değil, cümleye bakılmalı.
-const INCELENDI = new Set(['read']);
+// minute (isim: mˈɪnɪt), wind (isim: wˈɪnd), row (sıra: ɹˈoʊ): Kokoro'nun ön ucu bu sözcüklerde derste kullanılan anlamı seçiyor (ses-uret.py'deki fonemleştiriciyle bakıldı).
+const INCELENDI = new Set(['read', 'minute', 'wind', 'row']);
 
 test('ses: çok okunuşlu sözcükler için okunuş belirlenmiş ya da incelenmiş', () => {
   const tablo = uretici.match(/SOZCUKLER\s*=\s*\{([^}]*)\}/);

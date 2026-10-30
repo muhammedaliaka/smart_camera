@@ -8,6 +8,7 @@ import { derle } from '../derle.js';
 import { ctxOlustur } from '../oyuncu.js';
 import { programGunu, gorevSatiri, dersOzeti, dersDurumMetni, sayfaBasligi, bosKutu } from './yardimci.js';
 import { kisaTarih } from '../zaman.js';
+import { kural } from '../seviye-ac.js';
 
 export function derslerGorunum(sorgu) {
   const sekme = sorgu.get('s') || 'program';
@@ -26,7 +27,7 @@ function programListesi() {
   const ic = icerik.ic();
   const pg = programGunu();
   const kok = h('div');
-  if (!ic.haftalar.length) return bosKutu('📦', 'Program yok', 'İçerik paketi yüklenince haftalar burada listelenir.');
+  if (!ic.haftalar.length && !ic.seviyeli) return bosKutu('📦', 'Program yok', 'İçerik paketi yüklenince haftalar burada listelenir.');
   for (const hf of ic.haftalar) {
     const mevcutHafta = pg.durum === 'surer' && pg.gun?.hafta === hf.hafta;
     const kap = h('section');
@@ -44,7 +45,21 @@ function programListesi() {
     }
     kok.append(kap);
   }
+  if (ic.seviyeli) kok.append(haftalikDuzen(ic.seviyeli));
   return kok;
+}
+
+/** Yoklama haftasından sonra her hafta tekrarlanan düzen: hangi gün hangi beceri. */
+function haftalikDuzen(sd) {
+  const k = kural();
+  const ad = (iz) => `${IZLER[iz]?.simge || ''} ${k.izler[iz]?.ad || IZLER[iz]?.ad || iz}`.trim();
+  const kap = h('section', h('div.hafta-baslik', 'Her hafta böyle ilerler'));
+  kap.append(h('p.alt-yazi', 'İlk hafta yoklama haftasıdır: her becerinin başlangıç seviyesi bulunur. Sonra her gün seviyene göre kısa oturumlar gelir. Bir oturumdaki tüm puanlı sorular ilk denemede doğruysa seviye bir basamak yükselir; yazılı derslerden seviyene uygun olanı Bugün sayfasında önerilir.'));
+  sd.desen.forEach((gun, i) => {
+    const parcalar = gun.map((g) => (g.oturum ? ad(g.oturum) : icerik.ders(g.ders)?.baslik || g.ders) + (g.istege ? ' (isteğe bağlı)' : ''));
+    kap.append(h('div.kart.duz', { style: 'padding:10px 12px;margin:6px 0' }, h('strong', `${i + 1}. gün`), h('div.alt-yazi', parcalar.join(' · '))));
+  });
+  return kap;
 }
 
 function konularListesi() {

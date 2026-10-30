@@ -10,6 +10,8 @@ import { sayfaBasligi, bosKutu, toplamDers } from './yardimci.js';
 import { srsOzet } from './tekrar.js';
 import { cevrimdisiIndir, cevrimdisiDurum } from '../cevrimdisi.js';
 import { raporUret } from '../rapor.js';
+import { seviyeDurumu, kural } from '../seviye-ac.js';
+import { cefrYaklasim } from '../seviye.js';
 
 const SEKMELER = [['ilerleme', 'İlerleme'], ['gecmis', 'Geçmiş'], ['ayar', 'Ayarlar'], ['icerik', 'İçerik']];
 
@@ -54,6 +56,7 @@ function ilerleme() {
     ozetKutu('✅', `${biten}/${toplam}`, 'ders tamam'),
     ozetKutu('🧠', String(oz.toplam), 'madde tekrar sistemine girdi')));
 
+  kok.append(seviyeKarti());
   if (!qs.length) {
     kok.append(bosKutu('📊', 'Henüz sonuç yok', 'İlk dersi bitirince doğru sayın ve yüzden burada görünür.', h('a.dugme.birincil', { href: '#/bugun' }, 'Bugün sayfasına git')));
   } else {
@@ -71,6 +74,39 @@ function ilerleme() {
 
   kok.append(raporKarti());
   return kok;
+}
+
+/** Her becerinin güncel seviyesi, son değişikliği ve elle ayarlama (yoklama bittikten sonra). */
+function seviyeKarti() {
+  const sv = seviyeDurumu();
+  const k = kural();
+  const kart = h('div.kart', h('h3', 'Seviyelerin'),
+    h('p.alt-yazi', 'Her beceride 1’den başlayan açık uçlu bir merdiven. Oturumdaki her soruyu ilk denemede doğru yaparsan bir basamak çıkarsın; zor geçerse kendiliğinden bir basamak iner. Seviye bir not değildir, bugünkü çalışmanın zorluğunu belirler.'));
+  for (const s of Object.values(sv)) {
+    const iz = IZLER[s.iz] || { simge: '•' };
+    const son = s.gecmis.at(-1);
+    const ayar = k.izler[s.iz] || {};
+    const alt = s.yoklamaBekliyor
+      ? `Yoklama sürüyor (${s.yerlestirme.yoklamalar.length} yoklama yapıldı). Bitince başlangıç seviyen burada görünür.`
+      : [cefrYaklasim(s.sv), `${s.oturum} oturum`, ayar.yukselmeSeri > 1 ? `yükselmek için ${ayar.yukselmeSeri - s.tamSeri} oturum daha tam` : null, son?.neden ? `son değişiklik: ${son.neden}` : null].filter(Boolean).join(' · ');
+    const satir = h('div', { style: 'margin:14px 0', data: { iz: s.iz } },
+      h('div.satir', h('span', `${iz.simge} ${s.ad}`), h('span.bosluk'), s.yoklamaBekliyor ? h('strong', 'yoklamada') : h('strong', `Seviye ${s.sv}`)),
+      h('div.alt-yazi', alt));
+    if (!s.yoklamaBekliyor) {
+      const giris = h('input', { type: 'number', min: '1', max: '100', value: String(s.sv), 'aria-label': `${s.ad} seviyesi`, style: 'width:80px' });
+      const neden = h('input', { type: 'text', placeholder: 'Neden? (isteğe bağlı)', 'aria-label': 'Neden', style: 'flex:1;min-width:0' });
+      satir.append(h('details.ac', h('summary', 'Elle ayarla'),
+        h('div.satir', { style: 'gap:8px;margin:8px 0' }, giris, neden,
+          h('button.dugme.cizgili', { type: 'button', onclick: () => {
+            const yeni = Math.round(+giris.value);
+            if (!(yeni >= 1 && yeni <= 100) || yeni === s.sv) { bildir('1–100 arasında, şimdikinden farklı bir seviye yaz'); return; }
+            store.olay('seviye-ayar', { iz: s.iz, sv: yeni, neden: neden.value.trim() || undefined }, { iz: s.iz });
+            store.kaydetHemen(); bildir(`${s.ad} seviyesi ${yeni} yapıldı`); window.dispatchEvent(new HashChangeEvent('hashchange'));
+          } }, 'Kaydet'))));
+    }
+    kart.append(satir);
+  }
+  return kart;
 }
 
 function halkaSvg(y) {
@@ -105,6 +141,7 @@ export function raporMetni({ aralik = raporSecim.aralik, ayrinti = raporSecim.ay
     durum: store.al(),
     oku: { ders: (id) => icerik.ders(id), kelime: (id) => icerik.kelime(id) },
     bas: gun ? gunEkle(b, -(gun - 1)) : null, son: b, bugun: b, ayrinti, surum: store.SURUM,
+    seviye: seviyeDurumu(), seviyeKural: kural(),
   });
 }
 
@@ -178,6 +215,10 @@ function olayOzeti(o) {
     case 'gecikmeli-yanit': return ['⏰', `Gecikmeli hatırlama (${o.kontrol}): ${o.dogru ? 'hatırladı' : 'hatırlayamadı'}`, 'ders'];
     case 'saray': return ['🏛️', `Hafıza sarayı kuruldu (${o.duraklar?.length || 0} durak)`, 'ders'];
     case 'dinleme': return ['🎧', `Dinleme: ${o.sayi} kez`, 'ders'];
+    case 'yerlestirme': return ['🧭', `Yoklama (${o.iz}) · seviye ${o.sv}: ${o.dogru}/${o.toplam}`, 'ders'];
+    case 'yerlestirme-son': return ['🧭', `Yoklama bitti (${o.iz})`, 'ders'];
+    case 'seviye-oturum': return ['📶', `Seviye oturumu (${o.iz}) · seviye ${o.sv}: ${o.dogru ?? '-'}/${o.toplam ?? '-'}${o.sonuc ? ` · ${o.sonuc}` : ''}`, 'ders'];
+    case 'seviye-ayar': return ['🎚️', `Seviye elle ayarlandı (${o.iz}): ${o.sv}`, 'ders'];
     default: return null;
   }
 }

@@ -7,11 +7,13 @@
 import { IZLER } from './paket.js';
 import { ozet as srsOzet } from './srs.js';
 import { gunFarki, uzunTarih } from './zaman.js';
+import { cefrYaklasim } from './seviye.js';
 
 /** Raporda ayrı bir biçimi olan kayıt türleri. Yeni bir olay türü eklenirse buraya biçim yazılmalıdır (test denetler). */
 export const RAPOR_TURLERI = new Set([
   'ders-bitir', 'soru', 'serbest', 'serbest-kontrol', 'liste-sun', 'liste', 'gecikmeli-kur', 'gecikmeli-yanit',
   'saray', 'saray-hayal', 'dinleme', 'okuma', 'olcek', 'spor', 'dis', 'oyun',
+  'yerlestirme', 'yerlestirme-son', 'seviye-oturum', 'seviye-ayar',
 ]);
 /** Raporda tek tek yazılmayan kayıt türleri ve nedeni. */
 export const RAPOR_ATLANAN = {
@@ -25,6 +27,8 @@ const YARDIM_AD = {
 const KONTROL_AD = { '5dk': '5 dakika sonra', '30dk': '30 dakika sonra', '2sa': '2 saat sonra', '1gun': 'ertesi gün', '7gun': '1 hafta sonra' };
 const KIP_ACIKLAMA = {
   Oyun: 'Öğrenilmiş kelimelerle kısa bir oyun; yeni bilgi öğretmez.',
+  'Seviye yoklaması': 'Yoklama haftasında başlangıç seviyesini bulmak için kısa bir deneme. Sorular kolaydan zora gider; “Bilmiyorum” seçeneği vardır ve yanlışlar yeniden sorulmaz. Not ya da değerlendirme değildir.',
+  'Seviye oturumu': 'Öğrencinin o andaki seviyesine göre kurulan günlük çalışma. Puanlanan her soru ilk denemede doğruysa seviye bir basamak yükselir.',
   'Tekrar oturumu': 'Aralıklı tekrar: daha önce öğrenilen kelimeler ve listeler, belirli günler geçtikten sonra yeniden soruluyor.',
   'Gecikmeli hatırlama kontrolü': 'Öğrenciden bir süre önce çalıştığı bilgiyi bakmadan hatırlaması isteniyor.',
   'Dış uygulama': 'Öğrenci uygulama dışındaki bir programda (örneğin Voscreen, Busuu) çalıştı ve sonucu elle girdi.',
@@ -49,8 +53,10 @@ function izAdi(iz) { return IZLER[iz]?.ad || IZ_EK[iz] || iz || 'Diğer'; }
  * @param {string} p.bugun   bugünün tarihi
  * @param {'kisa'|'tam'} [p.ayrinti]  kisa: doğru bilinenler tek tek yazılmaz; tam: her soru yazılır
  * @param {string} [p.surum] uygulama sürümü
+ * @param {object} [p.seviye] seviyeler() çıktısı (verilirse “Seviyeler” bölümü yazılır)
+ * @param {object} [p.seviyeKural] kuralKur() çıktısı (seviye kurallarını rapora yazmak için)
  */
-export function raporUret({ durum, oku = {}, bas = null, son = null, bugun, ayrinti = 'kisa', surum = '' }) {
+export function raporUret({ durum, oku = {}, bas = null, son = null, bugun, ayrinti = 'kisa', surum = '', seviye = null, seviyeKural = null }) {
   const bag = durum.bag || {};
   const B = (o) => (o.b && bag[o.b]) || {};
   const tum = durum.olaylar || [];
@@ -142,6 +148,8 @@ export function raporUret({ durum, oku = {}, bas = null, son = null, bugun, ayri
   const bekleyen = (durum.gecikmeli || []).flatMap((g) => g.kontroller.filter((k) => !k.yapildi).map((k) => ({ g, k })));
   if (bekleyen.length) { L(`Yanıtlanmayı bekleyen gecikmeli hatırlama kontrolü: ${bekleyen.length} (${[...new Set(bekleyen.map((x) => x.g.baslik))].join('; ')}).`); L(); }
 
+  if (seviye) seviyeBolumu(L, seviye, seviyeKural, bas, son);
+
   // ---------- Günlük kayıt ----------
   L('## Günlük kayıt'); L();
   L('Her gün için dersler/etkinlikler sırayla verilmiştir.'); L();
@@ -151,7 +159,7 @@ export function raporUret({ durum, oku = {}, bas = null, son = null, bugun, ayri
   for (const o of olaylar) {
     if (RAPOR_ATLANAN[o.tur]) continue;
     const g = gunlukGrup.get(o.g) || new Map();
-    const anahtar = o.ders || `(${o.tur})`;
+    const anahtar = o.oturum || o.ders || `(${o.tur})`;
     (g.get(anahtar) || g.set(anahtar, []).get(anahtar)).push(o);
     gunlukGrup.set(o.g, g);
   }
@@ -164,7 +172,7 @@ export function raporUret({ durum, oku = {}, bas = null, son = null, bugun, ayri
       const ders = dersBul(dersId);
       const ad = b0.dersAd || ders?.baslik || dersId;
       const iz = b0.iz || ders?.iz;
-      const tur = String(dersId).startsWith('oyun:') ? 'Oyun' : String(dersId).startsWith('tekrar:') ? 'Tekrar oturumu' : String(dersId).startsWith('hatirla:') ? 'Gecikmeli hatırlama kontrolü' : String(dersId).startsWith('dis:') ? 'Dış uygulama' : 'Ders';
+      const tur = String(dersId).startsWith('sv:') || String(dersId).startsWith('yoklama:') ? (/^(sv:[a-z]+:yoklama|yoklama:)/.test(String(dersId)) ? 'Seviye yoklaması' : 'Seviye oturumu') : String(dersId).startsWith('oyun:') ? 'Oyun' : String(dersId).startsWith('tekrar:') ? 'Tekrar oturumu' : String(dersId).startsWith('hatirla:') ? 'Gecikmeli hatırlama kontrolü' : String(dersId).startsWith('dis:') ? 'Dış uygulama' : 'Ders';
       L(`#### ${tur}: ${tirnak(ad)}${iz && tur === 'Ders' ? ` (${izAdi(iz)})` : ''}${tur === 'Ders' ? ` · kod: ${dersId}` : ''}`); L();
       const aciklama = KIP_ACIKLAMA[tur] || (ders?.hedef ? `Dersin amacı: ${String(ders.hedef).replace(/\s+/g, ' ')}` : null);
       if (aciklama) L(`- ${aciklama}`);
@@ -259,9 +267,43 @@ function bicimle(o, b, kontrolEslesme, oku) {
     }
     case 'dis': return [`- ${etiket('Dış uygulama')} ${o.ad || o.uygulama} · Görev: ${tirnak(o.gorev)} · ${o.yapilmadi ? 'Beyan: bugün yapmadı' : o.dogru != null && o.toplam ? `Beyan: ${o.dogru}/${o.toplam} doğru (%${o.yuzde})` : 'Sonuç girilmedi'}${o.not ? ` · Not: ${tirnak(o.not)}` : ''}`];
     case 'oyun': return [`- ${etiket(`Oyun · ${b.oyunAd || o.oyun}`)} İlk denemede ${o.dogru}/${o.toplam} doğru (%${o.yuzde})`];
+    case 'yerlestirme': return [`- ${etiket('Yoklama sonucu')} ${izAdi(o.iz)} · denenen seviye ${o.sv}: ${o.dogru}/${o.toplam} doğru${o.toplam ? ` (%${yuzde(o.dogru, o.toplam)})` : ''}${o.ders ? ` · yazılı ders: ${o.ders}` : ''}`];
+    case 'yerlestirme-son': return [`- ${etiket('Yoklama kapandı')} ${izAdi(o.iz)}${o.neden ? ` · neden: ${o.neden}` : ''}`];
+    case 'seviye-oturum': {
+      if (o.iz === 'spor') return [`- ${etiket('Seviye oturumu sonucu')} Spor · seviye ${o.sv} · sonuç: ${o.sonuc === 'tam' ? 'rahat tamamlandı (yükselmeye sayılır)' : o.sonuc === 'zayif' ? 'zor geçti ya da kısmen yapıldı' : 'tamamlandı'} · Beyan: zorlanma ${o.zorlanma ?? '-'}/10${o.kismi ? ', planın bir kısmını yaptı' : ''}${o.destek ? ', destek kullandı' : ''}`];
+      return [`- ${etiket('Seviye oturumu sonucu')} ${izAdi(o.iz)} · seviye ${o.sv}: ${o.dogru}/${o.toplam} doğru${o.toplam ? ` (%${yuzde(o.dogru, o.toplam)})` : ''}${o.toplam && o.dogru === o.toplam ? ' · hepsi ilk denemede doğru' : ''}`];
+    }
+    case 'seviye-ayar': return [`- ${etiket('Seviye elle ayarlandı')} ${izAdi(o.iz)} → seviye ${o.sv}${o.neden ? ` · neden: ${tirnak(o.neden)}` : ''} (öğrenci ya da veli kararı; uygulama hesaplamadı)`];
     default: {
       const { i, t, g, gn, tur, b: _b, ...veri } = o;
       return [`- [Tanımsız kayıt türü: ${tur}] ${JSON.stringify(veri)}`];
     }
+  }
+}
+
+/** Seviyeler: şu anki durum, kurallar ve (aralıktaki) değişiklikler. */
+function seviyeBolumu(L, seviye, kural, bas, son) {
+  const sat = Object.values(seviye);
+  if (!sat.length) return;
+  L('## Seviyeler'); L();
+  const y = kural?.yerlestirme, d = kural?.dusme;
+  L('Her beceri 1’den başlayan, üst sınırı olmayan bir merdivenle ilerler; numara bir not değil, günlük çalışmanın zorluk basamağıdır. Numaralar bu uygulamaya özgüdür (bir sınav puanına çevrilemez); “yaklaşık düzey” yalnız kaba bir yorumdur.');
+  if (y) L(`- **Yoklama haftası (programın ilk ${y.sonGun} günü):** her beceride kısa yoklamalar yapılır; sorular ${(y.basamaklar || []).join(' → ')}. seviye basamaklarına doğru ilerler (üst sınır ${y.tavan}). Bir basamak, soruların en az %${Math.round((y.gecis ?? 0.8) * 100)}’i doğruysa geçilmiş sayılır. “Bilmiyorum” seçeneği vardır; yoklamada yanlışlar yeniden sorulmaz ve tahmin beklenmez.`);
+  if (y) L(`- **Başlangıç seviyesi:** geçilen son basamağın %${Math.round((y.guvenPayi ?? 0.8) * 100)}’i (öğrencinin hafifçe rahat başlaması için).`);
+  L(`- **Yükselme:** bir oturumda puanlanan tüm sorular ilk denemede doğruysa seviye 1 artar (Spor’da ${kural?.izler?.spor?.yukselmeSeri ?? 2} oturum üst üste rahat tamamlama gerekir).`);
+  if (d) L(`- **Düşme:** ${d.ardisik} oturum üst üste doğru oranı %${Math.round(d.altinda * 100)}’in altında kalırsa seviye 1 azalır.`);
+  L(); L('| Beceri | Seviye | Yaklaşık düzey | Durum | Seviye oturumu |'); L('|---|---:|---|---|---:|');
+  for (const s of sat) {
+    const yer = s.yoklamaBekliyor ? `yoklama sürüyor (${s.yerlestirme.yoklamalar.length} yoklama)` : s.kaynak === 'ayar' ? 'elle ayarlanmış' : s.kaynak === 'yerlestirme' ? 'yoklamadan başladı' : 'başlangıç değeri';
+    L(`| ${hucre(s.ad)} | ${s.yoklamaBekliyor ? '–' : s.sv} | ${s.yoklamaBekliyor ? '–' : cefrYaklasim(s.sv)} | ${yer} | ${s.oturum} |`);
+  }
+  L();
+  const degisim = [];
+  for (const s of sat) for (const e of s.gecmis) if (e.g && (!bas || e.g >= bas) && (!son || e.g <= son) && e.onceki != null) degisim.push({ ...e, ad: s.ad });
+  degisim.sort((a, b) => String(a.t || a.g).localeCompare(String(b.t || b.g)));
+  if (degisim.length) {
+    L('Aralıktaki seviye değişiklikleri:'); L();
+    for (const e of degisim) L(`- ${e.g} · ${e.ad}: ${e.onceki} → ${e.sv} (${e.neden})`);
+    L();
   }
 }

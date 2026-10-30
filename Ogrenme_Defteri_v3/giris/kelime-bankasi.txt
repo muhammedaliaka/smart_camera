@@ -1,0 +1,450 @@
+# Kelime bankası (seviyeli). Biçim: docs/KOLAY_GIRIS.md
+# sv=A-B: konu sırası elle (grup aralığı), grup içi sıra sözcüğün sıklık sırasına göre (sıklık listesi gerekir; bkz. docs/SEVIYE_SISTEMI.md).
+# Bu dosya icerik/kelime-bankasi.json'u ÜRETİR; değiştirmek istersen burayı düzenle ve yeniden içe aktar:
+#   node scripts/ekle.mjs giris/kelime-bankasi.txt --siklik <sıklık listesi>
+@paket kelime-bankasi
+
+@kelimeler grup=insan sv=6-22
+person | kişi | She is a nice person. | O iyi bir kişi.
+man | adam | The man is tall. | Adam uzun boyludur.
+woman | kadın | The woman is a doctor. | Kadın bir doktordur.
+child | çocuk | The child is happy. | Çocuk mutlu. | 🧒
+boy | erkek çocuk | The boy plays with a ball. | Erkek çocuk topla oynar.
+girl | kız çocuğu | The girl reads a book. | Kız çocuğu kitap okur.
+baby | bebek | The baby is sleeping. | Bebek uyuyor. | 👶
+son | oğul | He is my son. | O benim oğlum.
+daughter | kız evlat | She is my daughter. | O benim kızım.
+neighbor | komşu | My neighbor is kind. | Komşum nazik.
+doctor | doktor | The doctor helps people. | Doktor insanlara yardım eder. | 🩺
+nurse | hemşire | The nurse is at the hospital. | Hemşire hastanede. | 💉
+driver | şoför | The driver is on the bus. | Şoför otobüste.
+worker | işçi | The worker is tired. | İşçi yorgun. | 👷
+police | polis | The police help us. | Polis bize yardım eder. | 👮
+boss | patron | My boss is kind. | Patronum nazik.
+customer | müşteri | The customer buys bread. | Müşteri ekmek alır.
+people | insanlar | Many people live here. | Burada çok insan yaşar. | 👥
+guest | misafir | We have a guest today. | Bugün bir misafirimiz var.
+king | kral | The king lives in a big house. | Kral büyük bir evde yaşar. | 👑
+
+@kelimeler grup=vucut sv=8-24
+head | baş | He has a hat on his head. | Başında bir şapka var. | sv=6
+hand | el | Wash your hands. | Ellerini yıka. | ✋ | sv=6
+eye | göz | I have two eyes. | İki gözüm var. | 👁️ | sv=6
+ear | kulak | I have two ears. | İki kulağım var. | sv=8
+nose | burun | This is my nose. | Bu benim burnum. | 👃 | sv=8
+mouth | ağız | Open your mouth. | Ağzını aç. | 👄 | sv=8
+face | yüz | Her face is round. | Yüzü yuvarlak. | 🙂 | sv=8
+hair | saç | She has long hair. | Uzun saçları var. | 💇 | sv=10
+arm | kol | My arm is strong. | Kolum güçlü. | sv=10
+leg | bacak | My leg is tired. | Bacağım yorgun. | 🦵 | sv=10
+foot | ayak | My foot is small. | Ayağım küçük. | 🦶 | sv=8
+heart | kalp | My heart is strong. | Kalbim güçlü. | sv=14
+finger | parmak | I have ten fingers. | On parmağım var. | ☝️ | sv=12
+tooth | diş | My tooth is white. | Dişim beyaz. | 🦷 | sv=12
+body | vücut | Sport is good for the body. | Spor vücut için iyidir.
+health | sağlık | Health is important. | Sağlık önemlidir.
+
+@kelimeler grup=ev sv=8-30
+house | ev (bina) | They have a big house. | Onların büyük bir evi var.
+kitchen | mutfak | She is in the kitchen. | O mutfakta. | 🍳 | sv=12
+bed | yatak | The bed is soft. | Yatak yumuşak. | 🛏️ | sv=10
+bathroom | banyo | The bathroom is small. | Banyo küçük. | 🛁 | sv=14
+garden | bahçe | We sit in the garden. | Bahçede otururuz.
+floor | zemin | The floor is clean. | Zemin temiz.
+wall | duvar | The wall is white. | Duvar beyaz. | 🧱
+key | anahtar | I have the key. | Anahtar bende. | 🔑
+clock | duvar saati | The clock is on the wall. | Saat duvarda. | 🕰️ | sv=14
+lamp | lamba | Turn on the lamp. | Lambayı aç. | 💡 | sv=14
+television | televizyon | The television is on. | Televizyon açık. | 📺 | sv=12
+computer | bilgisayar | I use a computer every day. | Her gün bilgisayar kullanırım. | 💻
+picture | resim | I like this picture. | Bu resmi severim. | 🖼️
+box | kutu | The box is empty. | Kutu boş. | 📦
+glass | bardak | I drink water from a glass. | Bardaktan su içerim.
+cup | fincan | I want a cup of tea. | Bir fincan çay istiyorum. | ☕ | sv=10
+plate | tabak | The plate is on the table. | Tabak masanın üstünde. | sv=16
+knife | bıçak | Be careful with the knife. | Bıçağa dikkat et. | 🔪 | sv=18
+spoon | kaşık | I eat soup with a spoon. | Çorbayı kaşıkla içerim. | 🥄 | sv=24
+bottle | şişe | The bottle is full. | Şişe dolu. | 🍼 | sv=16
+towel | havlu | Take a clean towel. | Temiz bir havlu al. | sv=28
+mirror | ayna | She looks in the mirror. | O aynaya bakar. | 🪞 | sv=18
+roof | çatı | The roof is red. | Çatı kırmızı. | sv=22
+stairs | merdiven | The stairs are long. | Merdiven uzun. | 🪜 | sv=30
+money | para | I need money. | Paraya ihtiyacım var. | 💰
+paper | kağıt | I need a piece of paper. | Bir kağıda ihtiyacım var. | 📄
+letter | mektup | I write a letter to my friend. | Arkadaşıma mektup yazarım. | ✉️
+
+@kelimeler grup=yiyecek sv=6-26
+rice | pirinç | I eat rice for lunch. | Öğle yemeğinde pirinç yerim. | 🍚 | sv=12
+meat | et | He does not eat meat. | O et yemez. | 🥩 | sv=12
+chicken | tavuk | We have chicken for dinner. | Akşam yemeğinde tavuk var. | 🍗 | sv=12
+fish | balık | I like fish. | Balığı severim. | 🐟 | sv=8
+egg | yumurta | I eat an egg for breakfast. | Kahvaltıda bir yumurta yerim. | 🥚 | sv=10
+cheese | peynir | I want bread and cheese. | Ekmek ve peynir istiyorum. | 🧀 | sv=12
+soup | çorba | The soup is hot. | Çorba sıcak. | 🍲 | sv=14
+salad | salata | She makes a salad. | O salata yapar. | 🥗 | sv=16
+sugar | şeker | I take tea without sugar. | Çayı şekersiz alırım. | 🍬 | sv=12
+salt | tuz | Add some salt. | Biraz tuz ekle. | 🧂
+coffee | kahve | I drink coffee in the morning. | Sabahları kahve içerim.
+juice | meyve suyu | I want orange juice. | Portakal suyu istiyorum. | 🧃 | sv=12
+fruit | meyve | I eat fruit every day. | Her gün meyve yerim. | 🍇
+vegetable | sebze | Vegetables are good for you. | Sebzeler sana iyi gelir. | 🥦 | sv=18
+potato | patates | I like potatoes. | Patatesi severim. | 🥔 | sv=14
+tomato | domates | The tomato is red. | Domates kırmızı. | 🍅 | sv=14
+banana | muz | The monkey eats a banana. | Maymun muz yer. | 🍌 | sv=14
+lemon | limon | I put lemon in my tea. | Çayıma limon koyarım. | 🍋 | sv=16
+cake | pasta | We eat cake on birthdays. | Doğum günlerinde pasta yeriz. | 🎂 | sv=12
+butter | tereyağı | I put butter on my bread. | Ekmeğime tereyağı sürerim. | 🧈 | sv=18
+oil | yağ | Cook with a little oil. | Biraz yağla pişir.
+food | yemek (yiyecek) | The food is ready. | Yemek hazır. | 🍴
+restaurant | restoran | We eat at a restaurant. | Bir restoranda yemek yeriz.
+menu | menü | Can I see the menu? | Menüyü görebilir miyim? | 📋
+hungry | aç | I am hungry. | Açım. | sv=8
+thirsty | susamış | The children are thirsty. | Çocuklar susamış. | sv=26
+
+@kelimeler grup=giyim sv=14-26
+shirt | gömlek | He wears a white shirt. | O beyaz bir gömlek giyer. | 👔 | sv=12
+shoes | ayakkabı | My shoes are new. | Ayakkabılarım yeni. | 👟 | sv=10
+coat | palto | Take your coat. | Paltonu al. | 🧥 | sv=14
+hat | şapka | He has a red hat. | Kırmızı bir şapkası var. | 🎩 | sv=12
+dress | elbise | She has a blue dress. | Mavi bir elbisesi var. | 👗 | sv=14
+trousers | pantolon | These trousers are too long. | Bu pantolon çok uzun. | 👖 | sv=27
+socks | çorap | I need new socks. | Yeni çoraplara ihtiyacım var. | 🧦 | sv=16
+pocket | cep | The key is in my pocket. | Anahtar cebimde. | 
+wear | giymek | I wear a coat in winter. | Kışın palto giyerim.
+
+@kelimeler grup=sehir sv=12-34
+street | sokak | Our street is quiet. | Sokağımız sessiz. | 🛣️
+shop | dükkân | The shop is open. | Dükkân açık. | 🏪
+market | pazar yeri | I buy fruit at the market. | Pazardan meyve alırım. | 🛒
+bank | banka | The bank is near the park. | Banka parkın yakınında. | 🏦
+hospital | hastane | My mother works at a hospital. | Annem hastanede çalışır. | 🏥 | sv=16
+station | istasyon | The station is far from here. | İstasyon buradan uzak. | 🚉 | sv=18
+airport | havalimanı | We are at the airport. | Havalimanındayız. | 🛫 | sv=18
+bus | otobüs | I take the bus to work. | İşe otobüsle giderim. | 🚌 | sv=10
+car | araba | My father has a car. | Babamın bir arabası var. | 🚗 | sv=8
+train | tren | The train is late. | Tren geç kaldı. | 🚆 | sv=12
+bicycle | bisiklet | I ride my bicycle in the park. | Parkta bisikletime binerim. | 🚲 | sv=16
+ticket | bilet | I have a ticket. | Biletim var. | 🎫 | sv=16
+road | yol | The road is long. | Yol uzun. | 🛤️
+bridge | köprü | We walk across the bridge. | Köprüden yürüyerek geçeriz. | 🌉 | sv=22
+map | harita | Look at the map. | Haritaya bak. | 🗺️
+village | köy | My grandmother lives in a village. | Büyükannem bir köyde yaşar. | sv=18
+church | kilise | The church is old. | Kilise eski. | ⛪
+hotel | otel | The hotel is near the sea. | Otel denize yakın. | 🏨 | sv=14
+museum | müze | We go to the museum. | Müzeye gideriz. | 🏛️
+address | adres | What is your address? | Adresiniz nedir? 
+
+@kelimeler grup=doga sv=10-40
+sun | güneş | The sun is hot. | Güneş sıcak. | ☀️ | sv=10
+moon | ay | The moon is bright tonight. | Ay bu gece parlak. | sv=13
+star | yıldız | I can see a star. | Bir yıldız görebiliyorum. | ⭐
+sky | gökyüzü | The sky is blue. | Gökyüzü mavi. | 🌌 | sv=14
+rain | yağmur | I like the rain. | Yağmuru severim. | 🌧️ | sv=14
+snow | kar | There is snow on the mountain. | Dağda kar var. | ❄️ | sv=16
+wind | rüzgâr | The wind is cold today. | Rüzgâr bugün soğuk. | 🌬️
+tree | ağaç | The tree is very tall. | Ağaç çok uzun. | 🌲 | sv=14
+flower | çiçek | She likes red flowers. | Kırmızı çiçekleri sever. | 🌸 | sv=14
+river | nehir | The river is wide. | Nehir geniş. | 🏞️
+sea | deniz | We swim in the sea. | Denizde yüzeriz. | 🌊 | sv=14
+mountain | dağ | The mountain is high. | Dağ yüksek. | ⛰️
+weather | hava durumu | The weather is nice today. | Bugün hava güzel.
+cloud | bulut | There is a big cloud. | Büyük bir bulut var. | ☁️
+grass | çimen | The grass is green. | Çimen yeşil.
+fire | ateş | Be careful with the fire. | Ateşe dikkat et.
+animal | hayvan | A dog is an animal. | Köpek bir hayvandır. | 🐾
+dog | köpek | My dog is friendly. | Köpeğim cana yakın. | 🐶 | sv=10
+cat | kedi | The cat sleeps all day. | Kedi bütün gün uyur. | 🐱 | sv=11
+bird | kuş | A bird sits on the tree. | Ağaçta bir kuş oturuyor. | 🐦 | sv=14
+horse | at | The horse is fast. | At hızlı. | 🐴 | sv=16
+cow | inek | The cow gives milk. | İnek süt verir. | 🐄 | sv=18
+island | ada | The island is small. | Ada küçük. | 🏝️
+forest | orman | We walk in the forest. | Ormanda yürürüz.
+lake | göl | The lake is calm. | Göl sakin. | 
+earth | dünya (gezegen) | The earth goes around the sun. | Dünya güneşin çevresinde döner.
+
+@kelimeler grup=zaman sv=8-30
+year | yıl | This year is a good year. | Bu yıl iyi bir yıl.
+month | ay (takvim) | There are twelve months in a year. | Bir yılda on iki ay vardır. | sv=12
+minute | dakika | Wait a minute. | Bir dakika bekle. | sv=14
+hour | saat (süre) | The lesson is one hour long. | Ders bir saat sürer.
+yesterday | dün | I was at home yesterday. | Dün evdeydim. | sv=10
+now | şimdi | I am at work now. | Şimdi işteyim.
+soon | yakında | See you soon. | Yakında görüşürüz.
+always | her zaman | I always drink tea in the morning. | Sabahları her zaman çay içerim.
+never | asla | I never eat fish. | Asla balık yemem.
+often | sık sık | We often walk in the park. | Sık sık parkta yürürüz.
+sometimes | bazen | Sometimes I read at night. | Bazen geceleri okurum. | sv=18
+early | erken | I get up early. | Erken kalkarım.
+late | geç | The bus is late. | Otobüs geç.
+winter | kış | Winter is cold. | Kış soğuktur. | ⛄ | sv=14
+summer | yaz (mevsim) | We swim in summer. | Yazın yüzeriz. | 🏖️ | sv=14
+spring | ilkbahar | Flowers come in spring. | İlkbaharda çiçekler açar. | 🌷 | sv=16
+autumn | sonbahar | The leaves fall in autumn. | Sonbaharda yapraklar düşer. | 🍂 | sv=16
+birthday | doğum günü | Today is my birthday. | Bugün benim doğum günüm. | 🎈 | sv=12
+time | zaman | I have no time. | Zamanım yok.
+day | gün | It is a nice day. | Güzel bir gün.
+holiday | tatil | We go on holiday in summer. | Yazın tatile çıkarız. | 🧳
+
+@kelimeler grup=sayi-miktar sv=8-30
+eleven | on bir | I have eleven books. | On bir kitabım var. | sv=8
+twelve | on iki | There are twelve eggs. | On iki yumurta var. | sv=9
+twenty | yirmi | He is twenty years old. | O yirmi yaşında. | sv=10
+thirty | otuz | Thirty students are here. | Otuz öğrenci burada. | sv=12
+fifty | elli | The book has fifty pages. | Kitap elli sayfa. | sv=14
+hundred | yüz (sayı) | A hundred people are here. | Yüz kişi burada. | sv=14
+thousand | bin | The car costs ten thousand dollars. | Araba on bin dolar. | sv=20
+first | birinci | This is my first lesson. | Bu benim ilk dersim.
+second | ikinci | He is in the second row. | O ikinci sırada.
+last | son (sıra) | This is the last page. | Bu son sayfa.
+half | yarım | I need half an hour. | Yarım saate ihtiyacım var. | sv=18
+many | çok (sayılabilen) | There are many books. | Çok kitap var.
+few | birkaç | I have a few friends. | Birkaç arkadaşım var.
+some | biraz | I want some water. | Biraz su istiyorum.
+all | hepsi | All of them are here. | Hepsi burada.
+every | her | I walk every day. | Her gün yürürüm.
+more | daha fazla | I want more tea. | Daha fazla çay istiyorum.
+number | sayı | What is your phone number? | Telefon numaran nedir?
+
+@kelimeler grup=yon sv=8-26
+left | sol | Turn left. | Sola dön. | sv=10
+right | sağ | The bank is on the right. | Banka sağda. | sv=10
+straight | düz | Go straight. | Düz git. | sv=16
+near | yakın | The school is near my house. | Okul evime yakın. | sv=14
+far | uzak | The station is far. | İstasyon uzak. | sv=14
+front | ön | The shop is in front of the bank. | Dükkân bankanın önünde.
+behind | arka | The garden is behind the house. | Bahçe evin arkasında. | sv=18
+between | arasında | The bank is between the shop and the park. | Banka dükkân ile park arasında.
+inside | içeride | The children are inside. | Çocuklar içeride. | sv=18
+outside | dışarıda | It is cold outside. | Dışarıda hava soğuk. | sv=18
+here | burada | I live here. | Burada yaşıyorum.
+there | orada | The book is there. | Kitap orada.
+side | yan | Sit by my side. | Yanıma otur.
+
+@kelimeler grup=fiil-gunluk sv=8-42
+buy | satın almak | I buy bread every morning. | Her sabah ekmek alırım.
+sell | satmak | They sell fruit here. | Burada meyve satarlar.
+pay | ödemek | I pay with cash. | Nakit öderim.
+cost | tutmak (fiyat) | How much does it cost? | Ne kadar tutar?
+give | vermek | Please give me the book. | Lütfen bana kitabı ver.
+take | almak (götürmek) | Take the key with you. | Anahtarı yanına al.
+make | yapmak (üretmek) | I make tea every morning. | Her sabah çay yaparım.
+do | yapmak (etmek) | What do you do on Sundays? | Pazar günleri ne yaparsın?
+see | görmek | I see a bird in the tree. | Ağaçta bir kuş görüyorum.
+look | bakmak | Look at the picture. | Resme bak.
+find | bulmak | I cannot find my key. | Anahtarımı bulamıyorum.
+ask | sormak | I ask the teacher a question. | Öğretmene bir soru sorarım.
+answer | cevaplamak | Please answer the question. | Lütfen soruyu cevapla.
+tell | söylemek (anlatmak) | Tell me your name. | Bana adını söyle.
+say | demek | What did you say? | Ne dedin?
+call | aramak | I call my mother every day. | Her gün annemi ararım.
+help | yardım etmek | Can you help me? | Bana yardım edebilir misin?
+work | çalışmak (iş) | I work in a bank. | Bir bankada çalışırım.
+use | kullanmak | I use my phone every day. | Her gün telefonumu kullanırım.
+need | ihtiyaç duymak | I need some water. | Biraz suya ihtiyacım var.
+try | denemek | Try this soup. | Bu çorbayı dene.
+think | düşünmek | I think it is a good idea. | Bence bu iyi bir fikir.
+know | bilmek | I know his name. | Adını biliyorum.
+remember | hatırlamak | I remember your face. | Yüzünü hatırlıyorum.
+forget | unutmak | Do not forget your key. | Anahtarını unutma.
+cook | yemek pişirmek | I cook dinner at home. | Evde akşam yemeği pişiririm. | sv=14
+wash | yıkamak | I wash my hands. | Ellerimi yıkarım. | sv=12
+drive | araba sürmek | My father drives to work. | Babam işe araba sürerek gider.
+travel | seyahat etmek | We travel by train. | Trenle seyahat ederiz.
+visit | ziyaret etmek | I visit my grandmother on Sundays. | Pazar günleri büyükannemi ziyaret ederim.
+stay | kalmak | We stay at a small hotel. | Küçük bir otelde kalırız.
+leave | ayrılmak | I leave home at eight. | Sekizde evden ayrılırım.
+arrive | varmak | The train arrives at nine. | Tren dokuzda varır. | sv=22
+finish | bitirmek | I finish work at five. | Beşte işi bitiririm.
+sit | oturmak | Please sit here. | Lütfen buraya otur. | sv=10
+stand | ayakta durmak | Stand near the door. | Kapının yanında dur.
+jump | zıplamak | The cat jumps on the bed. | Kedi yatağa zıplar. | sv=16
+push | itmek | Push the door. | Kapıyı it. | sv=16
+pull | çekmek | Pull the door. | Kapıyı çek. | sv=16
+carry | taşımak | I carry the bag. | Çantayı taşırım. | sv=18
+throw | atmak | Throw the ball to me. | Topu bana at. | sv=18
+catch | yakalamak | Catch the ball. | Topu yakala. | sv=18
+break | kırmak | Do not break the glass. | Bardağı kırma.
+build | inşa etmek | They build a new house. | Yeni bir ev inşa ediyorlar.
+cut | kesmek | Cut the bread with a knife. | Ekmeği bıçakla kes.
+draw | çizmek | She likes to draw flowers. | Çiçek çizmeyi sever. | sv=16
+sing | şarkı söylemek | I sing in the bathroom. | Banyoda şarkı söylerim. | sv=16
+dance | dans etmek | They dance at the party. | Partide dans ederler. | sv=16
+laugh | gülmek | We laugh a lot. | Çok güleriz. | sv=16
+cry | ağlamak | I cry when I am sad. | Üzgün olunca ağlarım. | sv=18
+smile | gülümsemek | She smiles at me. | Bana gülümser. | sv=18
+hear | duymak | I hear a bird. | Bir kuş duyuyorum.
+feel | hissetmek | I feel tired today. | Bugün yorgun hissediyorum.
+love | sevmek (aşk) | I love my family. | Ailemi severim.
+hope | ummak | I hope you are well. | Umarım iyisindir.
+send | göndermek | I send a message to my friend. | Arkadaşıma mesaj gönderirim.
+move | taşınmak (hareket etmek) | We move to a new house. | Yeni bir eve taşınırız.
+turn | dönmek | Turn left at the bank. | Bankada sola dön.
+put | koymak | Put the book on the table. | Kitabı masaya koy.
+keep | tutmak (saklamak) | Keep the key in your pocket. | Anahtarı cebinde tut.
+show | göstermek | Show me your phone. | Bana telefonunu göster.
+change | değiştirmek | I change my clothes. | Kıyafetlerimi değiştiririm.
+choose | seçmek | Choose a color. | Bir renk seç.
+win | kazanmak | Our team wins the game. | Takımımız maçı kazanır.
+lose | kaybetmek | I lose my keys often. | Anahtarlarımı sık sık kaybederim.
+happen | olmak (meydana gelmek) | What happens next? | Sırada ne olur?
+
+@kelimeler grup=sifat-gunluk sv=8-38
+good | iyi | This is a good book. | Bu iyi bir kitap.
+bad | kötü | The weather is bad today. | Bugün hava kötü.
+easy | kolay | The test is easy. | Test kolay.
+difficult | zor | The question is difficult. | Soru zor.
+long | uzun | The road is long. | Yol uzun.
+short | kısa | The film is short. | Film kısa.
+fast | hızlı | The train is fast. | Tren hızlı.
+slow | yavaş | The bus is slow. | Otobüs yavaş. | sv=16
+young | genç | My teacher is young. | Öğretmenim genç.
+beautiful | güzel | The garden is beautiful. | Bahçe güzel.
+clean | temiz | The room is clean. | Oda temiz.
+dirty | kirli | My shoes are dirty. | Ayakkabılarım kirli. | sv=18
+full | dolu | The bus is full. | Otobüs dolu.
+empty | boş | The box is empty. | Kutu boş. | sv=20
+heavy | ağır | The bag is heavy. | Çanta ağır. | sv=20
+light | hafif | The box is light. | Kutu hafif.
+loud | gürültülü | The music is loud. | Müzik gürültülü. | sv=24
+quiet | sessiz | The street is quiet. | Sokak sessiz. | sv=22
+rich | zengin | He is a rich man. | O zengin bir adam. | sv=22
+poor | fakir | The family is poor. | Aile fakir.
+cheap | ucuz | The bread is cheap. | Ekmek ucuz.
+expensive | pahalı | The car is expensive. | Araba pahalı.
+ready | hazır | Dinner is ready. | Akşam yemeği hazır.
+free | serbest (ücretsiz) | The museum is free on Sundays. | Müze pazar günleri ücretsiz.
+busy | meşgul | I am busy today. | Bugün meşgulüm. | sv=22
+important | önemli | Sleep is important. | Uyku önemlidir.
+different | farklı | These two shoes are different. | Bu iki ayakkabı farklı.
+same | aynı | We have the same teacher. | Aynı öğretmenimiz var.
+wrong | yanlış | This answer is wrong. | Bu cevap yanlış.
+safe | güvenli | The street is safe. | Sokak güvenli.
+dangerous | tehlikeli | The road is dangerous. | Yol tehlikeli.
+strong | güçlü | He is a strong man. | O güçlü bir adam.
+weak | zayıf (güçsüz) | I feel weak today. | Bugün güçsüz hissediyorum. | sv=24
+sick | hasta | My son is sick. | Oğlum hasta. | sv=18
+angry | kızgın | My father is angry. | Babam kızgın. | sv=22
+sad | üzgün | The girl is sad. | Kız üzgün. | sv=18
+afraid | korkmuş | I am afraid of dogs. | Köpeklerden korkarım. | sv=24
+sweet | tatlı | The cake is sweet. | Pasta tatlı. | sv=18
+dark | karanlık | The room is dark. | Oda karanlık.
+bright | parlak | The sun is bright. | Güneş parlak.
+wide | geniş | The river is wide. | Nehir geniş.
+high | yüksek | The mountain is high. | Dağ yüksek.
+low | alçak | The table is low. | Masa alçak.
+soft | yumuşak | The bed is soft. | Yatak yumuşak.
+hard | sert | The bread is hard. | Ekmek sert.
+wet | ıslak | My coat is wet. | Paltom ıslak. | sv=20
+dry | kuru | The towel is dry. | Havlu kuru. | sv=20
+
+@kelimeler grup=okul-is sv=18-48
+job | meslek (iş) | He has a good job. | İyi bir işi var.
+office | ofis | My office is on the second floor. | Ofisim ikinci katta.
+company | şirket | She works for a big company. | O büyük bir şirkette çalışır.
+meeting | toplantı | We have a meeting at ten. | Saat onda toplantımız var.
+lesson | ders (konu) | The lesson starts at nine. | Ders dokuzda başlar.
+exam | sınav | I have an exam on Monday. | Pazartesi sınavım var. | sv=20
+question | soru | I have a question. | Bir sorum var.
+page | sayfa | Open your book to page ten. | Kitabını on. sayfaya aç.
+word | sözcük | I learn five new words every day. | Her gün beş yeni sözcük öğrenirim.
+sentence | cümle | Write a short sentence. | Kısa bir cümle yaz.
+problem | sorun | We have a problem. | Bir sorunumuz var.
+idea | fikir | That is a good idea. | Bu iyi bir fikir.
+language | dil (konuşulan) | English is a language. | İngilizce bir dildir.
+test | test | The test is easy. | Test kolay. | sv=18
+mistake | hata | I make a mistake. | Bir hata yaparım.
+example | örnek | Give me an example. | Bana bir örnek ver.
+subject | konu | What is the subject of the book? | Kitabın konusu nedir?
+university | üniversite | My sister studies at a university. | Ablam bir üniversitede okur.
+science | bilim | I like science. | Bilimi severim.
+history | tarih | History is my favorite lesson. | Tarih en sevdiğim ders.
+art | sanat | She loves art. | O sanatı sever.
+music | müzik | I listen to music every day. | Her gün müzik dinlerim. | 🎵 | sv=12
+movie | film | We watch a movie on Friday. | Cuma günü film izleriz. | 🎬 | sv=14
+game | oyun | The children play a game. | Çocuklar bir oyun oynar. | 🎮 | sv=12
+photo | fotoğraf | I take a photo of the sea. | Denizin fotoğrafını çekerim. | 📷 | sv=14
+news | haber | The news is on at nine. | Haberler dokuzda.
+story | hikâye | My mother tells a story. | Annem bir hikâye anlatır.
+message | mesaj | I send a message. | Mesaj gönderirim.
+email | e-posta | I write an email. | Bir e-posta yazarım. | 📧
+website | web sitesi | The website is easy to use. | Web sitesi kullanması kolay.
+price | fiyat | What is the price? | Fiyat nedir?
+
+@kelimeler grup=saglik-spor sv=22-44
+pain | ağrı | I have pain in my back. | Sırtımda ağrı var.
+medicine | ilaç | Take your medicine. | İlacını al. | 💊
+exercise | egzersiz | Exercise is good for you. | Egzersiz sana iyi gelir. | 🏋️
+football | futbol | We play football on Sundays. | Pazar günleri futbol oynarız.
+team | takım | Our team is strong. | Takımımız güçlü.
+ball | top | Throw me the ball. | Bana topu at. | sv=12
+race | yarış | I run in the race. | Yarışta koşarım. | 🏁
+sport | spor | My favorite sport is tennis. | En sevdiğim spor tenis.
+energy | enerji | I have a lot of energy. | Çok enerjim var.
+rest | dinlenmek | I rest after lunch. | Öğle yemeğinden sonra dinlenirim.
+
+@kelimeler grup=zarf-baglac sv=12-40
+because | çünkü | I stay home because it rains. | Yağmur yağdığı için evde kalırım.
+but | ama | I like tea but I do not like coffee. | Çayı severim ama kahveyi sevmem.
+or | veya | Tea or coffee? | Çay mı kahve mi?
+very | çok (derece) | The soup is very hot. | Çorba çok sıcak.
+too | fazla | The tea is too hot. | Çay fazla sıcak.
+also | ayrıca | She also speaks French. | O ayrıca Fransızca konuşur.
+again | tekrar | Please say it again. | Lütfen tekrar söyle.
+only | yalnızca | I have only one pen. | Yalnızca bir kalemim var.
+maybe | belki | Maybe it will rain. | Belki yağmur yağar.
+really | gerçekten | I really like this book. | Bu kitabı gerçekten seviyorum.
+enough | yeterli | I have enough money. | Yeterli param var.
+together | birlikte | We study together. | Birlikte çalışırız.
+alone | yalnız | He lives alone. | O yalnız yaşar.
+quickly | çabucak | Please come quickly. | Lütfen çabuk gel.
+slowly | yavaşça | Speak slowly, please. | Lütfen yavaş konuş.
+well | iyi (zarf) | She speaks English well. | O İngilizceyi iyi konuşur.
+almost | neredeyse | The bus is almost full. | Otobüs neredeyse dolu.
+already | zaten | I already know him. | Onu zaten tanıyorum.
+still | hâlâ | He is still at work. | O hâlâ işte.
+after | sonra (-den sonra) | We eat after the lesson. | Dersten sonra yemek yeriz.
+before | önce (-den önce) | Wash your hands before lunch. | Öğle yemeğinden önce ellerini yıka.
+with | ile | I go with my friend. | Arkadaşımla giderim.
+without | -sız | I drink tea without sugar. | Şekersiz çay içerim.
+about | hakkında | The book is about animals. | Kitap hayvanlar hakkında.
+
+@kelimeler grup=soyut-b1 sv=40-70
+decide | karar vermek | I decide to stay home. | Evde kalmaya karar veririm.
+believe | inanmak | I believe you. | Sana inanıyorum.
+agree | aynı fikirde olmak | I agree with you. | Seninle aynı fikirdeyim.
+explain | açıklamak | Please explain the rule. | Lütfen kuralı açıkla.
+describe | tanımlamak | Describe your room. | Odanı anlat.
+suggest | önermek | I suggest a walk. | Bir yürüyüş öneririm.
+improve | geliştirmek | I want to improve my English. | İngilizcemi geliştirmek istiyorum.
+prefer | tercih etmek | I prefer tea to coffee. | Çayı kahveye tercih ederim.
+expect | beklemek (ummak) | I expect good news. | İyi haber bekliyorum.
+enjoy | keyif almak | I enjoy music. | Müzikten keyif alırım.
+manage | başarmak (idare etmek) | I manage to finish on time. | Zamanında bitirmeyi başarırım.
+offer | teklif etmek | They offer me a job. | Bana bir iş teklif ederler.
+receive | almak (teslim almak) | I receive a letter today. | Bugün bir mektup alırım.
+plan | planlamak | We plan a trip. | Bir gezi planlarız.
+compare | karşılaştırmak | Compare the two prices. | İki fiyatı karşılaştır.
+increase | artmak | Prices increase every year. | Fiyatlar her yıl artar.
+reduce | azaltmak | I reduce the sugar in my tea. | Çayımdaki şekeri azaltırım.
+protect | korumak | We protect the forest. | Ormanı koruruz.
+produce | üretmek | The farm produces milk. | Çiftlik süt üretir.
+continue | devam etmek | Please continue. | Lütfen devam et.
+develop | geliştirmek (büyütmek) | The company develops new phones. | Şirket yeni telefonlar geliştirir.
+discuss | tartışmak | We discuss the plan. | Planı tartışırız.
+include | içermek | The price includes breakfast. | Fiyata kahvaltı dahildir.
+reason | neden | What is the reason? | Nedeni nedir?
+result | sonuç | The result is good. | Sonuç iyi.
+chance | şans | This is a good chance. | Bu iyi bir şans.
+experience | deneyim | She has a lot of experience. | Çok deneyimi var.
+information | bilgi | I need more information. | Daha fazla bilgiye ihtiyacım var.
+opinion | görüş | What is your opinion? | Görüşün nedir?
+habit | alışkanlık | Reading is a good habit. | Okumak iyi bir alışkanlıktır. | sv=45
+trouble | dert (başbelası) | I am in trouble. | Başım dertte.
+advice | tavsiye | Thank you for your advice. | Tavsiyen için teşekkürler.
+accident | kaza | There is an accident on the road. | Yolda bir kaza var.
+culture | kültür | Every country has a culture. | Her ülkenin bir kültürü vardır.
+environment | çevre | We protect the environment. | Çevreyi koruruz.
+society | toplum | Society changes. | Toplum değişir.
+quality | kalite | The quality is good. | Kalite iyi.
+future | gelecek | I think about the future. | Geleceği düşünürüm.
+past | geçmiş | The past is gone. | Geçmiş geçti.
