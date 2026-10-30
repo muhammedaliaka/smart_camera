@@ -1,0 +1,71 @@
+{
+  "paket": "seviye",
+  "ad": "Seviye kuralları",
+  "surum": 1,
+  "seviye": {
+    "olcek": { "en": 1, "ust": 100 },
+    "yerlestirme": {
+      "ilkGun": 1,
+      "sonGun": 7,
+      "basamaklar": [5, 10, 20, 35, 50],
+      "tavan": 50,
+      "gecis": 0.8,
+      "soru": 7,
+      "enCokYoklama": 7,
+      "cozunurluk": 2,
+      "guvenPayi": 0.8
+    },
+    "yukselme": { "enAzSoru": 5 },
+    "dusme": { "altinda": 0.6, "ardisik": 2 },
+    "izler": {
+      "ingilizce": {
+        "ad": "İngilizce",
+        "belirler": "Kelime ve cümle seviyesi (sıklık ve konuya göre sıralı)",
+        "yerlestirme": true,
+        "yukselmeSeri": 1,
+        "oturum": { "yeniKelime": 5, "kontrolSoru": 3, "dikte": 1, "ogrenmePencere": [-1, 2], "hatirlamaPencere": [-8, 0] }
+      },
+      "okuma": {
+        "ad": "Okuma",
+        "belirler": "Metnin uzunluğu, kelime sıklığı ve cümle yapısı",
+        "yerlestirme": true,
+        "yukselmeSeri": 1,
+        "enAzSoru": 3,
+        "oturum": { "pencere": [-6, 3] }
+      },
+      "dinleme": {
+        "ad": "Dinleme",
+        "belirler": "Kaydın uzunluğu, hızı ve ayrıntı düzeyi",
+        "yerlestirme": true,
+        "yukselmeSeri": 1,
+        "enAzSoru": 3,
+        "oturum": { "pencere": [-6, 3] }
+      },
+      "hafiza": {
+        "ad": "Hafıza",
+        "belirler": "Liste uzunluğu ve bekleme",
+        "yerlestirme": true,
+        "yukselmeSeri": 1,
+        "enAzSoru": 3,
+        "oturum": {
+          "uzunluk": [[1, 3], [4, 4], [7, 5], [10, 6], [13, 7], [16, 8], [19, 9], [22, 10], [25, 11], [28, 12], [31, 13], [35, 14], [40, 16], [45, 18], [50, 20], [60, 24], [70, 28], [80, 32], [90, 36], [100, 40]],
+          "dikkat": [[1, 0], [8, 2], [15, 3], [25, 4], [40, 5], [60, 6]]
+        }
+      },
+      "spor": {
+        "ad": "Spor",
+        "belirler": "Hacim: yürüyüş, set, tekrar, tur",
+        "yerlestirme": false,
+        "yukselmeSeri": 2,
+        "enAzSoru": 1,
+        "oturum": {
+          "gucBasamak": [[1, 6], [1, 8], [1, 10], [2, 6], [2, 8], [2, 10], [3, 8], [3, 10], [3, 12]],
+          "yuruyusKm": { "bas": 1.5, "adim": 0.1, "ust": 5 },
+          "dengeTur": { "her": 8, "ust": 4 },
+          "ceviklikTur": { "her": 6, "ust": 5 },
+          "zorlanmaUst": 6
+        }
+      }
+    }
+  }
+}

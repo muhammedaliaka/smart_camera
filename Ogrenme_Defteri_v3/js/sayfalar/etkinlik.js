@@ -57,6 +57,7 @@ export const spor = (sayfa, api) => {
       else for (const m of b.hareketler) yapilanlar.push({ ad: m.ad, yapilan: olcu['hareket:' + m.id], birim: m.birim || 'set', hedef: m.birim ? `${m.set || 1} ${m.birim}` : `${m.set || 1} set × ${m.tekrar || ''}`.trim() });
     }
     api.kaydet('spor', { olcu, yapilanlar, zorlanma, destek, kismi, not: notAlani.value.trim() || null }, { baslik: a.baslik });
+    api.sonuc?.({ kismi, zorlanma, destek });
     api.ilerle();
   };
   api.alt('Spor tamam — kaydet', () => kaydet(false), { ikincil: { etiket: 'Kısmen yaptım', fn: () => kaydet(true) } });

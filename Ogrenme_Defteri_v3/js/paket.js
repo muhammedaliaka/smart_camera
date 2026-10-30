@@ -11,7 +11,7 @@ export const IZLER = {
 };
 
 export function bosIcerik() {
-  return { paketler: [], kelimeler: [], hareketler: [], dersler: [], haftalar: [], disUygulamalar: [], sesler: { varsayilan: 'anlatici', konusmacilar: {} }, cakismalar: [] };
+  return { paketler: [], kelimeler: [], hareketler: [], dersler: [], haftalar: [], disUygulamalar: [], sesler: { varsayilan: 'anlatici', konusmacilar: {} }, seviye: {}, seviyeli: null, hafizaHavuzu: [], cakismalar: [] };
 }
 
 /** paketler: [{ paket, ad, surum, kelimeler?, hareketler?, dersler?, haftalar?, disUygulamalar?, sesler?, kaynak? }] */
@@ -51,6 +51,9 @@ export function birlestir(paketler) {
         }
       }
     }
+    if (p.seviye) ic.seviye = seviyeBirlestir(ic.seviye, p.seviye);
+    if (p.seviyeli) ic.seviyeli = p.seviyeli; // gün gün yazılmamış günler için hafta deseni (program.json)
+    if (Array.isArray(p.hafizaHavuzu)) for (const k of p.hafizaHavuzu) if (!ic.hafizaHavuzu.includes(k)) ic.hafizaHavuzu.push(k);
     if (p.sesler) {
       if (p.sesler.varsayilan) ic.sesler.varsayilan = p.sesler.varsayilan;
       Object.assign(ic.sesler.konusmacilar, p.sesler.konusmacilar || {});
@@ -59,6 +62,16 @@ export function birlestir(paketler) {
   ic.haftalar.sort((a, b) => a.hafta - b.hafta);
   for (const h of ic.haftalar) h.gunler.sort((a, b) => a.gun - b.gun);
   return ic;
+}
+
+/** Seviye kuralları: üst düzey bölümler (yerlestirme, izler…) alan alan birleşir, sonraki paket önceliklidir. */
+function seviyeBirlestir(a, b) {
+  const sonuc = { ...a };
+  for (const [k, v] of Object.entries(b)) {
+    if (v && typeof v === 'object' && !Array.isArray(v) && a[k] && typeof a[k] === 'object') sonuc[k] = seviyeBirlestir(a[k], v);
+    else sonuc[k] = v;
+  }
+  return sonuc;
 }
 
 export function indeksle(ic) {
@@ -70,5 +83,6 @@ export function indeksle(ic) {
   for (const h of ic.haftalar) for (const g of h.gunler) gunler.set(g.gun, { ...g, hafta: h.hafta, haftaBaslik: h.baslik });
   const dersGunu = new Map();
   for (const [no, g] of gunler) for (const t of g.gorevler || []) if (!dersGunu.has(t.ders)) dersGunu.set(t.ders, no);
-  return { kelime, ders, dis, hareket, gunler, dersGunu, enSonGun: Math.max(0, ...gunler.keys()) };
+  const enSonGun = ic.seviyeli ? Infinity : Math.max(0, ...gunler.keys()); // gün deseni varsa program bitmez
+  return { kelime, ders, dis, hareket, gunler, dersGunu, enSonGun, acikSonGun: Math.max(0, ...gunler.keys()) };
 }

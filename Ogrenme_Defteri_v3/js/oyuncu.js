@@ -32,7 +32,7 @@ export function ctxOlustur(deneme = 0) {
   };
 }
 
-/** Bir dersi açar. opts: { donus, sonraki: () => ({etiket, href}) } */
+/** Bir dersi açar. opts: { donus, sonraki: () => ({etiket, href}), oturumBitti: (S) => void } */
 export function dersAc(dersId, opts = {}) {
   const ders = icerik.ders(dersId);
   if (!ders) { bildir('Ders bulunamadı: ' + dersId); location.hash = opts.donus || '#/bugun'; return; }
@@ -41,7 +41,7 @@ export function dersAc(dersId, opts = {}) {
   const { sayfalar, ogrenilenKelimeler, srsListeleri } = derle(ders, ctx);
   oynat({
     id: dersId, baslik: ders.baslik, iz: ders.iz, olcum: ders.iz === 'olcum', sayfalar, ctx, donus: opts.donus || '#/bugun',
-    sonraki: opts.sonraki, ogrenilenKelimeler, srsListeleri, dersMi: true, hedef: ders.hedef, emoji: ders.emoji,
+    sonraki: opts.sonraki, oturumBitti: opts.oturumBitti, ogrenilenKelimeler, srsListeleri, dersMi: true, hedef: ders.hedef, emoji: ders.emoji,
   });
 }
 
@@ -134,6 +134,8 @@ export function oynat(o) {
       return store.olay(tur, { ders: S.id, id: sayfa.id, ...veri }, { dersAd: S.baslik, iz: S.iz || null, bolum: sayfa.bolum || null, ...baglam });
     },
     bildirim: bildirimGoster,
+    /** Sayfanın oturum sonucuna eklediği bilgi (ör. spor: kısmen, zorlanma); oturumBitti kancası S.sonuc olarak okur. */
+    sonuc: (v) => { S.sonuc = { ...(S.sonuc || {}), ...v }; },
     nokta: (v, t) => { S.puan.nokta.var += v; S.puan.nokta.toplam += t; },
     dis: (d, t) => S.disSonuc.push({ d, t }),
     yenile: () => goster(),
@@ -199,7 +201,7 @@ export function oynat(o) {
     const yanlisIds = new Set(S.yanlislar.map((y) => y.soru));
     const sayfalar = o.sayfalar.filter((s) => s.puan && yanlisIds.has(s.soru)).map((s) => ({ ...s, tekrar: true }));
     if (!sayfalar.length) return;
-    oynat({ ...o, id: S.id + ':yanlislar', baslik: S.baslik + ' · yanlışlar', sayfalar, dersMi: false, kaydetme: true, srsModu: false, ogrenilenKelimeler: [], srsListeleri: [], bitisEtiketi: 'Tamam' });
+    oynat({ ...o, id: S.id + ':yanlislar', baslik: S.baslik + ' · yanlışlar', sayfalar, dersMi: false, kaydetme: true, srsModu: false, ogrenilenKelimeler: [], srsListeleri: [], oturumBitti: null, bitisEtiketi: 'Tamam' });
   };
 
   const cikis = () => {
@@ -235,9 +237,18 @@ function metinAc(adim) {
   return h('details.ac', { style: 'margin-top:16px' }, h('summary', 'Metni göster'), h('div.metin-blok', adim.metin.map((m) => h('p', m))));
 }
 
+/** Seviye kartı: oturumun seviyeye etkisi (S.seviyeSonucu, seviye-ac.js kurar). */
+function seviyeKarti(r) {
+  const renk = r.tur === 'yukari' ? 'vurgulu' : 'duz';
+  return h('div.kart.' + renk + '.seviye-karti', { style: 'text-align:left', data: { tur: r.tur } },
+    h('h3', { style: 'margin:0 0 6px' }, (r.tur === 'yukari' ? '⬆️ ' : r.tur === 'asagi' ? '⬇️ ' : '📊 ') + r.baslik),
+    ...r.satirlar.map((s) => h('p', { style: 'margin:4px 0' }, s)));
+}
+
 function sonucEkrani(S, { yanlisTekrar }) {
   const { dogru, toplam, bolumler, nokta } = S.puan;
   const kap = h('div.sonuc');
+  if (S.seviyeSonucu) kap.append(seviyeKarti(S.seviyeSonucu));
   if (toplam > 0) {
     const yuzde = Math.round((dogru / toplam) * 100);
     const r = 54, c = 2 * Math.PI * r;

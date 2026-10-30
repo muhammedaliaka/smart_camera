@@ -165,7 +165,7 @@ export const listeHatirla = (sayfa, api) => {
     if (kilitli) return; kilitli = true;
     const yanit = bilmiyorum ? [] : al();
     const r = listeKarsilastir(yanit, sayfa.liste);
-    api.puanla({ adet: r.toplam, dogruAdet: r.var, yanit: yanit.join(', ') || 'bilmiyorum', dogruCevap: sayfa.liste.join(', '), soru: a.baslik || 'Liste', tekrarYok: true });
+    api.puanla({ adet: r.toplam, dogruAdet: sayfa.siraliPuan ? r.sirali : r.var, yanit: yanit.join(', ') || 'bilmiyorum', dogruCevap: sayfa.liste.join(', '), soru: a.baslik || 'Liste', tekrarYok: true });
     api.kaydet('liste', { var: r.var, sirali: r.sirali, toplam: r.toplam, yanit, yenidenBaktim }, { baslik: sayfa.baslik || a.baslik || 'Liste', anahtar: sayfa.liste, rota: rota?.ad || null });
     girdiler.forEach((g) => { g.disabled = true; });
     alan.after(h('div.kart.duz', { style: 'margin-top:14px' }, h('h3', `${r.var}/${r.toplam} öğeyi hatırladın · ${r.sirali} tanesi doğru yerde`),

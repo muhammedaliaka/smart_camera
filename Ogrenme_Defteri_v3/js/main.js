@@ -11,6 +11,7 @@ import { tekrarGorunum, tekrarOturumu, hatirlaOturumu, srsOzet } from './gorunum
 import { oyunlarGorunum, oyunBaslat, disOturumu } from './gorunum/oyunlar.js';
 import { benGorunum, ayarlariUygula } from './gorunum/ben.js';
 import { sonrakiDers } from './gorunum/yardimci.js';
+import { oturumAc } from './seviye-ac.js';
 
 const KOK = document.getElementById('uygulama');
 const MENU = [
@@ -51,7 +52,7 @@ function goster(el, menuRota, genis = false) {
 function yonlendir() {
   const { parcalar, sorgu } = rotaCoz();
   const [ilk = 'bugun', ikinci, ucuncu] = parcalar;
-  const oyunRotasi = ['oyna', 'oyun', 'hatirla', 'dis'].includes(ilk) || (ilk === 'tekrar' && ikinci === 'oturum');
+  const oyunRotasi = ['oyna', 'oyun', 'hatirla', 'dis', 'yoklama', 'seviye'].includes(ilk) || (ilk === 'tekrar' && ikinci === 'oturum');
   if (!oyunRotasi) oyuncu.kapat();
   try {
     if (!store.al().baslangic) { baslangicEkrani(); return; }
@@ -69,6 +70,8 @@ function yonlendir() {
       case 'oyun': arkaPlan('oyunlar', oyunlarGorunum); oyunBaslat(ikinci); break;
       case 'dis': arkaPlan('oyunlar', oyunlarGorunum); disOturumu(ikinci); break;
       case 'ben': goster(benGorunum(sorgu), 'ben'); break;
+      case 'yoklama': arkaPlan('bugun', bugunGorunum); oturumAc(ikinci, 'yoklama'); break;
+      case 'seviye': arkaPlan('bugun', bugunGorunum); oturumAc(ikinci, 'oturum'); break;
       case 'oyna': {
         const d = icerik.ders(ikinci);
         arkaPlan('dersler', () => dersGorunum(ikinci));
