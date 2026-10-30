@@ -13,7 +13,70 @@
         "Yavaşça otur, sonra ayağa kalk. Oturmayı 2 saniyede yap.",
         "Gerekirse elinle destek al ve bunu not et."
       ],
-      "uyari": "Sandalye kayıyorsa ya da başın dönüyorsa dur."
+      "uyari": "Sandalye kayıyorsa ya da başın dönüyorsa dur.",
+      "nerede": "Evde ya da çalışma alanında; duvara dayalı, kaymayan sağlam bir sandalye.",
+      "kas": "uyluk önü ve kalça",
+      "hisset": "Uyluğunun önünde ve kalçanda çalışma hissi. Dizinde batma ya da belinde sıkışma olmamalı.",
+      "nefes": "Otururken nefes al, kalkarken nefes ver. Nefesini tutma.",
+      "tempo": "2 sn in · sandalyeye dokun · 1–2 sn kalk",
+      "hatalar": [
+        {
+          "ne": "Kendini bırakıp sandalyeye çökmek",
+          "duzelt": "İnişi 2 saniyeye yay; sandalyeye yalnızca dokun. İniş, hareketin asıl işidir."
+        },
+        {
+          "ne": "Topukların yerden kalkması",
+          "duzelt": "Tabanın bütünüyle yerde kalsın; kalçanı biraz geriye it."
+        },
+        {
+          "ne": "Dizlerin içe kapanması",
+          "duzelt": "Dizlerin ayak parmaklarının yönüne baksın."
+        }
+      ],
+      "kolay": "Ellerinle sandalyenin kenarından ya da dizlerinden destek al; biraz yüksek bir sandalye kullan.",
+      "zor": "İnişi 3 saniyeye uzat ya da kollarını göğsünde çaprazla.",
+      "dur": "Baş dönmesi, göğüs ağrısı ya da dizde keskin ağrı olursa dur.",
+      "anlatim": [
+        {
+          "eylem": "kur",
+          "ses": "Sandalyeye otur kalk. Önce hazırlık. Sağlam bir sandalyeyi duvara daya, kaymadığından emin ol. Ayakların omuz genişliğinde, tabanların yerde olsun.",
+          "altyazi": "Sandalyeyi duvara daya. Ayaklar omuz genişliğinde, taban yerde."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 2,
+          "ses": "Şimdi doğru tekrar. Nefes alarak iki saniyede yavaşça otur. Kalçanı biraz geriye it. Sandalyeye sadece dokun. Sonra nefes vererek kalk. Çalışmayı uyluklarının önünde ve kalçanda hissetmelisin.",
+          "altyazi": "Nefes al, 2 saniyede otur. Dokun. Nefes ver, kalk."
+        },
+        {
+          "eylem": "hata",
+          "ses": "Sık yapılan hata: kendini bırakıp sertçe oturmak ve topukları kaldırmak. Böyle yaparsan kaslar iş görmez, diz ve bel yüklenir.",
+          "altyazi": "Çökme ve topuk kaldırma: kaslar iş görmez."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 1,
+          "ses": "Doğrusu şu: kontrollü in, kontrollü kalk.",
+          "altyazi": "Kontrollü in, kontrollü kalk."
+        },
+        {
+          "eylem": "kur",
+          "ses": "Zorlanırsan ellerinden destek al. Kolaylaşınca inişi üç saniyeye uzat. Başın dönerse ya da sandalye kayarsa hemen dur.",
+          "altyazi": "Kolay: destek al. Zor: inişi 3 saniye yap. Baş dönerse dur."
+        }
+      ],
+      "video": "gorsel/spor/video/sandalye.mp4",
+      "poster": "gorsel/spor/video/sandalye.jpg",
+      "izle": [
+        {
+          "ad": "NHS: güç egzersizleri (İngilizce, fotoğraflı)",
+          "url": "https://www.nhs.uk/live-well/exercise/strength-exercises/"
+        },
+        {
+          "ad": "NHS: Strength and Flex videoları (İngilizce, video)",
+          "url": "https://www.nhs.uk/live-well/exercise/strength-and-flex-exercise-plan-how-to-videos/"
+        }
+      ]
     },
     {
       "id": "duvar-sinav",
@@ -25,7 +88,70 @@
         "Dirsekleri açarak geri it.",
         "Ayaklarını duvardan uzaklaştırmak zorlaştırır; bu hafta yakın dur."
       ],
-      "uyari": "Omuzda ya da bilekte ağrı olursa bırak."
+      "uyari": "Omuzda ya da bilekte ağrı olursa bırak.",
+      "nerede": "Evde ya da parkta; düz, kaymayan bir duvar ve temiz zemin.",
+      "kas": "göğüs, omuz önü ve kolun arkası",
+      "hisset": "Göğüste, omuz önünde ve kolun arka tarafında çalışma. Bilekte ya da omuz önünde sıkışma olmamalı.",
+      "nefes": "Göğsünü duvara yaklaştırırken nefes al, iterken nefes ver.",
+      "tempo": "2 sn yaklaş · 1 sn bekle · 2 sn it",
+      "hatalar": [
+        {
+          "ne": "Kalçanın geride kalıp belden kırılmak",
+          "duzelt": "Karnını hafifçe sık; baştan topuğa tek çizgi olsun."
+        },
+        {
+          "ne": "Dirseklerin iki yana açılması",
+          "duzelt": "Dirsekler gövdene yakın kalsın; kollar okun ucu gibi, T gibi değil."
+        },
+        {
+          "ne": "Başı öne uzatmak",
+          "duzelt": "Boynun gövdenin devamı olsun; bakışın duvara değil, hemen önüne."
+        }
+      ],
+      "kolay": "Duvara daha yakın dur ya da eller omuzdan biraz yüksekte olsun.",
+      "zor": "Ayaklarını duvardan biraz uzaklaştır ya da inişi 3 saniyeye uzat.",
+      "dur": "Omuzda ya da bilekte ağrı olursa bırak.",
+      "anlatim": [
+        {
+          "eylem": "kur",
+          "ses": "Duvar şınavı. Duvara bir adım uzakta dur. Ellerini omuz hizasında duvara koy. Vücudun baştan topuğa düz bir çizgi olsun.",
+          "altyazi": "Eller omuz hizasında. Baştan topuğa düz çizgi."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 2,
+          "ses": "Nefes alarak göğsünü duvara yaklaştır. Dirsekler gövdene yakın kalsın. Bir saniye bekle. Nefes vererek geri it. Çalışmayı göğsünde, omuz önünde ve kolunun arkasında hissedersin.",
+          "altyazi": "Nefes al, yaklaş. Bekle. Nefes ver, it."
+        },
+        {
+          "eylem": "hata",
+          "ses": "Sık yapılan hata: kalçayı geride bırakıp belden kırılmak. Vücut tek parça gitmeli. Karnını hafifçe sık.",
+          "altyazi": "Kalça geride kalırsa bel yüklenir."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 1,
+          "ses": "Doğrusu: baştan topuğa tek çizgi, tek parça hareket.",
+          "altyazi": "Baştan topuğa tek çizgi."
+        },
+        {
+          "eylem": "kur",
+          "ses": "Zorlanırsan duvara daha yakın dur. Kolaylaşınca ayaklarını biraz uzaklaştır. Omzunda ya da bileğinde ağrı olursa bırak.",
+          "altyazi": "Kolay: duvara yakın. Zor: ayaklar biraz geride. Ağrı olursa bırak."
+        }
+      ],
+      "video": "gorsel/spor/video/duvar-sinav.mp4",
+      "poster": "gorsel/spor/video/duvar-sinav.jpg",
+      "izle": [
+        {
+          "ad": "NHS: güç egzersizleri (İngilizce, fotoğraflı)",
+          "url": "https://www.nhs.uk/live-well/exercise/strength-exercises/"
+        },
+        {
+          "ad": "YouTube’da ara: wall push up",
+          "url": "https://www.youtube.com/results?search_query=wall+push+up+exercise+technique"
+        }
+      ]
     },
     {
       "id": "kalca-kopru",
@@ -37,7 +163,70 @@
         "Bir saniye bekle, yavaşça indir.",
         "Belini fazla çukurlaştırma."
       ],
-      "uyari": "Belinde ağrı varsa daha az kaldır ya da bırak."
+      "uyari": "Belinde ağrı varsa daha az kaldır ya da bırak.",
+      "nerede": "Evde ya da çalışma alanında; kaymayan bir minder ya da halı üzerinde. Parkta ıslak zeminde yapma.",
+      "kas": "kalçanın arkası ve uyluk arkası",
+      "hisset": "Kalçanın arkasında ve uyluğun arka tarafında çalışma. Belinde sıkışma ya da kramp olmamalı.",
+      "nefes": "Kaldırırken nefes ver, indirirken nefes al.",
+      "tempo": "2 sn kaldır · 1 sn bekle · 2 sn indir",
+      "hatalar": [
+        {
+          "ne": "Gereğinden fazla kaldırıp belini çukurlaştırmak",
+          "duzelt": "Yükseklik değil kalça kası önemli; omuzdan dize düz çizgi yeter."
+        },
+        {
+          "ne": "Dizlerin iki yana açılması",
+          "duzelt": "Dizler ayak parmaklarıyla aynı yöne baksın."
+        },
+        {
+          "ne": "Boynu sıkmak",
+          "duzelt": "Başın rahat yerde dursun; bakışın tavana."
+        }
+      ],
+      "kolay": "Kalçanı daha az kaldır ya da beklemeyi bırak.",
+      "zor": "Beklemeyi 3 saniyeye çıkar.",
+      "dur": "Belinde ağrı olursa bırak.",
+      "anlatim": [
+        {
+          "eylem": "kur",
+          "ses": "Kalça köprüsü. Minderin üstünde sırtüstü yat. Dizlerini bük, ayaklarını yere bas. Kollar yanında olsun.",
+          "altyazi": "Sırtüstü yat, dizler bükük, ayaklar yerde."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 2,
+          "ses": "Nefes vererek kalçanı yavaşça kaldır. Omuzdan dize düz bir çizgi oluşsun. Bir saniye bekle. Nefes alarak yavaşça indir. Çalışmayı kalçanın arkasında ve uyluk arkasında hissedersin.",
+          "altyazi": "Nefes ver, kaldır. 1 saniye bekle. Nefes al, indir."
+        },
+        {
+          "eylem": "hata",
+          "ses": "Sık yapılan hata: gereğinden fazla kaldırıp belini çukurlaştırmak. Yükseklik değil, kalça kası önemli. Belin sıkışırsa daha az kaldır.",
+          "altyazi": "Çok yükselirsen bel çukurlaşır."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 1,
+          "ses": "Doğrusu bu: omuzdan dize düz çizgi, kontrollü iniş.",
+          "altyazi": "Omuzdan dize düz çizgi."
+        },
+        {
+          "eylem": "kur",
+          "ses": "Zorlanırsan daha az kaldır. Kolaylaşınca beklemeyi üç saniyeye çıkar. Belinde ağrı olursa bırak.",
+          "altyazi": "Kolay: daha az kaldır. Zor: 3 saniye bekle. Bel ağrırsa bırak."
+        }
+      ],
+      "video": "gorsel/spor/video/kalca-kopru.mp4",
+      "poster": "gorsel/spor/video/kalca-kopru.jpg",
+      "izle": [
+        {
+          "ad": "RNOH: işlevsel egzersiz paketi, glute bridge (İngilizce, fotoğraflı)",
+          "url": "https://www.rnoh.nhs.uk/patients-and-visitors/patient-information-guides/functional-fitness-exercise-pack"
+        },
+        {
+          "ad": "YouTube’da ara: glute bridge",
+          "url": "https://www.youtube.com/results?search_query=glute+bridge+exercise+technique"
+        }
+      ]
     },
     {
       "id": "cekis-prova",
@@ -48,6 +237,65 @@
         "Dirsekleri yavaşça gövdenin yanına çek.",
         "Yavaşça geri bırak.",
         "Bu bir kuvvet testi değil; hareketin sırasını öğrenme provasıdır."
+      ],
+      "nerede": "Evde ya da çalışma alanında; sırtı dik duran bir sandalye.",
+      "kas": "sırtın ortası ve kürek kemiklerinin arası",
+      "hisset": "Sırtının ortasında, kürek kemiklerinin arasında çalışma. Omuzların kulağa doğru kalkmamalı.",
+      "nefes": "Çekerken nefes ver, bırakırken nefes al.",
+      "tempo": "2 sn çek · 1 sn sıkıştır · 2 sn bırak",
+      "hatalar": [
+        {
+          "ne": "Gövdeyi geriye atarak çekmek",
+          "duzelt": "Gövden dik kalsın; hareket sırttan gelsin."
+        },
+        {
+          "ne": "Omuzları kulağa kaldırmak",
+          "duzelt": "Omuzların kulaklarından uzak, aşağıda olsun."
+        },
+        {
+          "ne": "Dirsekleri yukarı çıkarmak",
+          "duzelt": "Dirsekler gövdenin yanından geriye gitsin."
+        }
+      ],
+      "kolay": "Daha kısa çek; sıkıştırmayı bırak.",
+      "zor": "Sıkıştırmada 3 saniye bekle.",
+      "dur": "Omuz önünde keskin bir ağrı olursa bırak.",
+      "anlatim": [
+        {
+          "eylem": "kur",
+          "ses": "Çekiş provası. Dik bir sandalyede otur. Gövden dik, kolların önde uzansın.",
+          "altyazi": "Dik otur, kollar önde."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 2,
+          "ses": "Nefes vererek dirsekleri yavaşça geriye çek. Kürek kemiklerini birbirine yaklaştır ve bir saniye sıkıştır. Nefes alarak yavaşça bırak. Çalışmayı sırtının ortasında hissedersin.",
+          "altyazi": "Nefes ver, dirsekleri çek. Sıkıştır. Nefes al, bırak."
+        },
+        {
+          "eylem": "hata",
+          "ses": "Sık yapılan hata: gövdeyi geriye atarak çekmek ya da omuzları kulağa kaldırmak. Hareket gövdeden değil, sırttan gelmeli.",
+          "altyazi": "Gövdeyi atma; sırttan çek."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 1,
+          "ses": "Doğrusu: gövde dik, omuzlar aşağıda, kürekler birbirine yaklaşır.",
+          "altyazi": "Gövde dik, omuzlar aşağıda."
+        },
+        {
+          "eylem": "kur",
+          "ses": "Bu bir kuvvet testi değil; hareketin sırasını öğrenme provasıdır. Omzunda keskin bir ağrı olursa bırak.",
+          "altyazi": "Amaç sırayı öğrenmek. Ağrı olursa bırak."
+        }
+      ],
+      "video": "gorsel/spor/video/cekis-prova.mp4",
+      "poster": "gorsel/spor/video/cekis-prova.jpg",
+      "izle": [
+        {
+          "ad": "YouTube’da ara: seated row",
+          "url": "https://www.youtube.com/results?search_query=seated+row+exercise+technique+beginner"
+        }
       ]
     },
     {
@@ -61,7 +309,64 @@
         "Ayak değiştir ve tekrarla.",
         "Sonra tek ayak üstünde üç nefes dene. Destek almak serbest."
       ],
-      "uyari": "Her zaman tutunabileceğin bir şey yanında olsun."
+      "uyari": "Her zaman tutunabileceğin bir şey yanında olsun.",
+      "nerede": "Evde ya da çalışma alanında; yanında sağlam bir masa ya da duvar. Parkta ıslak zeminde yapma.",
+      "kas": "ayak bileği, kalça yanı ve uyluk",
+      "hisset": "Ayak bileğinde ve bacağın yanında küçük düzeltme titremeleri normaldir; denge kaslarının çalıştığını gösterir.",
+      "nefes": "Doğal nefes al. Her nefes bir sayımdır; üç nefes say.",
+      "tempo": "Her duruşta üç rahat nefes",
+      "hatalar": [
+        {
+          "ne": "Öne eğilip yere bakmak",
+          "duzelt": "Başını dik tut; bakışını önünde bir noktaya sabitle."
+        },
+        {
+          "ne": "Desteğe tüm ağırlığını vermek",
+          "duzelt": "Desteğe yalnızca parmak uçlarınla dokun."
+        },
+        {
+          "ne": "Nefesi tutmak",
+          "duzelt": "Sesli say: bir, iki, üç. Nefesin akıcı kalsın."
+        }
+      ],
+      "kolay": "Ayaklarını yan yana tut ya da desteği tüm elinle kavra.",
+      "zor": "Desteği yalnızca iki parmakla tut.",
+      "dur": "Baş dönmesi olursa hemen otur.",
+      "anlatim": [
+        {
+          "eylem": "kur",
+          "ses": "Denge turu. Sağlam bir desteğin yanında dur: duvar ya da masa. Tutunabileceğin bir şey her zaman yanında olsun.",
+          "altyazi": "Duvar ya da masanın yanında dur."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 1,
+          "ses": "Bir ayağını diğerinin tam önüne koy, tek çizgi gibi. Üç rahat nefes boyunca dur. Sonra ayak değiştir ve tekrarla. Son olarak tek ayak üzerinde üç nefes dene. Destek almak serbest.",
+          "altyazi": "Topuk–parmak: 3 nefes. Ayak değiştir. Tek ayak: 3 nefes."
+        },
+        {
+          "eylem": "hata",
+          "ses": "Sık yapılan hata: öne eğilip yere bakmak. Başını dik tut, bakışını önünde bir noktaya sabitle.",
+          "altyazi": "Yere bakma; ileride bir noktaya bak."
+        },
+        {
+          "eylem": "kur",
+          "ses": "Hafif titreme normaldir. Baş dönmesi olursa hemen otur.",
+          "altyazi": "Hafif titreme normal. Baş dönerse otur."
+        }
+      ],
+      "video": "gorsel/spor/video/denge-turu.mp4",
+      "poster": "gorsel/spor/video/denge-turu.jpg",
+      "izle": [
+        {
+          "ad": "NHS hastanesi: denge egzersizleri, heel-toe walking (İngilizce, fotoğraflı)",
+          "url": "https://www.nth.nhs.uk/resources/balance-exercises/"
+        },
+        {
+          "ad": "YouTube’da ara: tandem stance",
+          "url": "https://www.youtube.com/results?search_query=tandem+stance+balance+exercise"
+        }
+      ]
     },
     {
       "id": "ceviklik-turu",
@@ -73,13 +378,68 @@
         "Çizginin sağına, sonra soluna kontrollü beşer adım at.",
         "Zıplamak ya da yarışmak gerekmez; adımların düzgün olsun."
       ],
-      "uyari": "Yer kaygan ya da dağınıksa bu turu yapma."
+      "uyari": "Yer kaygan ya da dağınıksa bu turu yapma.",
+      "nerede": "Evde ya da parkta; düz, kuru ve engelsiz bir zemin. Kaygansa yapma.",
+      "kas": "uyluk dışı ve kalça yanı",
+      "hisset": "Kalçanın yanında ve uyluğun dışında hafif çalışma; ayak bileğinde sallanma olmamalı.",
+      "nefes": "Doğal nefes al; hızı sen belirle.",
+      "tempo": "Yaklaşık saniyede bir adım, hafif ve sessiz",
+      "hatalar": [
+        {
+          "ne": "Ayakları çaprazlamak",
+          "duzelt": "Önce hedef yöndeki ayağı aç, sonra diğerini yanına getir."
+        },
+        {
+          "ne": "Yere sertçe basmak",
+          "duzelt": "Adımlar sessiz olsun; ayak ucuna yumuşakça in."
+        },
+        {
+          "ne": "Acele etmek",
+          "duzelt": "Hız önemli değil; her adım düzgün olsun."
+        }
+      ],
+      "kolay": "Adımları ikişer ikişer at ve yanında duvar olsun.",
+      "zor": "Adımları biraz genişlet.",
+      "dur": "Yer kaygan ya da dağınıksa bu turu yapma.",
+      "anlatim": [
+        {
+          "eylem": "kur",
+          "ses": "Çeviklik turu. Yere hayalî bir çizgi çiz ya da bir ip ser. Zemin kaygan ya da dağınıksa bu turu yapma.",
+          "altyazi": "Yere çizgi çiz. Kaygan zeminde yapma."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 1,
+          "ses": "Çizginin sağına, sonra soluna kontrollü beşer adım at. Zıplamak ya da yarışmak gerekmez. Adımların düzgün olsun.",
+          "altyazi": "Sağa 5 adım, sola 5 adım. Düzgün ve sessiz."
+        },
+        {
+          "eylem": "hata",
+          "ses": "Sık yapılan hata: ayakları çaprazlamak. Önce öndeki ayağı aç, arkadaki ayağı yanına getir.",
+          "altyazi": "Ayaklar çaprazlanmasın."
+        },
+        {
+          "eylem": "tekrar",
+          "kez": 1,
+          "ses": "Doğrusu: ayaklar çaprazlanmadan, hafif ve sessiz adımlar.",
+          "altyazi": "Hafif ve sessiz adımlar."
+        }
+      ],
+      "video": "gorsel/spor/video/ceviklik-turu.mp4",
+      "poster": "gorsel/spor/video/ceviklik-turu.jpg",
+      "izle": [
+        {
+          "ad": "YouTube’da ara: side step drill",
+          "url": "https://www.youtube.com/results?search_query=side+step+agility+drill+beginner"
+        }
+      ]
     }
   ],
   "dersler": [
     {
       "id": "spor-g01",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Temel hareketler",
       "hedef": "Yürüyüş yap ve dört temel hareketi doğru öğren.",
@@ -166,7 +526,8 @@
     },
     {
       "id": "spor-g02",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Temel hareketler",
       "hedef": "Yürüyüş yap ve dört temel hareketi doğru öğren.",
@@ -240,7 +601,8 @@
     },
     {
       "id": "spor-g03",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Temel hareketler",
       "hedef": "Yürüyüş yap ve dört temel hareketi doğru öğren.",
@@ -314,7 +676,8 @@
     },
     {
       "id": "spor-g04",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Temel hareketler · ikinci set",
       "hedef": "Yürüyüş yap; hareketleri 2 sette tekrarla.",
@@ -388,7 +751,8 @@
     },
     {
       "id": "spor-g05",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Temel hareketler · ikinci set",
       "hedef": "Yürüyüş yap; hareketleri 2 sette tekrarla.",
@@ -462,7 +826,8 @@
     },
     {
       "id": "spor-g06",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Temel hareketler · ikinci set",
       "hedef": "Yürüyüş yap; hareketleri 2 sette tekrarla.",
@@ -536,7 +901,8 @@
     },
     {
       "id": "spor-g07",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Hafif gün",
       "hedef": "Rahat yürü ve hareketleri hafif tekrarla.",
@@ -610,7 +976,8 @@
     },
     {
       "id": "spor-g08",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Güç günü",
       "hedef": "Yürüyüş ve hareketler: 2 set × 8.",
@@ -684,7 +1051,8 @@
     },
     {
       "id": "spor-g09",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Yürüyüş günü",
       "hedef": "Yürüyüş yap, denge ve çevikliği çalış.",
@@ -730,7 +1098,8 @@
     },
     {
       "id": "spor-g10",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Güç günü",
       "hedef": "Yürüyüş ve hareketler: 2 set × 8.",
@@ -804,7 +1173,8 @@
     },
     {
       "id": "spor-g11",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Yürüyüş günü",
       "hedef": "Yürüyüş yap, denge ve çevikliği çalış.",
@@ -850,7 +1220,8 @@
     },
     {
       "id": "spor-g12",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Güç günü",
       "hedef": "Yürüyüş ve hareketler: 2 set × 8.",
@@ -924,7 +1295,8 @@
     },
     {
       "id": "spor-g13",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Yürüyüş günü",
       "hedef": "Yürüyüş yap, denge ve çevikliği çalış.",
@@ -970,7 +1342,8 @@
     },
     {
       "id": "spor-g14",
-      "iz": "spor", "kutuphane": true,
+      "iz": "spor",
+      "kutuphane": true,
       "emoji": "💪",
       "baslik": "Spor · Hafif gün",
       "hedef": "Rahat yürü ve hareketleri hafif tekrarla.",

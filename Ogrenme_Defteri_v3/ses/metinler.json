@@ -44,6 +44,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "003e6c9ff9ed4d.mp3": {
+  "metin": "fountain",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "00407aaac90cd4.mp3": {
   "metin": "work",
   "ses": "anlatici",
@@ -126,6 +131,11 @@
  },
  "00aba57a1f0b80.mp3": {
   "metin": "The food is ready.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "00b4da0b595a1d.mp3": {
+  "metin": "Please open the gate.",
   "ses": "anlatici",
   "hiz": 1
  },
@@ -639,6 +649,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "031dd0e29d3fee.mp3": {
+  "metin": "Sit on the bench.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "0320aeea2800c7.mp3": {
   "metin": "glass",
   "ses": "anlatici",
@@ -1126,6 +1141,11 @@
  },
  "053cd2c180b746.mp3": {
   "metin": "team",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "053f0f609e8c84.mp3": {
+  "metin": "The book is on the shelf.",
   "ses": "anlatici",
   "hiz": 1
  },
@@ -1729,6 +1749,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "081449830cb4c5.mp3": {
+  "metin": "shelf",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "0816f70ba54ec2.mp3": {
   "metin": "use",
   "ses": "anlatici",
@@ -2011,6 +2036,11 @@
  },
  "098ddc803f3080.mp3": {
   "metin": "Please continue.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "098dfa599d4ccc.mp3": {
+  "metin": "desk",
   "ses": "anlatici",
   "hiz": 1
  },
@@ -2969,6 +2999,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "0dae77bf3371fb.mp3": {
+  "metin": "The path goes to the lake.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "0db0832bd2eb67.mp3": {
   "metin": "seventy six",
   "ses": "anlatici",
@@ -2976,6 +3011,11 @@
  },
  "0db4bd74505561.mp3": {
   "metin": "eighty six",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "0db7222a2ebb86.mp3": {
+  "metin": "A red leaf falls from the tree.",
   "ses": "anlatici",
   "hiz": 1
  },
@@ -3096,6 +3136,11 @@
  },
  "0e2fe2cf0848dc.mp3": {
   "metin": "The cat jumps on the bed.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "0e315b1139d659.mp3": {
+  "metin": "umbrella",
   "ses": "anlatici",
   "hiz": 1
  },
@@ -3394,6 +3439,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "0f91d4cbe4b053.mp3": {
+  "metin": "Take your umbrella. It is raining.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "0f9810c1b8eedb.mp3": {
   "metin": "customer",
   "ses": "anlatici",
@@ -3576,6 +3626,11 @@
  },
  "108eec852c11ae.mp3": {
   "metin": "island",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "10945b2294ab92.mp3": {
+  "metin": "mud",
   "ses": "anlatici",
   "hiz": 1
  },
@@ -3889,6 +3944,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "12325ac99309ec.mp3": {
+  "metin": "gate",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "1234125390e1e2.mp3": {
   "metin": "Do not break the glass.",
   "ses": "anlatici",
@@ -3919,6 +3979,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "127af1d9d51477.mp3": {
+  "metin": "The child jumps in the puddle.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "127c5d625c4e30.mp3": {
   "metin": "The tree is very tall.",
   "ses": "anlatici",
@@ -3941,6 +4006,11 @@
  },
  "1288a706cc55de.mp3": {
   "metin": "Choose a color.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "128a0ba58974ec.mp3": {
+  "metin": "path",
   "ses": "anlatici",
   "hiz": 1
  },
@@ -4154,6 +4224,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "1422b36705bf7b.mp3": {
+  "metin": "The fountain is in the park.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "1423461d39dc46.mp3": {
   "metin": "Do you like milk?",
   "ses": "anlatici",
@@ -4313,6 +4388,11 @@
   "metin": "Hi Sara, it's Mike. I'm sorry, but I can't come to the cinema tonight because I have to finish a school project. Could we go tomorrow instead? The film starts at seven thirty, and there is also a show at nine fifteen. I will buy the tickets online if you tell me which one you prefer. Also, my cousin may come with us. Please call me back after six.",
   "ses": "erkek",
   "hiz": 0.9
+ },
+ "151ae7e671b2e2.mp3": {
+  "metin": "My desk is near the window.",
+  "ses": "anlatici",
+  "hiz": 1
  },
  "152cb6b09ffaef.mp3": {
   "metin": "thirty seven",
@@ -4809,6 +4889,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "178a840e9e1e03.mp3": {
+  "metin": "leaf",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "178fd4b3accf2e.mp3": {
   "metin": "pull",
   "ses": "anlatici",
@@ -5041,6 +5126,11 @@
  },
  "1891eb775667f2.mp3": {
   "metin": "boss",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "1891f33cb3ce53.mp3": {
+  "metin": "There is mud after the rain.",
   "ses": "anlatici",
   "hiz": 1
  },
@@ -5964,6 +6054,11 @@
   "ses": "anlatici",
   "hiz": 1
  },
+ "1d6a1c824dd309.mp3": {
+  "metin": "puddle",
+  "ses": "anlatici",
+  "hiz": 1
+ },
  "1d73fb57a3edd1.mp3": {
   "metin": "bridge",
   "ses": "anlatici",
@@ -6146,6 +6241,11 @@
  },
  "1e56012e49a98f.mp3": {
   "metin": "Winter is cold.",
+  "ses": "anlatici",
+  "hiz": 1
+ },
+ "1e56dc51b31bad.mp3": {
+  "metin": "bench",
   "ses": "anlatici",
   "hiz": 1
  },

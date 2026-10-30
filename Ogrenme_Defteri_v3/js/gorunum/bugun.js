@@ -7,9 +7,12 @@ import { bugun, gunEkle, uzunTarih, saatMetni } from '../zaman.js';
 import { srsOzet } from './tekrar.js';
 import { programGunu, gorevSatiri, bosKutu } from './yardimci.js';
 import { IZLER } from '../paket.js';
-import { bugunPlani, kural } from '../seviye-ac.js';
+import { bugunSureli, sonrakiGorev, kural } from '../seviye-ac.js';
+import { odakOnerisi, odakSuresi } from '../sure.js';
 import { gorevAdresi } from '../plan.js';
 import { cefrYaklasim } from '../seviye.js';
+import { ozet as oyunOzeti, gorulmemisRozetler, gorulduIsaretle } from '../oyun-ac.js';
+import { oyunSeridi, yeniRozetKarti } from './oyun-kart.js';
 
 export function bugunGorunum() {
   const d = store.al();
@@ -17,11 +20,11 @@ export function bugunGorunum() {
   const pg = programGunu();
   const kok = h('div');
   const adi = d.ad ? `, ${d.ad}` : '';
-  const seri = store.seri();
 
   kok.append(h('div.selam',
     h('h1', `Merhaba${adi} 👋`),
-    h('p.alt-yazi', { style: 'margin:0' }, uzunTarih(bugun()), seri >= 2 ? ` · 🔥 ${seri} gün üst üste` : '')));
+    h('p.alt-yazi', { style: 'margin:0' }, uzunTarih(bugun()))));
+
 
   if (pg.durum === 'baslamadi') {
     kok.append(h('div.kart', h('h2', 'Program henüz başlamadı'), h('p', `Başlangıç tarihin ${uzunTarih(d.baslangic)}. İstersen programı hemen şimdi başlatabilirsin.`),
@@ -34,6 +37,7 @@ export function bugunGorunum() {
     gunKarti(kok, pg);
   }
 
+  if (!kok.dataset.oyun) oyunKartlari(kok); // plan kartı yoksa (dinlenme günü, program başlamadı…) yine de göster
   tekrarKartlari(kok);
   geridekiler(kok, pg, idx);
 
@@ -47,10 +51,19 @@ export function bugunGorunum() {
   return kok;
 }
 
+/** Rütbe şeridi ve “Yeni rozet” kartı: Başla düğmesinin hemen altında (ana eylemi aşağı itmesin, ama ödül görünür olsun). */
+function oyunKartlari(kok) {
+  kok.dataset.oyun = '1';
+  if (!store.al().olaylar.length) return;
+  const yeni = yeniRozetKarti(gorulmemisRozetler(), gorulduIsaretle);
+  if (yeni) kok.append(yeni);
+  kok.append(oyunSeridi(oyunOzeti()));
+}
+
 function bugunYenile() { window.dispatchEvent(new HashChangeEvent('hashchange')); }
 
 function gunKarti(kok, pg) {
-  const plan = bugunPlani();
+  const plan = bugunSureli();
   if (!plan || !plan.gorevler.length) {
     kok.append(bosKutu('😴', 'Bugün dinlenme günü', 'Bugüne görev konmamış. İstersen Tekrar ya da Oyunlar bölümüne bakabilirsin.'));
     return;
@@ -60,6 +73,7 @@ function gunKarti(kok, pg) {
   const yuzde = zorunlu.length ? Math.round((biten / zorunlu.length) * 100) : 100;
   const tamam = zorunlu.length > 0 && biten === zorunlu.length;
   const yoklamada = Object.values(plan.seviye).some((s) => s.yoklamaBekliyor) && plan.no <= kural().yerlestirme.sonGun;
+  const k = plan.kesim;
 
   kok.append(h('div.kart.vurgulu',
     h('div.gunluk',
@@ -67,24 +81,58 @@ function gunKarti(kok, pg) {
       h('div', h('div.alt-yazi', `Gün ${plan.no} · Hafta ${plan.hafta}`), h('h2', { style: 'margin:2px 0 4px;color:inherit' }, plan.baslik || 'Bugünün programı'),
         plan.hedef ? h('div', { style: 'font-size:.95rem' }, '🎯 ', plan.hedef) : null)),
   ));
+
+  const sirada = sonrakiGorev(null);
+  if (sirada) {
+    kok.append(h('a.dugme.birincil.tam.basla', { href: sirada.href },
+      h('span.basla-ana', sirada.bonus ? '🎁 Hâlâ enerjin var mı?' : biten ? '▶ Devam et' : '▶ Başla'),
+      h('span.basla-alt', sirada.bonus ? sirada.etiket : `kalan ≈ ${k.kalanDk} dk · odak süren ${plan.odakDk} dk`)));
+  }
+  odakOneriKarti(kok);
+  oyunKartlari(kok);
+
   if (yoklamada) {
     kok.append(h('div.kart.duz', h('h3', 'İlk hafta: nereden başlayacağını bulalım'),
       h('p', { style: 'margin:0' }, 'Her beceri için kısa bir yoklama var. Sorular kolaydan zora doğru gider; bilmediğine “Bilmiyorum” de, tahmin etme. Sonuç not değil, yalnızca başlangıç seviyeni belirler; yoklama bitince gerçek çalışma başlar.')));
   }
-  if (tamam) kok.append(h('div.kart.duz', { style: 'background:var(--dogru-zemin);border-color:transparent;color:var(--dogru)' }, h('strong', '✅ Bugünkü görevlerin tamam. Eline sağlık!'), h('div.alt-yazi', { style: 'color:inherit' }, 'İstersen Tekrar, Oyunlar ya da isteğe bağlı görevlere bakabilirsin.')));
+  if (tamam) kok.append(h('div.kart.duz', { style: 'background:var(--dogru-zemin);border-color:transparent;color:var(--dogru)' }, h('strong', '✅ Bugünkü görevlerin tamam. Eline sağlık!'), h('div.alt-yazi', { style: 'color:inherit' }, 'Hâlâ enerjin varsa aşağıdaki bonuslara, Tekrar’a ya da Oyunlar’a bakabilirsin. Durmak da tamamen yeterli.')));
 
-  kok.append(h('div.bolum-baslik', h('h2', 'Bugünün görevleri')));
-  for (const t of plan.gorevler) { const sat = planSatiri(t); if (sat) kok.append(sat); }
+  const bolum = (baslik, alt, liste) => {
+    if (!liste.length) return;
+    kok.append(h('div.bolum-baslik', h('h2', baslik), alt ? h('span.alt-yazi', alt) : null));
+    for (const t of liste) { const sat = planSatiri(t); if (sat) kok.append(sat); }
+  };
+  bolum('Şimdi', `≈ ${k.simdiDk} dk`, k.simdi);
+  bolum('Hareket', 'oturmadan; mola yerine geçer', k.hareket);
+  bolum('Mola sonrası', `≈ ${k.sonraDk} dk · odak süreni aşıyor`, k.sonra);
+  bolum('Bonus', 'istersen · zorunlu değil', k.bonus);
+  kok.append(h('div.bolum-baslik', h('h2', 'Dışarıda mısın?')), h('a.gorev', { href: '#/alan', data: { iz: 'hafiza' } }, h('span.iz-simge', '🌳'), h('span.metin', h('span.baslik', 'Serbest alan'), h('span.alt', 'Park ya da çalışma alanı: gerçek yerde hafıza sarayı, mekân avı, sesli tur')), simge('ok')));
   seviyeSeridi(kok, plan);
+}
+
+/** Son üç etkin gün odak süresini doldurduysa +5 dakika öner (tek dokunuşla kabul; "Şimdi değil" bir hafta susar). */
+function odakOneriKarti(kok) {
+  const d = store.al();
+  const oner = odakOnerisi({ olaylar: d.olaylar, odakDk: odakSuresi(d.ayar), bugun: bugun(), ayar: d.ayar });
+  if (!oner) return;
+  const kapat = (kart) => kart.remove();
+  const kart = h('div.kart.duz', { style: 'border-color:var(--vurgu)' },
+    h('strong', '🌱 Dayanıklılığın artıyor'),
+    h('p', { style: 'margin:6px 0 10px' }, `Son üç etkin günde odak süreni (${odakSuresi(d.ayar)} dk) doldurdun. ${oner.yeni} dakikayı deneyelim mi? İstediğin zaman Ben → Ayarlar’dan geri alabilirsin.`),
+    h('div.esnek',
+      h('button.dugme.cizgili', { type: 'button', style: 'flex:1', onclick: () => { d.ayar.odakErtele = gunEkle(bugun(), 7); store.kaydetHemen(); kapat(kart); } }, 'Şimdi değil'),
+      h('button.dugme.birincil', { type: 'button', style: 'flex:1', onclick: () => { d.ayar.odakDk = oner.yeni; d.ayar.odakDegisim = bugun(); store.kaydetHemen(); bugunYenile(); } }, `${oner.yeni} dk yap`)));
+  kok.append(kart);
 }
 
 /** Planın bir görevi: yoklama ve seviye oturumu burada, yazılı dersler ortak satırla gösterilir. */
 function planSatiri(t) {
-  if (t.tur === 'ders') return gorevSatiri(t.ders, { istege: t.istege, ek: t.oneri ? 'önerilen · seviyene uygun' : null });
+  const dk = t.dk ? `≈ ${t.dk} dk` : null;
+  if (t.tur === 'ders') return gorevSatiri(t.ders, { istege: t.istege, ek: [t.oneri ? 'önerilen · seviyene uygun' : null, dk].filter(Boolean).join(' · ') || null });
   const iz = IZLER[t.iz] || { ad: t.iz, simge: '•' };
   const ad = kural().izler[t.iz]?.ad || iz.ad;
   const baslik = t.tur === 'yoklama' ? `${ad} yoklaması` : `${ad} oturumu`;
-  const alt = (t.tur === 'yoklama' ? [`${t.no}. yoklama`, 'sınav değil, yer bulma'] : [`Seviye ${t.sv}`, t.istege ? 'isteğe bağlı' : null]).filter(Boolean).join(' · ');
+  const alt = (t.tur === 'yoklama' ? [`${t.no}. yoklama`, 'sınav değil, yer bulma', dk] : [`Seviye ${t.sv}`, t.istege ? 'isteğe bağlı' : null, t.iz === 'spor' ? `≈ ${t.dk} dk hareket + yürüyüş` : dk]).filter(Boolean).join(' · ');
   return h('a.gorev' + (t.bitti ? '.bitti' : ''), { href: gorevAdresi(t), data: { iz: t.iz } },
     h('span.iz-simge', iz.simge),
     h('span.metin', h('span.baslik', baslik), h('span.alt', alt)),

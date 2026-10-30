@@ -79,6 +79,7 @@ export function dogrula(ic, idx) {
   for (const m of ic.hareketler) {
     if (!m.ad || !m.adimlar?.length) H(`hareket:${m.id}`, 'ad ve adimlar gerekli');
     if (!kullanilanHareket.has(m.id)) U(`hareket:${m.id}`, 'hiçbir spor dersinde kullanılmıyor');
+    hareketDetayDogrula(m, H, U);
   }
 
   // ---- program ----
@@ -298,5 +299,35 @@ function adimDogrula(a, ay, ders, ic, idx, { H, U, sorular, kullanilanKelime, ku
       break;
     case 'olcek': if (!a.id || !a.soru) H(ay, 'id ve soru gerekli'); break;
     default: break;
+  }
+}
+
+const HAREKET_METIN = ['nerede', 'kas', 'hisset', 'nefes', 'tempo', 'kolay', 'zor', 'dur'];
+/** Hareketin isteğe bağlı ayrıntı alanları (video betiği, ipuçları, bağlantılar). Hepsi isteğe bağlıdır; verilirse biçimi doğrulanır. */
+export function hareketDetayDogrula(m, H, U) {
+  const y = `hareket:${m.id}`;
+  for (const k of HAREKET_METIN) if (m[k] != null && (typeof m[k] !== 'string' || !m[k].trim())) H(y, `"${k}" boş olmayan bir metin olmalı`);
+  if (m.hatalar != null) {
+    if (!Array.isArray(m.hatalar)) H(y, '"hatalar" bir liste olmalı');
+    else m.hatalar.forEach((x, i) => { if (!x?.ne || !x?.duzelt) H(y, `hatalar[${i + 1}]: "ne" ve "duzelt" gerekli`); });
+  }
+  if (m.video != null && !/^gorsel\/[\w\-/]+\.mp4$/.test(m.video)) H(y, '"video" gorsel/… .mp4 yolu olmalı');
+  if (m.poster != null && !/^gorsel\/[\w\-/]+\.(jpg|png)$/.test(m.poster)) H(y, '"poster" gorsel/… .jpg ya da .png yolu olmalı');
+  if (m.video && !m.poster) U(y, 'video var, poster yok (video açılmadan önce boş kutu görünür)');
+  if (m.izle != null) {
+    if (!Array.isArray(m.izle)) H(y, '"izle" bir liste olmalı');
+    else m.izle.forEach((l, i) => { if (!l?.ad || !/^https:\/\//.test(l?.url || '')) H(y, `izle[${i + 1}]: "ad" ve https:// ile başlayan "url" gerekli`); });
+  }
+  if (m.anlatim != null) {
+    if (!Array.isArray(m.anlatim) || !m.anlatim.length) { H(y, '"anlatim" boş olmayan bir liste olmalı'); return; }
+    m.anlatim.forEach((a, i) => {
+      const ay = `anlatim[${i + 1}]`;
+      if (!['kur', 'tekrar', 'hata'].includes(a?.eylem)) H(y, `${ay}: eylem kur, tekrar ya da hata olmalı`);
+      if (!a?.ses || !String(a.ses).trim()) H(y, `${ay}: "ses" (konuşma metni) gerekli`);
+      else if (/\d/.test(a.ses)) U(y, `${ay}: konuşma metninde rakam var; sayıları yazıyla yaz (ses motoru yanlış okuyabilir)`);
+      if (!a?.altyazi) U(y, `${ay}: altyazı yok (sessiz izleyen biri anlatımı kaçırır)`);
+      if (a?.kez != null && !(Number.isInteger(a.kez) && a.kez >= 1 && a.kez <= 5)) H(y, `${ay}: "kez" 1–5 arasında tam sayı olmalı`);
+    });
+    if (!m.anlatim.some((a) => a?.eylem === 'tekrar')) H(y, '"anlatim" içinde en az bir "tekrar" parçası gerekli (doğru form)');
   }
 }

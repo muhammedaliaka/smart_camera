@@ -10,6 +10,8 @@ import { derslerGorunum, konuGorunum, dersGorunum } from './gorunum/dersler.js';
 import { tekrarGorunum, tekrarOturumu, hatirlaOturumu, srsOzet } from './gorunum/tekrar.js';
 import { oyunlarGorunum, oyunBaslat, disOturumu } from './gorunum/oyunlar.js';
 import { benGorunum, ayarlariUygula } from './gorunum/ben.js';
+import { molaGorunum } from './gorunum/mola.js';
+import { alanGorunum, alanDurdur } from './gorunum/alan.js';
 import { sonrakiDers } from './gorunum/yardimci.js';
 import { oturumAc } from './seviye-ac.js';
 import { otomatikBaslat } from './esitle.js';
@@ -55,6 +57,7 @@ function yonlendir() {
   const [ilk = 'bugun', ikinci, ucuncu] = parcalar;
   const oyunRotasi = ['oyna', 'oyun', 'hatirla', 'dis', 'yoklama', 'seviye'].includes(ilk) || (ilk === 'tekrar' && ikinci === 'oturum');
   if (!oyunRotasi) oyuncu.kapat();
+  if (ilk !== 'alan') alanDurdur();
   try {
     if (!store.al().baslangic) { baslangicEkrani(); return; }
     if (!menuEl || !KOK.contains(menuEl)) iskeleKur();
@@ -71,6 +74,8 @@ function yonlendir() {
       case 'oyun': arkaPlan('oyunlar', oyunlarGorunum); oyunBaslat(ikinci); break;
       case 'dis': arkaPlan('oyunlar', oyunlarGorunum); disOturumu(ikinci); break;
       case 'ben': goster(benGorunum(sorgu), 'ben'); break;
+      case 'mola': goster(molaGorunum(), 'bugun'); break;
+      case 'alan': goster(alanGorunum(ikinci), 'bugun'); break;
       case 'yoklama': arkaPlan('bugun', bugunGorunum); oturumAc(ikinci, 'yoklama'); break;
       case 'seviye': arkaPlan('bugun', bugunGorunum); oturumAc(ikinci, 'oturum'); break;
       case 'oyna': {

@@ -4,14 +4,15 @@
 
 import { bugun, simdiISO, gunEkle, gunFarki } from './zaman.js';
 import * as srsModul from './srs.js';
+import { esnekSeri, etkinGunler } from './oyunlastir.js';
 
 const ANAHTAR = 'od3.durum';
-export const SURUM = '3.2.0';
+export const SURUM = '3.3.0';
 
 function bos() {
   return {
     v: 3, ad: '', baslangic: null,
-    ayar: { tema: 'oto', yazi: 'orta', yavas: false, gunlukTekrar: 20, otoSes: true },
+    ayar: { tema: 'oto', yazi: 'orta', yavas: false, gunlukTekrar: 20, otoSes: true, odakDk: 30, haftaHedef: 4 },
     olaylar: [],
     bag: {},          // bağlam kataloğu: olay.b -> { dersAd, soru, dogruCevap, ... } (aynı soru bir kez saklanır)
     dersler: {},      // dersId -> { bitti, deneme, son, dogru, toplam, enIyi }
@@ -20,6 +21,7 @@ function bos() {
     saraylar: [],     // hafıza sarayı güzergâhları
     oyunlar: {},      // oyunId -> { enIyi, oynama }
     notlar: {},
+    oyunlastirma: { rozet: {} }, // kazanılan rozetler: id -> { g: gün, gorulen: bool } (XP/seri olay defterinden türetilir)
   };
 }
 
@@ -173,13 +175,8 @@ export function gecikmeliBekleyen() {
 // ---- Genel yardımcılar ----
 export function olaylar(filtre = () => true) { return durum.olaylar.filter(filtre); }
 export function gunSayisi() { return new Set(durum.olaylar.map((o) => o.g)).size; }
-export function seri(bugunS = bugun()) {
-  const gunler = new Set(durum.olaylar.filter((o) => ['ders-bitir', 'srs', 'oyun', 'soru'].includes(o.tur)).map((o) => o.g));
-  let n = 0, g = bugunS;
-  if (!gunler.has(g)) g = gunEkle(g, -1);
-  while (gunler.has(g)) { n++; g = gunEkle(g, -1); }
-  return n;
-}
+/** Esnek seri (js/oyunlastir.js): 7 günde bir gün ara vermek seriyi bozmaz. */
+export function seri(bugunS = bugun()) { return esnekSeri(etkinGunler(durum.olaylar), bugunS); }
 
 // ---- IndexedDB: ses kayıtları + içe aktarılan paketler ----
 let dbSoz = null;

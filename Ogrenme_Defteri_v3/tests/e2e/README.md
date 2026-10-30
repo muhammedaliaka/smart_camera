@@ -27,6 +27,15 @@ node tests/e2e/dersleri-gez.cjs
 
 # Ana sayfaları telefon / tablet / dizüstü boyutunda, açık ve koyu temada tara; ekran görüntüsü kaydeder
 node tests/e2e/gorunum-taramasi.cjs
+
+# Bugün: Başla düğmesi, süre bölümleri, mola, spor videosu kartı
+node tests/e2e/bugun-sure.cjs
+
+# Serbest alan: mekân avı, gerçek mekânda hafıza sarayı (rota → yerleştir → hatırla → canavar turu), sesli tur
+node tests/e2e/alan.cjs
+
+# Oyunlaştırma: kombo, ders sonu XP kartı, rütbe şeridi, hafta noktaları, Yeni rozet kartı, rozet ızgarası, haftalık hedef
+node tests/e2e/oyun.cjs
 ```
 
 Çıkış kodu 0 ise sorun bulunmadı, 1 ise bulundu (ayrıntı ekranda). Ekran görüntüleri `./e2e-cikti/` klasörüne yazılır.

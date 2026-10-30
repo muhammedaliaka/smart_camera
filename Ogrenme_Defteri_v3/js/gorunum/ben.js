@@ -12,6 +12,10 @@ import { cevrimdisiIndir, cevrimdisiDurum } from '../cevrimdisi.js';
 import { raporUret } from '../rapor.js';
 import { seviyeDurumu, kural } from '../seviye-ac.js';
 import { cefrYaklasim } from '../seviye.js';
+import { odakSuresi } from '../sure.js';
+import { rozetler } from '../oyun-ac.js';
+import { haftaHedefi } from '../oyunlastir.js';
+import { rozetIzgarasi } from './oyun-kart.js';
 import * as esitleme from '../esitle.js';
 
 const SEKMELER = [['ilerleme', 'İlerleme'], ['gecmis', 'Geçmiş'], ['ayar', 'Ayarlar'], ['icerik', 'İçerik']];
@@ -58,6 +62,7 @@ function ilerleme() {
     ozetKutu('🧠', String(oz.toplam), 'madde tekrar sistemine girdi')));
 
   kok.append(seviyeKarti());
+  kok.append(rozetIzgarasi(rozetler()));
   if (!qs.length) {
     kok.append(bosKutu('📊', 'Henüz sonuç yok', 'İlk dersi bitirince doğru sayın ve yüzden burada görünür.', h('a.dugme.birincil', { href: '#/bugun' }, 'Bugün sayfasına git')));
   } else {
@@ -219,6 +224,8 @@ function olayOzeti(o) {
     case 'yerlestirme': return ['🧭', `Yoklama (${o.iz}) · seviye ${o.sv}: ${o.dogru}/${o.toplam}`, 'ders'];
     case 'yerlestirme-son': return ['🧭', `Yoklama bitti (${o.iz})`, 'ders'];
     case 'seviye-oturum': return ['📶', `Seviye oturumu (${o.iz}) · seviye ${o.sv}: ${o.dogru ?? '-'}/${o.toplam ?? '-'}${o.sonuc ? ` · ${o.sonuc}` : ''}`, 'ders'];
+    case 'alan-tur': return ['🌳', `Serbest alan · ${{ saray: 'mekân sarayı', sesli: 'sesli tur', av: 'mekân avı' }[o.etkinlik] || o.etkinlik}: ${o.dogru}/${o.toplam}`, 'ders'];
+    case 'sure': return null;
     case 'seviye-ayar': return ['🎚️', `Seviye elle ayarlandı (${o.iz}): ${o.sv}`, 'ders'];
     default: return null;
   }
@@ -291,13 +298,17 @@ function ayar() {
   kok.append(h('div.kart',
     secenekSatiri('Görünüm', [['oto', 'Otomatik'], ['acik', 'Açık'], ['koyu', 'Koyu']], a.tema, (v) => { a.tema = v; ayarKaydet(); }),
     secenekSatiri('Yazı boyutu', [['kucuk', 'Küçük'], ['orta', 'Orta'], ['buyuk', 'Büyük']], a.yazi, (v) => { a.yazi = v; ayarKaydet(); }),
+    secenekSatiri('Odak süresi (dakika)', [20, 25, 30, 35, 40, 45, 50].map((n) => [n, String(n)]), odakSuresi(a), (v) => { a.odakDk = v; a.odakDegisim = bugun(); ayarKaydet(); }),
+    h('p.alt-yazi', { style: 'margin:-4px 0 8px' }, 'Bugünün zorunlu görevleri bu süreye sığacak kadarı “Şimdi” olur; fazlası “Mola sonrası”na geçer. Dayanıklılığın arttıkça uygulama +5 dakika önerir; sen karar verirsin.'),
+    secenekSatiri('Haftalık hedef (çalışılan gün)', [2, 3, 4, 5, 6, 7].map((n) => [n, String(n)]), haftaHedefi(a), (v) => { a.haftaHedef = v; ayarKaydet(); }),
+    h('p.alt-yazi', { style: 'margin:-4px 0 8px' }, 'Bugün ekranındaki hafta noktaları bu hedefe göre dolar. Gerçekçi bir sayı seç; tutturamadığın hafta ceza değildir. Her 7 günde bir gün ara vermek “gün üst üste” sayını bozmaz.'),
     secenekSatiri('Günlük tekrar adedi', [[10, '10'], [20, '20'], [30, '30']], a.gunlukTekrar, (v) => { a.gunlukTekrar = v; ayarKaydet(); }),
     onay('Sesleri varsayılan olarak yavaş çal', a.yavas, (v) => { a.yavas = v; ayarKaydet(); }),
     onay('Yeni kelime açılınca sesi kendiliğinden çal', a.otoSes, (v) => { a.otoSes = v; ayarKaydet(); })));
 
-  const cd = h('div.kart', h('h3', 'Çevrimdışı kullanım'), h('p.alt-yazi', 'Ders sesleri internetsiz de çalsın istiyorsan bir kez indir. (Uygulama dosyaları zaten otomatik saklanır.)'));
+  const cd = h('div.kart', h('h3', 'Çevrimdışı kullanım'), h('p.alt-yazi', 'Ders sesleri ve hareket videoları internetsiz de çalışsın istiyorsan bir kez indir. (Uygulama dosyaları zaten otomatik saklanır.)'));
   const durum = h('p.alt-yazi', { 'aria-live': 'polite' }, 'Durum denetleniyor…');
-  const dugme = h('button.dugme.cizgili', { type: 'button' }, simge('indir'), 'Tüm sesleri indir');
+  const dugme = h('button.dugme.cizgili', { type: 'button' }, simge('indir'), 'Sesleri ve videoları indir');
   dugme.addEventListener('click', async () => {
     dugme.disabled = true;
     try { await cevrimdisiIndir((n, t) => { durum.textContent = `İndiriliyor… ${n}/${t}`; }); durum.textContent = 'Sesler indirildi ✓'; }

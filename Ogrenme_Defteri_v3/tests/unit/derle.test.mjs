@@ -70,3 +70,24 @@ test('sabit sıralı sorular karışmaz', () => {
   assert.deepEqual(s.secenekler.map((o) => o.m), ['b', 'a', 'c']);
   assert.equal(s.dogru, 1);
 });
+
+test('uzun kelime sunumu bölünür: ≤7 kelimelik parçalar, her parçadan sonra o parçanın alıştırması; kısa olanlar ve kimlikler korunur', async () => {
+  const { kelimeBloklariniBol } = await import('../../js/derle.js');
+  const kel = (n) => Array.from({ length: n }, (_, i) => 'k' + i);
+  const adimlar = [{ tur: 'anlat', id: 'a1' }, { tur: 'kelime-ogren', id: 'ogren', kelimeler: kel(13) }, { tur: 'alistirma', id: 'al', kelimeler: kel(13), adet: 13 }, { tur: 'soru', id: 's' }];
+  const s = kelimeBloklariniBol(adimlar);
+  assert.deepEqual(s.map((x) => x.id), ['a1', 'ogren-1', 'al-1', 'ogren-2', 'al-2', 's']);
+  assert.deepEqual(s.map((x) => x.tur), ['anlat', 'kelime-ogren', 'alistirma', 'kelime-ogren', 'alistirma', 'soru']);
+  assert.ok(s[1].kelimeler.length <= 7 && s[3].kelimeler.length <= 7);
+  assert.deepEqual([...s[1].kelimeler, ...s[3].kelimeler], kel(13), 'kelimeler eksiksiz ve sıralı');
+  assert.deepEqual(s[2].kelimeler, s[1].kelimeler); assert.deepEqual(s[4].kelimeler, s[3].kelimeler);
+  assert.equal(s[2].adet + s[4].adet >= 12 && s[2].adet >= 5, true, 'alıştırma adedi parçalara orantılı paylaşılır');
+  // kısa blok değişmez
+  const kisa = kelimeBloklariniBol([{ tur: 'kelime-ogren', id: 'o', kelimeler: kel(6) }, { tur: 'alistirma', id: 'a', kelimeler: kel(6), adet: 6 }]);
+  assert.deepEqual(kisa.map((x) => x.id), ['o', 'a']);
+  // alıştırma farklı kelimeler içeriyorsa dokunma (hatırlama ile sunum eşleşmiyor)
+  const farkli = kelimeBloklariniBol([{ tur: 'kelime-ogren', id: 'o', kelimeler: kel(10) }, { tur: 'alistirma', id: 'a', kelimeler: kel(9), adet: 9 }]);
+  assert.deepEqual(farkli.map((x) => x.id), ['o', 'a']);
+  // kimliksiz adımlar özgün sıra numarasıyla adlandırılır
+  assert.equal(kelimeBloklariniBol([{ tur: 'anlat' }, { tur: 'anlat' }])[1].id, 'a2');
+});

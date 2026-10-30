@@ -21,7 +21,8 @@ async function kontrolEt(p, etiket, sonuc) {
   if (r.length) sonuc.push(`[${etiket}] ` + r.join(' | '));
 }
 
-async function gez(p, { ad, klasor, sonuc, dogru = 0.5, azami = 120, ekran = true }) {
+// bilinenCevaplar: [[sayfada geçen metin, doğru seçeneğin metni], …] — verilen sorularda bilerek doğru seçeneği tıklar (kombo gibi ilk-deneme özelliklerini sınamak için).
+async function gez(p, { ad, klasor, sonuc, dogru = 0.5, azami = 120, ekran = true, bilinenCevaplar = [] }) {
   const gorulen = new Set();
   let rng = 1234567;
   const rastgele = () => { rng = (rng * 1664525 + 1013904223) % 4294967296; return rng / 4294967296; };
@@ -59,7 +60,10 @@ async function gez(p, { ad, klasor, sonuc, dogru = 0.5, azami = 120, ekran = tru
     try {
       if (tur === 'mcq') {
         const n = await p.locator('.oyuncu .secenekler .secenek').count();
-        await p.locator('.oyuncu .secenekler .secenek').nth(Math.floor(rastgele() * n)).click();
+        const sayfaMetni = await ic.innerText();
+        const bilinen = bilinenCevaplar.find(([q]) => sayfaMetni.includes(q));
+        if (bilinen) await p.locator('.oyuncu .secenekler .secenek').filter({ hasText: new RegExp('^\\s*(?:[A-F]\\s*)?' + bilinen[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*$') }).first().click();
+        else await p.locator('.oyuncu .secenekler .secenek').nth(Math.floor(rastgele() * n)).click();
         await altBirincil.click();
       } else if (tur === 'eslestir') {
         const kutular = p.locator('.oyuncu .kutu-izgara .kutu');

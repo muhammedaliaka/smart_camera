@@ -101,6 +101,16 @@ Ayrıntı ve kanıt tablosu: `SEVIYE_SISTEMI.md`. Kararlar:
 - **Yazıya bağımlılık azaltıldı:** emoji, hareket çizimleri, ilerleme çubukları, renkli doğru/yanlış durumları; ama anlam tek başına renk ya da simgeye bırakılmadı, her zaman yazıyla da söylenir.
 - Derleme yok, çerçeve yok; dosyayı açan tarayıcı çalıştırır. Neden: bakım yükü ve kırılma riski en az.
 
+## Oturum, süre ve oyunlaştırma (v3.3)
+
+- **Tek tuş + süre görünürlüğü:** başlamayı zorlaştıran şey "ne kadar sürer, nereden başlayayım" belirsizliğidir. Bu yüzden Bugün'de tek ▶ Başla düğmesi ve her görevin yanında dakika tahmini vardır (`docs/SURE_VE_OTURUM.md`). Dakika sabitleri ölçülmüş değil **tahminimdir**; öğrencinin gerçek hızıyla kalibre edilir.
+- **Odak penceresi 30 dk (20–50), +5 dk önerisi yalnız öneridir:** dayanıklılığı artırmak istenen bir hedef; ama süre uzatmak öğrencinin kararıdır. 3 gün/%85/7 gün eşikleri tasarım tahminidir.
+- **Spor odak süresine sayılmaz ve mola yerine geçer:** hareket ederek dinlenmek hem sıkıcılığı hem de oturma süresini azaltır.
+- **Uzun kelime sunumları bölünür** (≤ 7 kelime + hemen o parçanın alıştırması): aynı süre, daha az monotonluk, daha erken geri çağırma. Bu, kartları art arda göstermenin geri çağırmadan daha az etkili olduğu bilgisine dayanır; bu uygulamada ölçülmedi.
+- **Oyunlaştırma bilerek hafif ve cezasız** (`docs/OYUNLASTIRMA.md`): XP olay defterinden türetilir (ayrı sayaç yok), seri esnektir (7 günde 1 gün serbest), hedef gün sayısıdır, liderlik tablosu/bildirim/rastgele ödül yoktur. Kanıt orta düzeyde ve tasarıma bağlıdır; XP öğrenme ölçüsü değildir ve rapora girmez.
+- **Serbest alan** (`docs/SERBEST_ALAN.md`): yağmurlu/sakin günlerde dışarıda çalışmak için. Sonuçlar öğrencinin kendi bildirimidir, seviyeyi değiştirmez.
+- **Spor videoları kendi ürettiğim çizimli animasyonlardır** (gerçek kişi çekimi değil) ve her harekette dış kaynak bağlantıları vardır (`docs/SPOR_VIDEOLARI.md`).
+
 ## Dış uygulamalar
 
 Ayrıntı: `DIS_UYGULAMALAR.md`. Özet: otomatik bağlantı yok, sonuç elle girilir, görevler isteğe bağlıdır; mağaza bağlantıları üçüncü taraf kaynaklarla teyit edildi (Google'ın kendi sayfasından değil).
@@ -116,3 +126,7 @@ Ayrıntı: `DIS_UYGULAMALAR.md`. Özet: otomatik bağlantı yok, sonuç elle gir
 - **Mikrofon kaydı ve çevrimdışı çalışma yalnızca `https` ya da `localhost`** adreslerinde çalışır (tarayıcı kuralı).
 - **Telaffuz değerlendirmesi yoktur.**
 - **Dış uygulama sonuçları öğrencinin beyanıdır.**
+- **Süre tahminleri ve oyunlaştırma sayıları (rütbe eşikleri, rozet hedefleri, XP değerleri, odak eşikleri) bu öğrenci üzerinde sınanmadı;** kullanıldıkça ayarlanmalıdır.
+- **Spor videoları tarayıcıda oynarken denenmedi** (ortamdaki başsız Chromium H.264 oynatamadı); gerçek telefonda da denenmedi.
+- **Uzun İngilizce dersleri hâlâ 14–21 dakikadır** (bölünme monotonluğu azaltır, süreyi değil). Daha kısa istenirse içerik kırpılmalıdır.
+- **Serbest alan sonuçları kendi bildirimidir;** gerçek mekânda yürüyüp yürümediğin denetlenmez.

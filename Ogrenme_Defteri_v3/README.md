@@ -6,6 +6,14 @@ Telefonda ve tabletde çalışan, İngilizce + hafıza + okuma + dinleme + spor 
 
 **Seviyeli çalışma:** İngilizce, okuma, dinleme, hafıza ve spor ayrı birer merdivendir (1'den başlar, açık uçlu, küçük adımlarla yükselir). **İlk hafta yoklama haftasıdır:** her beceri 5. seviyeden başlayıp gerekirse 10 → 20 → 35 → 50'ye çıkan kısa yoklamalarla ölçülür (yoklama 50'yi geçmez; en zorlayıcı testle başlanmaz). Sonra **gerçek çalışma** bulunan seviyenin biraz altından başlar; bir oturumdaki puanlanan sorular **hepsi ilk denemede doğruysa** seviye bir basamak yükselir. Hangi sayının kanıta, hangisinin bizim tasarımımıza dayandığı: [docs/SEVIYE_SISTEMI.md](docs/SEVIYE_SISTEMI.md).
 
+**Tek tuşla başla, süre belli, mola var:** Bugün ekranında büyük ▶ Başla düğmesi sıradaki görevi açar; her görevin yanında "≈ N dk" yazar (öğrencinin gerçek hızına göre kalibre edilir). Günün işi **odak süresine** (varsayılan 30 dk; dayanıklılık arttıkça +5 dk önerilir, karar öğrencinin; en çok 50) sığmıyorsa fazlası "Mola sonrası" olur ve arada 2 dakikalık mola çıkar. Spor oturup çalışma sayılmaz, mola yerine geçer. [docs/SURE_VE_OTURUM.md](docs/SURE_VE_OTURUM.md)
+
+**Oyunlaştırma (hafif, cezasız):** XP ve 7 rütbe, haftalık hedef, esnek seri (7 günde 1 gün ara serbest), ders içinde 🔥 kombo, 18 rozet. XP öğrenme ölçüsü değildir; rapora girmez. [docs/OYUNLASTIRMA.md](docs/OYUNLASTIRMA.md)
+
+**Serbest alan (park, çalışma alanı):** gerçek yerde hafıza sarayı, mekân avı, sesli tur. [docs/SERBEST_ALAN.md](docs/SERBEST_ALAN.md)
+
+**Spor videoları:** 6 hareketin her biri için anlatımlı, altyazılı, "doğru form / sık hata" karşılaştırmalı video (kendi ürettiğim çizimli animasyon; gerçek kişi çekimi değil) ve dış bağlantılar. [docs/SPOR_VIDEOLARI.md](docs/SPOR_VIDEOLARI.md)
+
 **İçeriği JSON yazmadan ekle:** düz metin dosyası (`giris/*.txt`) → `node scripts/ekle.mjs`. Biçim: [docs/KOLAY_GIRIS.md](docs/KOLAY_GIRIS.md).
 
 **Yapay zekâ bağlantısı (MCP):** `scripts/mcp.mjs` bir yapay zekâ asistanına öğrencinin raporunu, seviyelerini ve geçmişini okutur; içerikte arama yaptırır, yeni içeriği doğrulatıp ekletir (varsayılan: yalnız dene). Kurulum ve güvenlik: [docs/MCP.md](docs/MCP.md).
@@ -29,6 +37,8 @@ Telefonda tam özellik (mikrofon, çevrimdışı, ana ekrana ekleme) için `http
 | `npm run guncelle` | İçerik eklemeden sonra tek komutla kontrol listesi: doğrula → ses listesini güncelle → eksik sesleri göster → program özeti |
 | `npm test` | Birim testleri (`node --test`) |
 | `node tests/benzetim.mjs '{"ingilizce":55,"okuma":40}' 40` | Gerçek motor ve içerikle üretilmiş bir öğrenciyi N gün yürütür; yerleştirme, yükselme ve içerik tükenmesini gösterir |
+| `node scripts/denetim-sure.mjs` | Her dersin tahmini süresini ve tekdüzeliğini denetler (uzun/yorucu dersleri bulur) |
+| `node scripts/hareket-video.mjs --model <piper.onnx>` | Spor hareket videolarını yeniden üretir (ffmpeg, Playwright, Piper gerekir) |
 | `node scripts/ekle.mjs giris/dosya.txt` | Düz metin giriş dosyasını içerik paketine çevirir ve doğrular (`--kuru`: yalnız dene) |
 | `node scripts/mcp.mjs` | MCP sunucusu (yapay zekâ istemcisi başlatır; elle çalıştırılmaz). `npm run` ile **değil**, doğrudan `node` ile çalıştır |
 
@@ -52,6 +62,10 @@ docs/                                     kılavuzlar
 |---|---|
 | [docs/KULLANIM.md](docs/KULLANIM.md) | Öğrenci: açma, günlük kullanım, sonuçları okuma, yedek, sık sorular |
 | [docs/SEVIYE_SISTEMI.md](docs/SEVIYE_SISTEMI.md) | Seviye merdiveni, ilk hafta yoklama, yükselme/düşme kuralları, **kanıt tablosu (neyin kanıtı var, neyin yok)** |
+| [docs/SURE_VE_OTURUM.md](docs/SURE_VE_OTURUM.md) | Tek tuşla başlama, süre tahmini ve kalibrasyon, odak süresi (30→50 dk), mola, bonus |
+| [docs/OYUNLASTIRMA.md](docs/OYUNLASTIRMA.md) | XP, rütbe, hafta hedefi, esnek seri, rozet, kombo; **kanıt notu** ve bilerek yapılmayanlar |
+| [docs/SERBEST_ALAN.md](docs/SERBEST_ALAN.md) | Parkta/çalışma alanında hafıza sarayı, mekân avı, sesli tur |
+| [docs/SPOR_VIDEOLARI.md](docs/SPOR_VIDEOLARI.md) | Hareket videoları nasıl üretildi, neyi gösterir/göstermez, yeni hareket ekleme |
 | [docs/KOLAY_GIRIS.md](docs/KOLAY_GIRIS.md) | JSON yazmadan düz metinle kelime/okuma/dinleme/hafıza içeriği ekleme |
 | [docs/MCP.md](docs/MCP.md) | Yapay zekâ asistanını bağlama: kurulum, araçlar, güvenlik, sorun giderme |
 | [docs/ICERIK_EKLEME.md](docs/ICERIK_EKLEME.md) | İçerik ekleyen: kelime, ders, hafta ekleme; tutarlılık kuralları; geri dönme |
@@ -71,4 +85,4 @@ Kendi paketini tarayıcıdan da ekleyebilirsin (Ben → İçerik); beğenmezsen 
 
 ## Sınırlar
 
-İnsan kulağıyla ses onayı yapılmadı, gerçek telefon/tablette denenmedi (Chromium'da telefon/tablet boyutlarında test edildi), dış uygulama sonuçları elle girilir, telaffuz değerlendirilmez. **Seviye sayıları (5/10/20/35/50, %80, %100…) tasarım tahminidir, bu öğrenci üzerinde sınanmadı;** hazır içerik kelimede 70, okumada 66, dinlemede 70. seviyeye kadardır; **okuma (28 metin) ve dinleme (23 kayıt) havuzu yetkin bir öğrenci için yaklaşık 3. haftada yetmemeye başlar** (benzetimle ölçüldü; yeni metin kalmayınca tekrar turu seviyeyi değiştirmez). Yeni okuma/dinleme metinlerini bir öğretmen gözden geçirmedi. MCP sunucusu betikli bir istemciyle sınandı, gerçek bir yapay zekâ istemcisiyle henüz değil. Ayrıntı: [docs/KARARLAR.md](docs/KARARLAR.md), [docs/SEVIYE_SISTEMI.md](docs/SEVIYE_SISTEMI.md).
+İnsan kulağıyla ses onayı yapılmadı, **spor videoları kendi çizimli animasyonlarımdır (gerçek kişi çekimi değil) ve tarayıcıda oynarken doğrulanamadı** (ortamdaki başsız Chromium H.264 oynatamadı), süre tahminleri/rütbe eşikleri/oyunlaştırma sayıları bu öğrenci üzerinde sınanmadı, serbest alan sonuçları öğrencinin kendi bildirimidir, uzun İngilizce dersleri hâlâ 14–21 dk'dır, gerçek telefon/tablette denenmedi (Chromium'da telefon/tablet boyutlarında test edildi), dış uygulama sonuçları elle girilir, telaffuz değerlendirilmez. **Seviye sayıları (5/10/20/35/50, %80, %100…) tasarım tahminidir, bu öğrenci üzerinde sınanmadı;** hazır içerik kelimede 70, okumada 66, dinlemede 70. seviyeye kadardır; **okuma (28 metin) ve dinleme (23 kayıt) havuzu yetkin bir öğrenci için yaklaşık 3. haftada yetmemeye başlar** (benzetimle ölçüldü; yeni metin kalmayınca tekrar turu seviyeyi değiştirmez). Yeni okuma/dinleme metinlerini bir öğretmen gözden geçirmedi. MCP sunucusu betikli bir istemciyle sınandı, gerçek bir yapay zekâ istemcisiyle henüz değil. Ayrıntı: [docs/KARARLAR.md](docs/KARARLAR.md), [docs/SEVIYE_SISTEMI.md](docs/SEVIYE_SISTEMI.md).

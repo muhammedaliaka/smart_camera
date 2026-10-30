@@ -232,7 +232,7 @@ export function sarayBul(kimlik) {
   const liste = store.al().saraylar;
   return typeof kimlik === 'string' ? liste.find((s) => s.id === kimlik) || null : liste[0] || null;
 }
-function sarayKaydet(kimlik, ad, duraklar) {
+export function sarayKaydet(kimlik, ad, duraklar) {
   const liste = store.al().saraylar;
   const kayit = { id: kimlik, ad, duraklar, t: new Date().toISOString() };
   const i = liste.findIndex((s) => s.id === kimlik);
@@ -240,7 +240,7 @@ function sarayKaydet(kimlik, ad, duraklar) {
   store.kaydet();
 }
 
-function sarayEditoru(a, kapat, mevcut = []) {
+export function sarayEditoru(a, kapat, mevcut = []) {
   const duraklar = mevcut.length ? [...mevcut] : [];
   const min = a.min || 6, max = a.max || 10;
   const liste = h('ol', { style: 'padding-left:0;list-style:none;margin:12px 0;display:grid;gap:8px' });

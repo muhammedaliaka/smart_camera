@@ -19,7 +19,7 @@ const PORT = +arg('port', process.env.PORT || 8080);
 const ICERIK = arg('icerik', null) ? resolve(arg('icerik')) : null;
 const VERI = arg('veri', null) ? resolve(arg('veri')) : join(KOK, 'veri'); // --veri: eşitleme kaydının ve belirtecin klasörü (test için)
 const ESITLEME_SINIRI = 40 * 1024 * 1024; // bayt; kayıt alanı zaten ~5 MB ile sınırlıdır
-const TUR = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml', '.png': 'image/png', '.mp3': 'audio/mpeg', '.md': 'text/plain; charset=utf-8' };
+const TUR = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml', '.png': 'image/png', '.mp3': 'audio/mpeg', '.mp4': 'video/mp4', '.jpg': 'image/jpeg', '.md': 'text/plain; charset=utf-8' };
 
 function belirtecAl() {
   mkdirSync(VERI, { recursive: true });
@@ -62,7 +62,18 @@ const sunucu = http.createServer(async (istek, yanit) => {
     const s = await stat(dosya);
     if (s.isDirectory()) { yanit.writeHead(302, { Location: yol + '/' }).end(); return; }
     const veri = await readFile(dosya);
-    yanit.writeHead(200, { 'Content-Type': TUR[extname(dosya)] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
+    const tur = TUR[extname(dosya)] || 'application/octet-stream';
+    // Safari ve telefonlar ses/video için "Range" ister; istenen parçayı 206 ile ver.
+    const aralik = /^bytes=(\d*)-(\d*)$/.exec(istek.headers.range || '');
+    if (aralik && (aralik[1] || aralik[2])) {
+      const bas = aralik[1] ? +aralik[1] : Math.max(0, veri.length - +aralik[2]);
+      const son = aralik[1] && aralik[2] ? Math.min(+aralik[2], veri.length - 1) : veri.length - 1;
+      if (bas > son || bas >= veri.length) { yanit.writeHead(416, { 'Content-Range': `bytes */${veri.length}` }).end(); return; }
+      yanit.writeHead(206, { 'Content-Type': tur, 'Content-Range': `bytes ${bas}-${son}/${veri.length}`, 'Content-Length': son - bas + 1, 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-cache' });
+      yanit.end(veri.subarray(bas, son + 1));
+      return;
+    }
+    yanit.writeHead(200, { 'Content-Type': tur, 'Content-Length': veri.length, 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-cache' });
     yanit.end(veri);
   } catch { yanit.writeHead(404).end('yok'); }
 });

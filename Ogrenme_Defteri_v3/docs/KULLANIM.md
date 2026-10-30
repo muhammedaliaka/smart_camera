@@ -32,13 +32,20 @@ Böylece uygulama tam ekran açılır ve internet olmadan da çalışır.
 
 ## 2. Her gün ne yapacaksın?
 
-1. **Bugün** sekmesini aç. O günün görevleri sırayla durur. Birine dokunarak başla.
+1. **Bugün** sekmesini aç ve büyük **▶ Başla** düğmesine dokun: sıradaki görev açılır, bitince bir sonrakine geçen düğme çıkar. Sırayı kendin seçmek istersen görevlerden birine dokun. Her görevin yanında "≈ N dk" yazar; günün işi **odak süresine** (varsayılan 30 dk) sığmıyorsa fazlası "Mola sonrası" olur ve arada 2 dakikalık bir mola çıkar (aşağıda).
 2. Dersi bitirince sonuç ekranı çıkar: yüzde, doğru sayısı, bölüm bölüm sonuç ve yanlış yaptığın sorular. Dinleme ve okuma bölümlerinde **"% anladın"** görürsün.
 3. Ana sayfada **Tekrar** kartı çıkarsa onu da yap. Uygulama eski kelimeleri 3, 10, 20 ve 50 gün sonra yeniden sorar.
 4. Satırında "isteğe bağlı" yazan görevler zorunlu değildir; bugünkü görevler yalnız zorunlu olanlarla tamam sayılır.
 5. İstediğinde **Oyunlar** sekmesinde kısa oyunlar oynayabilirsin (eşleştirme, dinle ve bul, hızlı tur, yazım, cümle kur, hafıza kartları, sayı avı).
+6. Dersin içinde art arda doğru bildikçe üstte **🔥 kombo** görünür; ders bitince **XP**, rütbe, haftalık hedefin ve varsa yeni **rozet** gösterilir. Bunlar eğlence ve süreklilik içindir, not değildir ([OYUNLASTIRMA.md](OYUNLASTIRMA.md)).
 
 Yarım bıraktığın ders için bir sonraki açılışta "kaldığın yerden devam" önerilir.
+
+### Süre, mola ve spor
+- **Odak süresi** (Ben → Ayarlar, 20–50 dk, varsayılan 30): oturup çalışma için tek seferlik pencere. Dolunca uygulama **mola** önerir; mola yerine spor da sayılır. Spor oturup çalışma sayılmaz, odak süresine eklenmez.
+- Dakika tahminleri ilk günlerde kabadır; gerçek hızına göre kendini ayarlar. Üç etkin gün üst üste odak süreni doldurursan uygulama **+5 dakika önerir**; kabul etmek zorunda değilsin. Ayrıntı: [SURE_VE_OTURUM.md](SURE_VE_OTURUM.md).
+- **Spor** kartında hareketin **videosu** (kendi çizimli animasyonum; gerçek kişi çekimi değil), nerede hissedileceği, nefes, hatalar ve kolay/zor seçenek vardır; ayrıca NHS sayfaları ve YouTube arama bağlantıları ([SPOR_VIDEOLARI.md](SPOR_VIDEOLARI.md)).
+- **Dışarıdayken** (park, çalışma alanı, yağmurlu gün): Bugün → **Serbest alan**. Gerçek yerde hafıza sarayı, mekân avı ve sesli tur ([SERBEST_ALAN.md](SERBEST_ALAN.md)).
 
 ### İlk hafta: yoklama haftası
 İlk 7 gün normal ders yok; **seviyeni bulmak için kısa yoklamalar** var (İngilizce, okuma, dinleme, hafıza; spor için yoklama yoktur). Bilmen gerekmez:
@@ -86,14 +93,14 @@ Bu uygulamalarla **otomatik bağlantı yoktur**; nedeni `DIS_UYGULAMALAR.md`'de.
 ## 5. Ayarlar ve geriye dönmek
 
 **Ben → Ayarlar**:
-- **Görünüm** (açık/koyu), **yazı boyutu**, günlük tekrar adedi, sesleri yavaş çalma.
+- **Görünüm** (açık/koyu), **yazı boyutu**, **odak süresi**, **haftalık hedef** (2–7 gün), günlük tekrar adedi, sesleri yavaş çalma.
 - **Program başlangıç tarihi (Gün 1)**: bugünkü görevler bu tarihe göre belirlenir. Tarihi geriye ya da ileriye alabilirsin; **hiçbir kaydın silinmez**. Bir hafta ara verdiysen tarihi ileri alıp programı kaldığın yerden sürdürebilirsin.
 - **Çevrimdışı kullanım**: "Tüm sesleri indir" ile ders seslerini cihaza kaydet.
 - **Yedek**: kayıtların yalnızca bu cihazın tarayıcısında durur. Düzenli olarak "Yedek indir"i kullan. Yedeği başka bir cihaza yüklersen kayıtlar **birleşir**, hiçbiri silinmez.
 - **Yapay zekâ bağlantısı (isteğe bağlı)**: kaydını bilgisayardaki yerel sunucuya gönderir; orada çalışan MCP sunucusu raporunu bir yapay zekâ asistanına açar. Kurulum için bilgisayarı kuran kişiye `docs/MCP.md`'yi göster. Hiçbir şey internete gönderilmez; yine de yapay zekâya verdiklerini o hizmet görür.
 - **Tüm verileri sil**: yalnızca bu cihazdaki kayıtları temizler.
 
-**Ben → İlerleme / Geçmiş**: seviyelerin, dersler, doğru oranları, seri, kayıt ve notların. **Ben → İçerik**: yüklü paketler; yeni paket eklemek ya da senin eklediğini kaldırmak (geri dönüş) için.
+**Ben → İlerleme / Geçmiş**: seviyelerin, **rozetlerin**, dersler, doğru oranları, seri (7 günde bir gün ara vermek seriyi bozmaz), kayıt ve notların. **Ben → İçerik**: yüklü paketler; yeni paket eklemek ya da senin eklediğini kaldırmak (geri dönüş) için.
 
 ## 6. Sık sorular
 
@@ -110,3 +117,7 @@ Bu uygulamalarla **otomatik bağlantı yoktur**; nedeni `DIS_UYGULAMALAR.md`'de.
 **"Bu seviyede içerik yok" ya da "Bu metni daha önce çözdün" diyor.** Hazır okuma ve dinleme metinleri belli bir seviyeye kadardır ve her aralıkta birkaç metin vardır (okuma 28, dinleme 23). Yeni metin kalmayınca uygulama en eski metni **pekiştirme** olarak yeniden verir: bu tur kaydedilir ama seviyeni değiştirmez, çünkü cevapları ezberlemiş olabilirsin. Yeni içerik gerekir (`docs/KOLAY_GIRIS.md`, `docs/MCP.md`); seviyen hatalı değildir. Yetkin bir öğrenci için bu durum yaklaşık 3. haftadan sonra görülebilir.
 
 **Seviyem çok yavaş yükseliyor.** Yükselme için oturumdaki bütün puanlanan soruların ilk denemede doğru olması gerekir; bu bilerek sıkı bir kuraldır (`docs/SEVIYE_SISTEMI.md`, bölüm 6). Çok yavaş buluyorsan kuralı ayarlamak için bilgisayarı kuran kişiye söyle.
+
+**Çok sıkıcı ya da çok yorucu geliyor.** Odak süresini düşür (Ben → Ayarlar), "Mola sonrası" görevlerini ertesi güne bırakmak serbesttir; yalnız "Şimdi" bölümünü yapmak da yeterlidir. Uzun İngilizce dersleri ≤ 7 kelimelik parçalara bölünmüştür ve yarıda bırakılabilir (kaldığın sayfadan devam edilir). Hangi ders ya da etkinlik sıkıyorsa not al: içerik buna göre ayıklanır.
+
+**Rozet/XP beni strese sokuyor.** Haftalık hedefi düşür (2 gün) ya da yok say; hiçbir şey kaybedilmez, ceza yoktur. Seviye ve tekrar sistemi XP'den bağımsız çalışır.

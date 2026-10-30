@@ -8,6 +8,8 @@ import { bugun, gunFarki } from './zaman.js';
 import { kuralKur, seviyeler } from './seviye.js';
 import { hazirla, sayfalar, olayVerisi, sonucMetni, yerlestirmeKapatOlayi } from './seviye-oturum.js';
 import { gunPlani, gorevAdresi } from './plan.js';
+import { sureEkle } from './sure-ac.js';
+import { bugunOdakDk } from './sure.js';
 
 export const kural = () => kuralKur(icerik.ic());
 
@@ -29,13 +31,35 @@ export function bugunPlani() {
   return gunPlani({ no, ic: icerik.ic(), idx: icerik.idx(), durum: store.al(), kural: kural(), bugun: bugun() });
 }
 
-/** Bugünün planında, verilen görevden sonra yapılacak ilk bitmemiş görev: { etiket, href } ya da null. */
+/** Bugünün planı, her göreve dakika ve odak grubu eklenmiş olarak (kesim: şimdi / mola sonrası / hareket / bonus). */
+export function bugunSureli() {
+  const p = bugunPlani();
+  return p ? sureEkle(p) : null;
+}
+
+/** Mola bugün verildi mi (Mola sayfası işaretler). */
+export const molaVerildi = () => !!store.al().notlar['mola:' + bugun()];
+
+/**
+ * Bugünün planında, verilen görevden sonra yapılacak ilk bitmemiş zorunlu görev: { etiket, href } ya da null.
+ * Sıradaki görev "mola sonrası" grubundaysa ve mola henüz verilmediyse önce kısa mola önerilir.
+ */
 export function sonrakiGorev(anahtar) {
-  const plan = bugunPlani();
-  const g = plan?.gorevler.find((x) => !x.bitti && !x.istege && x.anahtar !== anahtar);
-  if (!g) return null;
+  const plan = bugunSureli();
+  if (!plan) return null;
+  const k = plan.kesim, sira = [...k.simdi, ...k.hareket, ...k.sonra]; // ekrandaki sıra: odak görevleri → hareket (spor) → mola sonrası
+  const g = sira.find((x) => !x.bitti && x.anahtar !== anahtar);
+  if (!g) { // zorunlular bitti: odak süresi dolmadıysa bonus öner (zorunlu değil; Bugün'de “Hâlâ enerjin var mı?” olarak görünür)
+    const kalanDk = plan.odakDk - bugunOdakDk(store.al().olaylar, bugun());
+    const b = kalanDk >= 5 ? k.bonus.find((x) => !x.bitti && x.anahtar !== anahtar) : null;
+    if (!b) return null;
+    const ad = b.tur === 'ders' ? icerik.ders(b.ders)?.baslik : null;
+    return { etiket: `Bonus${ad ? `: ${ad}` : ''} · ≈ ${b.dk} dk`, href: gorevAdresi(b), bonus: true };
+  }
+  const molaGerek = k.sonra.includes(g) && !molaVerildi() && !k.hareket.some((x) => x.bitti); // spor zaten hareket molasıdır
+  if (molaGerek) return { etiket: '☕ 2 dakika mola, sonra devam', href: '#/mola' };
   const ad = g.tur === 'yoklama' ? 'Sıradaki yoklama' : g.tur === 'oturum' ? 'Sıradaki oturum' : 'Sıradaki görev';
-  return { etiket: ad, href: gorevAdresi(g) };
+  return { etiket: `${ad} · ≈ ${g.dk} dk`, href: gorevAdresi(g) };
 }
 
 /**

@@ -13,7 +13,7 @@ import { cefrYaklasim } from './seviye.js';
 export const RAPOR_TURLERI = new Set([
   'ders-bitir', 'soru', 'serbest', 'serbest-kontrol', 'liste-sun', 'liste', 'gecikmeli-kur', 'gecikmeli-yanit',
   'saray', 'saray-hayal', 'dinleme', 'okuma', 'olcek', 'spor', 'dis', 'oyun',
-  'yerlestirme', 'yerlestirme-son', 'seviye-oturum', 'seviye-ayar',
+  'yerlestirme', 'yerlestirme-son', 'seviye-oturum', 'seviye-ayar', 'sure', 'alan-tur',
 ]);
 /** Raporda tek tek yazılmayan kayıt türleri ve nedeni. */
 export const RAPOR_ATLANAN = {
@@ -31,6 +31,7 @@ const KIP_ACIKLAMA = {
   'Seviye oturumu': 'Öğrencinin o andaki seviyesine göre kurulan günlük çalışma. Puanlanan her soru ilk denemede doğruysa seviye bir basamak yükselir.',
   'Tekrar oturumu': 'Aralıklı tekrar: daha önce öğrenilen kelimeler ve listeler, belirli günler geçtikten sonra yeniden soruluyor.',
   'Gecikmeli hatırlama kontrolü': 'Öğrenciden bir süre önce çalıştığı bilgiyi bakmadan hatırlaması isteniyor.',
+  'Serbest alan': 'Öğrenci park ya da çalışma alanında telefonla gerçek mekânda çalıştı (hafıza sarayı, mekân avı ya da sesli tur). Sonuçlar öğrencinin kendi bildirimidir; uygulama doğrulamadı.',
   'Dış uygulama': 'Öğrenci uygulama dışındaki bir programda (örneğin Voscreen, Busuu) çalıştı ve sonucu elle girdi.',
 };
 const IZ_EK = { oyun: 'Oyunlar', dis: 'Dış uygulamalar', diger: 'Diğer' };
@@ -172,7 +173,7 @@ export function raporUret({ durum, oku = {}, bas = null, son = null, bugun, ayri
       const ders = dersBul(dersId);
       const ad = b0.dersAd || ders?.baslik || dersId;
       const iz = b0.iz || ders?.iz;
-      const tur = String(dersId).startsWith('sv:') || String(dersId).startsWith('yoklama:') ? (/^(sv:[a-z]+:yoklama|yoklama:)/.test(String(dersId)) ? 'Seviye yoklaması' : 'Seviye oturumu') : String(dersId).startsWith('oyun:') ? 'Oyun' : String(dersId).startsWith('tekrar:') ? 'Tekrar oturumu' : String(dersId).startsWith('hatirla:') ? 'Gecikmeli hatırlama kontrolü' : String(dersId).startsWith('dis:') ? 'Dış uygulama' : 'Ders';
+      const tur = String(dersId).startsWith('sv:') || String(dersId).startsWith('yoklama:') ? (/^(sv:[a-z]+:yoklama|yoklama:)/.test(String(dersId)) ? 'Seviye yoklaması' : 'Seviye oturumu') : String(dersId).startsWith('oyun:') ? 'Oyun' : String(dersId).startsWith('tekrar:') ? 'Tekrar oturumu' : String(dersId).startsWith('hatirla:') ? 'Gecikmeli hatırlama kontrolü' : String(dersId).startsWith('dis:') ? 'Dış uygulama' : String(dersId).startsWith('alan:') ? 'Serbest alan' : 'Ders';
       L(`#### ${tur}: ${tirnak(ad)}${iz && tur === 'Ders' ? ` (${izAdi(iz)})` : ''}${tur === 'Ders' ? ` · kod: ${dersId}` : ''}`); L();
       const aciklama = KIP_ACIKLAMA[tur] || (ders?.hedef ? `Dersin amacı: ${String(ders.hedef).replace(/\s+/g, ' ')}` : null);
       if (aciklama) L(`- ${aciklama}`);
@@ -272,6 +273,13 @@ function bicimle(o, b, kontrolEslesme, oku) {
     case 'seviye-oturum': {
       if (o.iz === 'spor') return [`- ${etiket('Seviye oturumu sonucu')} Spor · seviye ${o.sv} · sonuç: ${o.sonuc === 'tam' ? 'rahat tamamlandı (yükselmeye sayılır)' : o.sonuc === 'zayif' ? 'zor geçti ya da kısmen yapıldı' : 'tamamlandı'} · Beyan: zorlanma ${o.zorlanma ?? '-'}/10${o.kismi ? ', planın bir kısmını yaptı' : ''}${o.destek ? ', destek kullandı' : ''}`];
       return [`- ${etiket('Seviye oturumu sonucu')} ${izAdi(o.iz)} · seviye ${o.sv}: ${o.dogru}/${o.toplam} doğru${o.toplam ? ` (%${yuzde(o.dogru, o.toplam)})` : ''}${o.toplam && o.dogru === o.toplam ? ' · hepsi ilk denemede doğru' : ''}${o.tekrar ? ' · AYNI METNİN TEKRARI (yeni içerik kalmamıştı; cevaplar bellekten gelmiş olabilir, seviyeye sayılmadı)' : ''}`];
+    }
+    case 'sure': return [`- ⏱ Çalışma süresi: yaklaşık ${Math.max(1, Math.round(o.sn / 60))} dakika (ekranda açık kalma süresi; ara vermeyi içerebilir)`];
+    case 'alan-tur': {
+      const ad = { saray: 'mekân sarayı', sesli: 'sesli tur', av: 'mekân avı' }[o.etkinlik] || o.etkinlik;
+      const yer = { park: 'park', calisma: 'çalışma alanı' }[o.yer] || o.yer;
+      const sonuc = o.etkinlik === 'sesli' ? `${o.dogru} kelime dinlendi (puansız; yalnız hatırlama denemesi)` : o.etkinlik === 'av' ? `${o.dogru}/${o.toplam} nesne bulundu ve söylendi (kendi bildirimi)` : `${o.dogru}/${o.toplam} kelime hatırlandı (ilk deneme, kendi bildirimi)`;
+      return [`- ${etiket('Serbest alan')} ${ad} · ${yer} · ${o.kip === 'sessiz' ? 'sessiz kip' : 'sesli kip'}: ${sonuc} · yaklaşık ${Math.max(1, Math.round((o.sn || 0) / 60))} dk${o.eksikler?.length ? ` · unutulanlar: ${o.eksikler.join(', ')}` : ''}`];
     }
     case 'seviye-ayar': return [`- ${etiket('Seviye elle ayarlandı')} ${izAdi(o.iz)} → seviye ${o.sv}${o.neden ? ` · neden: ${tirnak(o.neden)}` : ''} (öğrenci ya da veli kararı; uygulama hesaplamadı)`];
     default: {

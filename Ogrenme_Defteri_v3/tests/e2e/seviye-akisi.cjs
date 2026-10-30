@@ -86,7 +86,7 @@ fs.mkdirSync(CIKTI, { recursive: true });
 
   if (process.env.DURUM_CIKTI) { // MCP testi için gerçek uygulamanın ürettiği kaydı dosyaya yaz (yedek biçiminde)
     const durum = await p.evaluate(() => JSON.parse(localStorage.getItem('od3.durum')));
-    fs.writeFileSync(process.env.DURUM_CIKTI, JSON.stringify({ tur: 'od3-yedek', surum: '3.2.0', tarih: new Date().toISOString(), durum }));
+    fs.writeFileSync(process.env.DURUM_CIKTI, JSON.stringify({ tur: 'od3-yedek', surum: '3.3.0', tarih: new Date().toISOString(), durum }));
   }
   console.log(gunKaydi.join('\n'));
   console.log('Olay türleri:', veri.turler.join(', '));

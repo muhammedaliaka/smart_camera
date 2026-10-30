@@ -19,6 +19,27 @@ function sayac(baslangic, { min = 0, max = 99, adim = 1, birim = '' } = {}) {
   return el;
 }
 
+/** Hareketin anlatımlı videosu (varsa), yoksa çizimi. Video yalnız dokununca iner (preload yok). */
+function hareketMedya(m) {
+  if (m.video) {
+    return h('video.hareket-video', { controls: true, playsinline: true, preload: 'none', poster: m.poster || null, 'aria-label': `${m.ad}: anlatımlı video` },
+      h('source', { src: m.video, type: 'video/mp4' }), 'Tarayıcın videoyu oynatamıyor; aşağıdaki adımları izle.');
+  }
+  return m.gorsel ? h('img', { src: m.gorsel, alt: m.ad, loading: 'lazy', style: 'width:100%;max-height:180px;object-fit:contain;border-radius:14px;background:var(--yuzey-2)' }) : null;
+}
+
+/** Kapalı "Ayrıntılar" bölümü: nasıl hissedilmeli, nefes, sık hatalar, kolaylaştır/zorlaştır, nerede, ek videolar. */
+function hareketAyrinti(m) {
+  const satir = (baslik, metin) => (metin ? h('p.hareket-satir', h('b', baslik + ' '), metin) : null);
+  const parcalar = [
+    satir('Nasıl hissetmeli?', m.hisset), satir('Nefes:', m.nefes), satir('Nerede:', m.nerede),
+    m.hatalar?.length ? h('div.hareket-satir', h('b', 'Sık yapılan hatalar'), h('ul.liste-duz', m.hatalar.map((x) => h('li', h('span.yanlis-metin', '✗ ' + x.ne), h('br'), h('span.dogru-metin', '✓ ' + x.duzelt))))) : null,
+    satir('Kolaylaştır:', m.kolay), satir('Zorlaştır:', m.zor),
+    m.izle?.length ? h('p.hareket-satir', h('b', 'Başka anlatımlar: '), m.izle.map((l, i) => [i ? ' · ' : '', h('a', { href: l.url, target: '_blank', rel: 'noopener noreferrer' }, l.ad)])) : null,
+  ].filter(Boolean);
+  return parcalar.length ? h('details.ac', h('summary', 'Ayrıntılar'), ...parcalar) : null;
+}
+
 export const spor = (sayfa, api) => {
   const a = sayfa.adim;
   const sayaclar = {};
@@ -35,10 +56,12 @@ export const spor = (sayfa, api) => {
         const s = sayac(0, { min: 0, max: m.set || 5, adim: 1 });
         sayaclar['hareket:' + m.id] = s;
         return h('div.kart.duz.hareket-kart', { style: 'margin-top:10px' },
-          m.gorsel ? h('img', { src: m.gorsel, alt: m.ad, loading: 'lazy', style: 'width:100%;max-height:180px;object-fit:contain;border-radius:14px;background:var(--yuzey-2)' }) : null,
+          hareketMedya(m),
           h('h3', { style: 'margin:0' }, m.ad), h('div.rozet', m.birim ? `${m.set || 1} ${m.birim}` : `${m.set || 1} set × ${m.tekrar || ''}`),
+          m.tempo ? h('div.alt-yazi', `⏱ ${m.tempo}`) : null,
           h('ol.liste-duz', m.adimlar.map((x) => { const li = h('li'); li.append(zengin(x)); return li; })),
-          m.uyari ? h('div.ipucu', m.uyari) : null,
+          hareketAyrinti(m),
+          m.dur || m.uyari ? h('div.ipucu', m.dur || m.uyari) : null,
           h('div.alt-yazi', { style: 'text-align:center' }, `Tamamladığın ${m.birim || 'set'}`), s);
       }));
   });

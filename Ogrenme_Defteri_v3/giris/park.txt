@@ -1,0 +1,15 @@
+# Park ve çalışma alanı kelimeleri (Serbest alan: mekân avı ve gerçek mekân hafıza sarayı için). Biçim: docs/KOLAY_GIRIS.md
+# Bankada zaten olan park/oda sözcükleri (tree, bird, rain, window, table…) burada tekrarlanmaz; yalnız eksik olanlar eklendi.
+@paket park-kelimeleri
+
+@kelimeler grup=park sv=24
+bench | bank (oturulan) | Sit on the bench. | Banka otur.
+umbrella | şemsiye | Take your umbrella. It is raining. | Şemsiyeni al. Yağmur yağıyor. | ☂️
+leaf | yaprak | A red leaf falls from the tree. | Ağaçtan kırmızı bir yaprak düşüyor.
+puddle | su birikintisi | The child jumps in the puddle. | Çocuk su birikintisine zıplıyor.
+path | patika | The path goes to the lake. | Patika göle gidiyor.
+fountain | çeşme | The fountain is in the park. | Çeşme parkta. | ⛲
+gate | bahçe kapısı | Please open the gate. | Lütfen kapıyı aç.
+desk | çalışma masası | My desk is near the window. | Çalışma masam pencerenin yanında. | 🗄️
+shelf | raf | The book is on the shelf. | Kitap rafta.
+mud | çamur | There is mud after the rain. | Yağmurdan sonra çamur var.

@@ -11,12 +11,38 @@ export function listeBul(ders, ref, ctx) {
   return kaynak?.adimlar.find((b) => b.tur === 'liste-sun' && b.id === adimId);
 }
 
+/**
+ * Uzun kelime sunumlarını bölüp her parçadan sonra o parçanın alıştırmasını koyar.
+ * Neden: 9–13 kelimeyi art arda kart olarak görmek yorucudur ve bellek için de zayıftır; küçük parça + hemen hatırlama daha iyi sonuç verir
+ * ve sıkıcı kart dizisini kısaltır. Kural: "kelime-ogren" adımında 8+ kelime varsa ve hemen ardından AYNI kelimelerle bir "alistirma" geliyorsa,
+ * ikisi de en çok `enCok` kelimelik eşit parçalara bölünür (alıştırmanın adet sayısı kelime oranında paylaşılır).
+ * Adımların kimliği korunur (kimliksizlere özgün sıra numarasından "aN" verilir); bölünenlere "-1", "-2" eklenir.
+ */
+export function kelimeBloklariniBol(adimlar, enCok = 7) {
+  const sonuc = [];
+  for (let i = 0; i < adimlar.length; i++) {
+    const a = adimlar[i], sonraki = adimlar[i + 1], kimlik = a.id || `a${i + 1}`;
+    const ayni = a.tur === 'kelime-ogren' && a.kelimeler.length > enCok && sonraki?.tur === 'alistirma'
+      && sonraki.kelimeler.length === a.kelimeler.length && sonraki.kelimeler.every((k) => a.kelimeler.includes(k));
+    if (!ayni) { sonuc.push({ ...a, id: kimlik }); continue; }
+    const n = a.kelimeler.length, parca = Math.ceil(n / enCok), boyut = Math.ceil(n / parca);
+    const adetToplam = sonraki.adet || Math.max(8, n);
+    for (let p = 0; p < parca; p++) {
+      const kel = a.kelimeler.slice(p * boyut, (p + 1) * boyut);
+      sonuc.push({ ...a, id: `${kimlik}-${p + 1}`, kelimeler: kel });
+      sonuc.push({ ...sonraki, id: `${sonraki.id || `a${i + 2}`}-${p + 1}`, kelimeler: kel, adet: Math.max(5, Math.round(adetToplam * kel.length / n)) });
+    }
+    i++; // alıştırma adımı işlendi
+  }
+  return sonuc;
+}
+
 export function derle(ders, ctx) {
   const tohum = `${ders.id}#${ctx.deneme || 0}`;
   const sayfalar = [];
   const ogrenilenKelimeler = [];
   const srsListeleri = [];
-  ders.adimlar.forEach((a, n) => {
+  kelimeBloklariniBol(ders.adimlar).forEach((a, n) => {
     const kimlik = a.id || `a${n + 1}`;
     const bolum = a.bolum || null;
     switch (a.tur) {

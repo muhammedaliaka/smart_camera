@@ -6,6 +6,10 @@ import * as icerik from './icerik.js';
 import * as ses from './ses.js';
 import { derle } from './derle.js';
 import { CIZ } from './sayfalar/index.js';
+import { sayfalarSn } from './sure.js';
+import { xpToplami, oturumSonucu } from './oyun-ac.js';
+import { komboGuncelle, komboMetni, komboTakdiri } from './oyunlastir.js';
+import { sonucOyunKarti } from './gorunum/oyun-kart.js';
 
 let aktif = null;
 
@@ -51,6 +55,7 @@ export function oynat(o) {
   const S = {
     ...o, i: 0, puan: { dogru: 0, toplam: 0, nokta: { var: 0, toplam: 0 }, bolumler: new Map() },
     yanlislar: [], sayfalar: o.sayfalar.slice(), bitti: false, baslangic: Date.now(), disSonuc: [],
+    kombo: 0, enUzunKombo: 0, xp0: o.kaydetme ? null : xpToplami(),
   };
   const devamAnahtar = 'devam:' + S.id;
   if (S.dersMi) {
@@ -61,9 +66,10 @@ export function oynat(o) {
   const kok = h('div.oyuncu', { role: 'dialog', 'aria-modal': 'true', 'aria-label': S.baslik, data: { iz: S.iz || '' } });
   const kapatDugme = h('button.dugme.ikon-dugme', { type: 'button', 'aria-label': 'Dersten çık' }, simge('x'));
   const cubukEl = h('div.cubuk', { role: 'progressbar', 'aria-valuemin': 0, 'aria-valuemax': 100 }, h('i'));
+  const komboEl = h('span.kombo', { hidden: true, 'aria-live': 'polite' });
   const ic = h('div.oyuncu-ic', { id: 'oyuncu-ic', tabindex: '-1' });
   const alt = h('div.oyuncu-alt', h('div.ic'));
-  kok.append(h('div.oyuncu-ust', kapatDugme, cubukEl), ic, alt);
+  kok.append(h('div.oyuncu-ust', kapatDugme, cubukEl, komboEl), ic, alt);
   document.body.append(kok);
   document.body.style.overflow = 'hidden';
   let onceki = null, sheet = null;
@@ -72,6 +78,19 @@ export function oynat(o) {
     const yuzde = S.bitti ? 100 : (S.i / Math.max(1, S.sayfalar.length)) * 100;
     cubukEl.firstChild.style.width = yuzde + '%';
     cubukEl.setAttribute('aria-valuenow', String(Math.round(yuzde)));
+  };
+
+  /** Art arda ilk denemede doğru sayısı (🔥). 3'ten itibaren görünür; eşiklerde kısa bir takdir cümlesi çıkar. Yanlışta sessizce sıfırlanır, ceza yok. */
+  const komboCiz = (yeni) => {
+    const arttı = yeni > S.kombo;
+    S.kombo = yeni; S.enUzunKombo = Math.max(S.enUzunKombo, yeni);
+    const metin = komboMetni(yeni);
+    komboEl.hidden = !metin;
+    if (!metin) { komboEl.replaceChildren(); return; }
+    const takdir = arttı ? komboTakdiri(yeni) : '';
+    komboEl.replaceChildren(metin, ...(takdir ? [h('span.takdir', takdir)] : []));
+    komboEl.setAttribute('aria-label', `${yeni} doğru üst üste${takdir ? '. ' + takdir : ''}`);
+    komboEl.classList.remove('pop'); void komboEl.offsetWidth; komboEl.classList.add('pop');
   };
 
   const altYaz = (etiket, fn, { devre = false, ikincil = null } = {}) => {
@@ -107,6 +126,7 @@ export function oynat(o) {
       const b = S.puan.bolumler.get(sayfa.bolum || 'Genel') || { dogru: 0, toplam: 0 };
       b.dogru += d; b.toplam += n; S.puan.bolumler.set(sayfa.bolum || 'Genel', b);
     }
+    if (sayfa.puan && !S.olcum) komboCiz(komboGuncelle(S.kombo, { ilk, dogru: dogruMu }));
     const bg = baglam || {};
     const secenekler = Array.isArray(bg.secenekler) ? bg.secenekler.slice(0, 6).map((x) => temiz(x, 60)) : null;
     store.olay('soru', {
@@ -188,6 +208,8 @@ export function oynat(o) {
       store.kaydetHemen();
     }
     if (S.oturumBitti) S.oturumBitti(S);
+    sureKaydet();
+    if (S.xp0 != null) { try { S.oyun = oturumSonucu(S.xp0); } catch (e) { console.warn('oyunlaştırma hesaplanamadı', e); } }
     temizle(ic);
     ic.append(h('div.oyuncu-sayfa', sonucEkrani(S, { yanlisTekrar })));
     alt.hidden = false;
@@ -195,6 +217,14 @@ export function oynat(o) {
     alt.firstChild.replaceChildren(
       ...(sonraki ? [h('button.dugme.cizgili.ikincil', { type: 'button', onclick: () => cikis() }, 'Kapat'), h('a.dugme.birincil', { href: sonraki.href }, sonraki.etiket)]
         : [h('button.dugme.birincil', { type: 'button', onclick: () => cikis() }, S.bitisEtiketi || 'Tamam')]));
+  };
+
+  /** Oturumun gerçek süresi ("sure" olayı): Bugün ekranındaki dakika tahminini öğrencinin hızına göre ayarlamak ve odak süresini önermek için. */
+  const sureKaydet = () => {
+    const sn = Math.round((Date.now() - S.baslangic) / 1000);
+    if (S.sureYok || sn < 20 || sn > 7200) return;
+    store.olay('sure', { ders: S.id, iz: S.iz || null, sn, tahmin: S.devamTeklif ? null : sayfalarSn(o.sayfalar), kaynak: S.dersMi ? 'ders' : 'oturum' });
+    store.kaydetHemen();
   };
 
   const yanlisTekrar = () => {
@@ -249,6 +279,7 @@ function sonucEkrani(S, { yanlisTekrar }) {
   const { dogru, toplam, bolumler, nokta } = S.puan;
   const kap = h('div.sonuc');
   if (S.seviyeSonucu) kap.append(seviyeKarti(S.seviyeSonucu));
+  const oyunKarti = sonucOyunKarti(S.oyun, S.enUzunKombo); // yüzdenin hemen altında: ödül, ayrıntı listelerinden önce görünsün
   if (toplam > 0) {
     const yuzde = Math.round((dogru / toplam) * 100);
     const r = 54, c = 2 * Math.PI * r;
@@ -259,6 +290,7 @@ function sonucEkrani(S, { yanlisTekrar }) {
     kap.append(h('div.iz-etiket', S.baslik), h('h2', yuzde >= 80 ? 'Çok iyi gitti!' : yuzde >= 50 ? 'İyi bir ilerleme' : 'Bu kez zordu, tekrar edince oturacak'),
       halkaEl, h('p', { style: 'font-size:1.15rem;font-weight:700' }, `${dogru} / ${toplam} soruyu ilk denemede bildin`),
       h('p.alt-yazi', 'Yanlışlar dersin sonunda yeniden soruldu; yüzde yalnız ilk denemeleri sayar.'));
+    if (oyunKarti) kap.append(oyunKarti);
     if (bolumler.size > 1) {
       kap.append(h('div.kart.duz', { style: 'text-align:left' }, h('h3', 'Bölümlere göre'), ...[...bolumler.entries()].map(([ad, b]) => {
         const y = Math.round((b.dogru / b.toplam) * 100);
@@ -268,6 +300,7 @@ function sonucEkrani(S, { yanlisTekrar }) {
     }
   } else {
     kap.append(h('div.buyuk-emoji', S.emoji || '✅'), h('h2', 'Tamamlandı'), h('p.alt-yazi', S.hedef || 'Kaydın saklandı.'));
+    if (oyunKarti) kap.append(oyunKarti);
   }
   if (nokta.toplam) kap.append(h('div.kart.duz', { style: 'text-align:left' }, h('strong', `Anahtar noktalar: ${nokta.var}/${nokta.toplam}`), h('p.alt-yazi', { style: 'margin:4px 0 0' }, 'Bunu sen işaretledin; puan değil, kendi kontrolündür.')));
   if (S.disSonuc.length) { const d = S.disSonuc.reduce((a, x) => a + x.d, 0), t = S.disSonuc.reduce((a, x) => a + x.t, 0); kap.append(h('div.kart.duz', h('strong', `Dış uygulama sonucun: ${d}/${t} (%${Math.round(d / t * 100)})`))); }
