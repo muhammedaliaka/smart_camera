@@ -1,0 +1,145 @@
+{
+  "paket": "hafiza",
+  "ad": "Hafıza sarayı",
+  "surum": 1,
+  "dersler": [
+    {
+      "id": "haf-01-saray", "iz": "hafiza", "emoji": "🏛️",
+      "baslik": "Hafıza sarayı nedir? İlk rotan",
+      "hedef": "Hafıza sarayının ne olduğunu anlamak ve kendi evinden 7–9 duraklı bir rota kurmak.",
+      "neden": "Sıralı bir listeyi (alışveriş, bir konunun başlıkları, yabancı kelimeler) aklında tutmanın en eski ve en işe yarar yolu. Bu ders rotayı kurar; sonraki derslerde her seferinde aynı rotayı kullanacaksın.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Hafıza sarayı nedir?", "bloklar": [
+          { "emoji": "🏛️", "altyazi": "Hafıza sarayı" },
+          { "p": "**Hafıza sarayı**, bildiğin bir yerdeki (mesela evindeki) **sabit durakları**, hatırlamak istediklerini **sırayla** koyduğun raflar gibi kullanma yöntemidir. Eski Yunan ve Roma'da hatipler uzun konuşmaları böyle ezberlerdi." },
+          { "p": "**Neden işe yarar?** Beynimiz yerleri ve resimleri, soyut sözcük listelerinden çok daha iyi hatırlar. Listeyi bir yere bağladığında **sıra da kendiliğinden gelir**: ilk durak, ikinci durak…" },
+          { "liste": ["**Durak seç:** bildiğin yerde birbirine benzemeyen 7–9 durak.", "**Resim kur:** her durakta hatırlanacak şeyle abartılı, hareketli, komik bir sahne hayal et.", "**Gezerek hatırla:** zihninde aynı yönde yürü; her durakta sahneyi “gör”."], "sirali": true },
+          { "kutu": "Bu bir **teknik**, sihir değil. Her şeyi unutmanı engellemez; ama **sıralı listeleri** hatırlamak için gerçekten işe yarar. Bugün yalnız 1. adımı yapacaksın: rotanı kuracaksın." }
+        ] },
+        { "tur": "anlat", "baslik": "İyi durak nasıl seçilir?", "bloklar": [
+          { "tablo": { "baslik": ["İyi durak", "Zor durak"], "satirlar": [
+            ["Birbirinden farklı (kapı, lavabo, yatak)", "Birbirine benzeyen (4 aynı raf)"],
+            ["Büyük ve net, gözünün önüne kolay gelen", "Küçük, kalabalık ya da sürekli değişen"],
+            ["Hep aynı yönde, aynı sırada", "Sırası karışan"],
+            ["İyi bildiğin bir yer (evin)", "Yeni gördüğün, emin olmadığın bir yer"]
+          ] } },
+          { "ipucu": "Evine kapıdan girdiğini düşün ve **hep sağa doğru** yürü. Karşına çıkan 7–9 şeyi sırayla say: kapı, ayakkabılık, portmanto, mutfak masası… Bu senin rotan." },
+          { "kutu": "Rotanı bir kez **yüksek sesle** say. Sonra gözlerini kapat ve aynı sırada yürü. Takıldığın durak varsa onu değiştir." }
+        ] },
+        { "tur": "saray-kur", "baslik": "Rotanı kur", "min": 7, "max": 9, "yonerge": "Evinde (ya da çok iyi bildiğin bir yerde) kapıdan başlayıp içeri doğru yürüdüğünü düşün. Karşılaştığın 7–9 durağı **sırayla** ekle. Önerilerden seçebilir ya da kendi adlarını yazabilirsin." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "Hafıza sarayı için hangi durak seçimi en uygun?", "secenekler": ["Kapı, lavabo, yatak, pencere (birbirinden farklı)", "Raf 1, raf 2, raf 3, raf 4 (hepsi aynı)", "Her gün yeri değişen kalabalık bir sınıf"], "aciklama": "Duraklar birbirinden farklı ve sabit olmalı ki karışmasınlar." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "Hafıza sarayında listenin “sırası” nereden gelir?", "secenekler": ["Durakların sırasından", "Nesnelerin alfabetik sırasından", "Rastgele"], "aciklama": "Rotayı hep aynı yönde yürüdüğün için sıra durakların sırasıdır." },
+        { "tur": "olcek", "id": "rota-akici", "soru": "Rotanı gözünü kapatıp **sırayla** yürüyebildin mi?", "aciklama": "0 = hiç yürüyemedim · 10 = hiç takılmadan yürüdüm", "min": 0, "max": 10, "altEtiket": "yürüyemedim", "ustEtiket": "hiç takılmadan" }
+      ]
+    },
+
+    {
+      "id": "haf-02-liste", "iz": "hafiza", "emoji": "🍋",
+      "baslik": "İlk listeni saraya yerleştir",
+      "hedef": "6 nesnelik bir listeyi rotandaki duraklara abartılı resimlerle bağlamak ve bakmadan sırayla hatırlamak.",
+      "neden": "Rotayı kurdun; şimdi gerçekten kullanma zamanı. Hayal kurma becerisi bir kas gibi: ilk seferde yavaş, birkaç denemeden sonra çok hızlı olur.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Resmi nasıl kurarsın?", "bloklar": [
+          { "emoji": "🍋", "altyazi": "Büyük · Abartılı · Hareketli" },
+          { "p": "Bir nesneyi bir durağa **sıradan** koyarsan unutursun. Onu **tuhaf bir olaya** çevirirsen aklında kalır:" },
+          { "tablo": { "baslik": ["Durak", "Nesne", "Aklında kalan resim"], "satirlar": [["Kapı", "limon", "Kapıdan koca bir limon yuvarlanıyor; açamıyorsun, hava limon kokuyor."], ["Ayakkabılık", "saat", "Her ayakkabının içinde tik-tak eden bir saat var."]] } },
+          { "liste": ["**Büyük** yap (dev bir limon)", "**Hareket** ettir (yuvarlanıyor, zıplıyor)", "**Duyu** ekle (koku, ses, dokunma)", "**Komik ya da tuhaf** olsun"] },
+          { "ipucu": "Resmi **sen** kurmalısın. Başkasının resmi senin beynine yapışmaz; kendi evin, kendi hayalin." }
+        ] },
+        { "tur": "liste-sun", "id": "l1", "baslik": "6 nesne", "liste": ["limon", "saat", "kitap", "top", "anahtar", "bulut"], "tekrar": true, "yonerge": "Listeyi sırayla oku. Hazır olunca düğmeye bas; sonra her nesneyi bir durağa yerleştireceksin." },
+        { "tur": "saray-yerlestir", "liste": ["limon", "saat", "kitap", "top", "anahtar", "bulut"], "baslik": "Nesneleri duraklara yerleştir", "yonerge": "Her durakta nesneyle ilgili **tuhaf bir olayı** bir cümleyle yaz. Yazarken olayı zihninde gör." },
+        { "tur": "liste-hatirla", "ref": "l1", "saray": true, "baslik": "Rotanı gez ve hatırla", "yonerge": "Gözünü kapat, rotanı baştan yürü. Her durakta resmi gör ve nesneyi yaz. Listeye bakma." },
+        { "tur": "anlat", "baslik": "Şimdi unutmaya bırak", "bloklar": [
+          { "p": "Öğrendiğin bir listeyi **hemen hatırlamak kolaydır.** Asıl soru: **yarın** hâlâ hatırlıyor musun? Bunu denemek için birazdan seni bir süre sonra yoklayacağım." },
+          { "kutu": "Bu bir sınav değil. Amaç, **unuttuğunu fark etmek** ve resmi güçlendirmek. Hatırlayamazsan sorun değil; bu da bilgi." },
+          { "ipucu": "Listeye **bakma.** Bakarsan sonraki kontrol anlamsızlaşır." }
+        ] },
+        { "tur": "gecikmeli-kur", "ref": "l1", "kontroller": ["30dk", "1gun"], "soru": "6 nesneyi sırayla yaz." }
+      ]
+    },
+
+    {
+      "id": "haf-03-uzun-liste", "iz": "hafiza", "emoji": "🪜",
+      "baslik": "Daha uzun liste, hangi yöntem?",
+      "hedef": "7 nesnelik bir listeyi saraya yerleştirmek ve “hangi iş için hangi yöntem?” sorusunu cevaplamak.",
+      "neden": "Tek bir yöntem her iş için en iyisi değildir. Hangisini ne zaman kullanacağını bilirsen zaman kazanırsın.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Üç yöntem, üç iş", "bloklar": [
+          { "emoji": "🪜", "altyazi": "Hangi yöntem ne zaman?" },
+          { "tablo": { "baslik": ["Yöntem", "Ne zaman?", "Nasıl?"], "satirlar": [
+            ["**Hafıza sarayı**", "Sıra önemli, 5–10 öğe ya da daha fazla", "Her öğe bir durakta bir resim"],
+            ["**Hikâye zinciri**", "Kısa liste (4–6), rota yok", "Öğeleri tek bir hikâyede birbirine bağla: limon topa dönüştü, top anahtarı yuttu…"],
+            ["**Baş harf cümlesi**", "Kısa, sabit sıralı liste", "İlk harflerden bir söz ya da cümle yap"]
+          ] } },
+          { "ipucu": "Şüphede kalırsan **hafıza sarayını** kullan: en güvenilir olanı o." }
+        ] },
+        { "tur": "anlat", "baslik": "Her liste için ayrı rota", "bloklar": [
+          { "p": "Yeni listeyi **dünkü rotaya** koyarsan eski resimler yenileriyle karışır. Bu yüzden **her yeni liste için yeni bir rota** kuracaksın. Bugün **okulunu** kullan." },
+          { "kutu": "Rotalar: **Evim** (ilk ders), **Okul rotası** (bugün), ileride **mahalle yolun** ve **akraba evi**. Aynı rotayı ancak eski listeyi artık kullanmadığında yeniden kullan." }
+        ] },
+        { "tur": "saray-kur", "id": "okul", "ad": "Okul rotası", "baslik": "Okul rotanı kur", "min": 7, "max": 9, "oneriler": ["Bahçe kapısı", "Giriş kapısı", "Koridor", "Merdiven", "Sınıf kapısı", "Sıran", "Pencere", "Pano", "Kantin", "Kütüphane"], "yonerge": "Okulunu (ya da bildiğin başka bir binayı) giriş kapısından başlayarak gezdiğini düşün. Karşılaştığın 7–9 durağı sırayla ekle." },
+        { "tur": "liste-sun", "id": "l2", "baslik": "7 nesne", "liste": ["çatal", "merdiven", "portakal", "mektup", "kask", "ayna", "zil"], "tekrar": true, "yonerge": "Listeyi sırayla oku. Bu sefer 7 nesne var; okul rotanın ilk 7 durağını kullanacaksın." },
+        { "tur": "saray-yerlestir", "saray": "okul", "liste": ["çatal", "merdiven", "portakal", "mektup", "kask", "ayna", "zil"], "baslik": "Nesneleri duraklara yerleştir", "yonerge": "Her durakta nesneyle **tuhaf ve hareketli** bir olay yaz." },
+        { "tur": "liste-hatirla", "ref": "l2", "saray": "okul", "baslik": "Okul rotanı gez ve hatırla", "yonerge": "Gözünü kapat; okul rotanı baştan yürü ve her duraktaki nesneyi yaz. Listeye bakma." },
+        { "tur": "anlat", "baslik": "Bir nesneyi hatırlamadıysan?", "bloklar": [
+          { "p": "Hatırlayamadığın nesne için **durak değil, resim** zayıftır. Çözüm:" },
+          { "liste": ["O duraktaki resmi **daha büyük ve daha tuhaf** yap.", "Bir **ses ya da koku** ekle.", "Nesneyle **kendini** ilişkilendir (sana bir şey yapsın)."], "sirali": true }
+        ] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "Bir nesneyi hatırlayamadın. İlk ne yaparsın?", "secenekler": ["O duraktaki resmi daha abartılı yaparım", "Listeyi 10 kez yazarım", "Rotamı baştan değiştiririm"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "Sırası önemli 12 maddelik bir listeyi ezberleyeceksin. Hangi yöntem?", "secenekler": ["Hafıza sarayı", "Baş harf cümlesi", "Hepsini tek cümleye sığdırmak"] }
+      ]
+    },
+
+    {
+      "id": "haf-04-ingilizce-saray", "iz": "hafiza", "sv": 12, "emoji": "🔤",
+      "baslik": "İngilizce kelimeleri saraya yerleştir",
+      "hedef": "7 İngilizce kelimeyi (anlamıyla birlikte) hafıza sarayına yerleştirmek ve sırayla hatırlamak.",
+      "neden": "Aynı yöntemi İngilizce kelimelerde kullanmak, hem kelime öğrenmeyi hem hafızanı birlikte güçlendirir. Soyut kelimeler (yarın, yorgun) için resim kurmak özellikle iyi bir antrenman.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Kelimeyi resme çevir", "bloklar": [
+          { "emoji": "🔤", "altyazi": "Kelime + anlam + resim" },
+          { "p": "Bir İngilizce kelimeyi saraya koyarken **anlamını** resme çevir, **sesini** de ekle:" },
+          { "tablo": { "baslik": ["Kelime", "Anlamı", "Aklında kalan resim"], "satirlar": [["window", "pencere", "Dev bir pencere duvardan çıkıp yürüyor; “win-dow!” diye bağırıyor."], ["tired", "yorgun", "Yorgun bir lastik (“tire”) yere uzanmış, horluyor."]] } },
+          { "ipucu": "Resim komik ya da tuhaf olabilir; **doğru olması gerekmez**, hatırlatması yeter. Soyut kelimeler (yarın, yorgun) için duyguyu abartılı oyna." }
+        ] },
+        { "tur": "saray-kur", "id": "mahalle", "ad": "Mahalle yolu", "baslik": "Mahalle yolunu kur", "min": 7, "max": 9, "oneriler": ["Apartman kapısı", "Merdiven boşluğu", "Köşedeki bakkal", "Kaldırım", "Durak", "Park", "Yaya geçidi", "Çeşme", "Okul kapısı", "Fırın"], "yonerge": "Evinden okula (ya da sık gittiğin bir yere) giderken geçtiğin 7–9 yeri sırayla ekle." },
+        { "tur": "liste-sun", "id": "l3", "baslik": "7 İngilizce kelime", "liste": ["window", "table", "chair", "notebook", "library", "tired", "tomorrow"], "tekrar": true, "yonerge": "Her kelimenin Türkçesini düşün (pencere, masa, sandalye, defter, kütüphane, yorgun, yarın). Sonra gizle." },
+        { "tur": "saray-yerlestir", "saray": "mahalle", "liste": ["window", "table", "chair", "notebook", "library", "tired", "tomorrow"], "baslik": "Kelimeleri duraklara yerleştir", "yonerge": "Her durakta kelimenin **anlamıyla** ilgili tuhaf bir olay yaz. İngilizce kelimeyi de cümlenin içinde geçir." },
+        { "tur": "liste-hatirla", "ref": "l3", "saray": "mahalle", "baslik": "Mahalle yolunu gez: İngilizcesini yaz", "yonerge": "Rotanı yürü; her duraktaki kelimeyi **İngilizce** yaz (listede ne vardıysa)." },
+        { "tur": "alistirma", "kelimeler": ["window", "table", "chair", "notebook", "library", "tired", "tomorrow"], "turler": ["anlam-sec", "kelime-sec", "yaz"], "adet": 8, "bolum": "Anlamlarını da kontrol et" }
+      ]
+    },
+
+    {
+      "id": "haf-05-gezegenler", "iz": "hafiza", "sv": 18, "emoji": "🪐",
+      "baslik": "Gerçek bir konu: Güneş sistemi",
+      "hedef": "Sekiz gezegeni Güneş'e yakınlık sırasıyla öğrenmek ve rotanı 8 durağa çıkarmak.",
+      "neden": "Hafıza sarayı yalnız rastgele listeler için değil, **okulda öğrenmen gereken sıralı bilgiler** için de işe yarar. Burada hem güzel bir konuyu hem tekniği birlikte çalışırsın.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Gezegenler: Güneş'ten uzağa doğru", "bloklar": [
+          { "emoji": "🪐", "altyazi": "Güneş sistemi" },
+          { "p": "Güneş'e en yakın olandan en uzak olana doğru **sekiz gezegen** vardır. Her birinin akılda kalan bir özelliği var:" },
+          { "tablo": { "baslik": ["#", "Gezegen", "Akılda kalan özellik", "Resim önerisi"], "satirlar": [
+            ["1", "Merkür", "Güneş'e en yakın, en küçük", "ince bir civa termometresi"],
+            ["2", "Venüs", "En sıcak gezegen", "kızgın bir fırın"],
+            ["3", "Dünya", "Yaşadığımız yer", "elindeki küre"],
+            ["4", "Mars", "Kızıl gezegen", "kırmızı toza bulanmış bir araba"],
+            ["5", "Jüpiter", "En büyük gezegen", "dev bir fırtına topu"],
+            ["6", "Satürn", "Halkalarıyla ünlü", "parmağında dönen halkalar"],
+            ["7", "Uranüs", "Yan yatmış gibi döner", "yan yatmış bir top"],
+            ["8", "Neptün", "En uzak gezegen, mavi", "mavi denizde bir üç dişli çatal"]
+          ] } },
+          { "ipucu": "Bu bir hem **bilgi** hem **sıra** listesi. Hafıza sarayı ikisini birlikte taşır: durak = sıra, resim = bilgi." }
+        ] },
+        { "tur": "saray-kur", "id": "akraba", "ad": "Akraba evi", "baslik": "Yeni rota: sevdiğin bir ev", "min": 8, "max": 9, "oneriler": ["Kapı", "Antre", "Salon", "Koltuk", "Mutfak", "Yemek masası", "Koridor", "Banyo", "Yatak odası", "Balkon"], "yonerge": "Büyükanne, akraba ya da arkadaş evi gibi iyi bildiğin **başka bir ev** seç. Sekiz gezegen için en az 8 durak gerekiyor." },
+        { "tur": "liste-sun", "id": "l4", "baslik": "8 gezegen", "liste": ["Merkür", "Venüs", "Dünya", "Mars", "Jüpiter", "Satürn", "Uranüs", "Neptün"], "tekrar": true, "yonerge": "Sırayı oku: Güneş'ten uzağa doğru." },
+        { "tur": "saray-yerlestir", "saray": "akraba", "liste": ["Merkür", "Venüs", "Dünya", "Mars", "Jüpiter", "Satürn", "Uranüs", "Neptün"], "baslik": "Gezegenleri duraklara yerleştir", "yonerge": "Her duraktaki gezegenin **özelliğini** resme çevir (tabloya bak) ve bir cümleyle yaz." },
+        { "tur": "liste-hatirla", "ref": "l4", "saray": "akraba", "baslik": "Rotanı gez: sekiz gezegen", "yonerge": "Rotanı yürü; her duraktaki gezegeni sırayla yaz." },
+        { "tur": "soru", "bolum": "Gezegen bilgisi", "soru": "Güneş'e en yakın gezegen hangisi?", "secenekler": ["Merkür", "Venüs", "Dünya"], "aciklama": "Merkür 1. sırada." },
+        { "tur": "soru", "bolum": "Gezegen bilgisi", "soru": "Dünya, Güneş'e yakınlık sırasına göre kaçıncı gezegen?", "secenekler": ["3.", "2.", "4."], "aciklama": "Merkür, Venüs, Dünya → 3." },
+        { "tur": "soru", "bolum": "Gezegen bilgisi", "soru": "En büyük gezegen hangisi?", "secenekler": ["Jüpiter", "Satürn", "Neptün"] },
+        { "tur": "soru", "bolum": "Gezegen bilgisi", "soru": "“Kızıl gezegen” hangisi?", "secenekler": ["Mars", "Venüs", "Merkür"] }
+      ]
+    }
+  ]
+}

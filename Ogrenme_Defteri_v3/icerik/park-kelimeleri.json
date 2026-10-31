@@ -1,0 +1,123 @@
+{
+ "paket": "park-kelimeleri",
+ "ad": "park-kelimeleri",
+ "surum": 1,
+ "uretim": {
+  "kaynak": "giris"
+ },
+ "kelimeler": [
+  {
+   "id": "bench",
+   "en": "bench",
+   "tr": "bank (oturulan)",
+   "grup": "park",
+   "ornek": {
+    "en": "Sit on the bench.",
+    "tr": "Banka otur."
+   },
+   "sv": 24
+  },
+  {
+   "id": "umbrella",
+   "en": "umbrella",
+   "tr": "şemsiye",
+   "emoji": "☂️",
+   "grup": "park",
+   "ornek": {
+    "en": "Take your umbrella. It is raining.",
+    "tr": "Şemsiyeni al. Yağmur yağıyor."
+   },
+   "sv": 24
+  },
+  {
+   "id": "leaf",
+   "en": "leaf",
+   "tr": "yaprak",
+   "grup": "park",
+   "ornek": {
+    "en": "A red leaf falls from the tree.",
+    "tr": "Ağaçtan kırmızı bir yaprak düşüyor."
+   },
+   "sv": 24
+  },
+  {
+   "id": "puddle",
+   "en": "puddle",
+   "tr": "su birikintisi",
+   "grup": "park",
+   "ornek": {
+    "en": "The child jumps in the puddle.",
+    "tr": "Çocuk su birikintisine zıplıyor."
+   },
+   "sv": 24
+  },
+  {
+   "id": "path",
+   "en": "path",
+   "tr": "patika",
+   "grup": "park",
+   "ornek": {
+    "en": "The path goes to the lake.",
+    "tr": "Patika göle gidiyor."
+   },
+   "sv": 24
+  },
+  {
+   "id": "fountain",
+   "en": "fountain",
+   "tr": "çeşme",
+   "emoji": "⛲",
+   "grup": "park",
+   "ornek": {
+    "en": "The fountain is in the park.",
+    "tr": "Çeşme parkta."
+   },
+   "sv": 24
+  },
+  {
+   "id": "gate",
+   "en": "gate",
+   "tr": "bahçe kapısı",
+   "grup": "park",
+   "ornek": {
+    "en": "Please open the gate.",
+    "tr": "Lütfen kapıyı aç."
+   },
+   "sv": 24
+  },
+  {
+   "id": "desk",
+   "en": "desk",
+   "tr": "çalışma masası",
+   "emoji": "🗄️",
+   "grup": "park",
+   "ornek": {
+    "en": "My desk is near the window.",
+    "tr": "Çalışma masam pencerenin yanında."
+   },
+   "sv": 24
+  },
+  {
+   "id": "shelf",
+   "en": "shelf",
+   "tr": "raf",
+   "grup": "park",
+   "ornek": {
+    "en": "The book is on the shelf.",
+    "tr": "Kitap rafta."
+   },
+   "sv": 24
+  },
+  {
+   "id": "mud",
+   "en": "mud",
+   "tr": "çamur",
+   "grup": "park",
+   "ornek": {
+    "en": "There is mud after the rain.",
+    "tr": "Yağmurdan sonra çamur var."
+   },
+   "sv": 24
+  }
+ ]
+}

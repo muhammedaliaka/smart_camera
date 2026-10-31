@@ -1,0 +1,153 @@
+{
+  "paket": "okuma",
+  "ad": "Okuma",
+  "surum": 1,
+  "dersler": [
+    {
+      "id": "oku-01-uzay-suyu", "iz": "okuma", "sv": 47, "emoji": "🚀",
+      "baslik": "Uzay istasyonunda su nasıl geri dönüşür?",
+      "hedef": "Kısa bir bilgi metnini üç adımda okumak, soruları cevaplamak ve ana fikri kendi cümlenle anlatmak.",
+      "neden": "Okuduğunu anlamak, her derste ve sınavda işe yarar. Bu ders yöntemi öğretir (önce bak, bir kez oku, kapat ve anlat) ve metinde olanla olmayanı ayırt etmeyi çalıştırır.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Okumaya nasıl başlarsın?", "bloklar": [
+          { "emoji": "📖", "altyazi": "Okuma yöntemi" },
+          { "liste": [
+            "**Önce bak:** başlığı oku ve metnin ne hakkında olabileceğini tahmin et.",
+            "**Bir kez oku:** bilmediğin sözcükte durma, geç. Anlam çoğu zaman cümlenin devamından çıkar.",
+            "**Kapat ve anlat:** metne bakmadan ana fikri tek cümleyle söyle."
+          ], "sirali": true },
+          { "ipucu": "Parmağını ya da bir cetveli satırın altında gezdir. Göz satırı kaybetmez; bazı okuyucular için odaklanmayı kolaylaştırır. İşine yaramazsa bırak." },
+          { "kutu": "Soruları cevaplarken **“Metne bak”** düğmesini kullanabilirsin. Amaç ezberlemek değil, **anlamak**." }
+        ] },
+        { "tur": "oku", "id": "uzay-suyu", "baslik": "Uzay istasyonunda su nasıl geri dönüşür?", "kilavuz": "parmak",
+          "metin": [
+            "Uluslararası Uzay İstasyonu'nda yaşayan astronotlar da bizim gibi su içer, yıkanır ve yemek hazırlar. Ama istasyona her litre suyu Dünya'dan roketle göndermek çok pahalıdır. Bu yüzden istasyondaki su **tekrar tekrar kullanılır**.",
+            "Bu nasıl mümkün? Astronotların terindeki nem, nefesleriyle havaya karışan nem ve idrar özel makinelerle toplanır. Toplanan sıvı filtrelerden ve arıtma işleminden geçirilerek yeniden içilebilir hâle getirilir.",
+            "NASA, 2023'te istasyondaki sistemin suyun yaklaşık yüzde 98'ini geri kazandığını açıkladı. Yani 100 litre suyun yalnızca yaklaşık 2 litresi kayboluyor. Ancak bu oran o sistem ve o deneme için geçerlidir; her uzay aracının aynı oranı yakaladığı anlamına gelmez.",
+            "Suyun temizlenmesi tek başına yetmez: kalitesi de sürekli kontrol edilir. Ayrıca suyun geri kazanılması, yiyecek ve havanın da kendi kendine yettiği anlamına gelmez; onlar için ayrı sistemler çalışır."
+          ],
+          "sozluk": [
+            { "k": "Uluslararası Uzay İstasyonu", "a": "Dünya'nın çevresinde dönen, astronotların yaşayıp çalıştığı büyük laboratuvar" },
+            { "k": "arıtma", "a": "suyu kirlerden temizleme" },
+            { "k": "geri kazanım", "a": "kullanılmış bir şeyi yeniden kullanılır hâle getirme" },
+            { "k": "nem", "a": "havadaki ya da vücuttaki su buharı" }
+          ],
+          "kaynak": { "ad": "NASA, Haziran 2023 duyurusu", "url": "https://www.nasa.gov/missions/station/iss-research/nasa-achieves-water-recovery-milestone-on-international-space-station/" },
+          "sorular": [
+            { "soru": "İstasyondaki su neden tekrar tekrar kullanılıyor?", "secenekler": ["Roketle su taşımak çok pahalı", "Astronotlar çok az su içiyor", "Su uzayda kendiliğinden temizleniyor"], "aciklama": "“Her litre suyu Dünya'dan roketle göndermek çok pahalıdır.”" },
+            { "soru": "Hangi sıvılar toplanıp temizleniyor?", "secenekler": ["Ter nemi, nefes nemi ve idrar", "Yalnızca yağmur suyu", "Yalnızca musluk suyu"], "aciklama": "2. paragraf: ter, nefes nemi ve idrar toplanır." },
+            { "soru": "“Yüzde 98 geri kazanım” ne demek?", "secenekler": ["100 litrenin yaklaşık 98 litresi yeniden kullanılıyor", "100 litrenin yaklaşık 2 litresi yeniden kullanılıyor", "Astronotlar suyun yüzde 98'ini içmiyor"], "aciklama": "Yaklaşık 98 litre geri kazanılır, yaklaşık 2 litre kaybolur." },
+            { "soru": "Metne göre hangisi doğrudur?", "secenekler": ["Suyun geri kazanılması, yiyecek ve havanın da kendi kendine yettiği anlamına gelmez", "Her uzay aracı suyun yüzde 98'ini geri kazanır", "Temizlenen suyun kalitesi kontrol edilmez"], "aciklama": "Son paragraf: yiyecek ve hava için ayrı sistemler çalışır." },
+            { "soru": "Metnin ana fikri hangisi?", "secenekler": ["İstasyonda su büyük oranda geri dönüştürülerek yeniden kullanılır", "Astronotlar suyu her gün Dünya'dan alır", "Uzayda su içmek yasaktır"] },
+            { "soru": "Metne göre: “Astronotlar günde 20 litre su içer.” Bu cümle için ne diyebilirsin?", "secenekler": ["Metinde bu bilgi yok", "Doğru", "Yanlış"], "aciklama": "Metinde içilen su miktarı verilmemiş. Metinde olmayan bir bilgiyi ne doğru ne yanlış say: “metinde yok” de." }
+          ],
+          "serbest": { "id": "anlat", "soru": "Metni kapat ve **kendi cümlelerinle** anlat: uzay istasyonunda su nasıl kullanılıyor ve neden?", "dil": "tr", "ornek": "İstasyona su taşımak çok pahalı olduğu için astronotların ter, nefes ve idrar nemi toplanıp arıtılarak yeniden kullanılıyor. NASA'ya göre bu sistemde suyun yaklaşık yüzde 98'i geri kazanılıyor.",
+            "noktalar": [
+              { "ad": "Nedeni söyledin: su taşımak pahalı", "kabul": ["pahal", "maliyet", "masraf"] },
+              { "ad": "Nasıl olduğunu söyledin: ter, nefes ya da idrar toplanıp arıtılıyor", "kabul": ["arıt", "temizl", "filtre", "idrar", "ter ", "nefes"] },
+              { "ad": "Geri kazanım oranını (yüzde 98 / neredeyse hepsi) söyledin", "kabul": ["98", "neredeyse", "büyük bölüm", "çoğu"] }
+            ] } }
+      ]
+    },
+
+    {
+      "id": "oku-02-gokyuzu", "iz": "okuma", "sv": 35, "emoji": "🌤️",
+      "baslik": "Gökyüzü neden mavi?",
+      "hedef": "Bir neden-sonuç açıklamasını okuyup adım adım anlatabilmek.",
+      "neden": "Bilgi metinleri çoğunlukla “neden?” sorusunu cevaplar. Zinciri yakalamayı (A olunca B olur, B olunca C) öğrenmek, fen derslerinde de çok işe yarar.",
+      "adimlar": [
+        { "tur": "oku", "id": "gokyuzu", "baslik": "Gökyüzü neden mavi?", "kilavuz": "parmak",
+          "metin": [
+            "Güneş ışığı bize beyaz görünür; ama aslında bütün renklerin karışımıdır. Gökkuşağında bu renkleri ayrı ayrı görürüz: kırmızı, turuncu, sarı, yeşil, mavi, mor.",
+            "Işık Dünya'nın atmosferine girince havadaki çok küçük gaz moleküllerine çarpar ve her yöne dağılır. Mavi ışığın dalga boyu kısadır; bu yüzden kırmızıya göre çok daha fazla dağılır. Gökyüzüne nereye baksak, dağılmış mavi ışığı görürüz.",
+            "Mor ışığın dalga boyu daha da kısadır, ama gökyüzü mor görünmez. Çünkü Güneş mor ışığı daha az yayar, atmosferin üst kısmı bir bölümünü yutar ve gözümüz mora maviden daha az duyarlıdır. Sonuçta mavi baskın olur.",
+            "Gün batımında Güneş ufka yakındır; ışık havada çok daha uzun bir yol kat eder. Mavi ışığın büyük bölümü yolda dağılıp gider, bize kırmızı ve turuncu ışık ulaşır. Bu yüzden gün batımı kızıl görünür."
+          ],
+          "sozluk": [
+            { "k": "atmosfer", "a": "Dünya'yı saran hava tabakası" },
+            { "k": "dalga boyu", "a": "ışığın bir dalgasının uzunluğu; rengi belirler" },
+            { "k": "dağılmak", "a": "bir yöne giden ışığın her yöne yayılması" },
+            { "k": "ufuk", "a": "gökyüzü ile yerin birleştiği gibi görünen çizgi" }
+          ],
+          "sorular": [
+            { "soru": "Güneş ışığı aslında nedir?", "secenekler": ["Bütün renklerin karışımı", "Yalnızca beyaz ışık", "Yalnızca sarı ışık"], "aciklama": "1. paragraf: gökkuşağı bu karışımı ayırır." },
+            { "soru": "Mavi ışık neden daha çok dağılır?", "secenekler": ["Dalga boyu kısa olduğu için", "Dalga boyu uzun olduğu için", "Güneş en çok mavi yaydığı için"], "aciklama": "2. paragraf: mavi ışığın dalga boyu kısadır." },
+            { "soru": "Gökyüzü neden mor değil de mavi görünür?", "secenekler": ["Güneş az mor yayar, göz mora az duyarlıdır, atmosfer bir kısmını yutar", "Mor ışık hiç dağılmaz", "Mor ışık Dünya'ya ulaşmaz"], "aciklama": "3. paragraf: üç neden birlikte mavinin baskın olmasını sağlar." },
+            { "soru": "Gün batımı neden kızıl görünür?", "secenekler": ["Işık uzun yol kat eder, mavi dağılıp gider", "Güneş soğuyup kırmızıya döner", "Gökyüzü kirlenir"], "aciklama": "4. paragraf: uzun yolda mavi kaybolur, kırmızı ve turuncu kalır." },
+            { "soru": "Metne göre: “Mars'ta gökyüzü hangi renktir?” Cevap?", "secenekler": ["Metinde bu bilgi yok", "Kırmızı", "Mavi"], "aciklama": "Metin yalnızca Dünya'nın atmosferinden söz ediyor. Olmayan bilgiyi tahminle doldurma." }
+          ],
+          "serbest": { "id": "anlat", "soru": "Bir arkadaşına **gökyüzünün neden mavi olduğunu** iki üç cümleyle anlat.", "dil": "tr", "ornek": "Güneş ışığı bütün renklerin karışımıdır. Mavi ışığın dalga boyu kısa olduğu için havada diğer renklerden daha çok dağılır; biz de her yerde dağılmış mavi ışığı görürüz.",
+            "noktalar": [
+              { "ad": "Güneş ışığının renklerin karışımı olduğunu söyledin", "kabul": ["renk", "karışım"] },
+              { "ad": "Mavi ışığın daha çok dağıldığını söyledin", "kabul": ["dağıl", "saçıl"] },
+              { "ad": "Nedeni söyledin: dalga boyu kısa", "kabul": ["dalga boyu", "kısa"] }
+            ] } }
+      ]
+    },
+
+    {
+      "id": "oku-03-ari-dansi", "iz": "okuma", "sv": 30, "emoji": "🐝",
+      "baslik": "Arılar birbirine yön tarif eder",
+      "hedef": "Bir metindeki iki ayrı bilgiyi (yön ve mesafe) birbirinden ayırarak anlamak.",
+      "neden": "İyi bir okuyucu metindeki bilgileri ayrı ayrı tutar: “bu ne söylüyor, bu ne söylüyor?”. Arıların dansı bunun için güzel bir örnek: iki bilgi, iki işaret.",
+      "adimlar": [
+        { "tur": "oku", "id": "ari-dansi", "baslik": "Arılar birbirine yön tarif eder",
+          "metin": [
+            "Bir bal arısı güzel bir çiçek bahçesi bulduğunda bunu kovandaki arkadaşlarına nasıl anlatır? Konuşamaz, ama **dans eder**.",
+            "Avusturyalı bilim insanı Karl von Frisch bu dansı yıllarca inceledi ve 1973'te Nobel Ödülü aldı. Arı kovana dönünce karanlık petek üzerinde sekizi andıran bir yol çizer; yolun ortasında karnını sallayarak ilerler. Buna “sallanma dansı” denir.",
+            "Dansın iki bilgisi var. Düz kısmın **yönü**, çiçeğin Güneş'e göre hangi yönde olduğunu gösterir. Düz kısmın **uzunluğu** ise çiçeğin ne kadar uzakta olduğunu anlatır: dans uzadıkça çiçek daha uzaktadır.",
+            "Diğer arılar dansı izler, yönü ve mesafeyi öğrenir ve çiçeğe uçar. Böylece bütün kovan, tek bir arının keşfinden yararlanır."
+          ],
+          "sozluk": [
+            { "k": "kovan", "a": "arıların yaşadığı yuva" },
+            { "k": "petek", "a": "arıların balmumundan yaptığı, altıgen gözlerden oluşan tabaka" },
+            { "k": "Nobel Ödülü", "a": "bilimde en büyük ödüllerden biri" }
+          ],
+          "sorular": [
+            { "soru": "Arı bir çiçek bahçesi buldu. Arkadaşlarına nasıl haber verir?", "secenekler": ["Dans ederek", "Ses çıkararak", "Çiçeği kovana taşıyarak"], "aciklama": "“Konuşamaz, ama dans eder.”" },
+            { "soru": "Dansın düz kısmının **yönü** neyi gösterir?", "secenekler": ["Çiçeğin Güneş'e göre yönünü", "Çiçeğin rengini", "Kovanın yaşını"], "aciklama": "3. paragraf: yön = Güneş'e göre hangi yönde." },
+            { "soru": "Dansın düz kısmı uzadıkça ne anlaşılır?", "secenekler": ["Çiçek daha uzakta", "Çiçek daha yakında", "Çiçek daha büyük"], "aciklama": "Uzunluk = mesafe." },
+            { "soru": "Karl von Frisch kimdir?", "secenekler": ["Arı dansını inceleyip 1973'te Nobel alan bilim insanı", "Bir arı yetiştiricisi", "Bir arı türünün adı"] },
+            { "soru": "Metne göre: “Bir arı günde kaç çiçeğe konar?” Cevap?", "secenekler": ["Metinde bu bilgi yok", "Yaklaşık 100", "Yaklaşık 1000"], "aciklama": "Metinde çiçek sayısı verilmemiş." }
+          ],
+          "serbest": { "id": "anlat", "soru": "Arıların dansını **bir arkadaşına anlat**: hangi bilgiyi veriyor, nasıl?", "dil": "tr", "ornek": "Arı çiçeği bulunca kovanda sallanma dansı yapar. Dansın yönü çiçeğin Güneş'e göre yönünü, uzunluğu da ne kadar uzakta olduğunu gösterir.",
+            "noktalar": [
+              { "ad": "Arının dans ettiğini söyledin", "kabul": ["dans"] },
+              { "ad": "Yönü anlattın (Güneş'e göre)", "kabul": ["yön", "güneş"] },
+              { "ad": "Mesafeyi anlattın (uzunluk / uzaklık)", "kabul": ["mesafe", "uzak", "uzun"] }
+            ] } }
+      ]
+    },
+
+    {
+      "id": "oku-04-uyku", "iz": "okuma", "sv": 41, "emoji": "😴",
+      "baslik": "Uyku öğrenmeye nasıl yardım eder?",
+      "hedef": "Bilgi içeren bir metinden kendi hayatın için bir karar çıkarmak.",
+      "neden": "Okuduğun her şeyin bir işe yaraması gerekmez; ama bazı metinler davranışını değiştirebilir. Uyku, öğrenmenin en çok ihmal edilen parçası.",
+      "adimlar": [
+        { "tur": "oku", "id": "uyku", "baslik": "Uyku öğrenmeye nasıl yardım eder?",
+          "metin": [
+            "Gece uyurken beyin dinlenmez; çalışmaya devam eder. Gün içinde öğrendiğin şeylerin bir kısmı uykuda düzenlenir ve kalıcı hâle getirilir. Buna belleğin **pekişmesi** denir.",
+            "Araştırmalar, ders çalıştıktan sonra iyi uyuyan öğrencilerin, uykusuz kalanlara göre öğrendiklerini daha iyi hatırlama eğiliminde olduğunu gösteriyor. Uykusuzluk ayrıca dikkati dağıtır; ertesi gün yeni bir şey öğrenmek de zorlaşır.",
+            "Gençler için önerilen uyku süresi genellikle 8 ile 10 saat arasındadır. Pek çok genç bundan azıyla yetinir; oysa uyku, ertesi günün öğrenme enerjisinin bir parçasıdır.",
+            "Bu yüzden akşam geç saatte telefon ekranına bakmak yerine ders çalışmayı daha erken bitirmek ve her gün aynı saatte yatmaya çalışmak iyi bir fikirdir. Mükemmel olmak şart değil: düzenli bir uyku, bir gece fazladan çalışmaktan çoğu zaman daha yararlıdır."
+          ],
+          "sozluk": [
+            { "k": "pekişme", "a": "öğrenilen bilginin kalıcı hâle gelmesi" },
+            { "k": "eğilim", "a": "bir şeyin çoğu zaman öyle olması" },
+            { "k": "düzenli", "a": "her gün aynı saatlerde, aynı şekilde" }
+          ],
+          "kaynak": { "ad": "Amerikan Uyku Tıbbı Akademisi (2016): gençler için 8–10 saat uyku önerisi" },
+          "sorular": [
+            { "soru": "Uyku sırasında beyin ne yapar?", "secenekler": ["Öğrenilenleri düzenleyip kalıcı hâle getirir", "Tamamen durur", "Yalnızca rüya görür"], "aciklama": "1. paragraf: bu sürece pekişme denir." },
+            { "soru": "Gençler için önerilen uyku süresi nedir?", "secenekler": ["8–10 saat", "4–5 saat", "12–14 saat"], "aciklama": "3. paragraf." },
+            { "soru": "Metne göre uykusuzluğun etkisi hangisidir?", "secenekler": ["Dikkati dağıtır, öğrenmeyi zorlaştırır", "Daha hızlı öğretir", "Belleği güçlendirir"], "aciklama": "2. paragraf." },
+            { "soru": "Yazara göre düzenli uyku ile bir gece fazladan çalışma karşılaştırılınca ne söylenir?", "secenekler": ["Düzenli uyku çoğu zaman daha yararlıdır", "Fazladan çalışmak her zaman daha iyidir", "İkisi arasında fark yoktur"], "aciklama": "Son cümle." },
+            { "soru": "Metne göre: “Uyku sırasında kaç rüya görürüz?” Cevap?", "secenekler": ["Metinde bu bilgi yok", "Üç", "Yedi"], "aciklama": "Rüya sayısı metinde geçmiyor." }
+          ],
+          "serbest": { "id": "karar", "soru": "Bu bilgiden **kendin için bir karar** çıkar: ders ve uyku düzeninde bu hafta neyi değiştirirsin?", "dil": "tr", "kip": "yaz", "ornek": "Telefona akşam 10'dan sonra bakmayacağım ve her gün 11'de yatacağım.", "yardimSor": false }
+        }
+      ]
+    }
+  ]
+}

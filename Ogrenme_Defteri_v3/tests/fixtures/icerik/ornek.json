@@ -1,0 +1,88 @@
+{
+  "paket": "ornek",
+  "ad": "Örnek paket (test)",
+  "surum": 1,
+  "sesler": { "varsayilan": "anlatici", "konusmacilar": { "Ali": "erkek", "Ayşe": "kadin" } },
+  "disUygulamalar": [
+    { "id": "voscreen", "ad": "Voscreen", "simge": "🎬", "kisa": "Gerçek videolardan dinle ve anla", "aciklama": "Kısa gerçek video kesitlerini izler, ne dendiğini seçersin.", "nasil": ["Uygulamayı aç", "Bir seviye seç", "10 klip çöz"], "play": "https://play.google.com/store/apps/details?id=com.voscreen.voscreenapp", "web": "https://www.voscreen.com", "gorev": "10 klip çöz ve sonucu yaz.", "uyari": "Uygulama ücretsiz sürümünde sınırlı olabilir." },
+    { "id": "busuu", "ad": "Busuu", "simge": "🟢", "kisa": "Kısa dersler", "aciklama": "Günlük kısa İngilizce dersleri.", "play": "https://play.google.com/store/apps/details?id=com.busuu.android.enc", "web": "https://www.busuu.com", "gorev": "Bir ders yap." }
+  ],
+  "kelimeler": [
+    { "id": "apple", "en": "apple", "tr": "elma", "emoji": "🍎", "grup": "yiyecek", "ornek": { "en": "I eat an apple.", "tr": "Bir elma yerim." } },
+    { "id": "bread", "en": "bread", "tr": "ekmek", "emoji": "🍞", "grup": "yiyecek", "ornek": { "en": "I like bread.", "tr": "Ekmeği severim." } },
+    { "id": "water", "en": "water", "tr": "su", "emoji": "💧", "grup": "yiyecek", "ornek": { "en": "I drink water.", "tr": "Su içerim." } },
+    { "id": "milk", "en": "milk", "tr": "süt", "emoji": "🥛", "grup": "yiyecek", "ornek": { "en": "I drink milk.", "tr": "Süt içerim." } },
+    { "id": "cat", "en": "cat", "tr": "kedi", "emoji": "🐱", "grup": "hayvan", "ornek": { "en": "The cat is small.", "tr": "Kedi küçük." } },
+    { "id": "dog", "en": "dog", "tr": "köpek", "emoji": "🐶", "grup": "hayvan", "ornek": { "en": "The dog is big.", "tr": "Köpek büyük." } },
+    { "id": "bird", "en": "bird", "tr": "kuş", "emoji": "🐦", "grup": "hayvan", "ornek": { "en": "A bird can fly.", "tr": "Kuş uçabilir." } },
+    { "id": "fish", "en": "fish", "tr": "balık", "emoji": "🐟", "grup": "hayvan", "ornek": { "en": "A fish lives in water.", "tr": "Balık suda yaşar." } }
+  ],
+  "dersler": [
+    {
+      "id": "d-yiyecek", "iz": "ingilizce", "baslik": "Yiyecek ve hayvan kelimeleri", "emoji": "🍎",
+      "hedef": "8 günlük kelimeyi duyunca tanımak ve yazmak.",
+      "neden": "Günlük konuşmanın çoğu bu tür basit adlardan oluşur.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Önce nasıl çalışacağız?", "bloklar": [
+          { "p": "Önce kelimeyi **duyacaksın**, sonra anlamını göreceksin." },
+          { "liste": ["Dinle", "Tekrar et", "Alıştır"], "sirali": true },
+          { "ipucu": "Yüksek sesle tekrar etmek hatırlamayı kolaylaştırır." },
+          { "kutu": "Kelimeler 3, 10, 20 ve 50 gün sonra yeniden sorulur." },
+          { "ornek": { "en": "I eat an apple.", "tr": "Bir elma yerim." } },
+          { "tablo": { "baslik": ["İngilizce", "Türkçe"], "satirlar": [["apple", "elma"], ["bread", "ekmek"]] } }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["apple", "bread", "water", "milk", "cat", "dog", "bird", "fish"] },
+        { "tur": "alistirma", "kelimeler": ["apple", "bread", "water", "milk", "cat", "dog", "bird", "fish"], "adet": 10, "bolum": "Kelime alıştırması" },
+        { "tur": "sahne", "id": "s1", "baslik": "Kahvaltı", "ortam": "Sabah, mutfakta.", "satirlar": [
+          { "kim": "Ali", "en": "Do you want bread?", "tr": "Ekmek ister misin?" },
+          { "kim": "Ayşe", "en": "No, I want an apple.", "tr": "Hayır, elma istiyorum." }
+        ], "sorular": [
+          { "soru": "Ayşe ne istiyor?", "secenekler": ["Elma", "Ekmek", "Süt"], "aciklama": "Ayşe: I want an apple." }
+        ], "kelimeler": ["apple", "bread"] },
+        { "tur": "cumle-kur", "ogeler": [ { "tr": "Bir elma yerim.", "en": "I eat an apple." }, { "tr": "Su içerim.", "en": "I drink water.", "ek": ["eat"] } ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [ { "metin": "I like bread." }, { "metin": "A bird can fly." } ] },
+        { "tur": "sayi-dinle", "aralik": [1, 50], "adet": 3, "karisiklik": true }
+      ]
+    },
+    {
+      "id": "d-okuma", "iz": "okuma", "baslik": "Kısa okuma ve yazma", "emoji": "📖",
+      "hedef": "Kısa bir metni okuyup anlamak ve kendi cümlenle anlatmak.",
+      "adimlar": [
+        { "tur": "oku", "id": "o1", "baslik": "Balıklar", "kilavuz": "parmak", "sayim": true, "metin": ["Balıklar suda yaşar.", "Solungaçlarıyla nefes alırlar."], "sozluk": [{ "k": "solungaç", "a": "balığın nefes aldığı organ" }] },
+        { "tur": "soru", "soru": "Balıklar nerede yaşar?", "secenekler": ["Suda", "Ağaçta", "Mağarada"] },
+        { "tur": "serbest", "id": "f1", "soru": "Metni **kendi cümlenle** anlat.", "kip": "ikisi", "dilSor": true, "ornek": "Balıklar suda yaşar ve solungaçla nefes alır.", "noktalar": [{ "ad": "suda yaşar", "kabul": ["suda", "su"] }, { "ad": "solungaç", "kabul": ["solungaç", "solungac"] }] },
+        { "tur": "dinle", "id": "dn1", "baslik": "Kısa konuşma", "sinir": 2, "ses": { "metin": "My name is Ali and I have a cat.", "ses": "erkek" }, "yonerge": "Konuşmayı dinle.", "sorular": [ { "soru": "Ali'nin ne var?", "secenekler": ["Kedi", "Köpek", "Kuş"] } ], "metin": "My name is Ali and I have a cat.", "metinTr": "Benim adım Ali ve bir kedim var." }
+      ]
+    },
+    {
+      "id": "d-hafiza", "iz": "hafiza", "baslik": "Liste ezberi ve hafıza sarayı", "emoji": "🏛️",
+      "hedef": "5 nesneyi evindeki duraklara bağlayarak sırayla hatırlamak.",
+      "adimlar": [
+        { "tur": "saray-kur", "baslik": "Rotanı kur", "min": 5, "max": 8 },
+        { "tur": "liste-sun", "id": "l1", "baslik": "5 nesne", "liste": ["limon", "anahtar", "kitap", "şemsiye", "saat"], "tekrar": true },
+        { "tur": "saray-yerlestir", "liste": ["limon", "anahtar", "kitap", "şemsiye", "saat"] },
+        { "tur": "liste-hatirla", "ref": "l1", "saray": true },
+        { "tur": "gecikmeli-kur", "ref": "l1", "kontroller": ["5dk", "1gun"], "soru": "5 nesneyi sırayla yaz" }
+      ]
+    },
+    {
+      "id": "d-spor", "iz": "spor", "baslik": "İlk spor günü", "emoji": "🏃",
+      "hedef": "Isınma + 3 temel hareket + kısa yürüyüş.",
+      "adimlar": [
+        { "tur": "spor", "baslik": "Bugünkü spor", "giris": "Rahat kıyafet giy.", "guvenlik": "Ağrı hissedersen dur.", "bolumler": [
+          { "ad": "Güç", "simge": "💪", "hedef": "Her hareketten 2 set", "hareketler": [ { "id": "squat", "ad": "Çömelme", "set": 2, "tekrar": "8 tekrar", "adimlar": ["Ayakların omuz genişliğinde", "Sandalyeye oturur gibi in", "Kalk"], "uyari": "Dizlerin içe çökmesin." } ] },
+          { "tur": "mesafe", "ad": "Yürüyüş", "hedef": "Tempolu 20 dakika yürü", "not": "Konuşabilecek hızda." }
+        ] }
+      ]
+    },
+    { "id": "d-dis", "iz": "dinleme", "baslik": "Voscreen ile dinle", "emoji": "🎬", "hedef": "Gerçek video klipleri dinleyerek anlamak.", "adimlar": [ { "tur": "dis", "uygulama": "voscreen", "gorev": "10 klip çöz ve sonucu yaz." } ] },
+    { "id": "d-olcek", "iz": "olcum", "baslik": "Bugün nasılsın?", "emoji": "📏", "hedef": "Günün durumunu kaydetmek.", "adimlar": [ { "tur": "olcek", "id": "uyku", "soru": "Dün gece nasıl uyudun?", "aciklama": "0 hiç, 10 çok iyi", "min": 0, "max": 10, "altEtiket": "çok kötü", "ustEtiket": "çok iyi" } ] }
+  ],
+  "haftalar": [
+    { "hafta": 1, "baslik": "Başlangıç", "gunler": [
+      { "gun": 1, "baslik": "Kelime günü", "hedef": "8 kelime öğren", "gorevler": [ { "ders": "d-yiyecek" }, { "ders": "d-okuma" }, { "ders": "d-spor", "istege": true } ] },
+      { "gun": 2, "baslik": "Hafıza günü", "hedef": "İlk rotan", "gorevler": [ { "ders": "d-hafiza" }, { "ders": "d-dis" } ] },
+      { "gun": 3, "baslik": "Ölçüm", "hedef": "Durumunu kaydet", "gorevler": [ { "ders": "d-olcek" } ] }
+    ] }
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "paket": "ingilizce-hafta1",
+  "ad": "İngilizce · Hafta 1",
+  "surum": 1,
+  "dersler": [
+    {
+      "id": "en-01-tanisma", "iz": "ingilizce", "sv": 2, "emoji": "🤝",
+      "baslik": "Merhaba! Kendini tanıt",
+      "hedef": "İngilizce 4 cümleyle kendini tanıtmak (adın, nerelisin, nerede yaşıyorsun, öğrenci misin) ve karşındakine nasıl olduğunu sormak.",
+      "neden": "Tanışma her konuşmanın ilk adımı. Bu kalıpları bir kez doğru öğrenirsen İngilizce konuşan biriyle ilk dakikayı rahat geçirirsin. Sonraki derslerin kelimeleri de bunların üzerine kurulur.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Bugün ne yapacağız?", "bloklar": [
+          { "emoji": "🤝", "altyazi": "Tanışma" },
+          { "p": "Bugünün hedefi: **kendini İngilizce tanıtmak.** Dersin sonunda şunu söyleyebileceksin:" },
+          { "ornek": { "en": "Hi, I'm Ece. I'm from Türkiye. I live in Bursa. I'm a student.", "tr": "Merhaba, ben Ece. Türkiye'denim. Bursa'da yaşıyorum. Öğrenciyim." } },
+          { "kutu": "Ders üç bölümden oluşur: **kelimeleri öğren → alıştırma yap → kısa bir konuşmayı dinle ve kendin söyle.** Her ses düğmesine istediğin kadar basabilirsin." },
+          { "ipucu": "Bir kelimeyi duyduktan sonra **yüksek sesle tekrar et.** Sesli söylemek, sadece okumaktan çok daha iyi hatırlatır." }
+        ] },
+        { "tur": "anlat", "baslik": "“I am” = “ben …-im”", "bloklar": [
+          { "p": "Türkçede “öğrenciyim” tek sözcüktür: sondaki **-im** eki “ben” demektir. İngilizcede bu ek yoktur; onun yerine **ayrı bir sözcük** koyarsın: **I am**." },
+          { "tablo": { "baslik": ["Türkçe", "İngilizce"], "satirlar": [["Ben öğrenciyim.", "I am a student."], ["Sen öğrencisin.", "You are a student."]] } },
+          { "kutu": "Konuşurken kısaltılır: **I am → I'm**, **you are → you're**. İkisi de doğru; “I'm” daha doğal duyulur." },
+          { "ipucu": "Dikkat: İngilizcede “öğrenciyim” derken **a** kullanılır: I'm **a** student. Türkçedeki “bir” gibi düşün." }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["hello", "hi", "goodbye", "yes", "no", "name", "student", "from", "live", "how-are-you", "fine", "thank-you", "nice-to-meet-you"] },
+        { "tur": "alistirma", "kelimeler": ["hello", "hi", "goodbye", "yes", "no", "name", "student", "from", "live", "how-are-you", "fine", "thank-you", "nice-to-meet-you"], "adet": 15, "bolum": "Kelime alıştırması" },
+        { "tur": "sahne", "id": "ilk-tanisma", "baslik": "İlk tanışma", "ortam": "Okulun ilk günü. Ece, yeni bir arkadaşla tanışıyor.",
+          "satirlar": [
+            { "kim": "Sam", "en": "Hi! I'm Sam. What's your name?", "tr": "Selam! Ben Sam. Senin adın ne?" },
+            { "kim": "Ece", "en": "Hello, Sam. My name is Ece. Nice to meet you.", "tr": "Merhaba Sam. Benim adım Ece. Tanıştığımıza memnun oldum." },
+            { "kim": "Sam", "en": "Nice to meet you, too. Where are you from?", "tr": "Ben de memnun oldum. Nerelisin?" },
+            { "kim": "Ece", "en": "I'm from Türkiye. I live in Bursa.", "tr": "Türkiye'denim. Bursa'da yaşıyorum." },
+            { "kim": "Sam", "en": "Are you a student?", "tr": "Öğrenci misin?" },
+            { "kim": "Ece", "en": "Yes, I am. How are you?", "tr": "Evet, öğrenciyim. Sen nasılsın?" },
+            { "kim": "Sam", "en": "I'm fine, thank you. Goodbye, Ece!", "tr": "İyiyim, teşekkür ederim. Hoşça kal, Ece!" },
+            { "kim": "Ece", "en": "Goodbye, Sam!", "tr": "Hoşça kal, Sam!" }
+          ],
+          "sorular": [
+            { "soru": "Ece nerede yaşıyor?", "secenekler": ["Bursa'da", "Ankara'da", "Londra'da"], "aciklama": "Ece: “I live in Bursa.” — live = yaşamak." },
+            { "soru": "“Where are you from?” sorusu ne demek?", "secenekler": ["Nerelisin?", "Nerede yaşıyorsun?", "Adın ne?"], "aciklama": "where = nerede, from = …'den. Birlikte: “nerelisin?”. “Nerede yaşıyorsun?” sorusu ise “Where do you live?” olur." },
+            { "soru": "Sam, “How are you?” sorusuna ne cevap veriyor?", "secenekler": ["İyiyim, teşekkür ederim.", "Adım Sam.", "Öğrenciyim."], "aciklama": "Sam: “I'm fine, thank you.”" }
+          ],
+          "kelimeler": ["hello", "name", "from", "live", "student", "fine"],
+          "not": "Sam İngilizce konuşan bir öğrenci, Ece Türkiyeli. İki kişinin de sesi farklı; hangisinin konuştuğuna dikkat et." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Ben bir öğrenciyim.” hangisi?", "secenekler": ["I am a student.", "I a student.", "Am student I."], "aciklama": "İngilizcede “I am” birlikte kullanılır ve “student” önünde “a” bulunur." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“How are you?” sorusuna hangi cevap uygun?", "secenekler": ["I'm fine, thank you.", "My name is Ece.", "I live in Bursa."], "aciklama": "“How are you?” = “Nasılsın?”. İyiysen: “I'm fine, thank you.”" },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Benim adım Ece.", "en": "My name is Ece." },
+          { "tr": "Ben Türkiye'denim.", "en": "I am from Türkiye.", "ek": ["are"] },
+          { "tr": "Bursa'da yaşıyorum.", "en": "I live in Bursa.", "ek": ["from"] },
+          { "tr": "Ben bir öğrenciyim.", "en": "I am a student.", "ek": ["is"] },
+          { "tr": "Nasılsın?", "en": "How are you?" }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "Hello, my name is Ece." },
+          { "metin": "I live in Bursa." },
+          { "metin": "How are you?" },
+          { "metin": "I'm fine, thank you." }
+        ] },
+        { "tur": "serbest", "id": "tanit", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "**Kendini İngilizce tanıt.** Adını, nerede yaşadığını ve öğrenci olduğunu söyle; sonunda karşındakine nasıl olduğunu sor. (3–4 kısa cümle yeter.)",
+          "ipucu": "Sahnedeki cümlelerden yararlan; sadece adını ve şehrini kendininkiyle değiştir.",
+          "ornek": "Hello, my name is Ece. I live in Bursa. I am a student. How are you?",
+          "noktalar": [
+            { "ad": "Adını söyledin (my name is… / I'm…)", "kabul": ["my name is", "i am", "i'm"] },
+            { "ad": "Nerede yaşadığını söyledin (I live in…)", "kabul": ["i live", "live in"] },
+            { "ad": "Öğrenci olduğunu söyledin (I'm a student)", "kabul": ["student"] },
+            { "ad": "Karşındakine nasıl olduğunu sordun (How are you?)", "kabul": ["how are you"] }
+          ] }
+      ]
+    },
+
+    {
+      "id": "en-02-sayilar", "iz": "ingilizce", "sv": 3, "emoji": "🔢",
+      "baslik": "Sayılar ve yaş",
+      "hedef": "1–10 arası sayıları söylemek, 11–99 arası sayıları duyunca anlamak (13 ile 30'u karıştırmamak) ve yaşını söylemek.",
+      "neden": "Telefonda, saatte, fiyatta, adreste hep sayı duyarsın. Sayıyı duyunca hemen anlamak, İngilizce dinlemenin en işe yarayan becerilerinden biridir.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Bugün: sayılar", "bloklar": [
+          { "emoji": "🔢", "altyazi": "Sayılar" },
+          { "p": "İlk on sayıyı **ezberleyeceksin**. Geri kalanını ise **kalıbıyla** öğrenmek çok daha kolay. Bugünün hedefleri:" },
+          { "liste": ["1'den 10'a kadar sayıları tanımak ve söylemek", "11–99 arasındaki sayıları duyunca anlamak", "Yaşını söylemek: I am sixteen."], "sirali": true },
+          { "ipucu": "Sayıları sesli say: “one, two, three…”. Dilin alışınca kulağın da alışır." }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "old"] },
+        { "tur": "alistirma", "kelimeler": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "old"], "adet": 14, "bolum": "Kelime alıştırması" },
+        { "tur": "anlat", "baslik": "11–99: tek bir kalıp", "bloklar": [
+          { "tablo": { "baslik": ["Sayı", "İngilizce", "Kalıbı"], "satirlar": [
+            ["11", "eleven", "özel: ezberle"], ["12", "twelve", "özel: ezberle"], ["13", "thirteen", "thir + teen"], ["14", "fourteen", "four + teen"], ["15", "fifteen", "fif + teen"], ["16", "sixteen", "six + teen"],
+            ["20", "twenty", "twen + ty"], ["30", "thirty", "thir + ty"], ["40", "forty", "for + ty (u yok!)"], ["50", "fifty", "fif + ty"], ["60", "sixty", "six + ty"]
+          ] } },
+          { "p": "**Birler sonda gelir:** 21 = twenty-one, 34 = thirty-four, 99 = ninety-nine. Türkçedeki gibi: önce onlar, sonra birler." },
+          { "kutu": "En çok karışan çift: **13 (thirteen)** ile **30 (thirty)**. “-teen” ile biten sayıda son hece **uzun ve vurgulu** (thir-TEEN); “-ty” ile biten sayıda **ilk hece vurgulu**, son kısa (THIR-ty)." },
+          { "ipucu": "Emin olamazsan sor: “Thirteen or thirty?” Gerçek hayatta da herkes böyle doğrular." }
+        ] },
+        { "tur": "sayi-dinle", "aralik": [11, 99], "adet": 10, "karisiklik": true, "bolum": "Sayıyı duy, yaz" },
+        { "tur": "sahne", "id": "yas-kulup", "baslik": "Kulüp kaydı", "ortam": "Okul kulübü kayıt masası. Görevli Mr. Ray, Ece'yi kaydediyor.",
+          "satirlar": [
+            { "kim": "Mr. Ray", "en": "Hello! What's your name?", "tr": "Merhaba! Adın ne?" },
+            { "kim": "Ece", "en": "Hello. My name is Ece.", "tr": "Merhaba. Benim adım Ece." },
+            { "kim": "Mr. Ray", "en": "Nice to meet you, Ece. How old are you?", "tr": "Memnun oldum Ece. Kaç yaşındasın?" },
+            { "kim": "Ece", "en": "I'm sixteen years old.", "tr": "On altı yaşındayım." },
+            { "kim": "Mr. Ray", "en": "OK, sixteen. The club room is room thirteen.", "tr": "Tamam, on altı. Kulüp odası on üç numaralı oda." },
+            { "kim": "Ece", "en": "Thirteen or thirty?", "tr": "On üç mü, otuz mu?" },
+            { "kim": "Mr. Ray", "en": "Thirteen. One, three.", "tr": "On üç. Bir, üç." },
+            { "kim": "Ece", "en": "Thank you!", "tr": "Teşekkür ederim!" }
+          ],
+          "sorular": [
+            { "soru": "Ece kaç yaşında?", "secenekler": ["16", "17", "60"], "aciklama": "sixteen = 16 (six + teen). Altmış olsaydı “sixty” denirdi." },
+            { "soru": "Kulüp odası kaç numaralı?", "secenekler": ["13", "30", "3"], "aciklama": "thirteen = 13. Mr. Ray “One, three” diyerek rakamları tek tek söyledi." },
+            { "soru": "Ece neden “Thirteen or thirty?” diye sordu?", "secenekler": ["13 ile 30 kulağa benzediği için doğrulamak istedi", "Odayı bulamadığı için", "Yaşını unuttuğu için"], "aciklama": "Benzer duyulan sayılarda tekrar sorarak doğrulamak çok işe yarar." }
+          ],
+          "kelimeler": ["old"],
+          "not": "İki sayıyı karıştırınca ne yapılır? Ece'nin yaptığını yap: kısaca sor." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“thirteen” hangisi?", "secenekler": ["13", "30", "3"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“fifty” hangisi?", "secenekler": ["50", "15", "5"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“twenty-one” hangisi?", "secenekler": ["21", "12", "201"], "aciklama": "Önce onlar (twenty = 20), sonra birler (one = 1): 21." },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Kaç yaşındasın?", "en": "How old are you?" },
+          { "tr": "Ben on altı yaşındayım.", "en": "I am sixteen years old.", "ek": ["is"] },
+          { "tr": "Yaşım on yedi.", "en": "I am seventeen.", "ek": ["are"] }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "thirteen" }, { "metin": "thirty" }, { "metin": "fifteen" }, { "metin": "fifty" }, { "metin": "I am sixteen years old." }
+        ] },
+        { "tur": "serbest", "id": "yas", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "**Yaşını İngilizce söyle** (“I am … years old.”). Sonra 1'den 10'a kadar sesli say. Yazıyorsan sayıları sözcükle yaz: one, two, three…",
+          "ornek": "I am sixteen years old. One, two, three, four, five, six, seven, eight, nine, ten.",
+          "noktalar": [
+            { "ad": "Yaşını söyledin", "kabul": ["years old", "i am", "i'm"] },
+            { "ad": "1'den 10'a kadar sayıları söyledin", "kabul": ["ten"] }
+          ] }
+      ]
+    },
+
+    {
+      "id": "en-03-esyalar", "iz": "ingilizce", "sv": 4, "emoji": "🎒",
+      "baslik": "Eşyalar ve renkler",
+      "hedef": "Bir eşyanın ne olduğunu ve rengini söylemek: “This is a pen. It is blue.” ve “Is this your bag?” diye sormak.",
+      "neden": "Çevrendeki şeylerin adını bilmek, gün içinde sürekli kullanacağın en somut kelime hazinesidir. Renk + eşya kalıbı da tüm cümlelerin temeli.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "“Bu bir kalem. O mavi.”", "bloklar": [
+          { "emoji": "🎒", "altyazi": "Eşyalar ve renkler" },
+          { "ornek": { "en": "This is a pen.", "tr": "Bu bir tükenmez kalem." } },
+          { "ornek": { "en": "It is blue.", "tr": "O mavi." } },
+          { "kutu": "**Renk önce, eşya sonra:** *a red bag* = kırmızı bir çanta. Türkçeyle aynı sıra — kolay." },
+          { "kutu": "**a / an:** Bir şeyden ilk kez söz edince önüne **a** gelir: *a pen*. Sesli harfle (a, e, i, o, u) başlayan sözcüklerde **an** gelir: *an orange bag*." },
+          { "ipucu": "**This** yakındaki bir şeyi gösterir (bu), **it** daha önce söz ettiğin şeye döner (o). “This is a bag. It is red.”" }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["red", "blue", "green", "yellow", "black", "white", "orange"] },
+        { "tur": "alistirma", "kelimeler": ["red", "blue", "green", "yellow", "black", "white", "orange"], "adet": 9, "bolum": "Renkler" },
+        { "tur": "kelime-ogren", "kelimeler": ["bag", "pen", "pencil", "notebook", "book", "phone", "have"] },
+        { "tur": "alistirma", "kelimeler": ["bag", "pen", "pencil", "notebook", "book", "phone", "have"], "adet": 10, "bolum": "Eşyalar" },
+        { "tur": "alistirma", "kelimeler": ["red", "blue", "green", "yellow", "black", "white", "orange", "bag", "pen", "pencil", "notebook", "book", "phone", "have"], "adet": 12, "bolum": "Karışık alıştırma" },
+        { "tur": "sahne", "id": "kayip-esya", "baslik": "Kayıp eşyalar", "ortam": "Okul koridoru. Mr. Ray, bulunan eşyaları Ece'ye gösteriyor.",
+          "satirlar": [
+            { "kim": "Mr. Ray", "en": "Hi, Ece. Is this your pen?", "tr": "Merhaba Ece. Bu senin tükenmez kalemin mi?" },
+            { "kim": "Ece", "en": "No, it isn't. My pen is blue.", "tr": "Hayır, değil. Benim tükenmez kalemim mavi." },
+            { "kim": "Mr. Ray", "en": "Is this your notebook? It is green.", "tr": "Bu senin defterin mi? Yeşil." },
+            { "kim": "Ece", "en": "Yes, it is! Thank you.", "tr": "Evet, benim! Teşekkür ederim." },
+            { "kim": "Mr. Ray", "en": "And this black phone?", "tr": "Peki bu siyah telefon?" },
+            { "kim": "Ece", "en": "No, it isn't mine. I have a white phone.", "tr": "Hayır, benim değil. Benim telefonum beyaz." }
+          ],
+          "sorular": [
+            { "soru": "Ece'nin tükenmez kalemi hangi renk?", "secenekler": ["Mavi", "Yeşil", "Siyah"], "aciklama": "Ece: “My pen is blue.”" },
+            { "soru": "Ece hangi eşyasını geri aldı?", "secenekler": ["Yeşil defterini", "Mavi tükenmez kalemini", "Siyah telefonunu"], "aciklama": "Defter için “Yes, it is!” dedi. Kalem ve telefon ona ait değildi." },
+            { "soru": "“Is this your pen?” ne demek?", "secenekler": ["Bu senin tükenmez kalemin mi?", "Bu bir tükenmez kalem.", "Tükenmez kalemin nerede?"], "aciklama": "Soru yaparken **is** başa geçer: This is… → Is this…?" }
+          ],
+          "kelimeler": ["pen", "notebook", "phone", "blue", "green", "black", "white", "have"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Kırmızı bir çanta” hangisi?", "secenekler": ["a red bag", "a bag red", "red a bag"], "aciklama": "Renk, eşyanın önüne gelir: a + renk + eşya." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“___ orange bag.” Boşluğa ne gelir?", "secenekler": ["an", "a", "is"], "aciklama": "Orange sesli harfle başlar → an orange bag." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Bu bir defter.” İngilizcesi hangisi?", "secenekler": ["This is a notebook.", "This a notebook is.", "Is this notebook."] },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Bu bir tükenmez kalem.", "en": "This is a pen.", "ek": ["an"] },
+          { "tr": "Çantam kırmızı.", "en": "My bag is red.", "ek": ["are"] },
+          { "tr": "Mavi bir defterim var.", "en": "I have a blue notebook.", "ek": ["am"] },
+          { "tr": "Bu senin kitabın mı?", "en": "Is this your book?" },
+          { "tr": "O siyah bir telefon.", "en": "It is a black phone." }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "This is a red bag." }, { "metin": "My pen is blue." }, { "metin": "I have a black phone." }, { "metin": "Is this your notebook?" }
+        ] },
+        { "tur": "serbest", "id": "esyalar", "bolum": "Şimdi sıra sende", "kip": "yaz", "dil": "en",
+          "soru": "Çevrende gördüğün **üç eşyayı rengiyle** İngilizce yaz: **a (renk) (eşya)**. Sonra birinin rengini cümleyle söyle.",
+          "ipucu": "Bildiğin eşya kelimeleri: bag, pen, pencil, notebook, book, phone.",
+          "ornek": "a blue pen. a white notebook. a black phone. My phone is black.",
+          "noktalar": [
+            { "ad": "Üç eşya yazdın", "kabul": ["pen", "bag", "book", "phone", "notebook", "pencil"] },
+            { "ad": "Renk kullandın", "kabul": ["red", "blue", "green", "yellow", "black", "white", "orange"] },
+            { "ad": "Bir cümle kurdun (… is …)", "kabul": [" is "] }
+          ] }
+      ]
+    },
+
+    {
+      "id": "en-04-gunler", "iz": "ingilizce", "sv": 5, "emoji": "📅",
+      "baslik": "Günler ve plan yapmak",
+      "hedef": "Haftanın günlerini bilmek, “The class is on Tuesday. It starts at four.” gibi bir planı söylemek ve anlamak.",
+      "neden": "Buluşma, ders, randevu: her plan bir gün ve bir saatle söylenir. “on + gün”, “at + saat” kalıbını bir kez öğrenince bunu hiç karıştırmazsın.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Haftanın günleri", "bloklar": [
+          { "emoji": "📅", "altyazi": "Günler ve plan" },
+          { "tablo": { "baslik": ["Türkçe", "İngilizce"], "satirlar": [["Pazartesi", "Monday"], ["Salı", "Tuesday"], ["Çarşamba", "Wednesday"], ["Perşembe", "Thursday"], ["Cuma", "Friday"], ["Cumartesi", "Saturday"], ["Pazar", "Sunday"]] } },
+          { "kutu": "**on + gün, at + saat:** *on Monday* (Pazartesi günü), *at four* (saat dörtte)." },
+          { "ipucu": "İngilizcede gün adları cümlenin ortasında bile **büyük harfle** başlar: on **T**uesday." }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] },
+        { "tur": "alistirma", "kelimeler": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"], "adet": 10, "bolum": "Günler" },
+        { "tur": "kelime-ogren", "kelimeler": ["today", "tomorrow", "week", "when", "start", "class", "library", "meet", "see-you"] },
+        { "tur": "alistirma", "kelimeler": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "today", "tomorrow", "week", "when", "start", "class", "library", "meet", "see-you"], "adet": 14, "bolum": "Karışık alıştırma" },
+        { "tur": "sahne", "id": "ders-plani", "baslik": "Ders ne zaman?", "ortam": "Okul koridoru. Ece ve Sam, dersin gününü ve saatini konuşuyor.",
+          "satirlar": [
+            { "kim": "Sam", "en": "Hi, Ece. When is the class?", "tr": "Selam Ece. Ders ne zaman?" },
+            { "kim": "Ece", "en": "The class is on Tuesday.", "tr": "Ders Salı günü." },
+            { "kim": "Sam", "en": "What time does it start?", "tr": "Saat kaçta başlıyor?" },
+            { "kim": "Ece", "en": "It starts at four.", "tr": "Dörtte başlıyor." },
+            { "kim": "Sam", "en": "Is today Tuesday?", "tr": "Bugün Salı mı?" },
+            { "kim": "Ece", "en": "Yes, it is. The class is today!", "tr": "Evet. Ders bugün!" },
+            { "kim": "Sam", "en": "Great! See you at four.", "tr": "Harika! Dörtte görüşürüz." },
+            { "kim": "Ece", "en": "See you!", "tr": "Görüşürüz!" }
+          ],
+          "sorular": [
+            { "soru": "Ders hangi gün?", "secenekler": ["Salı", "Pazartesi", "Cuma"], "aciklama": "Ece: “The class is on Tuesday.”" },
+            { "soru": "Ders saat kaçta başlıyor?", "secenekler": ["Dörtte", "Beşte", "Üçte"], "aciklama": "“It starts at four.” → dörtte başlıyor." },
+            { "soru": "Ders ne zaman?", "secenekler": ["Bugün", "Yarın", "Cuma günü"], "aciklama": "Ders Salı günü ve bugün de Salı → ders bugün." }
+          ],
+          "kelimeler": ["class", "tuesday", "when", "start", "today", "see-you"],
+          "not": "Sam'in “What time does it start?” sorusunu şimdilik **kalıp** olarak öğren: “saat kaçta başlıyor?”. Yapısını sonraki haftalarda açacağız." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“The class starts ___ Tuesday.” Boşluğa ne gelir?", "secenekler": ["on", "at", "in"], "aciklama": "Gün adı + **on**: on Tuesday." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“The class starts ___ four.” Boşluğa ne gelir?", "secenekler": ["at", "on", "in"], "aciklama": "Saat + **at**: at four." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Tomorrow” ne demek?", "secenekler": ["yarın", "bugün", "hafta"] },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Bugün Pazartesi.", "en": "Today is Monday.", "ek": ["are"] },
+          { "tr": "Ders Salı günü.", "en": "The class is on Tuesday.", "ek": ["at"] },
+          { "tr": "Ders dörtte başlıyor.", "en": "The class starts at four.", "ek": ["on"] },
+          { "tr": "Yarın görüşürüz.", "en": "See you tomorrow." },
+          { "tr": "Ders ne zaman?", "en": "When is the class?" }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "Today is Friday." }, { "metin": "The class is on Monday." }, { "metin": "It starts at four." }, { "metin": "See you tomorrow." }
+        ] },
+        { "tur": "serbest", "id": "plan", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "Bu hafta için **bir plan** söyle ya da yaz: bir gün ve bir saat ver. (Örn: “See you on Saturday at four.”)",
+          "ornek": "The class is on Tuesday. It starts at four. See you on Saturday!",
+          "noktalar": [
+            { "ad": "Bir gün adı kullandın", "kabul": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] },
+            { "ad": "Bir saat söyledin (at …)", "kabul": [" at "] },
+            { "ad": "Gün için on, saat için at kullandın", "kabul": [" on "] }
+          ] }
+      ]
+    }
+  ]
+}

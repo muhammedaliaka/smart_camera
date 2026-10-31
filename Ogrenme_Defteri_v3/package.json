@@ -1,0 +1,14 @@
+{
+  "name": "ogrenme-defteri",
+  "version": "3.3.0",
+  "private": true,
+  "description": "Öğrenme Defteri: telefon ve tablette çalışan, derleme gerektirmeyen çalışma uygulaması",
+  "type": "module",
+  "scripts": {
+    "baslat": "node scripts/sunucu.mjs",
+    "dogrula": "node scripts/dogrula.mjs",
+    "guncelle": "node scripts/guncelle.mjs",
+    "test": "node --test \"tests/unit/*.test.mjs\""
+  },
+  "engines": { "node": ">=20" }
+}

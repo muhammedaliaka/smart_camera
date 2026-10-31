@@ -1,0 +1,53 @@
+{
+  "paket": "genel",
+  "ad": "Genel ayarlar ve dış uygulamalar",
+  "surum": 1,
+  "sesler": {
+    "varsayilan": "anlatici",
+    "konusmacilar": {
+      "Ece": "kadin",
+      "Sam": "erkek",
+      "Mr. Ray": "erkek",
+      "Maya": "kadin",
+      "Daniel": "erkek",
+      "Emma": "kadin"
+    }
+  },
+  "disUygulamalar": [
+    {
+      "id": "voscreen",
+      "ad": "Voscreen",
+      "simge": "🎬",
+      "kisa": "Gerçek video kesitlerini dinle, ne dendiğini seç",
+      "aciklama": "Film, dizi ve röportajlardan kısa kesitler izlersin; kesitte ne söylendiğini seçeneklerden bulursun. Gerçek konuşma hızına ve vurgusuna alışmanın iyi bir yolu.",
+      "nasil": [
+        "Uygulamayı aç; seviye olarak en kolay (Beginner / A1–A2) seçeneği seç.",
+        "Her kesiti önce altyazı olmadan dinle, sonra seçeneklerden birini seç.",
+        "Yanlış çıkan kesitin altyazısını oku ve cümleyi bir kez daha dinle.",
+        "10 kesit bitince kaç tanesini doğru bildiğini aşağıya yaz."
+      ],
+      "uyari": "Ücretsiz sürümde günlük kesit sayısı sınırlı olabilir; sınır dolarsa ertesi gün devam et. Android sürümünün son güncellemesi eski görünüyor (2023); Google Play'de bulamazsan ya da açılmazsa web sitesini kullan. Bizim aramızda otomatik bağlantı yok: sonucu sen girersin.",
+      "play": "https://play.google.com/store/apps/details?id=com.voscreen.voscreenapp",
+      "web": "https://www.voscreen.com",
+      "gorev": "10 kesit çöz ve kaçını doğru bildiğini yaz.",
+      "ios": "https://apps.apple.com/app/id907906083"
+    },
+    {
+      "id": "busuu",
+      "ad": "Busuu",
+      "simge": "🟢",
+      "kisa": "Kısa, düzenli İngilizce dersleri",
+      "aciklama": "Seviyene göre sıralı kısa dersler: kelime, dinleme ve konuşma. Kendi derslerimizin yanında ikinci bir bakış açısı verir.",
+      "nasil": [
+        "Uygulamayı aç; dil olarak İngilizce, başlangıç seviyesini seç.",
+        "Sıradaki dersi bitir (genelde birkaç dakikalık).",
+        "Ders sonunda gösterilen sonucu (doğru / toplam) aşağıya yaz."
+      ],
+      "uyari": "Ücretsiz sürümde bazı dersler ve özellikler kilitli olabilir; ücretli planı almak zorunda değilsin. Otomatik bağlantı yok: sonucu sen girersin.",
+      "play": "https://play.google.com/store/apps/details?id=com.busuu.android.enc",
+      "web": "https://www.busuu.com",
+      "gorev": "Sıradaki bir dersi bitir ve sonucu yaz.",
+      "ios": "https://apps.apple.com/us/app/busuu-language-learning/id379968583"
+    }
+  ]
+}

@@ -60,3 +60,7 @@ config.json
 
 # Test dosyaları
 test_*.py
+
+# Öğrenme Defteri: bilgisayarla eşitlenen kişisel kayıt ve belirteç (yayınlanmaz)
+Ogrenme_Defteri_v3/veri/
+Ogrenme_Defteri_v3/e2e-cikti/

@@ -1,0 +1,133 @@
+{
+ "paket": "program",
+ "ad": "Program",
+ "surum": 2,
+ "haftalar": [
+  {
+   "hafta": 1,
+   "baslik": "Yoklama haftası",
+   "gunler": [
+    {
+     "gun": 1,
+     "baslik": "İlk yoklama ve hafıza yöntemi",
+     "hedef": "Her beceride kısa bir yoklama yap: sınav değil, yalnız nereden başlayacağını bulmak için. Bilmediğine “Bilmiyorum” de. Sonra hafıza yöntemini (saray) öğren.",
+     "gorevler": [
+      {
+       "ders": "haf-01-saray"
+      }
+     ]
+    },
+    {
+     "gun": 2,
+     "baslik": "İlk hafıza listesi",
+     "gorevler": [
+      {
+       "ders": "haf-02-liste"
+      }
+     ]
+    },
+    {
+     "gun": 3,
+     "baslik": "Uzun liste",
+     "gorevler": [
+      {
+       "ders": "haf-03-uzun-liste"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "seviyeli": {
+  "baslangicGunu": 1,
+  "desen": [
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "okuma"
+    },
+    {
+     "oturum": "spor"
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "dinleme"
+    },
+    {
+     "oturum": "hafiza"
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "okuma"
+    },
+    {
+     "oturum": "spor"
+    },
+    {
+     "ders": "dis-01-voscreen",
+     "istege": true
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "dinleme"
+    },
+    {
+     "oturum": "hafiza"
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "okuma"
+    },
+    {
+     "oturum": "spor"
+    },
+    {
+     "ders": "dis-02-busuu",
+     "istege": true
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "dinleme"
+    },
+    {
+     "oturum": "hafiza"
+    }
+   ],
+   [
+    {
+     "oturum": "ingilizce"
+    },
+    {
+     "oturum": "hafiza",
+     "istege": true
+    },
+    {
+     "oturum": "spor",
+     "istege": true
+    }
+   ]
+  ]
+ }
+}

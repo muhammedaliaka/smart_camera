@@ -1,0 +1,346 @@
+{
+  "paket": "ingilizce-hafta2",
+  "ad": "İngilizce · Hafta 2",
+  "surum": 1,
+  "dersler": [
+    {
+      "id": "en-05-sinif-dili", "iz": "ingilizce", "sv": 6, "emoji": "🙋",
+      "baslik": "Sınıf dili: anlamadığında ne dersin?",
+      "hedef": "Sınıfta sık duyulan komutları (“Open the door.”) anlamak ve anlamadığında kibarca yardım istemek (“Can you repeat that, please?”).",
+      "neden": "İngilizce öğrenirken en çok işine yarayacak cümleler bunlar: anlamadığında pes etmek yerine ne diyeceğini bilirsen konuşma devam eder. Gerçek hayatta da herkes tekrar ister.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Komutlar ve rica", "bloklar": [
+          { "emoji": "🙋", "altyazi": "Sınıf dili" },
+          { "p": "Öğretmenler ve arkadaşlar sana şöyle seslenir. **Fiil cümlenin başında** durur, özne yoktur:" },
+          { "tablo": { "baslik": ["İngilizce", "Türkçe"], "satirlar": [["Open the door.", "Kapıyı aç."], ["Close the window.", "Pencereyi kapat."], ["Wait here.", "Burada bekle."], ["Bring your notebook.", "Defterini getir."], ["Listen.", "Dinle."], ["Repeat the word.", "Sözcüğü tekrar et."]] } },
+          { "kutu": "**Please** her komutu kibar yapar: *Please open the door.* Türkçedeki “lütfen” gibi; başa da sona da gelebilir." },
+          { "ipucu": "Rica ederken **Can you …, please?** kalıbını kullan: “Can you repeat that, please?” (Tekrar eder misin, lütfen?)" }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["good-morning", "please", "sorry", "excuse-me", "open", "close", "wait", "bring", "listen", "repeat", "understand", "what"] },
+        { "tur": "alistirma", "kelimeler": ["good-morning", "please", "sorry", "excuse-me", "open", "close", "wait", "bring", "listen", "repeat", "understand", "what"], "adet": 14, "bolum": "Kelime alıştırması" },
+        { "tur": "anlat", "baslik": "Anlamadığında 4 cümle", "bloklar": [
+          { "ornek": { "en": "I don't understand.", "tr": "Anlamıyorum." } },
+          { "ornek": { "en": "Can you repeat that, please?", "tr": "Tekrar eder misin, lütfen?" } },
+          { "ornek": { "en": "Can you speak more slowly, please?", "tr": "Biraz daha yavaş konuşur musun, lütfen?" } },
+          { "ornek": { "en": "What does this word mean?", "tr": "Bu sözcük ne demek?" } },
+          { "kutu": "Bu dört cümleyi ezberle. “Anlamıyorum” demek **utanılacak bir şey değil**; konuşmanın normal bir parçası." }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["k-dont-understand", "k-repeat-please", "k-speak-slowly", "k-what-mean", "k-how-say"] },
+        { "tur": "alistirma", "kelimeler": ["k-dont-understand", "k-repeat-please", "k-speak-slowly", "k-what-mean", "k-how-say"], "turler": ["dinle-sec", "anlam-sec", "kelime-sec"], "adet": 8, "bolum": "Yardım isteme kalıpları" },
+        { "tur": "sahne", "id": "sinifta", "baslik": "Sınıfta", "ortam": "İngilizce dersi. Mr. Ray bir şey söylüyor ama Ece tam anlamıyor.",
+          "satirlar": [
+            { "kim": "Mr. Ray", "en": "Good morning, class. Please open your books.", "tr": "Günaydın sınıf. Lütfen kitaplarınızı açın." },
+            { "kim": "Ece", "en": "Excuse me, Mr. Ray. I don't understand.", "tr": "Affedersiniz Mr. Ray. Anlamadım." },
+            { "kim": "Mr. Ray", "en": "No problem. Please open your books.", "tr": "Sorun değil. Lütfen kitaplarınızı açın." },
+            { "kim": "Ece", "en": "Can you speak more slowly, please?", "tr": "Biraz daha yavaş konuşur musunuz, lütfen?" },
+            { "kim": "Mr. Ray", "en": "Please... open... your... books.", "tr": "Lütfen... kitaplarınızı... açın." },
+            { "kim": "Ece", "en": "Thank you! I understand.", "tr": "Teşekkür ederim! Anladım." }
+          ],
+          "sorular": [
+            { "soru": "Ece neden “I don't understand” dedi?", "secenekler": ["Öğretmenin söylediğini anlamadı", "Kitabını bulamadı", "Dersi sevmedi"], "aciklama": "“I don't understand” = “Anlamıyorum.”" },
+            { "soru": "Ece öğretmenden ne istedi?", "secenekler": ["Daha yavaş konuşmasını", "Kapıyı açmasını", "Dersi bitirmesini"], "aciklama": "“Can you speak more slowly, please?” = “Daha yavaş konuşur musun, lütfen?”" },
+            { "soru": "Öğretmen sınıftan ne yapmalarını istiyor?", "secenekler": ["Kitaplarını açmalarını", "Kapıyı kapatmalarını", "Beklemelerini"], "aciklama": "“Please open your books.”" }
+          ],
+          "kelimeler": ["good-morning", "excuse-me", "understand", "open", "please", "k-dont-understand", "k-speak-slowly"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Lütfen kapıyı kapat.” İngilizcesi hangisi?", "secenekler": ["Please close the door.", "Please the door close.", "You close please door."] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "Karşındaki çok hızlı konuştu. Ne dersin?", "secenekler": ["Can you speak more slowly, please?", "Please open the door.", "Good morning!"] },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Lütfen kapıyı aç.", "en": "Please open the door." },
+          { "tr": "Defterini getir.", "en": "Bring your notebook.", "ek": ["brings"] },
+          { "tr": "Tekrar eder misin, lütfen?", "en": "Can you repeat that, please?" },
+          { "tr": "Anlamıyorum.", "en": "I don't understand.", "ek": ["not"] },
+          { "tr": "Affedersiniz.", "en": "Excuse me." }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "Please open the door." }, { "metin": "Please bring your notebook." }, { "metin": "I don't understand." }, { "metin": "Can you repeat that, please?" }
+        ] },
+        { "tur": "serbest", "id": "yardim-iste", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "Birinin sana İngilizce bir şey söylediğini ve **anlamadığını** düşün. Yardım istemek için **üç farklı cümle** söyle ya da yaz.",
+          "ipucu": "Dört kalıbı hatırla: I don't understand. / Can you repeat that, please? / Can you speak more slowly, please? / What does this word mean?",
+          "ornek": "Excuse me. I don't understand. Can you repeat that, please? Can you speak more slowly, please?",
+          "noktalar": [
+            { "ad": "Anlamadığını söyledin (I don't understand)", "kabul": ["do not understand"] },
+            { "ad": "Tekrar istedin (repeat)", "kabul": ["repeat"] },
+            { "ad": "Daha yavaş konuşmasını istedin (slowly)", "kabul": ["slowly"] }
+          ] }
+      ]
+    },
+
+    {
+      "id": "en-06-yerler", "iz": "ingilizce", "sv": 7, "emoji": "📍",
+      "baslik": "Nerede? Yerler ve eşyaların yeri",
+      "hedef": "Bir şeyin yerini söylemek ve sormak: “Where is my bag? — It is under the chair.”",
+      "neden": "“Nerede?” en sık sorulan sorulardan biri. Ayrıca yer bildiren küçük sözcükler (in, on, under, next to) hemen hemen her cümlede karşına çıkar.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "in · on · under · next to", "bloklar": [
+          { "emoji": "📍", "altyazi": "Yer bildirenler" },
+          { "p": "Türkçede yer **eklerle** söylenir: “masanın **üzerinde**”. İngilizcede ise yer sözcüğü **ismin önüne** gelir:" },
+          { "tablo": { "baslik": ["İngilizce", "Anlamı"], "satirlar": [["in the bag", "çantanın içinde"], ["on the table", "masanın üzerinde"], ["under the chair", "sandalyenin altında"], ["next to the door", "kapının yanında"]] } },
+          { "kutu": "**the** = “şu bildiğimiz”: ikimiz de hangi masadan söz ettiğimizi biliyorsak *the table* deriz. İlk kez söz ediyorsak *a table*." },
+          { "ornek": { "en": "Where is my bag?", "tr": "Çantam nerede?" } },
+          { "ornek": { "en": "It is under the chair.", "tr": "Sandalyenin altında." } }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["where", "in", "on", "under", "next-to", "table", "chair", "door", "window"] },
+        { "tur": "alistirma", "kelimeler": ["where", "in", "on", "under", "next-to", "table", "chair", "door", "window"], "adet": 12, "bolum": "Yer sözcükleri" },
+        { "tur": "kelime-ogren", "kelimeler": ["school", "home", "room", "park", "big", "small", "new"] },
+        { "tur": "alistirma", "kelimeler": ["school", "home", "room", "park", "big", "small", "new", "where", "in", "on", "under", "next-to", "table", "chair", "door", "window"], "adet": 14, "bolum": "Karışık alıştırma" },
+        { "tur": "sahne", "id": "kayip-canta", "baslik": "Çantam nerede?", "ortam": "Okul odası. Ece çantasını arıyor; Sam yardım ediyor.",
+          "satirlar": [
+            { "kim": "Ece", "en": "Excuse me, Sam. Where is my bag?", "tr": "Pardon Sam. Çantam nerede?" },
+            { "kim": "Sam", "en": "Is it a red bag?", "tr": "Kırmızı bir çanta mı?" },
+            { "kim": "Ece", "en": "No, it is a blue bag. It is small.", "tr": "Hayır, mavi bir çanta. Küçük." },
+            { "kim": "Sam", "en": "Look! It is under the chair, next to the door.", "tr": "Bak! Sandalyenin altında, kapının yanında." },
+            { "kim": "Ece", "en": "Oh, yes! Thank you. And my phone?", "tr": "Ah, evet! Teşekkürler. Peki telefonum?" },
+            { "kim": "Sam", "en": "Your phone is on the table.", "tr": "Telefonun masanın üzerinde." }
+          ],
+          "sorular": [
+            { "soru": "Ece'nin çantası nerede?", "secenekler": ["Sandalyenin altında, kapının yanında", "Masanın üzerinde", "Odanın dışında"], "aciklama": "“It is under the chair, next to the door.”" },
+            { "soru": "Ece'nin çantası nasıl?", "secenekler": ["Mavi ve küçük", "Kırmızı ve büyük", "Siyah ve yeni"], "aciklama": "“It is a blue bag. It is small.”" },
+            { "soru": "Ece'nin telefonu nerede?", "secenekler": ["Masanın üzerinde", "Çantanın içinde", "Sandalyenin altında"], "aciklama": "“Your phone is on the table.”" }
+          ],
+          "kelimeler": ["where", "under", "chair", "next-to", "door", "on", "table", "small"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“The book is ___ the table.” (Kitap masanın üzerinde.)", "secenekler": ["on", "in", "under"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Çantam sandalyenin yanında.” hangisi?", "secenekler": ["My bag is next to the chair.", "My bag is chair next to.", "Next to my bag chair is."] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“under” ne demek?", "secenekler": ["altında", "üzerinde", "içinde"] },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Çanta masanın üzerinde.", "en": "The bag is on the table.", "ek": ["in"] },
+          { "tr": "Kitap çantanın içinde.", "en": "The book is in the bag.", "ek": ["on"] },
+          { "tr": "Telefon sandalyenin altında.", "en": "The phone is under the chair." },
+          { "tr": "Çantan nerede?", "en": "Where is your bag?" },
+          { "tr": "Oda büyük.", "en": "The room is big.", "ek": ["small"] }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "The bag is under the chair." }, { "metin": "Where is my phone?" }, { "metin": "The book is on the table." }, { "metin": "My room is small." }
+        ] },
+        { "tur": "serbest", "id": "yerler", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "Bulunduğun odada **üç eşyanın yerini** İngilizce söyle: **The (eşya) is on / in / under / next to the (yer).**",
+          "ornek": "The phone is on the table. The bag is under the chair. The book is in the bag.",
+          "noktalar": [
+            { "ad": "Üç cümle kurdun", "kabul": [" is "] },
+            { "ad": "En az iki farklı yer sözcüğü kullandın (on, in, under, next to)", "kabul": [" on ", " in ", " under ", "next to"] }
+          ] }
+      ]
+    },
+
+    {
+      "id": "en-07-aile", "iz": "ingilizce", "sv": 8, "emoji": "👪",
+      "baslik": "Ailen ve arkadaşların",
+      "hedef": "Ailenden ve arkadaşlarından söz etmek: “She is my mother. He is my brother. I have one sister.”",
+      "neden": "İnsanlar en çok kendileri ve sevdikleri hakkında konuşur. “O (he / she)” demeyi öğrenince başkalarını da anlatabilirsin.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "He · she · it", "bloklar": [
+          { "emoji": "👪", "altyazi": "Aile" },
+          { "p": "Türkçede “o” tek sözcüktür. İngilizcede **kim olduğuna göre** üç ayrı sözcük vardır:" },
+          { "tablo": { "baslik": ["İngilizce", "Anlamı", "Örnek"], "satirlar": [["he", "o (erkek)", "He is my father."], ["she", "o (kadın)", "She is my mother."], ["it", "o (nesne, hayvan)", "It is a bag."]] } },
+          { "kutu": "**he / she / it** ile fiilin sonuna **-s** gelir: *I live → she lives*, *I have → he has*, *I like → she likes*. (**am / are / is** ise ayrı ayrı: I am, you are, he is.)" },
+          { "ipucu": "“Benim” = **my**. my mother, my father, my friend. Her şeyin önüne aynı sözcük gelir." }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["family", "mother", "father", "sister", "brother", "friend", "teacher", "who", "city", "country"] },
+        { "tur": "alistirma", "kelimeler": ["family", "mother", "father", "sister", "brother", "friend", "teacher", "who", "city", "country"], "adet": 14, "bolum": "Kelime alıştırması" },
+        { "tur": "sahne", "id": "aile-foto", "baslik": "Aile fotoğrafı", "ortam": "Ece, telefonundaki bir fotoğrafı Sam'e gösteriyor.",
+          "satirlar": [
+            { "kim": "Sam", "en": "Who is this?", "tr": "Bu kim?" },
+            { "kim": "Ece", "en": "This is my family. She is my mother. She is a teacher.", "tr": "Bu benim ailem. O benim annem. Öğretmen." },
+            { "kim": "Sam", "en": "And who is he?", "tr": "Peki o kim?" },
+            { "kim": "Ece", "en": "He is my father. He is in the park.", "tr": "O babam. Parkta." },
+            { "kim": "Sam", "en": "Do you have a brother or a sister?", "tr": "Erkek ya da kız kardeşin var mı?" },
+            { "kim": "Ece", "en": "I have one brother. He is ten years old.", "tr": "Bir erkek kardeşim var. On yaşında." },
+            { "kim": "Sam", "en": "Nice! I have one sister.", "tr": "Güzel! Benim de bir kız kardeşim var." }
+          ],
+          "sorular": [
+            { "soru": "Ece'nin annesi ne iş yapıyor?", "secenekler": ["Öğretmen", "Öğrenci", "Doktor"], "aciklama": "“She is a teacher.”" },
+            { "soru": "Ece'nin babası nerede?", "secenekler": ["Parkta", "Okulda", "Evde"], "aciklama": "“He is in the park.”" },
+            { "soru": "Ece'nin kaç erkek kardeşi var, kaç yaşında?", "secenekler": ["Bir, on yaşında", "İki, on yaşında", "Bir, altı yaşında"], "aciklama": "“I have one brother. He is ten years old.”" },
+            { "soru": "Sam'in kimi var?", "secenekler": ["Bir kız kardeşi", "Bir erkek kardeşi", "İki kız kardeşi"], "aciklama": "“I have one sister.”" }
+          ],
+          "kelimeler": ["family", "mother", "father", "brother", "sister", "teacher", "who"],
+          "not": "“Do you have a brother or a sister?” cümlesi kalıp olarak öğrenilir: “… var mı?” demek. Cevabı kolay: “I have …” ya da “No, I don't.”" },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“___ is my mother.” (O benim annem.)", "secenekler": ["She", "He", "It"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“___ is my father.” (O benim babam.)", "secenekler": ["He", "She", "It"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“She ___ in Bursa.” (O Bursa'da yaşıyor.)", "secenekler": ["lives", "live", "living"], "aciklama": "she / he / it ile fiilin sonuna -s gelir." },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Bu benim ailem.", "en": "This is my family." },
+          { "tr": "O benim annem.", "en": "She is my mother.", "ek": ["he"] },
+          { "tr": "O benim babam.", "en": "He is my father.", "ek": ["she"] },
+          { "tr": "Benim bir kız kardeşim var.", "en": "I have one sister.", "ek": ["has"] },
+          { "tr": "Bu kim?", "en": "Who is this?" }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "This is my family." }, { "metin": "She is my mother." }, { "metin": "He is my brother." }, { "metin": "I have one sister." }
+        ] },
+        { "tur": "serbest", "id": "aile", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "Ailenden ya da arkadaşlarından **iki kişiyi** İngilizce tanıt: kim olduğunu ve bir şeyini söyle (öğretmen, öğrenci, yaşı, nerede yaşadığı…).",
+          "ipucu": "He is… / She is… / He lives in… / She has…",
+          "ornek": "This is my friend. He is a student. He lives in Bursa. This is my mother. She is a teacher.",
+          "noktalar": [
+            { "ad": "İki kişiden söz ettin", "kabul": ["my mother", "my father", "my friend", "my brother", "my sister", "he is", "she is"] },
+            { "ad": "He / she kullandın", "kabul": ["he is", "she is", "he has", "she has", "he lives", "she lives"] }
+          ] }
+      ]
+    },
+
+    {
+      "id": "en-08-yemek", "iz": "ingilizce", "sv": 8, "emoji": "🍽️",
+      "baslik": "Yemek, içecek ve sevdiklerin",
+      "hedef": "Ne sevdiğini ve ne istediğini söylemek (I like… / I want…) ve sormak (Do you like…?).",
+      "neden": "Bir kafede, bir arkadaşınla ya da misafirken ne istediğini söyleyebilmek çok gerçekçi bir ihtiyaç. “Sevmek” ve “istemek” fiilleri de en çok kullanılan fiiller arasında.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "I like · I want · Do you like?", "bloklar": [
+          { "emoji": "🍽️", "altyazi": "Yemek ve içecek" },
+          { "tablo": { "baslik": ["İngilizce", "Türkçe"], "satirlar": [["I like tea.", "Çay severim."], ["I want bread.", "Ekmek istiyorum."], ["Do you like milk?", "Süt sever misin?"], ["Yes, I do.", "Evet, severim."], ["No, I don't.", "Hayır, sevmem."]] } },
+          { "kutu": "**Soru yaparken** başa **Do** gelir ve fiil yalın kalır: *You like tea → **Do** you like tea?* Cevap da **do** ile verilir: Yes, I **do**. / No, I **don't**." },
+          { "ipucu": "**a / an** yalnız tek tek sayabildiklerinle: *an apple*. Su, süt, ekmek, çay gibi şeylerde kullanılmaz: *I want water.*" }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["bread", "water", "milk", "tea", "apple", "hot", "cold"] },
+        { "tur": "alistirma", "kelimeler": ["bread", "water", "milk", "tea", "apple", "hot", "cold"], "adet": 10, "bolum": "Yiyecek ve içecek" },
+        { "tur": "kelime-ogren", "kelimeler": ["breakfast", "lunch", "dinner", "eat", "drink", "like", "want"] },
+        { "tur": "alistirma", "kelimeler": ["bread", "water", "milk", "tea", "apple", "hot", "cold", "breakfast", "lunch", "dinner", "eat", "drink", "like", "want"], "adet": 14, "bolum": "Karışık alıştırma" },
+        { "tur": "sahne", "id": "kahvalti", "baslik": "Kahvaltı", "ortam": "Sabah. Ece ve Sam birlikte kahvaltı yapıyor.",
+          "satirlar": [
+            { "kim": "Sam", "en": "Good morning, Ece! Do you want breakfast?", "tr": "Günaydın Ece! Kahvaltı ister misin?" },
+            { "kim": "Ece", "en": "Yes, please. I want bread and tea.", "tr": "Evet, lütfen. Ekmek ve çay istiyorum." },
+            { "kim": "Sam", "en": "Do you like milk?", "tr": "Süt sever misin?" },
+            { "kim": "Ece", "en": "No, I don't. I like tea. Is the tea hot?", "tr": "Hayır, sevmem. Çayı severim. Çay sıcak mı?" },
+            { "kim": "Sam", "en": "Yes, it is hot. Do you want an apple?", "tr": "Evet, sıcak. Elma ister misin?" },
+            { "kim": "Ece", "en": "Yes, please. I want an apple.", "tr": "Evet, lütfen. Bir elma istiyorum." }
+          ],
+          "sorular": [
+            { "soru": "Ece kahvaltıda ne istiyor?", "secenekler": ["Ekmek ve çay", "Süt ve elma", "Su ve ekmek"], "aciklama": "“I want bread and tea.” (Sonra ayrıca bir elma da istedi.)" },
+            { "soru": "Ece sütü sever mi?", "secenekler": ["Hayır, sevmez", "Evet, sever", "Bilinmiyor"], "aciklama": "“No, I don't.” = “Hayır, sevmem.”" },
+            { "soru": "“Is the tea hot?” ne demek?", "secenekler": ["Çay sıcak mı?", "Çay soğuk mu?", "Çay istiyor musun?"] }
+          ],
+          "kelimeler": ["breakfast", "bread", "tea", "milk", "apple", "hot", "like", "want"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“___ you like tea?” (Çay sever misin?)", "secenekler": ["Do", "Are", "Is"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“She ___ milk.” (O süt sever.)", "secenekler": ["likes", "like", "am like"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Bir elma istiyorum.” hangisi?", "secenekler": ["I want an apple.", "I want a water.", "I want an tea."], "aciklama": "Apple sesli harfle başlar → an apple. Water ve tea sayılmaz; “a” almaz." },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Çay istiyorum.", "en": "I want tea.", "ek": ["a"] },
+          { "tr": "Sütü sevmem.", "en": "I don't like milk.", "ek": ["not"] },
+          { "tr": "Bir elma yerim.", "en": "I eat an apple.", "ek": ["a"] },
+          { "tr": "Çay sever misin?", "en": "Do you like tea?" },
+          { "tr": "Su soğuk.", "en": "The water is cold.", "ek": ["are"] }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "I want bread and tea." }, { "metin": "Do you like milk?" }, { "metin": "I don't like milk." }, { "metin": "The tea is hot." }
+        ] },
+        { "tur": "serbest", "id": "sevdiklerim", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "Sevdiğin **iki yiyecek ya da içeceği** ve sevmediğin **bir şeyi** İngilizce söyle. Sonra karşındakine bir soru sor: “Do you like…?”",
+          "ornek": "I like tea and bread. I don't like milk. Do you like apples?",
+          "noktalar": [
+            { "ad": "Sevdiğin iki şeyi söyledin (I like…)", "kabul": ["i like"] },
+            { "ad": "Sevmediğin bir şeyi söyledin (I don't like…)", "kabul": ["do not like"] },
+            { "ad": "Soru sordun (Do you like…?)", "kabul": ["do you like"] }
+          ] }
+      ]
+    },
+
+    {
+      "id": "en-09-gunluk-duzen", "iz": "ingilizce", "sv": 9, "emoji": "⏰",
+      "baslik": "Günlük düzenin",
+      "hedef": "Gününü anlatmak: “I wake up at seven. I go to school in the morning. I sleep at ten.”",
+      "neden": "“Günün nasıl geçiyor?” en doğal sohbet konularından biri. Ayrıca düzenli yapılan işleri anlatmanın kalıbını (I + fiil) öğrenirsin; sonraki konuların çoğu bu kalıba dayanır.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "Gün içinde ne zaman?", "bloklar": [
+          { "emoji": "⏰", "altyazi": "Günlük düzen" },
+          { "tablo": { "baslik": ["İngilizce", "Anlamı"], "satirlar": [["I wake up at seven.", "Yedide uyanırım."], ["I go to school.", "Okula giderim."], ["I do my homework.", "Ev ödevimi yaparım."], ["I sleep at ten.", "Onda uyurum."]] } },
+          { "kutu": "**Saat için at:** at seven. **Günün bölümleri için in:** **in** the morning, **in** the afternoon, **in** the evening. Tek istisna: **at** night." },
+          { "ipucu": "“Ödev yapmak” = **do homework** (do = yapmak). Bu bir kalıp; “make” değil." }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["wake-up", "sleep", "morning", "afternoon", "evening", "night", "homework", "study", "go", "come", "read", "write"] },
+        { "tur": "alistirma", "kelimeler": ["wake-up", "sleep", "morning", "afternoon", "evening", "night", "homework", "study", "go", "come", "read", "write"], "adet": 15, "bolum": "Kelime alıştırması" },
+        { "tur": "sahne", "id": "benim-gunum", "baslik": "Benim günüm", "ortam": "Teneffüs. Sam, Ece'ye gününü soruyor.",
+          "satirlar": [
+            { "kim": "Sam", "en": "What time do you wake up?", "tr": "Kaçta uyanıyorsun?" },
+            { "kim": "Ece", "en": "I wake up at seven. I eat breakfast at eight.", "tr": "Yedide uyanırım. Kahvaltıyı sekizde yaparım." },
+            { "kim": "Sam", "en": "Do you go to school in the morning?", "tr": "Sabahları okula gider misin?" },
+            { "kim": "Ece", "en": "Yes, I do. I study and read at school. I do my homework in the afternoon.", "tr": "Evet. Okulda ders çalışır ve okurum. Ev ödevimi öğleden sonra yaparım." },
+            { "kim": "Sam", "en": "And in the evening?", "tr": "Peki akşam?" },
+            { "kim": "Ece", "en": "I eat dinner at seven. I sleep at ten.", "tr": "Akşam yemeğini yedide yerim. Onda uyurum." }
+          ],
+          "sorular": [
+            { "soru": "Ece kaçta uyanıyor?", "secenekler": ["Yedide", "Sekizde", "Altıda"], "aciklama": "“I wake up at seven.”" },
+            { "soru": "Ece ev ödevini ne zaman yapıyor?", "secenekler": ["Öğleden sonra", "Sabah", "Gece"], "aciklama": "“I do my homework in the afternoon.”" },
+            { "soru": "Ece akşam yemeğini kaçta yiyor?", "secenekler": ["Yedide", "Sekizde", "Onda"], "aciklama": "“I eat dinner at seven.”" },
+            { "soru": "Ece kaçta uyuyor?", "secenekler": ["Onda", "Dokuzda", "Yedide"], "aciklama": "“I sleep at ten.”" }
+          ],
+          "kelimeler": ["wake-up", "breakfast", "morning", "study", "read", "homework", "afternoon", "dinner", "sleep"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Sabahları” için hangisi doğru?", "secenekler": ["in the morning", "at the morning", "on the morning"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Geceleri” için hangisi doğru?", "secenekler": ["at night", "in night", "on night"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“Yedide uyanırım.” hangisi?", "secenekler": ["I wake up at seven.", "I wake up in seven.", "I wake up on seven."] },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Yedide uyanırım.", "en": "I wake up at seven.", "ek": ["in"] },
+          { "tr": "Okula giderim.", "en": "I go to school.", "ek": ["come"] },
+          { "tr": "Sabahları okurum.", "en": "I read in the morning.", "ek": ["at"] },
+          { "tr": "Akşamları ders çalışırım.", "en": "I study in the evening." },
+          { "tr": "Geceleri uyurum.", "en": "I sleep at night.", "ek": ["in"] }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "I wake up at seven." }, { "metin": "I go to school in the morning." }, { "metin": "I do my homework in the afternoon." }, { "metin": "I sleep at ten." }
+        ] },
+        { "tur": "serbest", "id": "gunum", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "**Kendi gününden üç şeyi** saatleriyle İngilizce anlat: “I wake up at …”, “I … in the …”.",
+          "ornek": "I wake up at seven. I go to school in the morning. I do my homework in the afternoon. I sleep at ten.",
+          "noktalar": [
+            { "ad": "Uyanma saatini söyledin (I wake up at…)", "kabul": ["wake up"] },
+            { "ad": "Günün bir bölümünü söyledin (in the morning / afternoon / evening)", "kabul": ["in the morning", "in the afternoon", "in the evening", "at night"] },
+            { "ad": "En az üç cümle kurdun", "kabul": ["i "] }
+          ] }
+      ]
+    },
+
+    {
+      "id": "en-10-yapabildiklerin", "iz": "ingilizce", "sv": 10, "emoji": "💪",
+      "baslik": "Neler yapabilirsin?",
+      "hedef": "Yapabildiğin ve yapamadığın şeyleri söylemek (I can swim. I can't run.) ve sormak (Can you swim?).",
+      "neden": "“Yapabilirim” demek, rica etmek, izin istemek ve yeteneklerini anlatmak için gerekli. Üstelik **can** çok kolay bir yapı: fiilin şekli hiç değişmez.",
+      "adimlar": [
+        { "tur": "anlat", "baslik": "can · can't", "bloklar": [
+          { "emoji": "💪", "altyazi": "Yapabilmek" },
+          { "tablo": { "baslik": ["İngilizce", "Türkçe"], "satirlar": [["I can swim.", "Yüzebilirim."], ["I can't run today.", "Bugün koşamam."], ["Can you swim?", "Yüzebilir misin?"], ["Yes, I can.", "Evet, yüzebilirim."], ["No, I can't.", "Hayır, yüzemem."]] } },
+          { "kutu": "**can** + fiil: fiil **hiç değişmez**, he/she için bile: *She can swim.* (“cans” ve “swims” denmez.) Olumsuzu **can't** (= cannot)." },
+          { "ipucu": "Soru için **can** başa geçer: *You can swim → **Can** you swim?* Önceki derslerdeki “Do you …?” kalıbından daha kısa." }
+        ] },
+        { "tur": "kelime-ogren", "kelimeler": ["can", "walk", "run", "swim", "play", "speak", "learn", "happy", "tired"] },
+        { "tur": "alistirma", "kelimeler": ["can", "walk", "run", "swim", "play", "speak", "learn", "happy", "tired"], "adet": 12, "bolum": "Kelime alıştırması" },
+        { "tur": "sahne", "id": "spor-kulubu", "baslik": "Spor kulübü", "ortam": "Okul bahçesi. Sam ve Ece spor yapmayı konuşuyor.",
+          "satirlar": [
+            { "kim": "Sam", "en": "Ece, can you swim?", "tr": "Ece, yüzebilir misin?" },
+            { "kim": "Ece", "en": "Yes, I can. I can swim and run. Can you swim?", "tr": "Evet, yüzebilirim. Yüzebilir ve koşabilirim. Sen yüzebilir misin?" },
+            { "kim": "Sam", "en": "No, I can't swim. But I can run.", "tr": "Hayır, yüzemem. Ama koşabilirim." },
+            { "kim": "Ece", "en": "Great! Let's run in the park.", "tr": "Harika! Hadi parkta koşalım." },
+            { "kim": "Sam", "en": "Okay! But I am tired today.", "tr": "Tamam! Ama bugün yorgunum." },
+            { "kim": "Ece", "en": "Don't worry. We can walk, too.", "tr": "Dert etme. Yürüyebiliriz de." },
+            { "kim": "Sam", "en": "Thank you. I am happy now!", "tr": "Teşekkürler. Şimdi mutluyum!" }
+          ],
+          "sorular": [
+            { "soru": "Ece neleri yapabiliyor?", "secenekler": ["Yüzebiliyor ve koşabiliyor", "Sadece yürüyebiliyor", "Hiçbirini yapamıyor"], "aciklama": "“I can swim and run.”" },
+            { "soru": "Sam yüzebiliyor mu?", "secenekler": ["Hayır, ama koşabiliyor", "Evet, hem yüzüyor hem koşuyor", "Bilinmiyor"], "aciklama": "“No, I can't swim. But I can run.”" },
+            { "soru": "Sam bugün neden koşmak istemiyor gibi?", "secenekler": ["Yorgun", "Çok mutlu", "Kitap okuyacak"], "aciklama": "“I am tired today.” (tired = yorgun)" },
+            { "soru": "Ece, Sam'i nasıl rahatlatıyor?", "secenekler": ["Yürüyebileceklerini söylüyor", "Eve gitmelerini söylüyor", "Su içmelerini söylüyor"], "aciklama": "“We can walk, too.”" }
+          ],
+          "kelimeler": ["swim", "run", "walk", "tired", "happy", "can"],
+          "not": "“Let's run” = “Hadi koşalım.” Birlikte bir şey önerirken kullanılan kalıp." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“I can ___.” (Yüzebilirim.)", "secenekler": ["swim", "swims", "swimming"] },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“She can ___ English.” (O İngilizce konuşabilir.)", "secenekler": ["speak", "speaks", "speaking"], "aciklama": "can'den sonra fiil hiç değişmez; he/she için bile." },
+        { "tur": "soru", "bolum": "Küçük kontrol", "soru": "“I can't” ne demek?", "secenekler": ["yapamam", "yaparım", "yapmak istiyorum"] },
+        { "tur": "cumle-kur", "bolum": "Cümle kur", "ogeler": [
+          { "tr": "Yüzebilirim.", "en": "I can swim.", "ek": ["swims"] },
+          { "tr": "Koşamıyorum.", "en": "I can't run.", "ek": ["can"] },
+          { "tr": "Yüzebilir misin?", "en": "Can you swim?" },
+          { "tr": "İngilizce konuşabilirim.", "en": "I can speak English." },
+          { "tr": "Yorgunum.", "en": "I am tired.", "ek": ["is"] }
+        ] },
+        { "tur": "dikte", "bolum": "Dikte", "ogeler": [
+          { "metin": "I can swim." }, { "metin": "I can't run today." }, { "metin": "Can you speak English?" }, { "metin": "I am tired but happy." }
+        ] },
+        { "tur": "serbest", "id": "yapabilirim", "bolum": "Şimdi sıra sende", "kip": "ikisi", "dil": "en",
+          "soru": "**Yapabildiğin üç şeyi** ve **yapamadığın bir şeyi** İngilizce söyle ya da yaz: “I can…”, “I can't…”.",
+          "ornek": "I can swim. I can run. I can speak Turkish and English. I can't play the piano.",
+          "noktalar": [
+            { "ad": "Yapabildiğin şeyleri söyledin (I can…)", "kabul": ["i can "] },
+            { "ad": "Yapamadığın bir şeyi söyledin (I can't…)", "kabul": ["can not", "cannot", "can't"] }
+          ] }
+      ]
+    }
+  ]
+}

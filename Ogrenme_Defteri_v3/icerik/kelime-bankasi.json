@@ -1,0 +1,5077 @@
+{
+ "paket": "kelime-bankasi",
+ "ad": "kelime-bankasi",
+ "surum": 1,
+ "uretim": {
+  "kaynak": "giris"
+ },
+ "kelimeler": [
+  {
+   "id": "person",
+   "en": "person",
+   "tr": "kişi",
+   "grup": "insan",
+   "ornek": {
+    "en": "She is a nice person.",
+    "tr": "O iyi bir kişi."
+   },
+   "siklik": 531,
+   "sv": 9
+  },
+  {
+   "id": "man",
+   "en": "man",
+   "tr": "adam",
+   "grup": "insan",
+   "ornek": {
+    "en": "The man is tall.",
+    "tr": "Adam uzun boyludur."
+   },
+   "siklik": 412,
+   "sv": 8
+  },
+  {
+   "id": "woman",
+   "en": "woman",
+   "tr": "kadın",
+   "grup": "insan",
+   "ornek": {
+    "en": "The woman is a doctor.",
+    "tr": "Kadın bir doktordur."
+   },
+   "siklik": 1131,
+   "sv": 13
+  },
+  {
+   "id": "child",
+   "en": "child",
+   "tr": "çocuk",
+   "emoji": "🧒",
+   "grup": "insan",
+   "ornek": {
+    "en": "The child is happy.",
+    "tr": "Çocuk mutlu."
+   },
+   "siklik": 654,
+   "sv": 9
+  },
+  {
+   "id": "boy",
+   "en": "boy",
+   "tr": "erkek çocuk",
+   "grup": "insan",
+   "ornek": {
+    "en": "The boy plays with a ball.",
+    "tr": "Erkek çocuk topla oynar."
+   },
+   "siklik": 1386,
+   "sv": 14
+  },
+  {
+   "id": "girl",
+   "en": "girl",
+   "tr": "kız çocuğu",
+   "grup": "insan",
+   "ornek": {
+    "en": "The girl reads a book.",
+    "tr": "Kız çocuğu kitap okur."
+   },
+   "siklik": 898,
+   "sv": 11
+  },
+  {
+   "id": "baby",
+   "en": "baby",
+   "tr": "bebek",
+   "emoji": "👶",
+   "grup": "insan",
+   "ornek": {
+    "en": "The baby is sleeping.",
+    "tr": "Bebek uyuyor."
+   },
+   "siklik": 667,
+   "sv": 10
+  },
+  {
+   "id": "son",
+   "en": "son",
+   "tr": "oğul",
+   "grup": "insan",
+   "ornek": {
+    "en": "He is my son.",
+    "tr": "O benim oğlum."
+   },
+   "siklik": 1410,
+   "sv": 15
+  },
+  {
+   "id": "daughter",
+   "en": "daughter",
+   "tr": "kız evlat",
+   "grup": "insan",
+   "ornek": {
+    "en": "She is my daughter.",
+    "tr": "O benim kızım."
+   },
+   "siklik": 2809,
+   "sv": 19
+  },
+  {
+   "id": "neighbor",
+   "en": "neighbor",
+   "tr": "komşu",
+   "grup": "insan",
+   "ornek": {
+    "en": "My neighbor is kind.",
+    "tr": "Komşum nazik."
+   },
+   "siklik": 9082,
+   "sv": 22
+  },
+  {
+   "id": "doctor",
+   "en": "doctor",
+   "tr": "doktor",
+   "emoji": "🩺",
+   "grup": "insan",
+   "ornek": {
+    "en": "The doctor helps people.",
+    "tr": "Doktor insanlara yardım eder."
+   },
+   "siklik": 2019,
+   "sv": 18
+  },
+  {
+   "id": "nurse",
+   "en": "nurse",
+   "tr": "hemşire",
+   "emoji": "💉",
+   "grup": "insan",
+   "ornek": {
+    "en": "The nurse is at the hospital.",
+    "tr": "Hemşire hastanede."
+   },
+   "siklik": 4155,
+   "sv": 19
+  },
+  {
+   "id": "driver",
+   "en": "driver",
+   "tr": "şoför",
+   "grup": "insan",
+   "ornek": {
+    "en": "The driver is on the bus.",
+    "tr": "Şoför otobüste."
+   },
+   "siklik": 1688,
+   "sv": 17
+  },
+  {
+   "id": "worker",
+   "en": "worker",
+   "tr": "işçi",
+   "emoji": "👷",
+   "grup": "insan",
+   "ornek": {
+    "en": "The worker is tired.",
+    "tr": "İşçi yorgun."
+   },
+   "siklik": 4289,
+   "sv": 20
+  },
+  {
+   "id": "police",
+   "en": "police",
+   "tr": "polis",
+   "emoji": "👮",
+   "grup": "insan",
+   "ornek": {
+    "en": "The police help us.",
+    "tr": "Polis bize yardım eder."
+   },
+   "siklik": 1258,
+   "sv": 14
+  },
+  {
+   "id": "boss",
+   "en": "boss",
+   "tr": "patron",
+   "grup": "insan",
+   "ornek": {
+    "en": "My boss is kind.",
+    "tr": "Patronum nazik."
+   },
+   "siklik": 4650,
+   "sv": 21
+  },
+  {
+   "id": "customer",
+   "en": "customer",
+   "tr": "müşteri",
+   "grup": "insan",
+   "ornek": {
+    "en": "The customer buys bread.",
+    "tr": "Müşteri ekmek alır."
+   },
+   "siklik": 403,
+   "sv": 7
+  },
+  {
+   "id": "people",
+   "en": "people",
+   "tr": "insanlar",
+   "emoji": "👥",
+   "grup": "insan",
+   "ornek": {
+    "en": "Many people live here.",
+    "tr": "Burada çok insan yaşar."
+   },
+   "siklik": 105,
+   "sv": 6
+  },
+  {
+   "id": "guest",
+   "en": "guest",
+   "tr": "misafir",
+   "grup": "insan",
+   "ornek": {
+    "en": "We have a guest today.",
+    "tr": "Bugün bir misafirimiz var."
+   },
+   "siklik": 1482,
+   "sv": 16
+  },
+  {
+   "id": "king",
+   "en": "king",
+   "tr": "kral",
+   "emoji": "👑",
+   "grup": "insan",
+   "ornek": {
+    "en": "The king lives in a big house.",
+    "tr": "Kral büyük bir evde yaşar."
+   },
+   "siklik": 1008,
+   "sv": 12
+  },
+  {
+   "id": "head",
+   "en": "head",
+   "tr": "baş",
+   "grup": "vucut",
+   "ornek": {
+    "en": "He has a hat on his head.",
+    "tr": "Başında bir şapka var."
+   },
+   "siklik": 689,
+   "sv": 6
+  },
+  {
+   "id": "hand",
+   "en": "hand",
+   "tr": "el",
+   "emoji": "✋",
+   "grup": "vucut",
+   "ornek": {
+    "en": "Wash your hands.",
+    "tr": "Ellerini yıka."
+   },
+   "siklik": 643,
+   "sv": 6
+  },
+  {
+   "id": "eye",
+   "en": "eye",
+   "tr": "göz",
+   "emoji": "👁️",
+   "grup": "vucut",
+   "ornek": {
+    "en": "I have two eyes.",
+    "tr": "İki gözüm var."
+   },
+   "siklik": 1558,
+   "sv": 6
+  },
+  {
+   "id": "ear",
+   "en": "ear",
+   "tr": "kulak",
+   "grup": "vucut",
+   "ornek": {
+    "en": "I have two ears.",
+    "tr": "İki kulağım var."
+   },
+   "siklik": 4544,
+   "sv": 8
+  },
+  {
+   "id": "nose",
+   "en": "nose",
+   "tr": "burun",
+   "emoji": "👃",
+   "grup": "vucut",
+   "ornek": {
+    "en": "This is my nose.",
+    "tr": "Bu benim burnum."
+   },
+   "siklik": 5893,
+   "sv": 8
+  },
+  {
+   "id": "mouth",
+   "en": "mouth",
+   "tr": "ağız",
+   "emoji": "👄",
+   "grup": "vucut",
+   "ornek": {
+    "en": "Open your mouth.",
+    "tr": "Ağzını aç."
+   },
+   "siklik": 3299,
+   "sv": 8
+  },
+  {
+   "id": "face",
+   "en": "face",
+   "tr": "yüz",
+   "emoji": "🙂",
+   "grup": "vucut",
+   "ornek": {
+    "en": "Her face is round.",
+    "tr": "Yüzü yuvarlak."
+   },
+   "siklik": 969,
+   "sv": 8
+  },
+  {
+   "id": "hair",
+   "en": "hair",
+   "tr": "saç",
+   "emoji": "💇",
+   "grup": "vucut",
+   "ornek": {
+    "en": "She has long hair.",
+    "tr": "Uzun saçları var."
+   },
+   "siklik": 1352,
+   "sv": 10
+  },
+  {
+   "id": "arm",
+   "en": "arm",
+   "tr": "kol",
+   "grup": "vucut",
+   "ornek": {
+    "en": "My arm is strong.",
+    "tr": "Kolum güçlü."
+   },
+   "siklik": 3202,
+   "sv": 10
+  },
+  {
+   "id": "leg",
+   "en": "leg",
+   "tr": "bacak",
+   "emoji": "🦵",
+   "grup": "vucut",
+   "ornek": {
+    "en": "My leg is tired.",
+    "tr": "Bacağım yorgun."
+   },
+   "siklik": 4049,
+   "sv": 10
+  },
+  {
+   "id": "foot",
+   "en": "foot",
+   "tr": "ayak",
+   "emoji": "🦶",
+   "grup": "vucut",
+   "ornek": {
+    "en": "My foot is small.",
+    "tr": "Ayağım küçük."
+   },
+   "siklik": 1993,
+   "sv": 8
+  },
+  {
+   "id": "heart",
+   "en": "heart",
+   "tr": "kalp",
+   "grup": "vucut",
+   "ornek": {
+    "en": "My heart is strong.",
+    "tr": "Kalbim güçlü."
+   },
+   "siklik": 885,
+   "sv": 14
+  },
+  {
+   "id": "finger",
+   "en": "finger",
+   "tr": "parmak",
+   "emoji": "☝️",
+   "grup": "vucut",
+   "ornek": {
+    "en": "I have ten fingers.",
+    "tr": "On parmağım var."
+   },
+   "siklik": 4853,
+   "sv": 12
+  },
+  {
+   "id": "tooth",
+   "en": "tooth",
+   "tr": "diş",
+   "emoji": "🦷",
+   "grup": "vucut",
+   "ornek": {
+    "en": "My tooth is white.",
+    "tr": "Dişim beyaz."
+   },
+   "siklik": 9302,
+   "sv": 12
+  },
+  {
+   "id": "body",
+   "en": "body",
+   "tr": "vücut",
+   "grup": "vucut",
+   "ornek": {
+    "en": "Sport is good for the body.",
+    "tr": "Spor vücut için iyidir."
+   },
+   "siklik": 569,
+   "sv": 24
+  },
+  {
+   "id": "health",
+   "en": "health",
+   "tr": "sağlık",
+   "grup": "vucut",
+   "ornek": {
+    "en": "Health is important.",
+    "tr": "Sağlık önemlidir."
+   },
+   "siklik": 117,
+   "sv": 8
+  },
+  {
+   "id": "house",
+   "en": "house",
+   "tr": "ev (bina)",
+   "grup": "ev",
+   "ornek": {
+    "en": "They have a big house.",
+    "tr": "Onların büyük bir evi var."
+   },
+   "siklik": 296,
+   "sv": 8
+  },
+  {
+   "id": "kitchen",
+   "en": "kitchen",
+   "tr": "mutfak",
+   "emoji": "🍳",
+   "grup": "ev",
+   "ornek": {
+    "en": "She is in the kitchen.",
+    "tr": "O mutfakta."
+   },
+   "siklik": 1334,
+   "sv": 12
+  },
+  {
+   "id": "bed",
+   "en": "bed",
+   "tr": "yatak",
+   "emoji": "🛏️",
+   "grup": "ev",
+   "ornek": {
+    "en": "The bed is soft.",
+    "tr": "Yatak yumuşak."
+   },
+   "siklik": 1256,
+   "sv": 10
+  },
+  {
+   "id": "bathroom",
+   "en": "bathroom",
+   "tr": "banyo",
+   "emoji": "🛁",
+   "grup": "ev",
+   "ornek": {
+    "en": "The bathroom is small.",
+    "tr": "Banyo küçük."
+   },
+   "siklik": 3904,
+   "sv": 14
+  },
+  {
+   "id": "garden",
+   "en": "garden",
+   "tr": "bahçe",
+   "grup": "ev",
+   "ornek": {
+    "en": "We sit in the garden.",
+    "tr": "Bahçede otururuz."
+   },
+   "siklik": 660,
+   "sv": 22
+  },
+  {
+   "id": "floor",
+   "en": "floor",
+   "tr": "zemin",
+   "grup": "ev",
+   "ornek": {
+    "en": "The floor is clean.",
+    "tr": "Zemin temiz."
+   },
+   "siklik": 1525,
+   "sv": 30
+  },
+  {
+   "id": "wall",
+   "en": "wall",
+   "tr": "duvar",
+   "emoji": "🧱",
+   "grup": "ev",
+   "ornek": {
+    "en": "The wall is white.",
+    "tr": "Duvar beyaz."
+   },
+   "siklik": 1368,
+   "sv": 28
+  },
+  {
+   "id": "key",
+   "en": "key",
+   "tr": "anahtar",
+   "emoji": "🔑",
+   "grup": "ev",
+   "ornek": {
+    "en": "I have the key.",
+    "tr": "Anahtar bende."
+   },
+   "siklik": 568,
+   "sv": 16
+  },
+  {
+   "id": "clock",
+   "en": "clock",
+   "tr": "duvar saati",
+   "emoji": "🕰️",
+   "grup": "ev",
+   "ornek": {
+    "en": "The clock is on the wall.",
+    "tr": "Saat duvarda."
+   },
+   "siklik": 2904,
+   "sv": 14
+  },
+  {
+   "id": "lamp",
+   "en": "lamp",
+   "tr": "lamba",
+   "emoji": "💡",
+   "grup": "ev",
+   "ornek": {
+    "en": "Turn on the lamp.",
+    "tr": "Lambayı aç."
+   },
+   "siklik": 4603,
+   "sv": 14
+  },
+  {
+   "id": "television",
+   "en": "television",
+   "tr": "televizyon",
+   "emoji": "📺",
+   "grup": "ev",
+   "ornek": {
+    "en": "The television is on.",
+    "tr": "Televizyon açık."
+   },
+   "siklik": 1605,
+   "sv": 12
+  },
+  {
+   "id": "computer",
+   "en": "computer",
+   "tr": "bilgisayar",
+   "emoji": "💻",
+   "grup": "ev",
+   "ornek": {
+    "en": "I use a computer every day.",
+    "tr": "Her gün bilgisayar kullanırım."
+   },
+   "siklik": 311,
+   "sv": 10
+  },
+  {
+   "id": "picture",
+   "en": "picture",
+   "tr": "resim",
+   "emoji": "🖼️",
+   "grup": "ev",
+   "ornek": {
+    "en": "I like this picture.",
+    "tr": "Bu resmi severim."
+   },
+   "siklik": 630,
+   "sv": 20
+  },
+  {
+   "id": "box",
+   "en": "box",
+   "tr": "kutu",
+   "emoji": "📦",
+   "grup": "ev",
+   "ornek": {
+    "en": "The box is empty.",
+    "tr": "Kutu boş."
+   },
+   "siklik": 450,
+   "sv": 14
+  },
+  {
+   "id": "glass",
+   "en": "glass",
+   "tr": "bardak",
+   "grup": "ev",
+   "ornek": {
+    "en": "I drink water from a glass.",
+    "tr": "Bardaktan su içerim."
+   },
+   "siklik": 1275,
+   "sv": 26
+  },
+  {
+   "id": "cup",
+   "en": "cup",
+   "tr": "fincan",
+   "emoji": "☕",
+   "grup": "ev",
+   "ornek": {
+    "en": "I want a cup of tea.",
+    "tr": "Bir fincan çay istiyorum."
+   },
+   "siklik": 1810,
+   "sv": 10
+  },
+  {
+   "id": "plate",
+   "en": "plate",
+   "tr": "tabak",
+   "grup": "ev",
+   "ornek": {
+    "en": "The plate is on the table.",
+    "tr": "Tabak masanın üstünde."
+   },
+   "siklik": 3130,
+   "sv": 16
+  },
+  {
+   "id": "knife",
+   "en": "knife",
+   "tr": "bıçak",
+   "emoji": "🔪",
+   "grup": "ev",
+   "ornek": {
+    "en": "Be careful with the knife.",
+    "tr": "Bıçağa dikkat et."
+   },
+   "siklik": 5569,
+   "sv": 18
+  },
+  {
+   "id": "spoon",
+   "en": "spoon",
+   "tr": "kaşık",
+   "emoji": "🥄",
+   "grup": "ev",
+   "ornek": {
+    "en": "I eat soup with a spoon.",
+    "tr": "Çorbayı kaşıkla içerim."
+   },
+   "sv": 24
+  },
+  {
+   "id": "bottle",
+   "en": "bottle",
+   "tr": "şişe",
+   "emoji": "🍼",
+   "grup": "ev",
+   "ornek": {
+    "en": "The bottle is full.",
+    "tr": "Şişe dolu."
+   },
+   "siklik": 3987,
+   "sv": 16
+  },
+  {
+   "id": "towel",
+   "en": "towel",
+   "tr": "havlu",
+   "grup": "ev",
+   "ornek": {
+    "en": "Take a clean towel.",
+    "tr": "Temiz bir havlu al."
+   },
+   "sv": 28
+  },
+  {
+   "id": "mirror",
+   "en": "mirror",
+   "tr": "ayna",
+   "emoji": "🪞",
+   "grup": "ev",
+   "ornek": {
+    "en": "She looks in the mirror.",
+    "tr": "O aynaya bakar."
+   },
+   "siklik": 3467,
+   "sv": 18
+  },
+  {
+   "id": "roof",
+   "en": "roof",
+   "tr": "çatı",
+   "grup": "ev",
+   "ornek": {
+    "en": "The roof is red.",
+    "tr": "Çatı kırmızı."
+   },
+   "siklik": 4564,
+   "sv": 22
+  },
+  {
+   "id": "stairs",
+   "en": "stairs",
+   "tr": "merdiven",
+   "emoji": "🪜",
+   "grup": "ev",
+   "ornek": {
+    "en": "The stairs are long.",
+    "tr": "Merdiven uzun."
+   },
+   "sv": 30
+  },
+  {
+   "id": "money",
+   "en": "money",
+   "tr": "para",
+   "emoji": "💰",
+   "grup": "ev",
+   "ornek": {
+    "en": "I need money.",
+    "tr": "Paraya ihtiyacım var."
+   },
+   "siklik": 390,
+   "sv": 12
+  },
+  {
+   "id": "paper",
+   "en": "paper",
+   "tr": "kağıt",
+   "emoji": "📄",
+   "grup": "ev",
+   "ornek": {
+    "en": "I need a piece of paper.",
+    "tr": "Bir kağıda ihtiyacım var."
+   },
+   "siklik": 576,
+   "sv": 18
+  },
+  {
+   "id": "letter",
+   "en": "letter",
+   "tr": "mektup",
+   "emoji": "✉️",
+   "grup": "ev",
+   "ornek": {
+    "en": "I write a letter to my friend.",
+    "tr": "Arkadaşıma mektup yazarım."
+   },
+   "siklik": 1190,
+   "sv": 24
+  },
+  {
+   "id": "rice",
+   "en": "rice",
+   "tr": "pirinç",
+   "emoji": "🍚",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I eat rice for lunch.",
+    "tr": "Öğle yemeğinde pirinç yerim."
+   },
+   "siklik": 3501,
+   "sv": 12
+  },
+  {
+   "id": "meat",
+   "en": "meat",
+   "tr": "et",
+   "emoji": "🥩",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "He does not eat meat.",
+    "tr": "O et yemez."
+   },
+   "siklik": 3998,
+   "sv": 12
+  },
+  {
+   "id": "chicken",
+   "en": "chicken",
+   "tr": "tavuk",
+   "emoji": "🍗",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "We have chicken for dinner.",
+    "tr": "Akşam yemeğinde tavuk var."
+   },
+   "siklik": 3571,
+   "sv": 12
+  },
+  {
+   "id": "fish",
+   "en": "fish",
+   "tr": "balık",
+   "emoji": "🐟",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I like fish.",
+    "tr": "Balığı severim."
+   },
+   "siklik": 1555,
+   "sv": 8
+  },
+  {
+   "id": "egg",
+   "en": "egg",
+   "tr": "yumurta",
+   "emoji": "🥚",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I eat an egg for breakfast.",
+    "tr": "Kahvaltıda bir yumurta yerim."
+   },
+   "siklik": 5096,
+   "sv": 10
+  },
+  {
+   "id": "cheese",
+   "en": "cheese",
+   "tr": "peynir",
+   "emoji": "🧀",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I want bread and cheese.",
+    "tr": "Ekmek ve peynir istiyorum."
+   },
+   "siklik": 4168,
+   "sv": 12
+  },
+  {
+   "id": "soup",
+   "en": "soup",
+   "tr": "çorba",
+   "emoji": "🍲",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "The soup is hot.",
+    "tr": "Çorba sıcak."
+   },
+   "siklik": 5878,
+   "sv": 14
+  },
+  {
+   "id": "salad",
+   "en": "salad",
+   "tr": "salata",
+   "emoji": "🥗",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "She makes a salad.",
+    "tr": "O salata yapar."
+   },
+   "siklik": 6659,
+   "sv": 16
+  },
+  {
+   "id": "sugar",
+   "en": "sugar",
+   "tr": "şeker",
+   "emoji": "🍬",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I take tea without sugar.",
+    "tr": "Çayı şekersiz alırım."
+   },
+   "siklik": 3352,
+   "sv": 12
+  },
+  {
+   "id": "salt",
+   "en": "salt",
+   "tr": "tuz",
+   "emoji": "🧂",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "Add some salt.",
+    "tr": "Biraz tuz ekle."
+   },
+   "siklik": 3020,
+   "sv": 23
+  },
+  {
+   "id": "coffee",
+   "en": "coffee",
+   "tr": "kahve",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I drink coffee in the morning.",
+    "tr": "Sabahları kahve içerim."
+   },
+   "siklik": 1929,
+   "sv": 19
+  },
+  {
+   "id": "juice",
+   "en": "juice",
+   "tr": "meyve suyu",
+   "emoji": "🧃",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I want orange juice.",
+    "tr": "Portakal suyu istiyorum."
+   },
+   "siklik": 5687,
+   "sv": 12
+  },
+  {
+   "id": "fruit",
+   "en": "fruit",
+   "tr": "meyve",
+   "emoji": "🍇",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I eat fruit every day.",
+    "tr": "Her gün meyve yerim."
+   },
+   "siklik": 3313,
+   "sv": 26
+  },
+  {
+   "id": "vegetable",
+   "en": "vegetable",
+   "tr": "sebze",
+   "emoji": "🥦",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "Vegetables are good for you.",
+    "tr": "Sebzeler sana iyi gelir."
+   },
+   "siklik": 7561,
+   "sv": 18
+  },
+  {
+   "id": "potato",
+   "en": "potato",
+   "tr": "patates",
+   "emoji": "🥔",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I like potatoes.",
+    "tr": "Patatesi severim."
+   },
+   "siklik": 8448,
+   "sv": 14
+  },
+  {
+   "id": "tomato",
+   "en": "tomato",
+   "tr": "domates",
+   "emoji": "🍅",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "The tomato is red.",
+    "tr": "Domates kırmızı."
+   },
+   "siklik": 9213,
+   "sv": 14
+  },
+  {
+   "id": "banana",
+   "en": "banana",
+   "tr": "muz",
+   "emoji": "🍌",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "The monkey eats a banana.",
+    "tr": "Maymun muz yer."
+   },
+   "siklik": 9286,
+   "sv": 14
+  },
+  {
+   "id": "lemon",
+   "en": "lemon",
+   "tr": "limon",
+   "emoji": "🍋",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I put lemon in my tea.",
+    "tr": "Çayıma limon koyarım."
+   },
+   "siklik": 6582,
+   "sv": 16
+  },
+  {
+   "id": "cake",
+   "en": "cake",
+   "tr": "pasta",
+   "emoji": "🎂",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "We eat cake on birthdays.",
+    "tr": "Doğum günlerinde pasta yeriz."
+   },
+   "siklik": 4196,
+   "sv": 12
+  },
+  {
+   "id": "butter",
+   "en": "butter",
+   "tr": "tereyağı",
+   "emoji": "🧈",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I put butter on my bread.",
+    "tr": "Ekmeğime tereyağı sürerim."
+   },
+   "siklik": 6230,
+   "sv": 18
+  },
+  {
+   "id": "oil",
+   "en": "oil",
+   "tr": "yağ",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "Cook with a little oil.",
+    "tr": "Biraz yağla pişir."
+   },
+   "siklik": 977,
+   "sv": 9
+  },
+  {
+   "id": "food",
+   "en": "food",
+   "tr": "yemek (yiyecek)",
+   "emoji": "🍴",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "The food is ready.",
+    "tr": "Yemek hazır."
+   },
+   "siklik": 417,
+   "sv": 6
+  },
+  {
+   "id": "restaurant",
+   "en": "restaurant",
+   "tr": "restoran",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "We eat at a restaurant.",
+    "tr": "Bir restoranda yemek yeriz."
+   },
+   "siklik": 1694,
+   "sv": 16
+  },
+  {
+   "id": "menu",
+   "en": "menu",
+   "tr": "menü",
+   "emoji": "📋",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "Can I see the menu?",
+    "tr": "Menüyü görebilir miyim?"
+   },
+   "siklik": 1077,
+   "sv": 13
+  },
+  {
+   "id": "hungry",
+   "en": "hungry",
+   "tr": "aç",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "I am hungry.",
+    "tr": "Açım."
+   },
+   "siklik": 8607,
+   "sv": 8
+  },
+  {
+   "id": "thirsty",
+   "en": "thirsty",
+   "tr": "susamış",
+   "grup": "yiyecek",
+   "ornek": {
+    "en": "The children are thirsty.",
+    "tr": "Çocuklar susamış."
+   },
+   "sv": 26
+  },
+  {
+   "id": "shirt",
+   "en": "shirt",
+   "tr": "gömlek",
+   "emoji": "👔",
+   "grup": "giyim",
+   "ornek": {
+    "en": "He wears a white shirt.",
+    "tr": "O beyaz bir gömlek giyer."
+   },
+   "siklik": 1989,
+   "sv": 12
+  },
+  {
+   "id": "shoes",
+   "en": "shoes",
+   "tr": "ayakkabı",
+   "emoji": "👟",
+   "grup": "giyim",
+   "ornek": {
+    "en": "My shoes are new.",
+    "tr": "Ayakkabılarım yeni."
+   },
+   "siklik": 995,
+   "sv": 10
+  },
+  {
+   "id": "coat",
+   "en": "coat",
+   "tr": "palto",
+   "emoji": "🧥",
+   "grup": "giyim",
+   "ornek": {
+    "en": "Take your coat.",
+    "tr": "Paltonu al."
+   },
+   "siklik": 5282,
+   "sv": 14
+  },
+  {
+   "id": "hat",
+   "en": "hat",
+   "tr": "şapka",
+   "emoji": "🎩",
+   "grup": "giyim",
+   "ornek": {
+    "en": "He has a red hat.",
+    "tr": "Kırmızı bir şapkası var."
+   },
+   "siklik": 3118,
+   "sv": 12
+  },
+  {
+   "id": "dress",
+   "en": "dress",
+   "tr": "elbise",
+   "emoji": "👗",
+   "grup": "giyim",
+   "ornek": {
+    "en": "She has a blue dress.",
+    "tr": "Mavi bir elbisesi var."
+   },
+   "siklik": 2844,
+   "sv": 14
+  },
+  {
+   "id": "trousers",
+   "en": "trousers",
+   "tr": "pantolon",
+   "emoji": "👖",
+   "grup": "giyim",
+   "ornek": {
+    "en": "These trousers are too long.",
+    "tr": "Bu pantolon çok uzun."
+   },
+   "sv": 27
+  },
+  {
+   "id": "socks",
+   "en": "socks",
+   "tr": "çorap",
+   "emoji": "🧦",
+   "grup": "giyim",
+   "ornek": {
+    "en": "I need new socks.",
+    "tr": "Yeni çoraplara ihtiyacım var."
+   },
+   "siklik": 6819,
+   "sv": 16
+  },
+  {
+   "id": "pocket",
+   "en": "pocket",
+   "tr": "cep",
+   "grup": "giyim",
+   "ornek": {
+    "en": "The key is in my pocket.",
+    "tr": "Anahtar cebimde."
+   },
+   "siklik": 2057,
+   "sv": 14
+  },
+  {
+   "id": "wear",
+   "en": "wear",
+   "tr": "giymek",
+   "grup": "giyim",
+   "ornek": {
+    "en": "I wear a coat in winter.",
+    "tr": "Kışın palto giyerim."
+   },
+   "siklik": 2642,
+   "sv": 26
+  },
+  {
+   "id": "street",
+   "en": "street",
+   "tr": "sokak",
+   "emoji": "🛣️",
+   "grup": "sehir",
+   "ornek": {
+    "en": "Our street is quiet.",
+    "tr": "Sokağımız sessiz."
+   },
+   "siklik": 522,
+   "sv": 23
+  },
+  {
+   "id": "shop",
+   "en": "shop",
+   "tr": "dükkân",
+   "emoji": "🏪",
+   "grup": "sehir",
+   "ornek": {
+    "en": "The shop is open.",
+    "tr": "Dükkân açık."
+   },
+   "siklik": 342,
+   "sv": 18
+  },
+  {
+   "id": "market",
+   "en": "market",
+   "tr": "pazar yeri",
+   "emoji": "🛒",
+   "grup": "sehir",
+   "ornek": {
+    "en": "I buy fruit at the market.",
+    "tr": "Pazardan meyve alırım."
+   },
+   "siklik": 469,
+   "sv": 20
+  },
+  {
+   "id": "bank",
+   "en": "bank",
+   "tr": "banka",
+   "emoji": "🏦",
+   "grup": "sehir",
+   "ornek": {
+    "en": "The bank is near the park.",
+    "tr": "Banka parkın yakınında."
+   },
+   "siklik": 871,
+   "sv": 29
+  },
+  {
+   "id": "hospital",
+   "en": "hospital",
+   "tr": "hastane",
+   "emoji": "🏥",
+   "grup": "sehir",
+   "ornek": {
+    "en": "My mother works at a hospital.",
+    "tr": "Annem hastanede çalışır."
+   },
+   "siklik": 1340,
+   "sv": 16
+  },
+  {
+   "id": "station",
+   "en": "station",
+   "tr": "istasyon",
+   "emoji": "🚉",
+   "grup": "sehir",
+   "ornek": {
+    "en": "The station is far from here.",
+    "tr": "İstasyon buradan uzak."
+   },
+   "siklik": 1302,
+   "sv": 18
+  },
+  {
+   "id": "airport",
+   "en": "airport",
+   "tr": "havalimanı",
+   "emoji": "🛫",
+   "grup": "sehir",
+   "ornek": {
+    "en": "We are at the airport.",
+    "tr": "Havalimanındayız."
+   },
+   "siklik": 1183,
+   "sv": 18
+  },
+  {
+   "id": "bus",
+   "en": "bus",
+   "tr": "otobüs",
+   "emoji": "🚌",
+   "grup": "sehir",
+   "ornek": {
+    "en": "I take the bus to work.",
+    "tr": "İşe otobüsle giderim."
+   },
+   "siklik": 1967,
+   "sv": 10
+  },
+  {
+   "id": "car",
+   "en": "car",
+   "tr": "araba",
+   "emoji": "🚗",
+   "grup": "sehir",
+   "ornek": {
+    "en": "My father has a car.",
+    "tr": "Babamın bir arabası var."
+   },
+   "siklik": 243,
+   "sv": 8
+  },
+  {
+   "id": "train",
+   "en": "train",
+   "tr": "tren",
+   "emoji": "🚆",
+   "grup": "sehir",
+   "ornek": {
+    "en": "The train is late.",
+    "tr": "Tren geç kaldı."
+   },
+   "siklik": 2484,
+   "sv": 12
+  },
+  {
+   "id": "bicycle",
+   "en": "bicycle",
+   "tr": "bisiklet",
+   "emoji": "🚲",
+   "grup": "sehir",
+   "ornek": {
+    "en": "I ride my bicycle in the park.",
+    "tr": "Parkta bisikletime binerim."
+   },
+   "siklik": 6998,
+   "sv": 16
+  },
+  {
+   "id": "ticket",
+   "en": "ticket",
+   "tr": "bilet",
+   "emoji": "🎫",
+   "grup": "sehir",
+   "ornek": {
+    "en": "I have a ticket.",
+    "tr": "Biletim var."
+   },
+   "siklik": 2748,
+   "sv": 16
+  },
+  {
+   "id": "road",
+   "en": "road",
+   "tr": "yol",
+   "emoji": "🛤️",
+   "grup": "sehir",
+   "ornek": {
+    "en": "The road is long.",
+    "tr": "Yol uzun."
+   },
+   "siklik": 589,
+   "sv": 26
+  },
+  {
+   "id": "bridge",
+   "en": "bridge",
+   "tr": "köprü",
+   "emoji": "🌉",
+   "grup": "sehir",
+   "ornek": {
+    "en": "We walk across the bridge.",
+    "tr": "Köprüden yürüyerek geçeriz."
+   },
+   "siklik": 2269,
+   "sv": 22
+  },
+  {
+   "id": "map",
+   "en": "map",
+   "tr": "harita",
+   "emoji": "🗺️",
+   "grup": "sehir",
+   "ornek": {
+    "en": "Look at the map.",
+    "tr": "Haritaya bak."
+   },
+   "siklik": 196,
+   "sv": 12
+  },
+  {
+   "id": "village",
+   "en": "village",
+   "tr": "köy",
+   "grup": "sehir",
+   "ornek": {
+    "en": "My grandmother lives in a village.",
+    "tr": "Büyükannem bir köyde yaşar."
+   },
+   "siklik": 1920,
+   "sv": 18
+  },
+  {
+   "id": "church",
+   "en": "church",
+   "tr": "kilise",
+   "emoji": "⛪",
+   "grup": "sehir",
+   "ornek": {
+    "en": "The church is old.",
+    "tr": "Kilise eski."
+   },
+   "siklik": 946,
+   "sv": 31
+  },
+  {
+   "id": "hotel",
+   "en": "hotel",
+   "tr": "otel",
+   "emoji": "🏨",
+   "grup": "sehir",
+   "ornek": {
+    "en": "The hotel is near the sea.",
+    "tr": "Otel denize yakın."
+   },
+   "siklik": 210,
+   "sv": 14
+  },
+  {
+   "id": "museum",
+   "en": "museum",
+   "tr": "müze",
+   "emoji": "🏛️",
+   "grup": "sehir",
+   "ornek": {
+    "en": "We go to the museum.",
+    "tr": "Müzeye gideriz."
+   },
+   "siklik": 1732,
+   "sv": 34
+  },
+  {
+   "id": "address",
+   "en": "address",
+   "tr": "adres",
+   "grup": "sehir",
+   "ornek": {
+    "en": "What is your address?",
+    "tr": "Adresiniz nedir?"
+   },
+   "siklik": 248,
+   "sv": 15
+  },
+  {
+   "id": "sun",
+   "en": "sun",
+   "tr": "güneş",
+   "emoji": "☀️",
+   "grup": "doga",
+   "ornek": {
+    "en": "The sun is hot.",
+    "tr": "Güneş sıcak."
+   },
+   "siklik": 644,
+   "sv": 10
+  },
+  {
+   "id": "moon",
+   "en": "moon",
+   "tr": "ay",
+   "grup": "doga",
+   "ornek": {
+    "en": "The moon is bright tonight.",
+    "tr": "Ay bu gece parlak."
+   },
+   "siklik": 2778,
+   "sv": 13
+  },
+  {
+   "id": "star",
+   "en": "star",
+   "tr": "yıldız",
+   "emoji": "⭐",
+   "grup": "doga",
+   "ornek": {
+    "en": "I can see a star.",
+    "tr": "Bir yıldız görebiliyorum."
+   },
+   "siklik": 638,
+   "sv": 10
+  },
+  {
+   "id": "sky",
+   "en": "sky",
+   "tr": "gökyüzü",
+   "emoji": "🌌",
+   "grup": "doga",
+   "ornek": {
+    "en": "The sky is blue.",
+    "tr": "Gökyüzü mavi."
+   },
+   "siklik": 2848,
+   "sv": 14
+  },
+  {
+   "id": "rain",
+   "en": "rain",
+   "tr": "yağmur",
+   "emoji": "🌧️",
+   "grup": "doga",
+   "ornek": {
+    "en": "I like the rain.",
+    "tr": "Yağmuru severim."
+   },
+   "siklik": 2922,
+   "sv": 14
+  },
+  {
+   "id": "snow",
+   "en": "snow",
+   "tr": "kar",
+   "emoji": "❄️",
+   "grup": "doga",
+   "ornek": {
+    "en": "There is snow on the mountain.",
+    "tr": "Dağda kar var."
+   },
+   "siklik": 2254,
+   "sv": 16
+  },
+  {
+   "id": "wind",
+   "en": "wind",
+   "tr": "rüzgâr",
+   "emoji": "🌬️",
+   "grup": "doga",
+   "ornek": {
+    "en": "The wind is cold today.",
+    "tr": "Rüzgâr bugün soğuk."
+   },
+   "siklik": 1887,
+   "sv": 35
+  },
+  {
+   "id": "tree",
+   "en": "tree",
+   "tr": "ağaç",
+   "emoji": "🌲",
+   "grup": "doga",
+   "ornek": {
+    "en": "The tree is very tall.",
+    "tr": "Ağaç çok uzun."
+   },
+   "siklik": 1363,
+   "sv": 14
+  },
+  {
+   "id": "flower",
+   "en": "flower",
+   "tr": "çiçek",
+   "emoji": "🌸",
+   "grup": "doga",
+   "ornek": {
+    "en": "She likes red flowers.",
+    "tr": "Kırmızı çiçekleri sever."
+   },
+   "siklik": 2374,
+   "sv": 14
+  },
+  {
+   "id": "river",
+   "en": "river",
+   "tr": "nehir",
+   "emoji": "🏞️",
+   "grup": "doga",
+   "ornek": {
+    "en": "The river is wide.",
+    "tr": "Nehir geniş."
+   },
+   "siklik": 1023,
+   "sv": 23
+  },
+  {
+   "id": "sea",
+   "en": "sea",
+   "tr": "deniz",
+   "emoji": "🌊",
+   "grup": "doga",
+   "ornek": {
+    "en": "We swim in the sea.",
+    "tr": "Denizde yüzeriz."
+   },
+   "siklik": 1315,
+   "sv": 14
+  },
+  {
+   "id": "mountain",
+   "en": "mountain",
+   "tr": "dağ",
+   "emoji": "⛰️",
+   "grup": "doga",
+   "ornek": {
+    "en": "The mountain is high.",
+    "tr": "Dağ yüksek."
+   },
+   "siklik": 1513,
+   "sv": 30
+  },
+  {
+   "id": "weather",
+   "en": "weather",
+   "tr": "hava durumu",
+   "grup": "doga",
+   "ornek": {
+    "en": "The weather is nice today.",
+    "tr": "Bugün hava güzel."
+   },
+   "siklik": 768,
+   "sv": 13
+  },
+  {
+   "id": "cloud",
+   "en": "cloud",
+   "tr": "bulut",
+   "emoji": "☁️",
+   "grup": "doga",
+   "ornek": {
+    "en": "There is a big cloud.",
+    "tr": "Büyük bir bulut var."
+   },
+   "siklik": 5559,
+   "sv": 40
+  },
+  {
+   "id": "grass",
+   "en": "grass",
+   "tr": "çimen",
+   "grup": "doga",
+   "ornek": {
+    "en": "The grass is green.",
+    "tr": "Çimen yeşil."
+   },
+   "siklik": 5061,
+   "sv": 38
+  },
+  {
+   "id": "fire",
+   "en": "fire",
+   "tr": "ateş",
+   "grup": "doga",
+   "ornek": {
+    "en": "Be careful with the fire.",
+    "tr": "Ateşe dikkat et."
+   },
+   "siklik": 956,
+   "sv": 20
+  },
+  {
+   "id": "animal",
+   "en": "animal",
+   "tr": "hayvan",
+   "emoji": "🐾",
+   "grup": "doga",
+   "ornek": {
+    "en": "A dog is an animal.",
+    "tr": "Köpek bir hayvandır."
+   },
+   "siklik": 1290,
+   "sv": 25
+  },
+  {
+   "id": "dog",
+   "en": "dog",
+   "tr": "köpek",
+   "emoji": "🐶",
+   "grup": "doga",
+   "ornek": {
+    "en": "My dog is friendly.",
+    "tr": "Köpeğim cana yakın."
+   },
+   "siklik": 1043,
+   "sv": 10
+  },
+  {
+   "id": "cat",
+   "en": "cat",
+   "tr": "kedi",
+   "emoji": "🐱",
+   "grup": "doga",
+   "ornek": {
+    "en": "The cat sleeps all day.",
+    "tr": "Kedi bütün gün uyur."
+   },
+   "siklik": 1748,
+   "sv": 11
+  },
+  {
+   "id": "bird",
+   "en": "bird",
+   "tr": "kuş",
+   "emoji": "🐦",
+   "grup": "doga",
+   "ornek": {
+    "en": "A bird sits on the tree.",
+    "tr": "Ağaçta bir kuş oturuyor."
+   },
+   "siklik": 2685,
+   "sv": 14
+  },
+  {
+   "id": "horse",
+   "en": "horse",
+   "tr": "at",
+   "emoji": "🐴",
+   "grup": "doga",
+   "ornek": {
+    "en": "The horse is fast.",
+    "tr": "At hızlı."
+   },
+   "siklik": 1394,
+   "sv": 16
+  },
+  {
+   "id": "cow",
+   "en": "cow",
+   "tr": "inek",
+   "emoji": "🐄",
+   "grup": "doga",
+   "ornek": {
+    "en": "The cow gives milk.",
+    "tr": "İnek süt verir."
+   },
+   "siklik": 7045,
+   "sv": 18
+  },
+  {
+   "id": "island",
+   "en": "island",
+   "tr": "ada",
+   "emoji": "🏝️",
+   "grup": "doga",
+   "ornek": {
+    "en": "The island is small.",
+    "tr": "Ada küçük."
+   },
+   "siklik": 778,
+   "sv": 15
+  },
+  {
+   "id": "forest",
+   "en": "forest",
+   "tr": "orman",
+   "grup": "doga",
+   "ornek": {
+    "en": "We walk in the forest.",
+    "tr": "Ormanda yürürüz."
+   },
+   "siklik": 1867,
+   "sv": 33
+  },
+  {
+   "id": "lake",
+   "en": "lake",
+   "tr": "göl",
+   "grup": "doga",
+   "ornek": {
+    "en": "The lake is calm.",
+    "tr": "Göl sakin."
+   },
+   "siklik": 936,
+   "sv": 18
+  },
+  {
+   "id": "earth",
+   "en": "earth",
+   "tr": "dünya (gezegen)",
+   "grup": "doga",
+   "ornek": {
+    "en": "The earth goes around the sun.",
+    "tr": "Dünya güneşin çevresinde döner."
+   },
+   "siklik": 1328,
+   "sv": 28
+  },
+  {
+   "id": "year",
+   "en": "year",
+   "tr": "yıl",
+   "grup": "zaman",
+   "ornek": {
+    "en": "This year is a good year.",
+    "tr": "Bu yıl iyi bir yıl."
+   },
+   "siklik": 112,
+   "sv": 12
+  },
+  {
+   "id": "month",
+   "en": "month",
+   "tr": "ay (takvim)",
+   "grup": "zaman",
+   "ornek": {
+    "en": "There are twelve months in a year.",
+    "tr": "Bir yılda on iki ay vardır."
+   },
+   "siklik": 636,
+   "sv": 12
+  },
+  {
+   "id": "minute",
+   "en": "minute",
+   "tr": "dakika",
+   "grup": "zaman",
+   "ornek": {
+    "en": "Wait a minute.",
+    "tr": "Bir dakika bekle."
+   },
+   "siklik": 1966,
+   "sv": 14
+  },
+  {
+   "id": "hour",
+   "en": "hour",
+   "tr": "saat (süre)",
+   "grup": "zaman",
+   "ornek": {
+    "en": "The lesson is one hour long.",
+    "tr": "Ders bir saat sürer."
+   },
+   "siklik": 1114,
+   "sv": 28
+  },
+  {
+   "id": "yesterday",
+   "en": "yesterday",
+   "tr": "dün",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I was at home yesterday.",
+    "tr": "Dün evdeydim."
+   },
+   "siklik": 2306,
+   "sv": 10
+  },
+  {
+   "id": "now",
+   "en": "now",
+   "tr": "şimdi",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I am at work now.",
+    "tr": "Şimdi işteyim."
+   },
+   "siklik": 75,
+   "sv": 10
+  },
+  {
+   "id": "soon",
+   "en": "soon",
+   "tr": "yakında",
+   "grup": "zaman",
+   "ornek": {
+    "en": "See you soon.",
+    "tr": "Yakında görüşürüz."
+   },
+   "siklik": 1048,
+   "sv": 26
+  },
+  {
+   "id": "always",
+   "en": "always",
+   "tr": "her zaman",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I always drink tea in the morning.",
+    "tr": "Sabahları her zaman çay içerim."
+   },
+   "siklik": 609,
+   "sv": 18
+  },
+  {
+   "id": "never",
+   "en": "never",
+   "tr": "asla",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I never eat fish.",
+    "tr": "Asla balık yemem."
+   },
+   "siklik": 519,
+   "sv": 16
+  },
+  {
+   "id": "often",
+   "en": "often",
+   "tr": "sık sık",
+   "grup": "zaman",
+   "ornek": {
+    "en": "We often walk in the park.",
+    "tr": "Sık sık parkta yürürüz."
+   },
+   "siklik": 862,
+   "sv": 22
+  },
+  {
+   "id": "sometimes",
+   "en": "sometimes",
+   "tr": "bazen",
+   "grup": "zaman",
+   "ornek": {
+    "en": "Sometimes I read at night.",
+    "tr": "Bazen geceleri okurum."
+   },
+   "siklik": 1725,
+   "sv": 18
+  },
+  {
+   "id": "early",
+   "en": "early",
+   "tr": "erken",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I get up early.",
+    "tr": "Erken kalkarım."
+   },
+   "siklik": 798,
+   "sv": 20
+  },
+  {
+   "id": "late",
+   "en": "late",
+   "tr": "geç",
+   "grup": "zaman",
+   "ornek": {
+    "en": "The bus is late.",
+    "tr": "Otobüs geç."
+   },
+   "siklik": 1227,
+   "sv": 30
+  },
+  {
+   "id": "winter",
+   "en": "winter",
+   "tr": "kış",
+   "emoji": "⛄",
+   "grup": "zaman",
+   "ornek": {
+    "en": "Winter is cold.",
+    "tr": "Kış soğuktur."
+   },
+   "siklik": 1596,
+   "sv": 14
+  },
+  {
+   "id": "summer",
+   "en": "summer",
+   "tr": "yaz (mevsim)",
+   "emoji": "🏖️",
+   "grup": "zaman",
+   "ornek": {
+    "en": "We swim in summer.",
+    "tr": "Yazın yüzeriz."
+   },
+   "siklik": 1197,
+   "sv": 14
+  },
+  {
+   "id": "spring",
+   "en": "spring",
+   "tr": "ilkbahar",
+   "emoji": "🌷",
+   "grup": "zaman",
+   "ornek": {
+    "en": "Flowers come in spring.",
+    "tr": "İlkbaharda çiçekler açar."
+   },
+   "siklik": 1245,
+   "sv": 16
+  },
+  {
+   "id": "autumn",
+   "en": "autumn",
+   "tr": "sonbahar",
+   "emoji": "🍂",
+   "grup": "zaman",
+   "ornek": {
+    "en": "The leaves fall in autumn.",
+    "tr": "Sonbaharda yapraklar düşer."
+   },
+   "siklik": 6272,
+   "sv": 16
+  },
+  {
+   "id": "birthday",
+   "en": "birthday",
+   "tr": "doğum günü",
+   "emoji": "🎈",
+   "grup": "zaman",
+   "ornek": {
+    "en": "Today is my birthday.",
+    "tr": "Bugün benim doğum günüm."
+   },
+   "siklik": 2613,
+   "sv": 12
+  },
+  {
+   "id": "time",
+   "en": "time",
+   "tr": "zaman",
+   "grup": "zaman",
+   "ornek": {
+    "en": "I have no time.",
+    "tr": "Zamanım yok."
+   },
+   "siklik": 50,
+   "sv": 8
+  },
+  {
+   "id": "day",
+   "en": "day",
+   "tr": "gün",
+   "grup": "zaman",
+   "ornek": {
+    "en": "It is a nice day.",
+    "tr": "Güzel bir gün."
+   },
+   "siklik": 113,
+   "sv": 14
+  },
+  {
+   "id": "holiday",
+   "en": "holiday",
+   "tr": "tatil",
+   "emoji": "🧳",
+   "grup": "zaman",
+   "ornek": {
+    "en": "We go on holiday in summer.",
+    "tr": "Yazın tatile çıkarız."
+   },
+   "siklik": 957,
+   "sv": 24
+  },
+  {
+   "id": "eleven",
+   "en": "eleven",
+   "tr": "on bir",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "I have eleven books.",
+    "tr": "On bir kitabım var."
+   },
+   "siklik": 8770,
+   "sv": 8
+  },
+  {
+   "id": "twelve",
+   "en": "twelve",
+   "tr": "on iki",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "There are twelve eggs.",
+    "tr": "On iki yumurta var."
+   },
+   "siklik": 5608,
+   "sv": 9
+  },
+  {
+   "id": "twenty",
+   "en": "twenty",
+   "tr": "yirmi",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "He is twenty years old.",
+    "tr": "O yirmi yaşında."
+   },
+   "siklik": 3516,
+   "sv": 10
+  },
+  {
+   "id": "thirty",
+   "en": "thirty",
+   "tr": "otuz",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "Thirty students are here.",
+    "tr": "Otuz öğrenci burada."
+   },
+   "siklik": 5362,
+   "sv": 12
+  },
+  {
+   "id": "fifty",
+   "en": "fifty",
+   "tr": "elli",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "The book has fifty pages.",
+    "tr": "Kitap elli sayfa."
+   },
+   "siklik": 7129,
+   "sv": 14
+  },
+  {
+   "id": "hundred",
+   "en": "hundred",
+   "tr": "yüz (sayı)",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "A hundred people are here.",
+    "tr": "Yüz kişi burada."
+   },
+   "siklik": 3885,
+   "sv": 14
+  },
+  {
+   "id": "thousand",
+   "en": "thousand",
+   "tr": "bin",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "The car costs ten thousand dollars.",
+    "tr": "Araba on bin dolar."
+   },
+   "siklik": 3997,
+   "sv": 20
+  },
+  {
+   "id": "first",
+   "en": "first",
+   "tr": "birinci",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "This is my first lesson.",
+    "tr": "Bu benim ilk dersim."
+   },
+   "siklik": 83,
+   "sv": 13
+  },
+  {
+   "id": "second",
+   "en": "second",
+   "tr": "ikinci",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "He is in the second row.",
+    "tr": "O ikinci sırada."
+   },
+   "siklik": 485,
+   "sv": 28
+  },
+  {
+   "id": "last",
+   "en": "last",
+   "tr": "son (sıra)",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "This is the last page.",
+    "tr": "Bu son sayfa."
+   },
+   "siklik": 126,
+   "sv": 18
+  },
+  {
+   "id": "half",
+   "en": "half",
+   "tr": "yarım",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "I need half an hour.",
+    "tr": "Yarım saate ihtiyacım var."
+   },
+   "siklik": 924,
+   "sv": 18
+  },
+  {
+   "id": "many",
+   "en": "many",
+   "tr": "çok (sayılabilen)",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "There are many books.",
+    "tr": "Çok kitap var."
+   },
+   "siklik": 183,
+   "sv": 23
+  },
+  {
+   "id": "few",
+   "en": "few",
+   "tr": "birkaç",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "I have a few friends.",
+    "tr": "Birkaç arkadaşım var."
+   },
+   "siklik": 574,
+   "sv": 30
+  },
+  {
+   "id": "some",
+   "en": "some",
+   "tr": "biraz",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "I want some water.",
+    "tr": "Biraz su istiyorum."
+   },
+   "siklik": 92,
+   "sv": 15
+  },
+  {
+   "id": "all",
+   "en": "all",
+   "tr": "hepsi",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "All of them are here.",
+    "tr": "Hepsi burada."
+   },
+   "siklik": 25,
+   "sv": 8
+  },
+  {
+   "id": "every",
+   "en": "every",
+   "tr": "her",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "I walk every day.",
+    "tr": "Her gün yürürüm."
+   },
+   "siklik": 392,
+   "sv": 25
+  },
+  {
+   "id": "more",
+   "en": "more",
+   "tr": "daha fazla",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "I want more tea.",
+    "tr": "Daha fazla çay istiyorum."
+   },
+   "siklik": 28,
+   "sv": 10
+  },
+  {
+   "id": "number",
+   "en": "number",
+   "tr": "sayı",
+   "grup": "sayi-miktar",
+   "ornek": {
+    "en": "What is your phone number?",
+    "tr": "Telefon numaran nedir?"
+   },
+   "siklik": 143,
+   "sv": 20
+  },
+  {
+   "id": "left",
+   "en": "left",
+   "tr": "sol",
+   "grup": "yon",
+   "ornek": {
+    "en": "Turn left.",
+    "tr": "Sola dön."
+   },
+   "siklik": 447,
+   "sv": 10
+  },
+  {
+   "id": "right",
+   "en": "right",
+   "tr": "sağ",
+   "grup": "yon",
+   "ornek": {
+    "en": "The bank is on the right.",
+    "tr": "Banka sağda."
+   },
+   "siklik": 233,
+   "sv": 10
+  },
+  {
+   "id": "straight",
+   "en": "straight",
+   "tr": "düz",
+   "grup": "yon",
+   "ornek": {
+    "en": "Go straight.",
+    "tr": "Düz git."
+   },
+   "siklik": 2421,
+   "sv": 16
+  },
+  {
+   "id": "near",
+   "en": "near",
+   "tr": "yakın",
+   "grup": "yon",
+   "ornek": {
+    "en": "The school is near my house.",
+    "tr": "Okul evime yakın."
+   },
+   "siklik": 985,
+   "sv": 14
+  },
+  {
+   "id": "far",
+   "en": "far",
+   "tr": "uzak",
+   "grup": "yon",
+   "ornek": {
+    "en": "The station is far.",
+    "tr": "İstasyon uzak."
+   },
+   "siklik": 856,
+   "sv": 14
+  },
+  {
+   "id": "front",
+   "en": "front",
+   "tr": "ön",
+   "grup": "yon",
+   "ornek": {
+    "en": "The shop is in front of the bank.",
+    "tr": "Dükkân bankanın önünde."
+   },
+   "siklik": 791,
+   "sv": 26
+  },
+  {
+   "id": "behind",
+   "en": "behind",
+   "tr": "arka",
+   "grup": "yon",
+   "ornek": {
+    "en": "The garden is behind the house.",
+    "tr": "Bahçe evin arkasında."
+   },
+   "siklik": 1523,
+   "sv": 18
+  },
+  {
+   "id": "between",
+   "en": "between",
+   "tr": "arasında",
+   "grup": "yon",
+   "ornek": {
+    "en": "The bank is between the shop and the park.",
+    "tr": "Banka dükkân ile park arasında."
+   },
+   "siklik": 259,
+   "sv": 17
+  },
+  {
+   "id": "inside",
+   "en": "inside",
+   "tr": "içeride",
+   "grup": "yon",
+   "ornek": {
+    "en": "The children are inside.",
+    "tr": "Çocuklar içeride."
+   },
+   "siklik": 1086,
+   "sv": 18
+  },
+  {
+   "id": "outside",
+   "en": "outside",
+   "tr": "dışarıda",
+   "grup": "yon",
+   "ornek": {
+    "en": "It is cold outside.",
+    "tr": "Dışarıda hava soğuk."
+   },
+   "siklik": 1186,
+   "sv": 18
+  },
+  {
+   "id": "here",
+   "en": "here",
+   "tr": "burada",
+   "grup": "yon",
+   "ornek": {
+    "en": "I live here.",
+    "tr": "Burada yaşıyorum."
+   },
+   "siklik": 70,
+   "sv": 13
+  },
+  {
+   "id": "there",
+   "en": "there",
+   "tr": "orada",
+   "grup": "yon",
+   "ornek": {
+    "en": "The book is there.",
+    "tr": "Kitap orada."
+   },
+   "siklik": 63,
+   "sv": 8
+  },
+  {
+   "id": "side",
+   "en": "side",
+   "tr": "yan",
+   "grup": "yon",
+   "ornek": {
+    "en": "Sit by my side.",
+    "tr": "Yanıma otur."
+   },
+   "siklik": 550,
+   "sv": 22
+  },
+  {
+   "id": "buy",
+   "en": "buy",
+   "tr": "satın almak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I buy bread every morning.",
+    "tr": "Her sabah ekmek alırım."
+   },
+   "siklik": 130,
+   "sv": 12
+  },
+  {
+   "id": "sell",
+   "en": "sell",
+   "tr": "satmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "They sell fruit here.",
+    "tr": "Burada meyve satarlar."
+   },
+   "siklik": 563,
+   "sv": 24
+  },
+  {
+   "id": "pay",
+   "en": "pay",
+   "tr": "ödemek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I pay with cash.",
+    "tr": "Nakit öderim."
+   },
+   "siklik": 598,
+   "sv": 25
+  },
+  {
+   "id": "cost",
+   "en": "cost",
+   "tr": "tutmak (fiyat)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "How much does it cost?",
+    "tr": "Ne kadar tutar?"
+   },
+   "siklik": 488,
+   "sv": 22
+  },
+  {
+   "id": "give",
+   "en": "give",
+   "tr": "vermek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Please give me the book.",
+    "tr": "Lütfen bana kitabı ver."
+   },
+   "siklik": 554,
+   "sv": 23
+  },
+  {
+   "id": "take",
+   "en": "take",
+   "tr": "almak (götürmek)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Take the key with you.",
+    "tr": "Anahtarı yanına al."
+   },
+   "siklik": 245,
+   "sv": 16
+  },
+  {
+   "id": "make",
+   "en": "make",
+   "tr": "yapmak (üretmek)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I make tea every morning.",
+    "tr": "Her sabah çay yaparım."
+   },
+   "siklik": 132,
+   "sv": 13
+  },
+  {
+   "id": "do",
+   "en": "do",
+   "tr": "yapmak (etmek)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "What do you do on Sundays?",
+    "tr": "Pazar günleri ne yaparsın?"
+   },
+   "siklik": 47,
+   "sv": 8
+  },
+  {
+   "id": "see",
+   "en": "see",
+   "tr": "görmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I see a bird in the tree.",
+    "tr": "Ağaçta bir kuş görüyorum."
+   },
+   "siklik": 64,
+   "sv": 9
+  },
+  {
+   "id": "look",
+   "en": "look",
+   "tr": "bakmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Look at the picture.",
+    "tr": "Resme bak."
+   },
+   "siklik": 445,
+   "sv": 21
+  },
+  {
+   "id": "find",
+   "en": "find",
+   "tr": "bulmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I cannot find my key.",
+    "tr": "Anahtarımı bulamıyorum."
+   },
+   "siklik": 100,
+   "sv": 11
+  },
+  {
+   "id": "ask",
+   "en": "ask",
+   "tr": "sormak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I ask the teacher a question.",
+    "tr": "Öğretmene bir soru sorarım."
+   },
+   "siklik": 746,
+   "sv": 29
+  },
+  {
+   "id": "answer",
+   "en": "answer",
+   "tr": "cevaplamak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Please answer the question.",
+    "tr": "Lütfen soruyu cevapla."
+   },
+   "siklik": 1247,
+   "sv": 36
+  },
+  {
+   "id": "tell",
+   "en": "tell",
+   "tr": "söylemek (anlatmak)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Tell me your name.",
+    "tr": "Bana adını söyle."
+   },
+   "siklik": 720,
+   "sv": 27
+  },
+  {
+   "id": "say",
+   "en": "say",
+   "tr": "demek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "What did you say?",
+    "tr": "Ne dedin?"
+   },
+   "siklik": 495,
+   "sv": 23
+  },
+  {
+   "id": "call",
+   "en": "call",
+   "tr": "aramak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I call my mother every day.",
+    "tr": "Her gün annemi ararım."
+   },
+   "siklik": 373,
+   "sv": 20
+  },
+  {
+   "id": "help",
+   "en": "help",
+   "tr": "yardım etmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Can you help me?",
+    "tr": "Bana yardım edebilir misin?"
+   },
+   "siklik": 76,
+   "sv": 10
+  },
+  {
+   "id": "work",
+   "en": "work",
+   "tr": "çalışmak (iş)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I work in a bank.",
+    "tr": "Bir bankada çalışırım."
+   },
+   "siklik": 125,
+   "sv": 11
+  },
+  {
+   "id": "use",
+   "en": "use",
+   "tr": "kullanmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I use my phone every day.",
+    "tr": "Her gün telefonumu kullanırım."
+   },
+   "siklik": 61,
+   "sv": 9
+  },
+  {
+   "id": "need",
+   "en": "need",
+   "tr": "ihtiyaç duymak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I need some water.",
+    "tr": "Biraz suya ihtiyacım var."
+   },
+   "siklik": 182,
+   "sv": 14
+  },
+  {
+   "id": "try",
+   "en": "try",
+   "tr": "denemek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Try this soup.",
+    "tr": "Bu çorbayı dene."
+   },
+   "siklik": 682,
+   "sv": 27
+  },
+  {
+   "id": "think",
+   "en": "think",
+   "tr": "düşünmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I think it is a good idea.",
+    "tr": "Bence bu iyi bir fikir."
+   },
+   "siklik": 324,
+   "sv": 18
+  },
+  {
+   "id": "know",
+   "en": "know",
+   "tr": "bilmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I know his name.",
+    "tr": "Adını biliyorum."
+   },
+   "siklik": 200,
+   "sv": 14
+  },
+  {
+   "id": "remember",
+   "en": "remember",
+   "tr": "hatırlamak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I remember your face.",
+    "tr": "Yüzünü hatırlıyorum."
+   },
+   "siklik": 975,
+   "sv": 31
+  },
+  {
+   "id": "forget",
+   "en": "forget",
+   "tr": "unutmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Do not forget your key.",
+    "tr": "Anahtarını unutma."
+   },
+   "siklik": 3036,
+   "sv": 41
+  },
+  {
+   "id": "cook",
+   "en": "cook",
+   "tr": "yemek pişirmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I cook dinner at home.",
+    "tr": "Evde akşam yemeği pişiririm."
+   },
+   "siklik": 3112,
+   "sv": 14
+  },
+  {
+   "id": "wash",
+   "en": "wash",
+   "tr": "yıkamak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I wash my hands.",
+    "tr": "Ellerimi yıkarım."
+   },
+   "siklik": 5146,
+   "sv": 12
+  },
+  {
+   "id": "drive",
+   "en": "drive",
+   "tr": "araba sürmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "My father drives to work.",
+    "tr": "Babam işe araba sürerek gider."
+   },
+   "siklik": 734,
+   "sv": 28
+  },
+  {
+   "id": "travel",
+   "en": "travel",
+   "tr": "seyahat etmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "We travel by train.",
+    "tr": "Trenle seyahat ederiz."
+   },
+   "siklik": 219,
+   "sv": 15
+  },
+  {
+   "id": "visit",
+   "en": "visit",
+   "tr": "ziyaret etmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I visit my grandmother on Sundays.",
+    "tr": "Pazar günleri büyükannemi ziyaret ederim."
+   },
+   "siklik": 398,
+   "sv": 20
+  },
+  {
+   "id": "stay",
+   "en": "stay",
+   "tr": "kalmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "We stay at a small hotel.",
+    "tr": "Küçük bir otelde kalırız."
+   },
+   "siklik": 997,
+   "sv": 32
+  },
+  {
+   "id": "leave",
+   "en": "leave",
+   "tr": "ayrılmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I leave home at eight.",
+    "tr": "Sekizde evden ayrılırım."
+   },
+   "siklik": 1125,
+   "sv": 34
+  },
+  {
+   "id": "arrive",
+   "en": "arrive",
+   "tr": "varmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "The train arrives at nine.",
+    "tr": "Tren dokuzda varır."
+   },
+   "siklik": 5412,
+   "sv": 22
+  },
+  {
+   "id": "finish",
+   "en": "finish",
+   "tr": "bitirmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I finish work at five.",
+    "tr": "Beşte işi bitiririm."
+   },
+   "siklik": 2652,
+   "sv": 40
+  },
+  {
+   "id": "sit",
+   "en": "sit",
+   "tr": "oturmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Please sit here.",
+    "tr": "Lütfen buraya otur."
+   },
+   "siklik": 3680,
+   "sv": 10
+  },
+  {
+   "id": "stand",
+   "en": "stand",
+   "tr": "ayakta durmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Stand near the door.",
+    "tr": "Kapının yanında dur."
+   },
+   "siklik": 1766,
+   "sv": 39
+  },
+  {
+   "id": "jump",
+   "en": "jump",
+   "tr": "zıplamak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "The cat jumps on the bed.",
+    "tr": "Kedi yatağa zıplar."
+   },
+   "siklik": 1849,
+   "sv": 16
+  },
+  {
+   "id": "push",
+   "en": "push",
+   "tr": "itmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Push the door.",
+    "tr": "Kapıyı it."
+   },
+   "siklik": 3553,
+   "sv": 16
+  },
+  {
+   "id": "pull",
+   "en": "pull",
+   "tr": "çekmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Pull the door.",
+    "tr": "Kapıyı çek."
+   },
+   "siklik": 3775,
+   "sv": 16
+  },
+  {
+   "id": "carry",
+   "en": "carry",
+   "tr": "taşımak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I carry the bag.",
+    "tr": "Çantayı taşırım."
+   },
+   "siklik": 2391,
+   "sv": 18
+  },
+  {
+   "id": "throw",
+   "en": "throw",
+   "tr": "atmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Throw the ball to me.",
+    "tr": "Topu bana at."
+   },
+   "siklik": 4358,
+   "sv": 18
+  },
+  {
+   "id": "catch",
+   "en": "catch",
+   "tr": "yakalamak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Catch the ball.",
+    "tr": "Topu yakala."
+   },
+   "siklik": 3601,
+   "sv": 18
+  },
+  {
+   "id": "break",
+   "en": "break",
+   "tr": "kırmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Do not break the glass.",
+    "tr": "Bardağı kırma."
+   },
+   "siklik": 1608,
+   "sv": 38
+  },
+  {
+   "id": "build",
+   "en": "build",
+   "tr": "inşa etmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "They build a new house.",
+    "tr": "Yeni bir ev inşa ediyorlar."
+   },
+   "siklik": 1044,
+   "sv": 33
+  },
+  {
+   "id": "cut",
+   "en": "cut",
+   "tr": "kesmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Cut the bread with a knife.",
+    "tr": "Ekmeği bıçakla kes."
+   },
+   "siklik": 1319,
+   "sv": 37
+  },
+  {
+   "id": "draw",
+   "en": "draw",
+   "tr": "çizmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "She likes to draw flowers.",
+    "tr": "Çiçek çizmeyi sever."
+   },
+   "siklik": 3321,
+   "sv": 16
+  },
+  {
+   "id": "sing",
+   "en": "sing",
+   "tr": "şarkı söylemek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I sing in the bathroom.",
+    "tr": "Banyoda şarkı söylerim."
+   },
+   "siklik": 5631,
+   "sv": 16
+  },
+  {
+   "id": "dance",
+   "en": "dance",
+   "tr": "dans etmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "They dance at the party.",
+    "tr": "Partide dans ederler."
+   },
+   "siklik": 1612,
+   "sv": 16
+  },
+  {
+   "id": "laugh",
+   "en": "laugh",
+   "tr": "gülmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "We laugh a lot.",
+    "tr": "Çok güleriz."
+   },
+   "siklik": 6194,
+   "sv": 16
+  },
+  {
+   "id": "cry",
+   "en": "cry",
+   "tr": "ağlamak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I cry when I am sad.",
+    "tr": "Üzgün olunca ağlarım."
+   },
+   "siklik": 5467,
+   "sv": 18
+  },
+  {
+   "id": "smile",
+   "en": "smile",
+   "tr": "gülümsemek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "She smiles at me.",
+    "tr": "Bana gülümser."
+   },
+   "siklik": 4789,
+   "sv": 18
+  },
+  {
+   "id": "hear",
+   "en": "hear",
+   "tr": "duymak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I hear a bird.",
+    "tr": "Bir kuş duyuyorum."
+   },
+   "siklik": 1724,
+   "sv": 39
+  },
+  {
+   "id": "feel",
+   "en": "feel",
+   "tr": "hissetmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I feel tired today.",
+    "tr": "Bugün yorgun hissediyorum."
+   },
+   "siklik": 869,
+   "sv": 30
+  },
+  {
+   "id": "love",
+   "en": "love",
+   "tr": "sevmek (aşk)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I love my family.",
+    "tr": "Ailemi severim."
+   },
+   "siklik": 369,
+   "sv": 19
+  },
+  {
+   "id": "hope",
+   "en": "hope",
+   "tr": "ummak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I hope you are well.",
+    "tr": "Umarım iyisindir."
+   },
+   "siklik": 1082,
+   "sv": 34
+  },
+  {
+   "id": "send",
+   "en": "send",
+   "tr": "göndermek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I send a message to my friend.",
+    "tr": "Arkadaşıma mesaj gönderirim."
+   },
+   "siklik": 232,
+   "sv": 16
+  },
+  {
+   "id": "move",
+   "en": "move",
+   "tr": "taşınmak (hareket etmek)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "We move to a new house.",
+    "tr": "Yeni bir eve taşınırız."
+   },
+   "siklik": 1138,
+   "sv": 35
+  },
+  {
+   "id": "turn",
+   "en": "turn",
+   "tr": "dönmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Turn left at the bank.",
+    "tr": "Bankada sola dön."
+   },
+   "siklik": 1003,
+   "sv": 32
+  },
+  {
+   "id": "put",
+   "en": "put",
+   "tr": "koymak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Put the book on the table.",
+    "tr": "Kitabı masaya koy."
+   },
+   "siklik": 677,
+   "sv": 26
+  },
+  {
+   "id": "keep",
+   "en": "keep",
+   "tr": "tutmak (saklamak)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Keep the key in your pocket.",
+    "tr": "Anahtarı cebinde tut."
+   },
+   "siklik": 655,
+   "sv": 25
+  },
+  {
+   "id": "show",
+   "en": "show",
+   "tr": "göstermek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Show me your phone.",
+    "tr": "Bana telefonunu göster."
+   },
+   "siklik": 267,
+   "sv": 17
+  },
+  {
+   "id": "change",
+   "en": "change",
+   "tr": "değiştirmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I change my clothes.",
+    "tr": "Kıyafetlerimi değiştiririm."
+   },
+   "siklik": 346,
+   "sv": 18
+  },
+  {
+   "id": "choose",
+   "en": "choose",
+   "tr": "seçmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Choose a color.",
+    "tr": "Bir renk seç."
+   },
+   "siklik": 888,
+   "sv": 30
+  },
+  {
+   "id": "win",
+   "en": "win",
+   "tr": "kazanmak",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "Our team wins the game.",
+    "tr": "Takımımız maçı kazanır."
+   },
+   "siklik": 1236,
+   "sv": 36
+  },
+  {
+   "id": "lose",
+   "en": "lose",
+   "tr": "kaybetmek",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "I lose my keys often.",
+    "tr": "Anahtarlarımı sık sık kaybederim."
+   },
+   "siklik": 3141,
+   "sv": 42
+  },
+  {
+   "id": "happen",
+   "en": "happen",
+   "tr": "olmak (meydana gelmek)",
+   "grup": "fiil-gunluk",
+   "ornek": {
+    "en": "What happens next?",
+    "tr": "Sırada ne olur?"
+   },
+   "siklik": 2853,
+   "sv": 41
+  },
+  {
+   "id": "good",
+   "en": "good",
+   "tr": "iyi",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "This is a good book.",
+    "tr": "Bu iyi bir kitap."
+   },
+   "siklik": 155,
+   "sv": 9
+  },
+  {
+   "id": "bad",
+   "en": "bad",
+   "tr": "kötü",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The weather is bad today.",
+    "tr": "Bugün hava kötü."
+   },
+   "siklik": 837,
+   "sv": 23
+  },
+  {
+   "id": "easy",
+   "en": "easy",
+   "tr": "kolay",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The test is easy.",
+    "tr": "Test kolay."
+   },
+   "siklik": 620,
+   "sv": 20
+  },
+  {
+   "id": "difficult",
+   "en": "difficult",
+   "tr": "zor",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The question is difficult.",
+    "tr": "Soru zor."
+   },
+   "siklik": 1915,
+   "sv": 34
+  },
+  {
+   "id": "long",
+   "en": "long",
+   "tr": "uzun",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The road is long.",
+    "tr": "Yol uzun."
+   },
+   "siklik": 263,
+   "sv": 12
+  },
+  {
+   "id": "short",
+   "en": "short",
+   "tr": "kısa",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The film is short.",
+    "tr": "Film kısa."
+   },
+   "siklik": 743,
+   "sv": 21
+  },
+  {
+   "id": "fast",
+   "en": "fast",
+   "tr": "hızlı",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The train is fast.",
+    "tr": "Tren hızlı."
+   },
+   "siklik": 848,
+   "sv": 24
+  },
+  {
+   "id": "slow",
+   "en": "slow",
+   "tr": "yavaş",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The bus is slow.",
+    "tr": "Otobüs yavaş."
+   },
+   "siklik": 2876,
+   "sv": 16
+  },
+  {
+   "id": "young",
+   "en": "young",
+   "tr": "genç",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "My teacher is young.",
+    "tr": "Öğretmenim genç."
+   },
+   "siklik": 570,
+   "sv": 16
+  },
+  {
+   "id": "beautiful",
+   "en": "beautiful",
+   "tr": "güzel",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The garden is beautiful.",
+    "tr": "Bahçe güzel."
+   },
+   "siklik": 1390,
+   "sv": 29
+  },
+  {
+   "id": "clean",
+   "en": "clean",
+   "tr": "temiz",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The room is clean.",
+    "tr": "Oda temiz."
+   },
+   "siklik": 1797,
+   "sv": 33
+  },
+  {
+   "id": "dirty",
+   "en": "dirty",
+   "tr": "kirli",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "My shoes are dirty.",
+    "tr": "Ayakkabılarım kirli."
+   },
+   "siklik": 4282,
+   "sv": 18
+  },
+  {
+   "id": "full",
+   "en": "full",
+   "tr": "dolu",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The bus is full.",
+    "tr": "Otobüs dolu."
+   },
+   "siklik": 195,
+   "sv": 11
+  },
+  {
+   "id": "empty",
+   "en": "empty",
+   "tr": "boş",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The box is empty.",
+    "tr": "Kutu boş."
+   },
+   "siklik": 2939,
+   "sv": 20
+  },
+  {
+   "id": "heavy",
+   "en": "heavy",
+   "tr": "ağır",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The bag is heavy.",
+    "tr": "Çanta ağır."
+   },
+   "siklik": 2128,
+   "sv": 20
+  },
+  {
+   "id": "light",
+   "en": "light",
+   "tr": "hafif",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The box is light.",
+    "tr": "Kutu hafif."
+   },
+   "siklik": 612,
+   "sv": 19
+  },
+  {
+   "id": "loud",
+   "en": "loud",
+   "tr": "gürültülü",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The music is loud.",
+    "tr": "Müzik gürültülü."
+   },
+   "siklik": 6806,
+   "sv": 24
+  },
+  {
+   "id": "quiet",
+   "en": "quiet",
+   "tr": "sessiz",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The street is quiet.",
+    "tr": "Sokak sessiz."
+   },
+   "siklik": 4160,
+   "sv": 22
+  },
+  {
+   "id": "rich",
+   "en": "rich",
+   "tr": "zengin",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "He is a rich man.",
+    "tr": "O zengin bir adam."
+   },
+   "siklik": 2151,
+   "sv": 22
+  },
+  {
+   "id": "poor",
+   "en": "poor",
+   "tr": "fakir",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The family is poor.",
+    "tr": "Aile fakir."
+   },
+   "siklik": 1701,
+   "sv": 32
+  },
+  {
+   "id": "cheap",
+   "en": "cheap",
+   "tr": "ucuz",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The bread is cheap.",
+    "tr": "Ekmek ucuz."
+   },
+   "siklik": 824,
+   "sv": 22
+  },
+  {
+   "id": "expensive",
+   "en": "expensive",
+   "tr": "pahalı",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The car is expensive.",
+    "tr": "Araba pahalı."
+   },
+   "siklik": 3961,
+   "sv": 37
+  },
+  {
+   "id": "ready",
+   "en": "ready",
+   "tr": "hazır",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "Dinner is ready.",
+    "tr": "Akşam yemeği hazır."
+   },
+   "siklik": 1288,
+   "sv": 27
+  },
+  {
+   "id": "free",
+   "en": "free",
+   "tr": "serbest (ücretsiz)",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The museum is free on Sundays.",
+    "tr": "Müze pazar günleri ücretsiz."
+   },
+   "siklik": 42,
+   "sv": 8
+  },
+  {
+   "id": "busy",
+   "en": "busy",
+   "tr": "meşgul",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "I am busy today.",
+    "tr": "Bugün meşgulüm."
+   },
+   "siklik": 4043,
+   "sv": 22
+  },
+  {
+   "id": "important",
+   "en": "important",
+   "tr": "önemli",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "Sleep is important.",
+    "tr": "Uyku önemlidir."
+   },
+   "siklik": 572,
+   "sv": 17
+  },
+  {
+   "id": "different",
+   "en": "different",
+   "tr": "farklı",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "These two shoes are different.",
+    "tr": "Bu iki ayakkabı farklı."
+   },
+   "siklik": 420,
+   "sv": 15
+  },
+  {
+   "id": "same",
+   "en": "same",
+   "tr": "aynı",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "We have the same teacher.",
+    "tr": "Aynı öğretmenimiz var."
+   },
+   "siklik": 288,
+   "sv": 13
+  },
+  {
+   "id": "wrong",
+   "en": "wrong",
+   "tr": "yanlış",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "This answer is wrong.",
+    "tr": "Bu cevap yanlış."
+   },
+   "siklik": 1663,
+   "sv": 31
+  },
+  {
+   "id": "safe",
+   "en": "safe",
+   "tr": "güvenli",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The street is safe.",
+    "tr": "Sokak güvenli."
+   },
+   "siklik": 1282,
+   "sv": 26
+  },
+  {
+   "id": "dangerous",
+   "en": "dangerous",
+   "tr": "tehlikeli",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The road is dangerous.",
+    "tr": "Yol tehlikeli."
+   },
+   "siklik": 4133,
+   "sv": 38
+  },
+  {
+   "id": "strong",
+   "en": "strong",
+   "tr": "güçlü",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "He is a strong man.",
+    "tr": "O güçlü bir adam."
+   },
+   "siklik": 1335,
+   "sv": 28
+  },
+  {
+   "id": "weak",
+   "en": "weak",
+   "tr": "zayıf (güçsüz)",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "I feel weak today.",
+    "tr": "Bugün güçsüz hissediyorum."
+   },
+   "siklik": 4924,
+   "sv": 24
+  },
+  {
+   "id": "sick",
+   "en": "sick",
+   "tr": "hasta",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "My son is sick.",
+    "tr": "Oğlum hasta."
+   },
+   "siklik": 4312,
+   "sv": 18
+  },
+  {
+   "id": "angry",
+   "en": "angry",
+   "tr": "kızgın",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "My father is angry.",
+    "tr": "Babam kızgın."
+   },
+   "siklik": 6471,
+   "sv": 22
+  },
+  {
+   "id": "sad",
+   "en": "sad",
+   "tr": "üzgün",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The girl is sad.",
+    "tr": "Kız üzgün."
+   },
+   "siklik": 5014,
+   "sv": 18
+  },
+  {
+   "id": "afraid",
+   "en": "afraid",
+   "tr": "korkmuş",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "I am afraid of dogs.",
+    "tr": "Köpeklerden korkarım."
+   },
+   "siklik": 5731,
+   "sv": 24
+  },
+  {
+   "id": "sweet",
+   "en": "sweet",
+   "tr": "tatlı",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The cake is sweet.",
+    "tr": "Pasta tatlı."
+   },
+   "siklik": 2445,
+   "sv": 18
+  },
+  {
+   "id": "dark",
+   "en": "dark",
+   "tr": "karanlık",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The room is dark.",
+    "tr": "Oda karanlık."
+   },
+   "siklik": 1630,
+   "sv": 30
+  },
+  {
+   "id": "bright",
+   "en": "bright",
+   "tr": "parlak",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The sun is bright.",
+    "tr": "Güneş parlak."
+   },
+   "siklik": 3722,
+   "sv": 36
+  },
+  {
+   "id": "wide",
+   "en": "wide",
+   "tr": "geniş",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The river is wide.",
+    "tr": "Nehir geniş."
+   },
+   "siklik": 913,
+   "sv": 25
+  },
+  {
+   "id": "high",
+   "en": "high",
+   "tr": "yüksek",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The mountain is high.",
+    "tr": "Dağ yüksek."
+   },
+   "siklik": 164,
+   "sv": 10
+  },
+  {
+   "id": "low",
+   "en": "low",
+   "tr": "alçak",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The table is low.",
+    "tr": "Masa alçak."
+   },
+   "siklik": 401,
+   "sv": 14
+  },
+  {
+   "id": "soft",
+   "en": "soft",
+   "tr": "yumuşak",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The bed is soft.",
+    "tr": "Yatak yumuşak."
+   },
+   "siklik": 2037,
+   "sv": 35
+  },
+  {
+   "id": "hard",
+   "en": "hard",
+   "tr": "sert",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The bread is hard.",
+    "tr": "Ekmek sert."
+   },
+   "siklik": 595,
+   "sv": 18
+  },
+  {
+   "id": "wet",
+   "en": "wet",
+   "tr": "ıslak",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "My coat is wet.",
+    "tr": "Paltom ıslak."
+   },
+   "siklik": 3180,
+   "sv": 20
+  },
+  {
+   "id": "dry",
+   "en": "dry",
+   "tr": "kuru",
+   "grup": "sifat-gunluk",
+   "ornek": {
+    "en": "The towel is dry.",
+    "tr": "Havlu kuru."
+   },
+   "siklik": 2486,
+   "sv": 20
+  },
+  {
+   "id": "job",
+   "en": "job",
+   "tr": "meslek (iş)",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "He has a good job.",
+    "tr": "İyi bir işi var."
+   },
+   "siklik": 428,
+   "sv": 33
+  },
+  {
+   "id": "office",
+   "en": "office",
+   "tr": "ofis",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "My office is on the second floor.",
+    "tr": "Ofisim ikinci katta."
+   },
+   "siklik": 240,
+   "sv": 27
+  },
+  {
+   "id": "company",
+   "en": "company",
+   "tr": "şirket",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "She works for a big company.",
+    "tr": "O büyük bir şirkette çalışır."
+   },
+   "siklik": 178,
+   "sv": 24
+  },
+  {
+   "id": "meeting",
+   "en": "meeting",
+   "tr": "toplantı",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "We have a meeting at ten.",
+    "tr": "Saat onda toplantımız var."
+   },
+   "siklik": 649,
+   "sv": 42
+  },
+  {
+   "id": "lesson",
+   "en": "lesson",
+   "tr": "ders (konu)",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "The lesson starts at nine.",
+    "tr": "Ders dokuzda başlar."
+   },
+   "siklik": 3910,
+   "sv": 46
+  },
+  {
+   "id": "exam",
+   "en": "exam",
+   "tr": "sınav",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I have an exam on Monday.",
+    "tr": "Pazartesi sınavım var."
+   },
+   "siklik": 3879,
+   "sv": 20
+  },
+  {
+   "id": "question",
+   "en": "question",
+   "tr": "soru",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I have a question.",
+    "tr": "Bir sorum var."
+   },
+   "siklik": 591,
+   "sv": 41
+  },
+  {
+   "id": "page",
+   "en": "page",
+   "tr": "sayfa",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "Open your book to page ten.",
+    "tr": "Kitabını on. sayfaya aç."
+   },
+   "siklik": 38,
+   "sv": 18
+  },
+  {
+   "id": "word",
+   "en": "word",
+   "tr": "sözcük",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I learn five new words every day.",
+    "tr": "Her gün beş yeni sözcük öğrenirim."
+   },
+   "siklik": 807,
+   "sv": 43
+  },
+  {
+   "id": "sentence",
+   "en": "sentence",
+   "tr": "cümle",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "Write a short sentence.",
+    "tr": "Kısa bir cümle yaz."
+   },
+   "siklik": 4668,
+   "sv": 47
+  },
+  {
+   "id": "problem",
+   "en": "problem",
+   "tr": "sorun",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "We have a problem.",
+    "tr": "Bir sorunumuz var."
+   },
+   "siklik": 552,
+   "sv": 36
+  },
+  {
+   "id": "idea",
+   "en": "idea",
+   "tr": "fikir",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "That is a good idea.",
+    "tr": "Bu iyi bir fikir."
+   },
+   "siklik": 1230,
+   "sv": 44
+  },
+  {
+   "id": "language",
+   "en": "language",
+   "tr": "dil (konuşulan)",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "English is a language.",
+    "tr": "İngilizce bir dildir."
+   },
+   "siklik": 561,
+   "sv": 37
+  },
+  {
+   "id": "test",
+   "en": "test",
+   "tr": "test",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "The test is easy.",
+    "tr": "Test kolay."
+   },
+   "siklik": 501,
+   "sv": 18
+  },
+  {
+   "id": "mistake",
+   "en": "mistake",
+   "tr": "hata",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I make a mistake.",
+    "tr": "Bir hata yaparım."
+   },
+   "siklik": 5741,
+   "sv": 48
+  },
+  {
+   "id": "example",
+   "en": "example",
+   "tr": "örnek",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "Give me an example.",
+    "tr": "Bana bir örnek ver."
+   },
+   "siklik": 582,
+   "sv": 39
+  },
+  {
+   "id": "subject",
+   "en": "subject",
+   "tr": "konu",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "What is the subject of the book?",
+    "tr": "Kitabın konusu nedir?"
+   },
+   "siklik": 258,
+   "sv": 28
+  },
+  {
+   "id": "university",
+   "en": "university",
+   "tr": "üniversite",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "My sister studies at a university.",
+    "tr": "Ablam bir üniversitede okur."
+   },
+   "siklik": 192,
+   "sv": 26
+  },
+  {
+   "id": "science",
+   "en": "science",
+   "tr": "bilim",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I like science.",
+    "tr": "Bilimi severim."
+   },
+   "siklik": 439,
+   "sv": 34
+  },
+  {
+   "id": "history",
+   "en": "history",
+   "tr": "tarih",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "History is my favorite lesson.",
+    "tr": "Tarih en sevdiğim ders."
+   },
+   "siklik": 334,
+   "sv": 31
+  },
+  {
+   "id": "art",
+   "en": "art",
+   "tr": "sanat",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "She loves art.",
+    "tr": "O sanatı sever."
+   },
+   "siklik": 337,
+   "sv": 32
+  },
+  {
+   "id": "music",
+   "en": "music",
+   "tr": "müzik",
+   "emoji": "🎵",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I listen to music every day.",
+    "tr": "Her gün müzik dinlerim."
+   },
+   "siklik": 129,
+   "sv": 12
+  },
+  {
+   "id": "movie",
+   "en": "movie",
+   "tr": "film",
+   "emoji": "🎬",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "We watch a movie on Friday.",
+    "tr": "Cuma günü film izleriz."
+   },
+   "siklik": 489,
+   "sv": 14
+  },
+  {
+   "id": "game",
+   "en": "game",
+   "tr": "oyun",
+   "emoji": "🎮",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "The children play a game.",
+    "tr": "Çocuklar bir oyun oynar."
+   },
+   "siklik": 304,
+   "sv": 12
+  },
+  {
+   "id": "photo",
+   "en": "photo",
+   "tr": "fotoğraf",
+   "emoji": "📷",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I take a photo of the sea.",
+    "tr": "Denizin fotoğrafını çekerim."
+   },
+   "siklik": 303,
+   "sv": 14
+  },
+  {
+   "id": "news",
+   "en": "news",
+   "tr": "haber",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "The news is on at nine.",
+    "tr": "Haberler dokuzda."
+   },
+   "siklik": 59,
+   "sv": 19
+  },
+  {
+   "id": "story",
+   "en": "story",
+   "tr": "hikâye",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "My mother tells a story.",
+    "tr": "Annem bir hikâye anlatır."
+   },
+   "siklik": 562,
+   "sv": 38
+  },
+  {
+   "id": "message",
+   "en": "message",
+   "tr": "mesaj",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I send a message.",
+    "tr": "Mesaj gönderirim."
+   },
+   "siklik": 149,
+   "sv": 23
+  },
+  {
+   "id": "email",
+   "en": "email",
+   "tr": "e-posta",
+   "emoji": "📧",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "I write an email.",
+    "tr": "Bir e-posta yazarım."
+   },
+   "siklik": 115,
+   "sv": 22
+  },
+  {
+   "id": "website",
+   "en": "website",
+   "tr": "web sitesi",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "The website is easy to use.",
+    "tr": "Web sitesi kullanması kolay."
+   },
+   "siklik": 274,
+   "sv": 29
+  },
+  {
+   "id": "price",
+   "en": "price",
+   "tr": "fiyat",
+   "grup": "okul-is",
+   "ornek": {
+    "en": "What is the price?",
+    "tr": "Fiyat nedir?"
+   },
+   "siklik": 101,
+   "sv": 21
+  },
+  {
+   "id": "pain",
+   "en": "pain",
+   "tr": "ağrı",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "I have pain in my back.",
+    "tr": "Sırtımda ağrı var."
+   },
+   "siklik": 1925,
+   "sv": 41
+  },
+  {
+   "id": "medicine",
+   "en": "medicine",
+   "tr": "ilaç",
+   "emoji": "💊",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "Take your medicine.",
+    "tr": "İlacını al."
+   },
+   "siklik": 1269,
+   "sv": 28
+  },
+  {
+   "id": "exercise",
+   "en": "exercise",
+   "tr": "egzersiz",
+   "emoji": "🏋️",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "Exercise is good for you.",
+    "tr": "Egzersiz sana iyi gelir."
+   },
+   "siklik": 2027,
+   "sv": 44
+  },
+  {
+   "id": "football",
+   "en": "football",
+   "tr": "futbol",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "We play football on Sundays.",
+    "tr": "Pazar günleri futbol oynarız."
+   },
+   "siklik": 1466,
+   "sv": 33
+  },
+  {
+   "id": "team",
+   "en": "team",
+   "tr": "takım",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "Our team is strong.",
+    "tr": "Takımımız güçlü."
+   },
+   "siklik": 448,
+   "sv": 22
+  },
+  {
+   "id": "ball",
+   "en": "ball",
+   "tr": "top",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "Throw me the ball.",
+    "tr": "Bana topu at."
+   },
+   "siklik": 1875,
+   "sv": 12
+  },
+  {
+   "id": "race",
+   "en": "race",
+   "tr": "yarış",
+   "emoji": "🏁",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "I run in the race.",
+    "tr": "Yarışta koşarım."
+   },
+   "siklik": 1573,
+   "sv": 39
+  },
+  {
+   "id": "sport",
+   "en": "sport",
+   "tr": "spor",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "My favorite sport is tennis.",
+    "tr": "En sevdiğim spor tenis."
+   },
+   "siklik": 1287,
+   "sv": 30
+  },
+  {
+   "id": "energy",
+   "en": "energy",
+   "tr": "enerji",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "I have a lot of energy.",
+    "tr": "Çok enerjim var."
+   },
+   "siklik": 669,
+   "sv": 25
+  },
+  {
+   "id": "rest",
+   "en": "rest",
+   "tr": "dinlenmek",
+   "grup": "saglik-spor",
+   "ornek": {
+    "en": "I rest after lunch.",
+    "tr": "Öğle yemeğinden sonra dinlenirim."
+   },
+   "siklik": 1539,
+   "sv": 36
+  },
+  {
+   "id": "because",
+   "en": "because",
+   "tr": "çünkü",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "I stay home because it rains.",
+    "tr": "Yağmur yağdığı için evde kalırım."
+   },
+   "siklik": 235,
+   "sv": 24
+  },
+  {
+   "id": "but",
+   "en": "but",
+   "tr": "ama",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "I like tea but I do not like coffee.",
+    "tr": "Çayı severim ama kahveyi sevmem."
+   },
+   "siklik": 43,
+   "sv": 16
+  },
+  {
+   "id": "or",
+   "en": "or",
+   "tr": "veya",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "Tea or coffee?",
+    "tr": "Çay mı kahve mi?"
+   },
+   "siklik": 18,
+   "sv": 13
+  },
+  {
+   "id": "very",
+   "en": "very",
+   "tr": "çok (derece)",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "The soup is very hot.",
+    "tr": "Çorba çok sıcak."
+   },
+   "siklik": 174,
+   "sv": 22
+  },
+  {
+   "id": "too",
+   "en": "too",
+   "tr": "fazla",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "The tea is too hot.",
+    "tr": "Çay fazla sıcak."
+   },
+   "siklik": 435,
+   "sv": 28
+  },
+  {
+   "id": "also",
+   "en": "also",
+   "tr": "ayrıca",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "She also speaks French.",
+    "tr": "O ayrıca Fransızca konuşur."
+   },
+   "siklik": 74,
+   "sv": 18
+  },
+  {
+   "id": "again",
+   "en": "again",
+   "tr": "tekrar",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "Please say it again.",
+    "tr": "Lütfen tekrar söyle."
+   },
+   "siklik": 514,
+   "sv": 30
+  },
+  {
+   "id": "only",
+   "en": "only",
+   "tr": "yalnızca",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "I have only one pen.",
+    "tr": "Yalnızca bir kalemim var."
+   },
+   "siklik": 65,
+   "sv": 17
+  },
+  {
+   "id": "maybe",
+   "en": "maybe",
+   "tr": "belki",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "Maybe it will rain.",
+    "tr": "Belki yağmur yağar."
+   },
+   "siklik": 1582,
+   "sv": 36
+  },
+  {
+   "id": "really",
+   "en": "really",
+   "tr": "gerçekten",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "I really like this book.",
+    "tr": "Bu kitabı gerçekten seviyorum."
+   },
+   "siklik": 471,
+   "sv": 29
+  },
+  {
+   "id": "enough",
+   "en": "enough",
+   "tr": "yeterli",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "I have enough money.",
+    "tr": "Yeterli param var."
+   },
+   "siklik": 959,
+   "sv": 34
+  },
+  {
+   "id": "together",
+   "en": "together",
+   "tr": "birlikte",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "We study together.",
+    "tr": "Birlikte çalışırız."
+   },
+   "siklik": 845,
+   "sv": 33
+  },
+  {
+   "id": "alone",
+   "en": "alone",
+   "tr": "yalnız",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "He lives alone.",
+    "tr": "O yalnız yaşar."
+   },
+   "siklik": 2039,
+   "sv": 39
+  },
+  {
+   "id": "quickly",
+   "en": "quickly",
+   "tr": "çabucak",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "Please come quickly.",
+    "tr": "Lütfen çabuk gel."
+   },
+   "siklik": 2003,
+   "sv": 38
+  },
+  {
+   "id": "slowly",
+   "en": "slowly",
+   "tr": "yavaşça",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "Speak slowly, please.",
+    "tr": "Lütfen yavaş konuş."
+   },
+   "siklik": 5017,
+   "sv": 40
+  },
+  {
+   "id": "well",
+   "en": "well",
+   "tr": "iyi (zarf)",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "She speaks English well.",
+    "tr": "O İngilizceyi iyi konuşur."
+   },
+   "siklik": 157,
+   "sv": 21
+  },
+  {
+   "id": "almost",
+   "en": "almost",
+   "tr": "neredeyse",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "The bus is almost full.",
+    "tr": "Otobüs neredeyse dolu."
+   },
+   "siklik": 1210,
+   "sv": 35
+  },
+  {
+   "id": "already",
+   "en": "already",
+   "tr": "zaten",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "I already know him.",
+    "tr": "Onu zaten tanıyorum."
+   },
+   "siklik": 729,
+   "sv": 31
+  },
+  {
+   "id": "still",
+   "en": "still",
+   "tr": "hâlâ",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "He is still at work.",
+    "tr": "O hâlâ işte."
+   },
+   "siklik": 389,
+   "sv": 27
+  },
+  {
+   "id": "after",
+   "en": "after",
+   "tr": "sonra (-den sonra)",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "We eat after the lesson.",
+    "tr": "Dersten sonra yemek yeriz."
+   },
+   "siklik": 150,
+   "sv": 19
+  },
+  {
+   "id": "before",
+   "en": "before",
+   "tr": "önce (-den önce)",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "Wash your hands before lunch.",
+    "tr": "Öğle yemeğinden önce ellerini yıka."
+   },
+   "siklik": 229,
+   "sv": 23
+  },
+  {
+   "id": "with",
+   "en": "with",
+   "tr": "ile",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "I go with my friend.",
+    "tr": "Arkadaşımla giderim."
+   },
+   "siklik": 13,
+   "sv": 12
+  },
+  {
+   "id": "without",
+   "en": "without",
+   "tr": "-sız",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "I drink tea without sugar.",
+    "tr": "Şekersiz çay içerim."
+   },
+   "siklik": 321,
+   "sv": 25
+  },
+  {
+   "id": "about",
+   "en": "about",
+   "tr": "hakkında",
+   "grup": "zarf-baglac",
+   "ornek": {
+    "en": "The book is about animals.",
+    "tr": "Kitap hayvanlar hakkında."
+   },
+   "siklik": 36,
+   "sv": 14
+  },
+  {
+   "id": "decide",
+   "en": "decide",
+   "tr": "karar vermek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I decide to stay home.",
+    "tr": "Evde kalmaya karar veririm."
+   },
+   "siklik": 3535,
+   "sv": 68
+  },
+  {
+   "id": "believe",
+   "en": "believe",
+   "tr": "inanmak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I believe you.",
+    "tr": "Sana inanıyorum."
+   },
+   "siklik": 1065,
+   "sv": 52
+  },
+  {
+   "id": "agree",
+   "en": "agree",
+   "tr": "aynı fikirde olmak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I agree with you.",
+    "tr": "Seninle aynı fikirdeyim."
+   },
+   "siklik": 1722,
+   "sv": 59
+  },
+  {
+   "id": "explain",
+   "en": "explain",
+   "tr": "açıklamak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Please explain the rule.",
+    "tr": "Lütfen kuralı açıkla."
+   },
+   "siklik": 3055,
+   "sv": 66
+  },
+  {
+   "id": "describe",
+   "en": "describe",
+   "tr": "tanımlamak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Describe your room.",
+    "tr": "Odanı anlat."
+   },
+   "siklik": 3087,
+   "sv": 67
+  },
+  {
+   "id": "suggest",
+   "en": "suggest",
+   "tr": "önermek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I suggest a walk.",
+    "tr": "Bir yürüyüş öneririm."
+   },
+   "siklik": 2180,
+   "sv": 63
+  },
+  {
+   "id": "improve",
+   "en": "improve",
+   "tr": "geliştirmek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I want to improve my English.",
+    "tr": "İngilizcemi geliştirmek istiyorum."
+   },
+   "siklik": 1321,
+   "sv": 55
+  },
+  {
+   "id": "prefer",
+   "en": "prefer",
+   "tr": "tercih etmek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I prefer tea to coffee.",
+    "tr": "Çayı kahveye tercih ederim."
+   },
+   "siklik": 4305,
+   "sv": 70
+  },
+  {
+   "id": "expect",
+   "en": "expect",
+   "tr": "beklemek (ummak)",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I expect good news.",
+    "tr": "İyi haber bekliyorum."
+   },
+   "siklik": 2303,
+   "sv": 65
+  },
+  {
+   "id": "enjoy",
+   "en": "enjoy",
+   "tr": "keyif almak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I enjoy music.",
+    "tr": "Müzikten keyif alırım."
+   },
+   "siklik": 1640,
+   "sv": 58
+  },
+  {
+   "id": "manage",
+   "en": "manage",
+   "tr": "başarmak (idare etmek)",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I manage to finish on time.",
+    "tr": "Zamanında bitirmeyi başarırım."
+   },
+   "siklik": 2197,
+   "sv": 64
+  },
+  {
+   "id": "offer",
+   "en": "offer",
+   "tr": "teklif etmek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "They offer me a job.",
+    "tr": "Bana bir iş teklif ederler."
+   },
+   "siklik": 616,
+   "sv": 46
+  },
+  {
+   "id": "receive",
+   "en": "receive",
+   "tr": "almak (teslim almak)",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I receive a letter today.",
+    "tr": "Bugün bir mektup alırım."
+   },
+   "siklik": 905,
+   "sv": 50
+  },
+  {
+   "id": "plan",
+   "en": "plan",
+   "tr": "planlamak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "We plan a trip.",
+    "tr": "Bir gezi planlarız."
+   },
+   "siklik": 479,
+   "sv": 43
+  },
+  {
+   "id": "compare",
+   "en": "compare",
+   "tr": "karşılaştırmak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Compare the two prices.",
+    "tr": "İki fiyatı karşılaştır."
+   },
+   "siklik": 405,
+   "sv": 42
+  },
+  {
+   "id": "increase",
+   "en": "increase",
+   "tr": "artmak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Prices increase every year.",
+    "tr": "Fiyatlar her yıl artar."
+   },
+   "siklik": 981,
+   "sv": 51
+  },
+  {
+   "id": "reduce",
+   "en": "reduce",
+   "tr": "azaltmak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I reduce the sugar in my tea.",
+    "tr": "Çayımdaki şekeri azaltırım."
+   },
+   "siklik": 2021,
+   "sv": 61
+  },
+  {
+   "id": "protect",
+   "en": "protect",
+   "tr": "korumak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "We protect the forest.",
+    "tr": "Ormanı koruruz."
+   },
+   "siklik": 2139,
+   "sv": 62
+  },
+  {
+   "id": "produce",
+   "en": "produce",
+   "tr": "üretmek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "The farm produces milk.",
+    "tr": "Çiftlik süt üretir."
+   },
+   "siklik": 2253,
+   "sv": 64
+  },
+  {
+   "id": "continue",
+   "en": "continue",
+   "tr": "devam etmek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Please continue.",
+    "tr": "Lütfen devam et."
+   },
+   "siklik": 1052,
+   "sv": 51
+  },
+  {
+   "id": "develop",
+   "en": "develop",
+   "tr": "geliştirmek (büyütmek)",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "The company develops new phones.",
+    "tr": "Şirket yeni telefonlar geliştirir."
+   },
+   "siklik": 1474,
+   "sv": 57
+  },
+  {
+   "id": "discuss",
+   "en": "discuss",
+   "tr": "tartışmak",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "We discuss the plan.",
+    "tr": "Planı tartışırız."
+   },
+   "siklik": 1880,
+   "sv": 60
+  },
+  {
+   "id": "include",
+   "en": "include",
+   "tr": "içermek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "The price includes breakfast.",
+    "tr": "Fiyata kahvaltı dahildir."
+   },
+   "siklik": 407,
+   "sv": 42
+  },
+  {
+   "id": "reason",
+   "en": "reason",
+   "tr": "neden",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "What is the reason?",
+    "tr": "Nedeni nedir?"
+   },
+   "siklik": 1242,
+   "sv": 55
+  },
+  {
+   "id": "result",
+   "en": "result",
+   "tr": "sonuç",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "The result is good.",
+    "tr": "Sonuç iyi."
+   },
+   "siklik": 610,
+   "sv": 45
+  },
+  {
+   "id": "chance",
+   "en": "chance",
+   "tr": "şans",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "This is a good chance.",
+    "tr": "Bu iyi bir şans."
+   },
+   "siklik": 1873,
+   "sv": 59
+  },
+  {
+   "id": "experience",
+   "en": "experience",
+   "tr": "deneyim",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "She has a lot of experience.",
+    "tr": "Çok deneyimi var."
+   },
+   "siklik": 565,
+   "sv": 44
+  },
+  {
+   "id": "information",
+   "en": "information",
+   "tr": "bilgi",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I need more information.",
+    "tr": "Daha fazla bilgiye ihtiyacım var."
+   },
+   "siklik": 49,
+   "sv": 40
+  },
+  {
+   "id": "opinion",
+   "en": "opinion",
+   "tr": "görüş",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "What is your opinion?",
+    "tr": "Görüşün nedir?"
+   },
+   "siklik": 1463,
+   "sv": 56
+  },
+  {
+   "id": "habit",
+   "en": "habit",
+   "tr": "alışkanlık",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Reading is a good habit.",
+    "tr": "Okumak iyi bir alışkanlıktır."
+   },
+   "sv": 45
+  },
+  {
+   "id": "trouble",
+   "en": "trouble",
+   "tr": "dert (başbelası)",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I am in trouble.",
+    "tr": "Başım dertte."
+   },
+   "siklik": 3097,
+   "sv": 68
+  },
+  {
+   "id": "advice",
+   "en": "advice",
+   "tr": "tavsiye",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Thank you for your advice.",
+    "tr": "Tavsiyen için teşekkürler."
+   },
+   "siklik": 1120,
+   "sv": 53
+  },
+  {
+   "id": "accident",
+   "en": "accident",
+   "tr": "kaza",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "There is an accident on the road.",
+    "tr": "Yolda bir kaza var."
+   },
+   "siklik": 3828,
+   "sv": 69
+  },
+  {
+   "id": "culture",
+   "en": "culture",
+   "tr": "kültür",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Every country has a culture.",
+    "tr": "Her ülkenin bir kültürü vardır."
+   },
+   "siklik": 1168,
+   "sv": 54
+  },
+  {
+   "id": "environment",
+   "en": "environment",
+   "tr": "çevre",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "We protect the environment.",
+    "tr": "Çevreyi koruruz."
+   },
+   "siklik": 783,
+   "sv": 49
+  },
+  {
+   "id": "society",
+   "en": "society",
+   "tr": "toplum",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "Society changes.",
+    "tr": "Toplum değişir."
+   },
+   "siklik": 708,
+   "sv": 47
+  },
+  {
+   "id": "quality",
+   "en": "quality",
+   "tr": "kalite",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "The quality is good.",
+    "tr": "Kalite iyi."
+   },
+   "siklik": 391,
+   "sv": 41
+  },
+  {
+   "id": "future",
+   "en": "future",
+   "tr": "gelecek",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "I think about the future.",
+    "tr": "Geleceği düşünürüm."
+   },
+   "siklik": 640,
+   "sv": 46
+  },
+  {
+   "id": "past",
+   "en": "past",
+   "tr": "geçmiş",
+   "grup": "soyut-b1",
+   "ornek": {
+    "en": "The past is gone.",
+    "tr": "Geçmiş geçti."
+   },
+   "siklik": 755,
+   "sv": 48
+  }
+ ]
+}
